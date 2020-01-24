@@ -23,8 +23,8 @@ public class OppositeTest {
         e1.addFuses(f1);
         e2.addFuses(f2);
 
-        assertEquals(f1.owner, e1);
-        assertEquals(f2.owner, e2);
+        assertEquals(f1.getOwner(), e1);
+        assertEquals(f2.getOwner(), e2);
 
         assertEquals(f1.getOpposite(), e2);
         assertEquals(f2.getOpposite(), e1);

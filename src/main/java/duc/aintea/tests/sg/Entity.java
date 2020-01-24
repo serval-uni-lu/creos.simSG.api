@@ -16,7 +16,7 @@ public abstract class Entity {
     public void addFuses(Fuse... fs) {
        for (Fuse f: fs) {
            fuses.add(f);
-           f.owner = this;
+           f.setOwner(this);
        }
     }
 

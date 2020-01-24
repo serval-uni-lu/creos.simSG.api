@@ -60,7 +60,7 @@ public class Cable {
     public String toString() {
          return "Cable(" +
                 "fuses=" + Arrays.toString(Arrays.stream(fuses).map(new MapperFuseName()).toArray()) +
-                ", meters=" + Arrays.toString(meters.stream().map((Meter m) -> m.name).toArray()) +
+                ", meters=" + Arrays.toString(meters.stream().map((Meter m) -> m.getName()).toArray()) +
                 ')';
     }
 }

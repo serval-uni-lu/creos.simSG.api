@@ -4,7 +4,7 @@ import org.junit.jupiter.params.provider.Arguments;
 
 import java.util.Random;
 
-public class DataGenerator {
+class DataGenerator {
     private static final int NB_TESTS = 10;
     private static final double MAX_LOAD = 100.;
     private static final Random RANDOM = new Random(12345);

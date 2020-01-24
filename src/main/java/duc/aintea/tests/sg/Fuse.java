@@ -3,9 +3,9 @@ package duc.aintea.tests.sg;
 import java.util.function.Function;
 
 public class Fuse {
-    public String name;
+    private String name;
     private Cable cable;
-    public Entity owner;
+    private Entity owner;
 
     public Fuse(String name) {
         this.name = name;
@@ -28,12 +28,28 @@ public class Fuse {
 
         return first.owner;
     }
+
+    public Entity getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Entity owner) {
+        this.owner = owner;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
 
 
 class MapperFuseName implements Function<Fuse, String> {
     @Override
     public String apply(Fuse fuse) {
-        return fuse.name;
+        return fuse.getName();
     }
 }

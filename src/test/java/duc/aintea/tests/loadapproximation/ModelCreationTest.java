@@ -13,7 +13,7 @@ public class ModelCreationTest {
         Fuse f1 = new Fuse("f1");
         e1.addFuses(f1);
 
-        assertEquals(e1, f1.owner);
+        assertEquals(e1, f1.getOwner());
     }
 
     @Test
