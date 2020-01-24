@@ -3,9 +3,10 @@ package duc.aintea.tests.sg;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class Entity {
-    List<Fuse> fuses;
+    private List<Fuse> fuses;
     private String name;
 
     public Entity(String name) {
@@ -26,6 +27,18 @@ public abstract class Entity {
 
     public List<Fuse> getFuses() {
         return new ArrayList<>(fuses);
+    }
+
+
+    public List<Entity> getReachableEntities() {
+        var result = new ArrayList<Entity>(fuses.size());
+
+        for (var f: fuses) {
+            Optional<Entity> opposite = f.getOpposite();
+            opposite.ifPresent(result::add);
+        }
+
+        return result;
     }
 
     @Override
