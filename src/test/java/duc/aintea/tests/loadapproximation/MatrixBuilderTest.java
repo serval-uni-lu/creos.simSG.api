@@ -10,10 +10,8 @@ public class MatrixBuilderTest {
 
 
     @Test
-    public void scenario1() {
-        Grid grid = new Grid();
+    public void scenario1_allClose() {
         Substation substation = new Substation("subs");
-        grid.addSubstation(substation);
 
         Fuse f1 = new Fuse("f1_subs");
         substation.addFuses(f1);
@@ -28,7 +26,7 @@ public class MatrixBuilderTest {
         cabinet.addFuses(f2);
 
         MatrixBuilder matrixBuilder = new MatrixBuilder();
-        double[] matrix = matrixBuilder.build(grid);
+        double[] matrix = matrixBuilder.build(substation);
 
         assertNotNull(matrix);
         assertEquals(4, matrix.length);

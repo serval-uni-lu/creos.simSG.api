@@ -12,14 +12,6 @@ import static org.junit.Assert.assertTrue;
 public class DeadEndTest {
 
     @Test
-    public void testOneFuseCabinet() {
-        Cabinet c1 = new Cabinet("c1");
-        Fuse f1 = new Fuse("f1");
-        c1.addFuses(f1);
-        assertTrue(c1.isDeadEnd());
-    }
-
-    @Test
     public void testParallelCablesDE() {
         Cabinet c1 = new Cabinet("c1");
         Cabinet c2 = new Cabinet("c2");
@@ -101,14 +93,6 @@ public class DeadEndTest {
         assertTrue(c1.isDeadEnd());
         assertFalse(c2.isDeadEnd());
         assertFalse(c3.isDeadEnd());
-    }
-
-    @Test
-    public void testOneFuseSubs() {
-        Cabinet c1 = new Cabinet("c1");
-        Fuse f1 = new Fuse("f1");
-        c1.addFuses(f1);
-        assertTrue(c1.isDeadEnd());
     }
 
     @Test
