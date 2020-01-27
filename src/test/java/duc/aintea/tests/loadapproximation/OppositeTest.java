@@ -37,7 +37,7 @@ public class OppositeTest {
 
 
     @Test
-    public void allClosed() {
+    public void testAllClosed() {
         Optional<Entity> oppositeF1 = f1.getOpposite();
         Optional<Entity> oppositeF2 = f2.getOpposite();
 
@@ -52,7 +52,7 @@ public class OppositeTest {
     }
 
     @Test
-    public void allOpen() {
+    public void testAllOpen() {
         f1.openFuse();
         f2.openFuse();
         Optional<Entity> oppositeF1 = f1.getOpposite();
@@ -67,7 +67,7 @@ public class OppositeTest {
 
 
     @Test
-    public void firstOpen() {
+    public void testFirstOpen() {
         f1.openFuse();
         Optional<Entity> oppositeF1 = f1.getOpposite();
         Optional<Entity> oppositeF2 = f2.getOpposite();
@@ -83,7 +83,7 @@ public class OppositeTest {
             Subs1--[f1]----(cbl1)----]f2[--Subs2
      */
     @Test
-    public void secondOpen() {
+    public void testSecondOpen() {
         f2.openFuse();
         Optional<Entity> oppositeF1 = f1.getOpposite();
         Optional<Entity> oppositeF2 = f2.getOpposite();

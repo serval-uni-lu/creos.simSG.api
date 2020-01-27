@@ -1,7 +1,10 @@
 package duc.aintea.tests.loadapproximation;
 
-import duc.aintea.tests.sg.*;
-import org.junit.Test;
+import duc.aintea.tests.sg.Cable;
+import duc.aintea.tests.sg.Entity;
+import duc.aintea.tests.sg.Fuse;
+import duc.aintea.tests.sg.Substation;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

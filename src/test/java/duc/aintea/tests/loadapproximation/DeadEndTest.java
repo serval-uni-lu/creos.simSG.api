@@ -1,7 +1,7 @@
 package duc.aintea.tests.loadapproximation;
 
 import duc.aintea.tests.sg.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
@@ -12,7 +12,7 @@ public class DeadEndTest {
     /*
                |-[f1]----(cbl1)----[f2]-|
         subs1-<                         >-c2
-              |-[f3]----(cbl2)----[f4]-|
+               |-[f3]----(cbl2)----[f4]-|
      */
     @Test
     public void testParallelCablesDE() {

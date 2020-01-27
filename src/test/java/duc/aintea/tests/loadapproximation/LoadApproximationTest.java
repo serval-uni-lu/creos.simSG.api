@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class LoadApproximationTest {
     @ParameterizedTest
     @MethodSource("duc.aintea.tests.loadapproximation.DataGenerator#oneValue")
-    public void scenario1(double il1) {
+    public void testScenario1(double il1) {
         Scenario1 sc1 = new Scenario1(il1);
 
         double[] actual = sc1.computeLoad();
@@ -18,7 +18,7 @@ public class LoadApproximationTest {
 
     @ParameterizedTest
     @MethodSource("duc.aintea.tests.loadapproximation.DataGenerator#threeValues")
-    public void scenario2(double il1, double il2, double il3) {
+    public void testScenario2(double il1, double il2, double il3) {
         Scenario2 sc2 = new Scenario2(il1, il2, il3);
         double[] actual = sc2.computeLoad();
 
@@ -36,7 +36,7 @@ public class LoadApproximationTest {
 
     @ParameterizedTest
     @MethodSource("duc.aintea.tests.loadapproximation.DataGenerator#threeValues")
-    public void scenario3(double il1, double il2, double il3) {
+    public void testScenario3(double il1, double il2, double il3) {
         Scenario3 sc3 = new Scenario3(il1, il2, il3);
         double[] actual = sc3.computeLoad();
 
@@ -56,7 +56,7 @@ public class LoadApproximationTest {
 
     @ParameterizedTest
     @MethodSource("duc.aintea.tests.loadapproximation.DataGenerator#fourValues")
-    public void scenario4(double il1, double il2, double il3, double il4) {
+    public void testScenario4(double il1, double il2, double il3, double il4) {
         Scenario4 sc4 = new Scenario4(il1, il2, il3, il4);
         double[] actual = sc4.computeLoad();
 
@@ -78,7 +78,7 @@ public class LoadApproximationTest {
 
     @ParameterizedTest
     @MethodSource("duc.aintea.tests.loadapproximation.DataGenerator#fiveValues")
-    public void scenario5(double il1, double il2, double il3, double il4, double il5) {
+    public void testScenario5(double il1, double il2, double il3, double il4, double il5) {
         Scenario5 sc5 = new Scenario5(il1, il2, il3, il4, il5);
         double[] actual = sc5.computeLoad();
 
