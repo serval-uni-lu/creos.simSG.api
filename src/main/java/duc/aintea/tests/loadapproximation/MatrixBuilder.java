@@ -1,24 +1,37 @@
 package duc.aintea.tests.loadapproximation;
 
+import duc.aintea.tests.sg.Entity;
 import duc.aintea.tests.sg.Substation;
 import org.ejml.data.DenseMatrix64F;
 
 public class MatrixBuilder {
 
     public double[] build(Substation substation) {
-        var cableEq = new DenseMatrix64F(0);
-        var deadEndsEq = new DenseMatrix64F(0);
+        final var nbFuses = substation.getFuses().size();
+        final var cableEq = new DenseMatrix64F(0);
+        final var deadEndsEq = new DenseMatrix64F(0);
 
-        var neighbors = substation.getReachableEntities();
-        cableEq.reshape(neighbors.size(), neighbors.size() * 2);
+        for (int i = 0; i < substation.getFuses().size(); i++) {
+            var fuse = substation.getFuses().get(i);
 
-        for (int i = 0; i < neighbors.size(); i++) {
-            cableEq.add(i, 0, 1);
-            cableEq.add(i, 1, 1);
+            if(fuse.isClosed()) {
+                final int ii = i;
+                fuse.getOpposite().ifPresent((Entity e) -> {
+                    cableEq.reshape(cableEq.numRows + 1, nbFuses*2, true);
+                    cableEq.add(cableEq.numRows - 1, ii, 1);
+                    cableEq.add(cableEq.numRows - 1, ii + 1, 1);
+                });
 
-            if(neighbors.get(i).isDeadEnd()) {
-                deadEndsEq.reshape(deadEndsEq.numRows + 1, cableEq.numCols, true);
-                deadEndsEq.add(deadEndsEq.numRows - 1, 1, 1);
+                fuse.getOppDeadEnds().ifPresent((Entity e) -> {
+                    cableEq.reshape(cableEq.numRows + 1, nbFuses*2, true);
+                    cableEq.add(cableEq.numRows - 1, ii, 1);
+                    cableEq.add(cableEq.numRows - 1, ii + 1, 1);
+
+                    deadEndsEq.reshape(deadEndsEq.numRows + 1, nbFuses*2, true);
+                    deadEndsEq.add(deadEndsEq.numRows - 1, ii + 1, 1);
+                });
+            } else {
+                cableEq.reshape(cableEq.numRows + 1, nbFuses*2, true);
             }
         }
 
