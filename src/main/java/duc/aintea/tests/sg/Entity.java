@@ -29,16 +29,23 @@ public abstract class Entity {
         return new ArrayList<>(fuses);
     }
 
-
-    public List<Entity> getReachableEntities() {
+    private List<Entity> prv_getReachableEntites(boolean deadends) {
         var result = new ArrayList<Entity>(fuses.size());
 
         for (var f: fuses) {
-            Optional<Entity> opposite = f.getOpposite();
+            Optional<Entity> opposite = f.prv_getOpposite(deadends);
             opposite.ifPresent(result::add);
         }
 
         return result;
+    }
+
+    public List<Entity> getReachableEntities() {
+        return prv_getReachableEntites(false);
+    }
+
+    public List<Entity> getReachableDeadEnds() {
+        return prv_getReachableEntites(true);
     }
 
     @Override
