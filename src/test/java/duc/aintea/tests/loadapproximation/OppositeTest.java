@@ -1,23 +1,19 @@
 package duc.aintea.tests.loadapproximation;
 
-import duc.aintea.tests.sg.Cable;
-import duc.aintea.tests.sg.Entity;
-import duc.aintea.tests.sg.Fuse;
-import duc.aintea.tests.sg.Substation;
+import duc.aintea.tests.sg.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class OppositeTest {
-    private Entity subs1, subs2;
+    private Entity subs1, c2;
     private Fuse f1, f2;
 
     /*
-           Subs1--[f1]----(cbl1)----[f2]--Subs2
+        Subs1--[f1]----(cbl1)----[f2]--c2
     */
     @BeforeEach
     public void init() {
@@ -29,69 +25,79 @@ public class OppositeTest {
         cbl1.setSecondFuse(f2);
 
         subs1 = new Substation("subs");
-        subs2 = new Substation("subs2");
+        c2 = new Cabinet("c2");
         subs1.addFuses(f1);
-        subs2.addFuses(f2);
+        c2.addFuses(f2);
     }
 
 
-
+    /*
+        Subs1--[f1]----(cbl1)----[f2]--c2
+    */
     @Test
     public void testAllClosed() {
         Optional<Entity> oppositeF1 = f1.getOpposite();
         Optional<Entity> oppositeF2 = f2.getOpposite();
 
         assertEquals(f1.getOwner(), subs1);
-        assertEquals(f2.getOwner(), subs2);
+        assertEquals(f2.getOwner(), c2);
 
-        assertTrue(oppositeF1.isPresent());
+        assertTrue(oppositeF1.isEmpty());
         assertTrue(oppositeF2.isPresent());
 
-        assertEquals(oppositeF1.get(), subs2);
         assertEquals(oppositeF2.get(), subs1);
     }
 
+    /*
+        Subs1--]f1[----(cbl1)----]f2[--c2
+    */
     @Test
     public void testAllOpen() {
         f1.openFuse();
         f2.openFuse();
+
         Optional<Entity> oppositeF1 = f1.getOpposite();
         Optional<Entity> oppositeF2 = f2.getOpposite();
 
+
         assertEquals(f1.getOwner(), subs1);
-        assertEquals(f2.getOwner(), subs2);
+        assertEquals(f2.getOwner(), c2);
 
         assertTrue(oppositeF1.isEmpty());
         assertTrue(oppositeF2.isEmpty());
     }
 
 
+    /*
+        Subs1--]f1[----(cbl1)----[f2]--c2
+    */
     @Test
-    public void testFirstOpen() {
+    public void testF1Open() {
         f1.openFuse();
         Optional<Entity> oppositeF1 = f1.getOpposite();
         Optional<Entity> oppositeF2 = f2.getOpposite();
 
         assertEquals(f1.getOwner(), subs1);
-        assertEquals(f2.getOwner(), subs2);
+        assertEquals(f2.getOwner(), c2);
 
         assertTrue(oppositeF1.isEmpty());
         assertTrue(oppositeF2.isEmpty());
     }
 
     /*
-            Subs1--[f1]----(cbl1)----]f2[--Subs2
+            Subs1--[f1]----(cbl1)----]f2[--c2
      */
     @Test
-    public void testSecondOpen() {
+    public void testF2Open() {
         f2.openFuse();
         Optional<Entity> oppositeF1 = f1.getOpposite();
         Optional<Entity> oppositeF2 = f2.getOpposite();
 
         assertEquals(f1.getOwner(), subs1);
-        assertEquals(f2.getOwner(), subs2);
+        assertEquals(f2.getOwner(), c2);
 
         assertTrue(oppositeF1.isEmpty());
         assertTrue(oppositeF2.isEmpty());
+
     }
 }

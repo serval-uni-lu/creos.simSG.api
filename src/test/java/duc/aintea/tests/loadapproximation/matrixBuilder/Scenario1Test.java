@@ -11,55 +11,54 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class Scenario1Test {
-    private static Substation substation;
-    private static Fuse[] fuses;
+    private static Substation subs1;
+    private static Fuse f1, f2;
 
+
+    /*
+        subs1-[f1]----(cbl1)----[f2]-c1
+     */
     @BeforeEach
     public void init() {
-        substation = new Substation("subs");
-        fuses = new Fuse[2];
+        subs1 = new Substation("subs");
+        Cabinet c1 = new Cabinet("cab");
 
-        Fuse f1 = new Fuse("f1_subs");
-        substation.addFuses(f1);
-        Fuse f2 = new Fuse("f2_cab");
-        fuses[0] = f1;
-        fuses[1] = f2;
+        Cable cbl1 = new Cable();
 
-        Cable cable = new Cable();
-        cable.setFirstFuse(f1);
-        cable.setSecondFuse(f2);
+        f1 = new Fuse("f1_subs");
+        f2 = new Fuse("f2_cab");
 
-        Cabinet cabinet = new Cabinet("cab");
-        cabinet.addFuses(f2);
+        subs1.addFuses(f1);
+        c1.addFuses(f2);
+        cbl1.setFuses(f1, f2);
+    }
+
+    private double[] buildMatrix() {
+        return new MatrixBuilder().build(subs1);
     }
 
 
     @Test
-    public void scenario1_allClose() {
-        MatrixBuilder matrixBuilder = new MatrixBuilder();
-        double[] matrix = matrixBuilder.build(substation);
-
-        assertArrayEquals(new double[]{1,1,0,1}, matrix);
+    public void testScenario1_allClose() {
+        assertArrayEquals(new double[]{1,1,0,1}, buildMatrix());
     }
 
     @Test
-    public void scenario1_allOpen() {
-        fuses[0].openFuse();
-        fuses[1].openFuse();
-
-        MatrixBuilder matrixBuilder = new MatrixBuilder();
-        double[] matrix = matrixBuilder.build(substation);
-
-        assertArrayEquals(new double[]{}, matrix);
+    public void testScenario1_f1Open() {
+        f1.openFuse();
+        assertArrayEquals(new double[]{0,0}, buildMatrix());
     }
 
     @Test
-    public void scenario1_f1Open() {
-        fuses[0].openFuse();
+    public void testScenario1_f2Open() {
+        f2.openFuse();
+        assertArrayEquals(new double[]{1,1,0,1}, buildMatrix());
+    }
 
-        MatrixBuilder matrixBuilder = new MatrixBuilder();
-        double[] matrix = matrixBuilder.build(substation);
-
-        assertArrayEquals(new double[]{1,0}, matrix);
+    @Test
+    public void testScenario1_allOpen() {
+        f1.openFuse();
+        f2.openFuse();
+        assertArrayEquals(new double[]{0,0}, buildMatrix());
     }
 }
