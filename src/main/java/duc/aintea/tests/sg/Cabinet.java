@@ -10,6 +10,8 @@ public class Cabinet extends Entity {
     }
 
     @Override
+    //TODO FIX
+    //definitions of dead end and Fuse#opposite create "infinite loop"
     public boolean isDeadEnd() {
         List<Entity> neighboors = getReachableEntities();
 
