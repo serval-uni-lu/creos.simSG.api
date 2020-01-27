@@ -23,17 +23,32 @@ public class Fuse {
         this.cable = cable;
     }
 
-    public Optional<Entity> getOpposite() {
+    private Optional<Entity> prv_getOpposite(boolean deadends) {
         if(isClosed()) {
-            Fuse first = cable.getFirstFuse();
-            if (first == this) {
-                Fuse second = cable.getSecondFuse();
-                return (second.isClosed())? Optional.of(second.owner) : Optional.empty();
+            var f = cable.getFirstFuse();
+            if(f == this) {
+                f = cable.getSecondFuse();
             }
-            return (first.isClosed())? Optional.of(first.owner) : Optional.empty();
+
+            Entity opposite = f.owner;
+            if((deadends && opposite.isDeadEnd()) || (!deadends && f.isClosed())) {
+                return Optional.of(opposite);
+            }
+            return Optional.empty();
         }
         return Optional.empty();
     }
+
+
+    public Optional<Entity> getOpposite() {
+        return prv_getOpposite(false);
+    }
+
+    public Optional<Entity> getOppDeadEnds() {
+        return prv_getOpposite(true);
+    }
+
+
 
     public Entity getOwner() {
         return owner;
