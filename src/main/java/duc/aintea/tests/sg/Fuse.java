@@ -23,7 +23,7 @@ public class Fuse {
         this.cable = cable;
     }
 
-    private Optional<Entity> prv_getOpposite(boolean deadends) {
+    Optional<Entity> prv_getOpposite(boolean deadends) {
         if(isClosed()) {
             var f = cable.getFirstFuse();
             if(f == this) {
@@ -31,7 +31,7 @@ public class Fuse {
             }
 
             Entity opposite = f.owner;
-            if((deadends && opposite.isDeadEnd()) || (!deadends && f.isClosed())) {
+            if((deadends && opposite.isDeadEnd()) || (!deadends && f.isClosed() && !opposite.isDeadEnd())) {
                 return Optional.of(opposite);
             }
             return Optional.empty();
