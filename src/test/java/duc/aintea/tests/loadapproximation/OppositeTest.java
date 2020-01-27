@@ -4,7 +4,8 @@ import duc.aintea.tests.sg.Cable;
 import duc.aintea.tests.sg.Entity;
 import duc.aintea.tests.sg.Fuse;
 import duc.aintea.tests.sg.Substation;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
@@ -12,104 +13,83 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class OppositeTest {
+    private Entity subs1, subs2;
+    private Fuse f1, f2;
+
+    /*
+           Subs1--[f1]----(cbl1)----[f2]--Subs2
+    */
+    @BeforeEach
+    public void init() {
+        Cable cbl1 = new Cable();
+
+        f1 = new Fuse("f1");
+        f2 = new Fuse("f2");
+        cbl1.setFirstFuse(f1);
+        cbl1.setSecondFuse(f2);
+
+        subs1 = new Substation("subs");
+        subs2 = new Substation("subs2");
+        subs1.addFuses(f1);
+        subs2.addFuses(f2);
+    }
+
+
+
     @Test
     public void allClosed() {
-        Cable c1 = new Cable();
-
-        Fuse f1 = new Fuse("f1");
-        Fuse f2 = new Fuse("f2");
-        c1.setFirstFuse(f1);
-        c1.setSecondFuse(f2);
-
-        Entity e1 = new Substation("subs");
-        Entity e2 = new Substation("subs2");
-        e1.addFuses(f1);
-        e2.addFuses(f2);
-
-        assertEquals(f1.getOwner(), e1);
-        assertEquals(f2.getOwner(), e2);
-
         Optional<Entity> oppositeF1 = f1.getOpposite();
         Optional<Entity> oppositeF2 = f2.getOpposite();
+
+        assertEquals(f1.getOwner(), subs1);
+        assertEquals(f2.getOwner(), subs2);
 
         assertTrue(oppositeF1.isPresent());
         assertTrue(oppositeF2.isPresent());
 
-        assertEquals(oppositeF1.get(), e2);
-        assertEquals(oppositeF2.get(), e1);
+        assertEquals(oppositeF1.get(), subs2);
+        assertEquals(oppositeF2.get(), subs1);
     }
 
     @Test
     public void allOpen() {
-        Cable c1 = new Cable();
-
-        Fuse f1 = new Fuse("f1");
         f1.openFuse();
-        Fuse f2 = new Fuse("f2");
         f2.openFuse();
-        c1.setFirstFuse(f1);
-        c1.setSecondFuse(f2);
-
-        Entity e1 = new Substation("subs");
-        Entity e2 = new Substation("subs2");
-        e1.addFuses(f1);
-        e2.addFuses(f2);
-
-        assertEquals(f1.getOwner(), e1);
-        assertEquals(f2.getOwner(), e2);
-
         Optional<Entity> oppositeF1 = f1.getOpposite();
         Optional<Entity> oppositeF2 = f2.getOpposite();
+
+        assertEquals(f1.getOwner(), subs1);
+        assertEquals(f2.getOwner(), subs2);
 
         assertTrue(oppositeF1.isEmpty());
         assertTrue(oppositeF2.isEmpty());
     }
+
 
     @Test
     public void firstOpen() {
-        Cable c1 = new Cable();
-
-        Fuse f1 = new Fuse("f1");
         f1.openFuse();
-        Fuse f2 = new Fuse("f2");
-        c1.setFirstFuse(f1);
-        c1.setSecondFuse(f2);
-
-        Entity e1 = new Substation("subs");
-        Entity e2 = new Substation("subs2");
-        e1.addFuses(f1);
-        e2.addFuses(f2);
-
-        assertEquals(f1.getOwner(), e1);
-        assertEquals(f2.getOwner(), e2);
-
         Optional<Entity> oppositeF1 = f1.getOpposite();
         Optional<Entity> oppositeF2 = f2.getOpposite();
+
+        assertEquals(f1.getOwner(), subs1);
+        assertEquals(f2.getOwner(), subs2);
 
         assertTrue(oppositeF1.isEmpty());
         assertTrue(oppositeF2.isEmpty());
     }
 
+    /*
+            Subs1--[f1]----(cbl1)----]f2[--Subs2
+     */
     @Test
     public void secondOpen() {
-        Cable c1 = new Cable();
-
-        Fuse f1 = new Fuse("f1");
-        Fuse f2 = new Fuse("f2");
         f2.openFuse();
-        c1.setFirstFuse(f1);
-        c1.setSecondFuse(f2);
-
-        Entity e1 = new Substation("subs");
-        Entity e2 = new Substation("subs2");
-        e1.addFuses(f1);
-        e2.addFuses(f2);
-
-        assertEquals(f1.getOwner(), e1);
-        assertEquals(f2.getOwner(), e2);
-
         Optional<Entity> oppositeF1 = f1.getOpposite();
         Optional<Entity> oppositeF2 = f2.getOpposite();
+
+        assertEquals(f1.getOwner(), subs1);
+        assertEquals(f2.getOwner(), subs2);
 
         assertTrue(oppositeF1.isEmpty());
         assertTrue(oppositeF2.isEmpty());
