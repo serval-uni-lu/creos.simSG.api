@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Entity {
     private List<Fuse> fuses;
@@ -49,6 +50,11 @@ public abstract class Entity {
             }
         });
         return result;
+    }
+
+    public List<Entity> getReachableNeighborsWithoutDeadEnds() {
+        var reachables = getReachableNeighbors();
+        return reachables.stream().filter(e -> !e.isDeadEnd()).collect(Collectors.toList());
     }
 
     public List<Entity> getDeadEndsNeighbors() {
