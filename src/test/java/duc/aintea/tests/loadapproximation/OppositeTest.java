@@ -173,6 +173,5 @@ public class OppositeTest {
 
         assertEquals(0, oppReachWDESubs1.size());
         assertEquals(0, oppReachWDEC2.size());
-
     }
 }
