@@ -3,7 +3,7 @@ package duc.aintea.tests.loadapproximation;
 import duc.aintea.tests.sg.*;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -36,18 +36,13 @@ public class DeadEndTest {
         assertFalse(subs1.isDeadEnd());
         assertTrue(c2.isDeadEnd());
 
-        Optional<Entity> oppDEF1 = f1.getOppDeadEnds();
-        Optional<Entity> oppDEF2 = f2.getOppDeadEnds();
-        Optional<Entity> oppDEF3 = f3.getOppDeadEnds();
-        Optional<Entity> oppDEF4 = f4.getOppDeadEnds();
+        List<Entity> oppDESubs1 = subs1.getDeadEndsNeighbors();
+        List<Entity> oppDEC2 = c2.getDeadEndsNeighbors();
 
-        assertTrue(oppDEF1.isPresent());
-        assertTrue(oppDEF2.isEmpty());
-        assertTrue(oppDEF3.isPresent());
-        assertTrue(oppDEF4.isEmpty());
-
-        assertEquals(c2, oppDEF1.get());
-        assertEquals(c2, oppDEF3.get());
+        assertEquals(2, oppDESubs1.size());
+        assertEquals(c2, oppDESubs1.get(0));
+        assertEquals(c2, oppDESubs1.get(1));
+        assertEquals(0, oppDEC2.size());
     }
 
     /*
@@ -83,6 +78,15 @@ public class DeadEndTest {
         assertFalse(subs1.isDeadEnd());
         assertFalse(c2.isDeadEnd());
         assertTrue(c3.isDeadEnd());
+
+        List<Entity> oppDESubs1 = subs1.getDeadEndsNeighbors();
+        List<Entity> oppDEC2 = c2.getDeadEndsNeighbors();
+        List<Entity> oppDEC3 = c3.getDeadEndsNeighbors();
+
+        assertEquals(0, oppDESubs1.size());
+        assertEquals(1, oppDEC2.size());
+        assertEquals(c3, oppDEC2.get(0));
+        assertEquals(0, oppDEC3.size());
     }
 
     /*
@@ -118,6 +122,16 @@ public class DeadEndTest {
         assertTrue(c1.isDeadEnd());
         assertFalse(c2.isDeadEnd());
         assertFalse(subs1.isDeadEnd());
+
+        List<Entity> oppDESubs1 = subs1.getDeadEndsNeighbors();
+        List<Entity> oppDEC1 = c1.getDeadEndsNeighbors();
+        List<Entity> oppDEC2 = c2.getDeadEndsNeighbors();
+
+        assertEquals(0, oppDESubs1.size());
+        assertEquals(0, oppDEC1.size());
+        assertEquals(2, oppDEC2.size());
+        assertEquals(c1, oppDEC2.get(0));
+        assertEquals(c1, oppDEC2.get(1));
     }
 
     /*
@@ -147,6 +161,16 @@ public class DeadEndTest {
         assertFalse(subs1.isDeadEnd());
         assertFalse(c1.isDeadEnd());
         assertTrue(c2.isDeadEnd());
+
+        List<Entity> oppDESubs1 = subs1.getDeadEndsNeighbors();
+        List<Entity> oppDEC1 = c1.getDeadEndsNeighbors();
+        List<Entity> oppDEC2 = c2.getDeadEndsNeighbors();
+
+        assertEquals(0, oppDESubs1.size());
+        assertEquals(1, oppDEC1.size());
+        assertEquals(c2, oppDEC1.get(0));
+        assertEquals(0, oppDEC2.size());
+
     }
 
 }

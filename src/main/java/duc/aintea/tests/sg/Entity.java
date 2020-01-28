@@ -2,8 +2,8 @@ package duc.aintea.tests.sg;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 
 public abstract class Entity {
     private List<Fuse> fuses;
@@ -29,24 +29,39 @@ public abstract class Entity {
         return new ArrayList<>(fuses);
     }
 
-    private List<Entity> prv_getReachableEntites(boolean deadends) {
+    public List<Entity> getNeighbors() {
         var result = new ArrayList<Entity>(fuses.size());
 
-        for (var f: fuses) {
-            Optional<Entity> opposite = f.prv_getOpposite(deadends);
-            opposite.ifPresent(result::add);
+        for(var f : fuses) {
+            Fuse opposite = f.getOpposite();
+            result.add(opposite.getOwner());
         }
 
         return result;
     }
 
-    public List<Entity> getReachableEntities() {
-        return prv_getReachableEntites(false);
+    public List<Entity> getReachableNeighbors() {
+        final var result = new ArrayList<Entity>(fuses.size());
+        fuses.stream().filter(Fuse::isClosed).forEach(f -> {
+            Fuse opposite = f.getOpposite();
+            if(opposite.isClosed()) {
+                result.add(opposite.getOwner());
+            }
+        });
+        return result;
     }
 
-    public List<Entity> getReachableDeadEnds() {
-        return prv_getReachableEntites(true);
+    public List<Entity> getDeadEndsNeighbors() {
+        final var result = new ArrayList<Entity>(fuses.size());
+        fuses.stream().filter(Fuse::isClosed).forEach(f -> {
+            Entity oppOwner = f.getOpposite().getOwner();
+            if(oppOwner.isDeadEnd()) {
+                result.add(oppOwner);
+            }
+        });
+        return result;
     }
+
 
     @Override
     public String toString() {
@@ -57,6 +72,20 @@ public abstract class Entity {
     }
 
     public boolean isDeadEnd() {
-        return false;
+        List<Entity> reachNeigh = getReachableNeighbors();
+        if(reachNeigh.size() == 1) {
+            return true;
+        }
+
+        var names = new HashSet<>(fuses.size());
+        for (int i = 0; i < reachNeigh.size(); i++) {
+            Entity entity = reachNeigh.get(i);
+            if(names.add(entity.getName()) && i>0) {
+                return false;
+            }
+        }
+
+        return true;
+
     }
 }

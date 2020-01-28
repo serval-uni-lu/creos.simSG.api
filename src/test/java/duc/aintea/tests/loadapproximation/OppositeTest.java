@@ -4,9 +4,9 @@ import duc.aintea.tests.sg.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
+import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class OppositeTest {
     private Entity subs1, c2;
@@ -36,16 +36,29 @@ public class OppositeTest {
     */
     @Test
     public void testAllClosed() {
-        Optional<Entity> oppositeF1 = f1.getOpposite();
-        Optional<Entity> oppositeF2 = f2.getOpposite();
+        Fuse oppositeF1 = f1.getOpposite();
+        Fuse oppositeF2 = f2.getOpposite();
 
-        assertEquals(f1.getOwner(), subs1);
-        assertEquals(f2.getOwner(), c2);
+        List<Entity> oppSubs1 = subs1.getNeighbors();
+        List<Entity> oppC2 = c2.getNeighbors();
 
-        assertTrue(oppositeF1.isEmpty());
-        assertTrue(oppositeF2.isPresent());
+        List<Entity> oppReachSubs1 = subs1.getReachableNeighbors();
+        List<Entity> oppReachC2 = c2.getReachableNeighbors();
 
-        assertEquals(oppositeF2.get(), subs1);
+        assertEquals(f2, oppositeF1);
+        assertEquals(f1, oppositeF2);
+
+        assertEquals(1, oppSubs1.size());
+        assertEquals(c2, oppSubs1.get(0));
+
+        assertEquals(1, oppC2.size());
+        assertEquals(subs1, oppC2.get(0));
+
+        assertEquals(1, oppReachSubs1.size());
+        assertEquals(c2, oppReachSubs1.get(0));
+
+        assertEquals(1, oppReachC2.size());
+        assertEquals(subs1, oppReachC2.get(0));
     }
 
     /*
@@ -56,15 +69,26 @@ public class OppositeTest {
         f1.openFuse();
         f2.openFuse();
 
-        Optional<Entity> oppositeF1 = f1.getOpposite();
-        Optional<Entity> oppositeF2 = f2.getOpposite();
+        Fuse oppositeF1 = f1.getOpposite();
+        Fuse oppositeF2 = f2.getOpposite();
 
+        List<Entity> oppSubs1 = subs1.getNeighbors();
+        List<Entity> oppC2 = c2.getNeighbors();
 
-        assertEquals(f1.getOwner(), subs1);
-        assertEquals(f2.getOwner(), c2);
+        List<Entity> oppReachSubs1 = subs1.getReachableNeighbors();
+        List<Entity> oppReachC2 = c2.getReachableNeighbors();
 
-        assertTrue(oppositeF1.isEmpty());
-        assertTrue(oppositeF2.isEmpty());
+        assertEquals(f2, oppositeF1);
+        assertEquals(f1, oppositeF2);
+
+        assertEquals(1, oppSubs1.size());
+        assertEquals(c2, oppSubs1.get(0));
+
+        assertEquals(1, oppC2.size());
+        assertEquals(subs1, oppC2.get(0));
+
+        assertEquals(0, oppReachSubs1.size());
+        assertEquals(0, oppReachC2.size());
     }
 
 
@@ -74,14 +98,27 @@ public class OppositeTest {
     @Test
     public void testF1Open() {
         f1.openFuse();
-        Optional<Entity> oppositeF1 = f1.getOpposite();
-        Optional<Entity> oppositeF2 = f2.getOpposite();
 
-        assertEquals(f1.getOwner(), subs1);
-        assertEquals(f2.getOwner(), c2);
+        Fuse oppositeF1 = f1.getOpposite();
+        Fuse oppositeF2 = f2.getOpposite();
 
-        assertTrue(oppositeF1.isEmpty());
-        assertTrue(oppositeF2.isEmpty());
+        List<Entity> oppSubs1 = subs1.getNeighbors();
+        List<Entity> oppC2 = c2.getNeighbors();
+
+        List<Entity> oppReachSubs1 = subs1.getReachableNeighbors();
+        List<Entity> oppReachC2 = c2.getReachableNeighbors();
+
+        assertEquals(f2, oppositeF1);
+        assertEquals(f1, oppositeF2);
+
+        assertEquals(1, oppSubs1.size());
+        assertEquals(c2, oppSubs1.get(0));
+
+        assertEquals(1, oppC2.size());
+        assertEquals(subs1, oppC2.get(0));
+
+        assertEquals(0, oppReachSubs1.size());
+        assertEquals(0, oppReachC2.size());
     }
 
     /*
@@ -90,14 +127,27 @@ public class OppositeTest {
     @Test
     public void testF2Open() {
         f2.openFuse();
-        Optional<Entity> oppositeF1 = f1.getOpposite();
-        Optional<Entity> oppositeF2 = f2.getOpposite();
 
-        assertEquals(f1.getOwner(), subs1);
-        assertEquals(f2.getOwner(), c2);
+        Fuse oppositeF1 = f1.getOpposite();
+        Fuse oppositeF2 = f2.getOpposite();
 
-        assertTrue(oppositeF1.isEmpty());
-        assertTrue(oppositeF2.isEmpty());
+        List<Entity> oppSubs1 = subs1.getNeighbors();
+        List<Entity> oppC2 = c2.getNeighbors();
+
+        List<Entity> oppReachSubs1 = subs1.getReachableNeighbors();
+        List<Entity> oppReachC2 = c2.getReachableNeighbors();
+
+        assertEquals(f2, oppositeF1);
+        assertEquals(f1, oppositeF2);
+
+        assertEquals(1, oppSubs1.size());
+        assertEquals(c2, oppSubs1.get(0));
+
+        assertEquals(1, oppC2.size());
+        assertEquals(subs1, oppC2.get(0));
+
+        assertEquals(0, oppReachSubs1.size());
+        assertEquals(0, oppReachC2.size());
 
     }
 }

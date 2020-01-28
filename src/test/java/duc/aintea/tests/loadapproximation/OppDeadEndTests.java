@@ -4,10 +4,9 @@ import duc.aintea.tests.sg.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
+import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class OppDeadEndTests {
 
@@ -37,12 +36,12 @@ public class OppDeadEndTests {
     */
     @Test
     public void testAllClosed() {
-        Optional<Entity> oppDEF1 = f1.getOppDeadEnds();
-        Optional<Entity> oppDEF2 = f2.getOppDeadEnds();
+        List<Entity> oppDESubs1 = subs1.getDeadEndsNeighbors();
+        List<Entity> oppDEC2 = c2.getDeadEndsNeighbors();
 
-        assertTrue(oppDEF1.isPresent());
-        assertTrue(oppDEF2.isEmpty());
-        assertEquals(oppDEF1.get(), c2);
+        assertEquals(1, oppDESubs1.size());
+        assertEquals(c2, oppDESubs1.get(0));
+        assertEquals(0, oppDEC2.size());
     }
 
     /*
@@ -53,11 +52,11 @@ public class OppDeadEndTests {
         f1.openFuse();
         f2.openFuse();
 
-        Optional<Entity> oppDEF1 = f1.getOppDeadEnds();
-        Optional<Entity> oppDEF2 = f2.getOppDeadEnds();
+        List<Entity> oppDESubs1 = subs1.getDeadEndsNeighbors();
+        List<Entity> oppDEC2 = c2.getDeadEndsNeighbors();
 
-        assertTrue(oppDEF1.isEmpty());
-        assertTrue(oppDEF2.isEmpty());
+        assertEquals(0, oppDESubs1.size());
+        assertEquals(0, oppDEC2.size());
     }
 
     /*
@@ -67,11 +66,11 @@ public class OppDeadEndTests {
     public void testF2Open() {
         f2.openFuse();
 
-        Optional<Entity> oppDEF1 = f1.getOppDeadEnds();
-        Optional<Entity> oppDEF2 = f2.getOppDeadEnds();
+        List<Entity> oppDESubs1 = subs1.getDeadEndsNeighbors();
+        List<Entity> oppDEC2 = c2.getDeadEndsNeighbors();
 
-        assertTrue(oppDEF1.isPresent());
-        assertTrue(oppDEF2.isEmpty());
-        assertEquals(oppDEF1.get(), c2);
+        assertEquals(1, oppDESubs1.size());
+        assertEquals(c2, oppDESubs1.get(0));
+        assertEquals(0, oppDEC2.size());
     }
 }
