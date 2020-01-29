@@ -37,7 +37,7 @@ public class MatrixBuilder {
         return resData;
     }
 
-    public int getOrCreateIdx(Fuse fuse, HashMap<String, Integer> map, int[] last) {
+    private int getOrCreateIdx(Fuse fuse, HashMap<String, Integer> map, int[] last) {
         Integer idx = map.get(fuse.getName());
         if(idx == null) {
             last[0] = last[0] + 1;
