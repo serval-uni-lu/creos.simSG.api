@@ -7,9 +7,9 @@ public class LoadApproximation {
     protected DenseMatrix64F consumption;
     protected DenseMatrix64F fuseStates;
 
-    public LoadApproximation(double[] consumptions, double[] fuseState) {
+    public LoadApproximation(double[] consumptions, double[] matrix) {
         consumption = new DenseMatrix64F(consumptions.length, 1, true, consumptions);
-        fuseStates = new DenseMatrix64F(consumptions.length, consumptions.length, true, fuseState);
+        fuseStates = new DenseMatrix64F(consumptions.length, consumptions.length, true, matrix);
     }
 
    public double[] computeLoad() {

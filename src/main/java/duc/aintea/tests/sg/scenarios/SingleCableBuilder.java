@@ -7,21 +7,24 @@ import duc.aintea.tests.sg.Substation;
 
 public class SingleCableBuilder {
 
+    /*
+        subs-[f1]----(cbl1)----[f2]-cab
+     */
     public static Substation build(double consumption) {
-        var substation = new Substation("substation");
-        var cabinet = new Cabinet("cabinet");
+        var subs = new Substation("substation");
+        var cab = new Cabinet("cabinet");
 
         var f1 = new Fuse("fuse_subs");
         var f2 = new Fuse("fuse_cabinet");
 
         var cable = new Cable();
 
-        substation.addFuses(f1);
-        cabinet.addFuses(f2);
+        subs.addFuses(f1);
+        cab.addFuses(f2);
 
         cable.setFuses(f1, f2);
 
-        return substation;
+        return subs;
     }
 
 }

@@ -76,6 +76,21 @@ public class Fuse {
         if(this == f) return cable.getSecondFuse();
         return f;
     }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Fuse)) {
+            return false;
+        }
+
+        var casted = (Fuse) obj;
+        return this.name.equals(casted.name);
+    }
 }
 
 

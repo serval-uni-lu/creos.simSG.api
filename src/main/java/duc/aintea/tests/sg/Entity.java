@@ -67,15 +67,6 @@ public abstract class Entity {
 //        return result;
 //    }
 
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName() + "(" +
-                "name=" + name +
-                ", fuses=" + Arrays.toString(fuses.stream().map(new MapperFuseName()).toArray()) +
-                ")";
-    }
-
     public boolean isDeadEnd() {
         List<Entity> reachNeigh = getReachableNeighbors();
         if(reachNeigh.size() == 1) {
@@ -91,5 +82,28 @@ public abstract class Entity {
         }
 
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "(" +
+                "name=" + name +
+                ", fuses=" + Arrays.toString(fuses.stream().map(new MapperFuseName()).toArray()) +
+                ")";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Entity)) {
+            return false;
+        }
+
+        var casted = (Entity) obj;
+        return this.name.equals(casted.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.name.hashCode();
     }
 }

@@ -1,37 +1,74 @@
 package duc.aintea.tests.loadapproximation;
 
+import duc.aintea.tests.sg.Entity;
 import duc.aintea.tests.sg.Fuse;
 import duc.aintea.tests.sg.Substation;
-import org.ejml.data.DenseMatrix64F;
+import duc.aintea.tests.utils.Matrix;
 
+import java.util.ArrayDeque;
 import java.util.HashMap;
 
 public class MatrixBuilder {
 
     public double[] build(Substation substation) {
         final var idxFuses = new HashMap<String, Integer>();
-        final var fuses = substation.getFuses();
         var idxLast = new int[]{-1};
 
-        final var cableEq = new DenseMatrix64F(0);
+        final var cableEq = new Matrix();
+        final var cabinetEq = new Matrix();
 
-        for (Fuse fuse : fuses) {
-            var oppFuse = fuse.getOpposite();
-            var idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
-            var idxOpp = getOrCreateIdx(oppFuse, idxFuses, idxLast);
-            cableEq.reshape(cableEq.numRows + 1, cableEq.numCols + 2, true);
-            if(fuse.isClosed()) {
-                cableEq.add(cableEq.numRows - 1, idxFuse, 1);
-                if(!oppFuse.getOwner().isDeadEnd()) {
-                    cableEq.add(cableEq.numRows - 1, idxOpp, 1);
+        var waitingList = new ArrayDeque<Entity>();
+        var entityVisited = new ArrayDeque<Entity>();
+        var fuseVisited = new ArrayDeque<Fuse>();
+
+        waitingList.add(substation);
+
+        while(!waitingList.isEmpty()) {
+            var currEntity = waitingList.remove();
+            entityVisited.add(currEntity);
+
+            final var fuses = currEntity.getFuses();
+
+            if(fuses.size() > 1) {
+                cabinetEq.addLine();
+            }
+
+            for (Fuse fuse : fuses) {
+                if(!fuseVisited.contains(fuse)) {
+                    var oppFuse = fuse.getOpposite();
+                    fuseVisited.add(oppFuse);
+                    cableEq.addLine();
+                    cableEq.addColumn();
+                    cabinetEq.addColumn();
+                    if(fuse.isClosed()) {
+                        var idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
+                        cableEq.set(cableEq.getNumRows() - 1, idxFuse, 1);
+
+                        if(!oppFuse.getOwner().isDeadEnd()) {
+                            var idxOpp = getOrCreateIdx(oppFuse, idxFuses, idxLast);
+                            cableEq.addColumn();
+                            cabinetEq.addColumn();
+
+                            cableEq.set(cableEq.getNumRows() - 1, idxOpp, 1);
+                            if(!entityVisited.contains(oppFuse.getOwner())) {
+                                waitingList.add(oppFuse.getOwner());
+                            }
+                        }
+                    }
+                }
+
+                if(fuses.size() > 1) {
+                    var idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
+                    cabinetEq.set(cabinetEq.getNumRows() - 1, idxFuse, 1);
                 }
             }
 
+
         }
 
-        double[] resData = new double[cableEq.data.length/* + deadEndsEq.data.length*/];
-        System.arraycopy(cableEq.data, 0, resData, 0, cableEq.data.length);
-
+        double[] resData = new double[cableEq.getData().length + cabinetEq.getData().length];
+        System.arraycopy(cableEq.getData(), 0, resData, 0, cableEq.getData().length);
+        System.arraycopy(cabinetEq.getData(), 0, resData, cableEq.getData().length, cabinetEq.getData().length);
         return resData;
     }
 
