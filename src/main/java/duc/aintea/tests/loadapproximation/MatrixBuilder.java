@@ -19,7 +19,6 @@ public class MatrixBuilder {
 
         var waitingList = new ArrayDeque<Entity>();
         var entityVisited = new ArrayDeque<Entity>();
-        var fuseVisited = new ArrayDeque<Fuse>();
 
         waitingList.add(substation);
 
@@ -34,9 +33,8 @@ public class MatrixBuilder {
             }
 
             for (Fuse fuse : fuses) {
-                if(!fuseVisited.contains(fuse)) {
+                if(!idxFuses.containsKey(fuse.getName())) {
                     var oppFuse = fuse.getOpposite();
-                    fuseVisited.add(oppFuse);
                     cableEq.addLine();
                     cableEq.addColumn();
                     cabinetEq.addColumn();
