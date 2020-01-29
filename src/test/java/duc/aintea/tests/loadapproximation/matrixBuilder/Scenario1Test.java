@@ -40,7 +40,7 @@ public class Scenario1Test {
 
     @Test
     public void testScenario1_allClose() {
-        assertArrayEquals(new double[]{1,1,0,1}, buildMatrix());
+        assertArrayEquals(new double[]{1,0}, buildMatrix());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class Scenario1Test {
     @Test
     public void testScenario1_f2Open() {
         f2.openFuse();
-        assertArrayEquals(new double[]{1,1,0,1}, buildMatrix());
+        assertArrayEquals(new double[]{1,0}, buildMatrix());
     }
 
     @Test

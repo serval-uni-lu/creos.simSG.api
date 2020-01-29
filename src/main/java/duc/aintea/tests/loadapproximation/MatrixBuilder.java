@@ -14,25 +14,23 @@ public class MatrixBuilder {
         var idxLast = new int[]{-1};
 
         final var cableEq = new DenseMatrix64F(0);
-        final var deadEndsEq = new DenseMatrix64F(0);
 
         for (Fuse fuse : fuses) {
             var oppFuse = fuse.getOpposite();
             var idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
             var idxOpp = getOrCreateIdx(oppFuse, idxFuses, idxLast);
             cableEq.reshape(cableEq.numRows + 1, cableEq.numCols + 2, true);
-            cableEq.add(cableEq.numRows - 1, idxFuse, (fuse.isClosed())? 1 : 0);
-            cableEq.add(cableEq.numRows - 1, idxOpp, (fuse.isClosed())? 1 : 0);
-
-            if (fuse.isClosed() && oppFuse.getOwner().isDeadEnd()) {
-                deadEndsEq.reshape(deadEndsEq.numRows + 1, cableEq.numCols);
-                deadEndsEq.add(deadEndsEq.numRows - 1, idxOpp, 1);
+            if(fuse.isClosed()) {
+                cableEq.add(cableEq.numRows - 1, idxFuse, 1);
+                if(!oppFuse.getOwner().isDeadEnd()) {
+                    cableEq.add(cableEq.numRows - 1, idxOpp, 1);
+                }
             }
+
         }
 
-        double[] resData = new double[cableEq.data.length + deadEndsEq.data.length];
+        double[] resData = new double[cableEq.data.length/* + deadEndsEq.data.length*/];
         System.arraycopy(cableEq.data, 0, resData, 0, cableEq.data.length);
-        System.arraycopy(deadEndsEq.data, 0, resData, cableEq.data.length, deadEndsEq.data.length);
 
         return resData;
     }

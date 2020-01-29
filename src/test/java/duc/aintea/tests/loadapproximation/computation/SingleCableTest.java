@@ -26,10 +26,10 @@ public class SingleCableTest {
     @MethodSource("duc.aintea.tests.loadapproximation.DataGenerator#oneValue")
     public void testAllClosed(double consumption) {
         double[] matrix = new MatrixBuilder().build(substation);
-        var approximator = new LoadApproximation(new double[]{consumption, 0.}, matrix);
+        var approximator = new LoadApproximation(new double[]{consumption}, matrix);
         double[] loads = approximator.computeLoad();
 
-        Assertions.assertArrayEquals(new double[]{consumption, 0}, loads, 0.1);
+        Assertions.assertArrayEquals(new double[]{consumption}, loads, 0.1);
     }
 
     @Test
@@ -49,10 +49,10 @@ public class SingleCableTest {
         fuse_cabinet.openFuse();
 
         double[] matrix = new MatrixBuilder().build(substation);
-        var approximator = new LoadApproximation(new double[]{consumption, 0.}, matrix);
+        var approximator = new LoadApproximation(new double[]{consumption}, matrix);
         double[] loads = approximator.computeLoad();
 
-        Assertions.assertArrayEquals(new double[]{consumption, 0}, loads, 0.1);
+        Assertions.assertArrayEquals(new double[]{consumption}, loads, 0.1);
     }
 
 
