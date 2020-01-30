@@ -1,15 +1,13 @@
-package duc.aintea.tests.loadapproximation;
+package duc.aintea.tests.loadapproximation.utils;
 
 import duc.aintea.tests.sg.Cabinet;
 import duc.aintea.tests.sg.Cable;
 import duc.aintea.tests.sg.Fuse;
 import duc.aintea.tests.sg.Substation;
+import duc.aintea.tests.utils.CycleDetection;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-public class DeadEndTest {
+public class CycleDetectionTests {
 
     /*
                |-[f1]----(cbl1)----[f2]-|
@@ -17,7 +15,7 @@ public class DeadEndTest {
                |-[f3]----(cbl2)----[f4]-|
      */
     @Test
-    public void testParallelCablesDE() {
+    public void testParalleleAtSubs() {
         Substation subs1 = new Substation("c1");
         Cabinet c2 = new Cabinet("c2");
 
@@ -35,8 +33,10 @@ public class DeadEndTest {
         cbl1.setFuses(f1, f2);
         cbl2.setFuses(f3, f4);
 
-        assertFalse(subs1.isDeadEnd());
-        assertTrue(c2.isDeadEnd());
+        System.out.println(CycleDetection.detectCircle(f1));
+        System.out.println(CycleDetection.detectCircle(f2));
+        System.out.println(CycleDetection.detectCircle(f3));
+        System.out.println(CycleDetection.detectCircle(f4));
     }
 
     /*
@@ -69,9 +69,12 @@ public class DeadEndTest {
         cbl2.setFuses(f3, f4);
         cbl3.setFuses(f5, f6);
 
-        assertFalse(subs1.isDeadEnd());
-        assertFalse(c2.isDeadEnd());
-        assertTrue(c3.isDeadEnd());
+        System.out.println(CycleDetection.detectCircle(f1));
+        System.out.println(CycleDetection.detectCircle(f2));
+        System.out.println(CycleDetection.detectCircle(f3));
+        System.out.println(CycleDetection.detectCircle(f4));
+        System.out.println(CycleDetection.detectCircle(f5));
+        System.out.println(CycleDetection.detectCircle(f6));
     }
 
     /*
@@ -104,38 +107,11 @@ public class DeadEndTest {
         cbl2.setFuses(f3, f4);
         cbl3.setFuses(f5, f6);
 
-        assertTrue(c1.isDeadEnd());
-        assertFalse(c2.isDeadEnd());
-        assertFalse(subs1.isDeadEnd());
+        System.out.println(CycleDetection.detectCircle(f1));
+        System.out.println(CycleDetection.detectCircle(f2));
+        System.out.println(CycleDetection.detectCircle(f3));
+        System.out.println(CycleDetection.detectCircle(f4));
+        System.out.println(CycleDetection.detectCircle(f5));
+        System.out.println(CycleDetection.detectCircle(f6));
     }
-
-    /*
-        subs1-[f1]----(cbl1)----[f2]-c1-[f3]----(cbl2)----[f4]-(c2)
-     */
-    @Test
-    public void testOneCable() {
-        Substation subs1 = new Substation("subs1");
-        Cabinet c1 = new Cabinet("c1");
-        Cabinet c2 = new Cabinet("c2");
-
-        Fuse f1 = new Fuse("f1");
-        Fuse f2 = new Fuse("f2");
-        Fuse f3 = new Fuse("f3");
-        Fuse f4 = new Fuse("f4");
-
-        Cable cbl1 = new Cable();
-        Cable cbl2 = new Cable();
-
-        subs1.addFuses(f1);
-        c1.addFuses(f2, f3);
-        c2.addFuses(f4);
-
-        cbl1.setFuses(f1, f2);
-        cbl2.setFuses(f3, f4);
-
-        assertFalse(subs1.isDeadEnd());
-        assertFalse(c1.isDeadEnd());
-        assertTrue(c2.isDeadEnd());
-    }
-
 }
