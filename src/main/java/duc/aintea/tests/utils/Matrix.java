@@ -69,6 +69,6 @@ public class Matrix {
             printStream.println();
         }
 
-        return printStream.toString();
+        return stream.toString();
     }
 }
