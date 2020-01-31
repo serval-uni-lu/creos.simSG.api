@@ -7,6 +7,7 @@ import duc.aintea.tests.utils.Matrix;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 public class MatrixBuilder {
 
@@ -26,7 +27,7 @@ public class MatrixBuilder {
             var currEntity = waitingList.remove();
             entityVisited.add(currEntity);
 
-            final var fuses = currEntity.getFuses();
+            final var fuses = currEntity.getFuses().stream().filter(Fuse::isClosed).collect(Collectors.toList());
 
             if(fuses.size() > 1) {
                 cabinetEq.addLine();
@@ -38,7 +39,7 @@ public class MatrixBuilder {
                     cableEq.addLine();
                     cableEq.addColumn();
                     cabinetEq.addColumn();
-                    if(fuse.isClosed()) {
+//                    if(fuse.isClosed()) {
                         var idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
                         cableEq.set(cableEq.getNumRows() - 1, idxFuse, 1);
 
@@ -52,7 +53,7 @@ public class MatrixBuilder {
                                 waitingList.add(oppFuse.getOwner());
                             }
                         }
-                    }
+//                    }
                 }
 
                 if(fuses.size() > 1) {
@@ -67,7 +68,7 @@ public class MatrixBuilder {
         double[] resData = new double[cableEq.getData().length + cabinetEq.getData().length];
         System.arraycopy(cableEq.getData(), 0, resData, 0, cableEq.getData().length);
         System.arraycopy(cabinetEq.getData(), 0, resData, cableEq.getData().length, cabinetEq.getData().length);
-        return resData;
+        return (resData.length == 0)? new double[]{0} : resData;
     }
 
     private int getOrCreateIdx(Fuse fuse, HashMap<String, Integer> map, int[] last) {
