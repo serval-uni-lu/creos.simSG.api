@@ -7,7 +7,6 @@ import duc.aintea.tests.utils.Matrix;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
-import java.util.stream.Collectors;
 
 public class MatrixBuilder {
 
@@ -27,42 +26,40 @@ public class MatrixBuilder {
             var currEntity = waitingList.remove();
             entityVisited.add(currEntity);
 
-            final var fuses = currEntity.getFuses().stream().filter(Fuse::isClosed).collect(Collectors.toList());
+            final var fuses = currEntity.getFuses();
 
             if(fuses.size() > 1) {
                 cabinetEq.addLine();
             }
 
             for (Fuse fuse : fuses) {
-                if(!idxFuses.containsKey(fuse.getName())) {
-                    var oppFuse = fuse.getOpposite();
-                    cableEq.addLine();
-                    cableEq.addColumn();
-                    cabinetEq.addColumn();
-//                    if(fuse.isClosed()) {
+                if (fuse.isClosed()) {
+                    if (!idxFuses.containsKey(fuse.getName())) {
+                        var oppFuse = fuse.getOpposite();
+                        cableEq.addLine();
+                        cableEq.addColumn();
+                        cabinetEq.addColumn();
                         var idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
                         cableEq.set(cableEq.getNumRows() - 1, idxFuse, 1);
 
-                        if(!oppFuse.getOwner().isDeadEnd()) {
+                        if (!oppFuse.getOwner().isDeadEnd()) {
                             var idxOpp = getOrCreateIdx(oppFuse, idxFuses, idxLast);
                             cableEq.addColumn();
                             cabinetEq.addColumn();
 
                             cableEq.set(cableEq.getNumRows() - 1, idxOpp, 1);
-                            if(!entityVisited.contains(oppFuse.getOwner())) {
+                            if (!entityVisited.contains(oppFuse.getOwner())) {
                                 waitingList.add(oppFuse.getOwner());
                             }
                         }
-//                    }
-                }
+                    }
 
-                if(fuses.size() > 1) {
-                    var idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
-                    cabinetEq.set(cabinetEq.getNumRows() - 1, idxFuse, 1);
+                    if (fuses.size() > 1) {
+                        var idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
+                        cabinetEq.set(cabinetEq.getNumRows() - 1, idxFuse, 1);
+                    }
                 }
             }
-
-
         }
 
         double[] resData = new double[cableEq.getData().length + cabinetEq.getData().length];
