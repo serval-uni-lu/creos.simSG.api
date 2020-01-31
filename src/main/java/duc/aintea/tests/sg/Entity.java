@@ -35,6 +35,8 @@ public abstract class Entity {
             Fuse opposite = f.getOpposite();
             if(opposite.isClosed()) {
                 result.add(opposite.getOwner());
+            }else if(opposite.getOwner().isDeadEnd()) {
+                result.add(opposite.getOwner());
             }
         });
         return result;
