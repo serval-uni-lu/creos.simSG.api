@@ -39,4 +39,45 @@ public class MatrixTests {
 
     }
 
+    @Test
+    public void testAddManyColumns() {
+        var matrix = new Matrix(2,3);
+        matrix.set(0,0, 1);
+        matrix.set(0,1, 2);
+        matrix.set(0,2, 3);
+        matrix.set(1,0, 4);
+        matrix.set(1,1, 5);
+        matrix.set(1,2, 6);
+
+        matrix.addColumns(3);
+
+        var expected1 = new double[]{
+                1,2,3,0,0,0,
+                4,5,6,0,0,0,
+        };
+        Assertions.assertArrayEquals(expected1, matrix.getData());
+    }
+
+    @Test
+    public void testAddManyLines() {
+        var matrix = new Matrix(2,3);
+        matrix.set(0,0, 1);
+        matrix.set(0,1, 2);
+        matrix.set(0,2, 3);
+        matrix.set(1,0, 4);
+        matrix.set(1,1, 5);
+        matrix.set(1,2, 6);
+
+        matrix.addLines(3);
+
+        var expected1 = new double[]{
+                1,2,3,
+                4,5,6,
+                0,0,0,
+                0,0,0,
+                0,0,0,
+        };
+        Assertions.assertArrayEquals(expected1, matrix.getData());
+    }
+
 }

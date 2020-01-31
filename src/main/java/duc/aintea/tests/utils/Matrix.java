@@ -27,15 +27,23 @@ public class Matrix {
     }
 
     public void addLine() {
-        numRows+=1;
+       addLines(1);
+    }
+
+    public void addLines(int nbNewLine) {
+        numRows+=nbNewLine;
         double[] newData = new double[numRows*numCols];
         System.arraycopy(data, 0, newData,0, data.length);
         data = newData;
     }
 
     public void addColumn() {
+        addColumns(1);
+    }
+
+    public void addColumns(int nbColToAdd) {
         var oldNumCols = numCols;
-        numCols+=1;
+        numCols+=nbColToAdd;
         double[] newData = new double[numCols*numRows];
 
         for (int row = 0; row < numRows; row++) {
