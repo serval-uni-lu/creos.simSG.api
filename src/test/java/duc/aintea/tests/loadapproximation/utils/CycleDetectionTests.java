@@ -7,6 +7,11 @@ import duc.aintea.tests.sg.Substation;
 import duc.aintea.tests.utils.CycleDetection;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class CycleDetectionTests {
 
     /*
@@ -33,10 +38,20 @@ public class CycleDetectionTests {
         cbl1.setFuses(f1, f2);
         cbl2.setFuses(f3, f4);
 
-        System.out.println(CycleDetection.detectCircle(f1));
-        System.out.println(CycleDetection.detectCircle(f2));
-        System.out.println(CycleDetection.detectCircle(f3));
-        System.out.println(CycleDetection.detectCircle(f4));
+        var actualCrclF1 = Arrays.asList(new CycleDetection().getEndCircle(f1));
+        assertEquals(4, actualCrclF1.size());
+        assertTrue(actualCrclF1.contains(f1), "actualCrclF1 doesn't contain " + f1);
+        assertTrue(actualCrclF1.contains(f2), "actualCrclF1 doesn't contain " + f2);
+        assertTrue(actualCrclF1.contains(f3), "actualCrclF1 doesn't contain " + f3);
+        assertTrue(actualCrclF1.contains(f4), "actualCrclF1 doesn't contain " + f4);
+
+        var actualCrclF3 = Arrays.asList(new CycleDetection().getEndCircle(f3));
+        assertEquals(4, actualCrclF3.size());
+        assertTrue(actualCrclF3.contains(f1), "actualCrclF3 doesn't contain " + f1);
+        assertTrue(actualCrclF3.contains(f2), "actualCrclF3 doesn't contain " + f2);
+        assertTrue(actualCrclF3.contains(f3), "actualCrclF3 doesn't contain " + f3);
+        assertTrue(actualCrclF3.contains(f4), "actualCrclF3 doesn't contain " + f4);
+
     }
 
     /*
@@ -69,12 +84,22 @@ public class CycleDetectionTests {
         cbl2.setFuses(f3, f4);
         cbl3.setFuses(f5, f6);
 
-        System.out.println(CycleDetection.detectCircle(f1));
-        System.out.println(CycleDetection.detectCircle(f2));
-        System.out.println(CycleDetection.detectCircle(f3));
-        System.out.println(CycleDetection.detectCircle(f4));
-        System.out.println(CycleDetection.detectCircle(f5));
-        System.out.println(CycleDetection.detectCircle(f6));
+        var actualCrclF1 = Arrays.asList(new CycleDetection().getEndCircle(f1));
+        assertEquals(4, actualCrclF1.size());
+        assertTrue(actualCrclF1.contains(f1), "actualCrclF1 doesn't contain " + f1);
+        assertTrue(actualCrclF1.contains(f2), "actualCrclF1 doesn't contain " + f2);
+        assertTrue(actualCrclF1.contains(f3), "actualCrclF1 doesn't contain " + f3);
+        assertTrue(actualCrclF1.contains(f4), "actualCrclF1 doesn't contain " + f4);
+
+        var actualCrclF2 = Arrays.asList(new CycleDetection().getEndCircle(f2));
+        assertEquals(4, actualCrclF2.size());
+        assertTrue(actualCrclF2.contains(f1), "actualCrclF2 doesn't contain " + f1);
+        assertTrue(actualCrclF2.contains(f2), "actualCrclF2 doesn't contain " + f2);
+        assertTrue(actualCrclF2.contains(f3), "actualCrclF2 doesn't contain " + f3);
+        assertTrue(actualCrclF2.contains(f4), "actualCrclF2 doesn't contain " + f4);
+
+        var actualCrclF6 = Arrays.asList(new CycleDetection().getEndCircle(f6));
+        assertTrue(actualCrclF6.isEmpty(), "actualCrclF6 is not empty and contains: " + Arrays.toString(actualCrclF6.toArray()));
     }
 
     /*
@@ -107,11 +132,21 @@ public class CycleDetectionTests {
         cbl2.setFuses(f3, f4);
         cbl3.setFuses(f5, f6);
 
-        System.out.println(CycleDetection.detectCircle(f1));
-        System.out.println(CycleDetection.detectCircle(f2));
-        System.out.println(CycleDetection.detectCircle(f3));
-        System.out.println(CycleDetection.detectCircle(f4));
-        System.out.println(CycleDetection.detectCircle(f5));
-        System.out.println(CycleDetection.detectCircle(f6));
+        var actualCrclF5 = Arrays.asList(new CycleDetection().getEndCircle(f5));
+        assertTrue(actualCrclF5.isEmpty(), "actualCrclF5 is not empty and contains: " + Arrays.toString(actualCrclF5.toArray()));
+
+        var actualCrclF2 = Arrays.asList(new CycleDetection().getEndCircle(f2));
+        assertEquals(4, actualCrclF2.size());
+        assertTrue(actualCrclF2.contains(f1), "actualCrclF2 doesn't contain " + f1);
+        assertTrue(actualCrclF2.contains(f2), "actualCrclF2 doesn't contain " + f2);
+        assertTrue(actualCrclF2.contains(f3), "actualCrclF2 doesn't contain " + f3);
+        assertTrue(actualCrclF2.contains(f4), "actualCrclF2 doesn't contain " + f4);
+
+        var actualCrclF4 = Arrays.asList(new CycleDetection().getEndCircle(f4));
+        assertEquals(4, actualCrclF4.size());
+        assertTrue(actualCrclF4.contains(f1), "actualCrclF4 doesn't contain " + f1);
+        assertTrue(actualCrclF4.contains(f2), "actualCrclF4 doesn't contain " + f2);
+        assertTrue(actualCrclF4.contains(f3), "actualCrclF4 doesn't contain " + f3);
+        assertTrue(actualCrclF4.contains(f4), "actualCrclF4 doesn't contain " + f4);
     }
 }
