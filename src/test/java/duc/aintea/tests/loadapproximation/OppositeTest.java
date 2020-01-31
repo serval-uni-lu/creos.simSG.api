@@ -110,7 +110,7 @@ public class OppositeTest {
         assertEquals(f2, oppositeF1);
         assertEquals(f1, oppositeF2);
 
-        assertEquals(0, oppReachSubs1.size());
+        assertEquals(1, oppReachSubs1.size());
         assertEquals(0, oppReachC2.size());
     }
 }
