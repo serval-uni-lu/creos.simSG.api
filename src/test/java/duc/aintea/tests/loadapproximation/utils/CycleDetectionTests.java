@@ -83,12 +83,54 @@ public class CycleDetectionTests {
         assertTrue(actualCrclF1.contains(f3), "actualCrclF1 doesn't contain " + f3);
         assertTrue(actualCrclF1.contains(f4), "actualCrclF1 doesn't contain " + f4);
 
-        var actualCrclF2 = Arrays.asList(new CycleDetection().getEndCircle(f2));
-        assertEquals(4, actualCrclF2.size());
-        assertTrue(actualCrclF2.contains(f1), "actualCrclF2 doesn't contain " + f1);
-        assertTrue(actualCrclF2.contains(f2), "actualCrclF2 doesn't contain " + f2);
-        assertTrue(actualCrclF2.contains(f3), "actualCrclF2 doesn't contain " + f3);
-        assertTrue(actualCrclF2.contains(f4), "actualCrclF2 doesn't contain " + f4);
+        var actualCrclF3 = Arrays.asList(new CycleDetection().getEndCircle(f3));
+        assertEquals(4, actualCrclF3.size());
+        assertTrue(actualCrclF3.contains(f1), "actualCrclF3 doesn't contain " + f1);
+        assertTrue(actualCrclF3.contains(f2), "actualCrclF3 doesn't contain " + f2);
+        assertTrue(actualCrclF3.contains(f3), "actualCrclF3 doesn't contain " + f3);
+        assertTrue(actualCrclF3.contains(f4), "actualCrclF3 doesn't contain " + f4);
+
+        var actualCrclF6 = Arrays.asList(new CycleDetection().getEndCircle(f6));
+        assertTrue(actualCrclF6.isEmpty(), "actualCrclF6 is not empty and contains: " + Arrays.toString(actualCrclF6.toArray()));
+    }
+
+    /*
+               |-[f1]----(cbl1)----]f2[-|
+        subs1-<                          >-c2-[f6]----(cbl3)----[f5]-c3
+               |-[f3]----(cbl1)----[f4]-|
+     */
+    @Test
+    public void testParallelCablesF2Open() {
+        Substation subs1 = new Substation("subs1");
+        Cabinet c2 = new Cabinet("c2");
+        Cabinet c3 = new Cabinet("c3");
+
+        Fuse f1 = new Fuse("f1");
+        Fuse f2 = new Fuse("f2");
+        Fuse f3 = new Fuse("f3");
+        Fuse f4 = new Fuse("f4");
+        Fuse f5 = new Fuse("f5");
+        Fuse f6 = new Fuse("f6");
+
+        Cable cbl1 = new Cable();
+        Cable cbl2 = new Cable();
+        Cable cbl3 = new Cable();
+
+        subs1.addFuses(f1, f3);
+        c2.addFuses(f2, f4, f6);
+        c3.addFuses(f5);
+
+        cbl1.setFuses(f1, f2);
+        cbl2.setFuses(f3, f4);
+        cbl3.setFuses(f5, f6);
+
+        f2.openFuse();
+
+        var actualCrclF1 = Arrays.asList(new CycleDetection().getEndCircle(f1));
+        assertTrue(actualCrclF1.isEmpty(), "actualCrclF1 is not empty and contains: " + Arrays.toString(actualCrclF1.toArray()));
+
+        var actualCrclF3 = Arrays.asList(new CycleDetection().getEndCircle(f3));
+        assertTrue(actualCrclF3.isEmpty(), "actualCrclF3 is not empty and contains: " + Arrays.toString(actualCrclF3.toArray()));
 
         var actualCrclF6 = Arrays.asList(new CycleDetection().getEndCircle(f6));
         assertTrue(actualCrclF6.isEmpty(), "actualCrclF6 is not empty and contains: " + Arrays.toString(actualCrclF6.toArray()));
