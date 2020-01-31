@@ -29,17 +29,6 @@ public abstract class Entity {
         return new ArrayList<>(fuses);
     }
 
-//    public List<Entity> getNeighbors() {
-//        var result = new ArrayList<Entity>(fuses.size());
-//
-//        for(var f : fuses) {
-//            Fuse opposite = f.getOpposite();
-//            result.add(opposite.getOwner());
-//        }
-//
-//        return result;
-//    }
-
     public List<Entity> getReachableNeighbors() {
         final var result = new ArrayList<Entity>(fuses.size());
         fuses.stream().filter(Fuse::isClosed).forEach(f -> {
@@ -51,21 +40,6 @@ public abstract class Entity {
         return result;
     }
 
-//    public List<Entity> getReachableNeighborsWithoutDeadEnds() {
-//        var reachables = getReachableNeighbors();
-//        return reachables.stream().filter(e -> !e.isDeadEnd()).collect(Collectors.toList());
-//    }
-
-//    public List<Entity> getDeadEndsNeighbors() {
-//        final var result = new ArrayList<Entity>(fuses.size());
-//        fuses.stream().filter(Fuse::isClosed).forEach(f -> {
-//            Entity oppOwner = f.getOpposite().getOwner();
-//            if(oppOwner.isDeadEnd()) {
-//                result.add(oppOwner);
-//            }
-//        });
-//        return result;
-//    }
 
     public boolean isDeadEnd() {
         List<Entity> reachNeigh = getReachableNeighbors();

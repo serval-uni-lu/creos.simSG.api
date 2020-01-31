@@ -46,31 +46,6 @@ public class Fuse {
         return status == State.CLOSED;
     }
 
-    //    Optional<Entity> prv_getOpposite(boolean deadends) {
-//        if(isClosed()) {
-//            var f = cable.getFirstFuse();
-//            if(f == this) {
-//                f = cable.getSecondFuse();
-//            }
-//
-//            Entity opposite = f.owner;
-//            if((deadends && opposite.isDeadEnd()) || (!deadends && f.isClosed() && !opposite.isDeadEnd())) {
-//                return Optional.of(opposite);
-//            }
-//            return Optional.empty();
-//        }
-//        return Optional.empty();
-//    }
-//
-//
-//    public Optional<Entity> getOpposite() {
-//        return prv_getOpposite(false);
-//    }
-//
-//    public Optional<Entity> getOppDeadEnds() {
-//        return prv_getOpposite(true);
-//    }
-
     public Fuse getOpposite() {
         var f = cable.getFirstFuse();
         if(this == f) return cable.getSecondFuse();
@@ -90,6 +65,11 @@ public class Fuse {
 
         var casted = (Fuse) obj;
         return this.name.equals(casted.name);
+    }
+
+    @Override
+    public String toString() {
+        return "Fuse(" + name + ")";
     }
 }
 

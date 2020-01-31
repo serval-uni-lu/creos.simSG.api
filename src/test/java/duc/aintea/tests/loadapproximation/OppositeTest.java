@@ -39,33 +39,17 @@ public class OppositeTest {
         Fuse oppositeF1 = f1.getOpposite();
         Fuse oppositeF2 = f2.getOpposite();
 
-//        List<Entity> oppSubs1 = subs1.getNeighbors();
-//        List<Entity> oppC2 = c2.getNeighbors();
-
         List<Entity> oppReachSubs1 = subs1.getReachableNeighbors();
         List<Entity> oppReachC2 = c2.getReachableNeighbors();
 
-//        List<Entity> oppReachWDESubs1 = subs1.getReachableNeighborsWithoutDeadEnds();
-//        List<Entity> oppReachWDEC2 = c2.getReachableNeighborsWithoutDeadEnds();
-
         assertEquals(f2, oppositeF1);
         assertEquals(f1, oppositeF2);
-
-//        assertEquals(1, oppSubs1.size());
-//        assertEquals(c2, oppSubs1.get(0));
-//
-//        assertEquals(1, oppC2.size());
-//        assertEquals(subs1, oppC2.get(0));
 
         assertEquals(1, oppReachSubs1.size());
         assertEquals(c2, oppReachSubs1.get(0));
 
         assertEquals(1, oppReachC2.size());
         assertEquals(subs1, oppReachC2.get(0));
-
-//        assertEquals(0, oppReachWDESubs1.size());
-//        assertEquals(1, oppReachWDEC2.size());
-//        assertEquals(subs1, oppReachWDEC2.get(0));
     }
 
     /*
@@ -79,29 +63,14 @@ public class OppositeTest {
         Fuse oppositeF1 = f1.getOpposite();
         Fuse oppositeF2 = f2.getOpposite();
 
-//        List<Entity> oppSubs1 = subs1.getNeighbors();
-//        List<Entity> oppC2 = c2.getNeighbors();
-
         List<Entity> oppReachSubs1 = subs1.getReachableNeighbors();
         List<Entity> oppReachC2 = c2.getReachableNeighbors();
-
-//        List<Entity> oppReachWDESubs1 = subs1.getReachableNeighborsWithoutDeadEnds();
-//        List<Entity> oppReachWDEC2 = c2.getReachableNeighborsWithoutDeadEnds();
 
         assertEquals(f2, oppositeF1);
         assertEquals(f1, oppositeF2);
 
-//        assertEquals(1, oppSubs1.size());
-//        assertEquals(c2, oppSubs1.get(0));
-//
-//        assertEquals(1, oppC2.size());
-//        assertEquals(subs1, oppC2.get(0));
-
         assertEquals(0, oppReachSubs1.size());
         assertEquals(0, oppReachC2.size());
-
-//        assertEquals(0, oppReachWDESubs1.size());
-//        assertEquals(0, oppReachWDEC2.size());
     }
 
 
@@ -115,29 +84,14 @@ public class OppositeTest {
         Fuse oppositeF1 = f1.getOpposite();
         Fuse oppositeF2 = f2.getOpposite();
 
-//        List<Entity> oppSubs1 = subs1.getNeighbors();
-//        List<Entity> oppC2 = c2.getNeighbors();
-
         List<Entity> oppReachSubs1 = subs1.getReachableNeighbors();
         List<Entity> oppReachC2 = c2.getReachableNeighbors();
-
-//        List<Entity> oppReachWDESubs1 = subs1.getReachableNeighborsWithoutDeadEnds();
-//        List<Entity> oppReachWDEC2 = c2.getReachableNeighborsWithoutDeadEnds();
 
         assertEquals(f2, oppositeF1);
         assertEquals(f1, oppositeF2);
 
-//        assertEquals(1, oppSubs1.size());
-//        assertEquals(c2, oppSubs1.get(0));
-
-//        assertEquals(1, oppC2.size());
-//        assertEquals(subs1, oppC2.get(0));
-
         assertEquals(0, oppReachSubs1.size());
         assertEquals(0, oppReachC2.size());
-
-//        assertEquals(0, oppReachWDESubs1.size());
-//        assertEquals(0, oppReachWDEC2.size());
     }
 
     /*
@@ -150,28 +104,13 @@ public class OppositeTest {
         Fuse oppositeF1 = f1.getOpposite();
         Fuse oppositeF2 = f2.getOpposite();
 
-//        List<Entity> oppSubs1 = subs1.getNeighbors();
-//        List<Entity> oppC2 = c2.getNeighbors();
-
         List<Entity> oppReachSubs1 = subs1.getReachableNeighbors();
         List<Entity> oppReachC2 = c2.getReachableNeighbors();
-
-//        List<Entity> oppReachWDESubs1 = subs1.getReachableNeighborsWithoutDeadEnds();
-//        List<Entity> oppReachWDEC2 = c2.getReachableNeighborsWithoutDeadEnds();
 
         assertEquals(f2, oppositeF1);
         assertEquals(f1, oppositeF2);
 
-//        assertEquals(1, oppSubs1.size());
-//        assertEquals(c2, oppSubs1.get(0));
-//
-//        assertEquals(1, oppC2.size());
-//        assertEquals(subs1, oppC2.get(0));
-
         assertEquals(0, oppReachSubs1.size());
         assertEquals(0, oppReachC2.size());
-
-//        assertEquals(0, oppReachWDESubs1.size());
-//        assertEquals(0, oppReachWDEC2.size());
     }
 }
