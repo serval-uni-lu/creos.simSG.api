@@ -1,55 +1,43 @@
 package duc.aintea.tests.loadapproximation.matrixBuilder;
 
-import duc.aintea.tests.loadapproximation.MatrixBuilder;
-import duc.aintea.tests.sg.Fuse;
-import duc.aintea.tests.sg.Substation;
 import duc.aintea.tests.sg.scenarios.SingleCableBuilder;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static duc.aintea.tests.sg.scenarios.SingleCableBuilder.*;
 
-public class SingleCableTest {
-    private static Substation substation;
-    private static Fuse fuse_subs, fuse_cab;
-
+public class SingleCableTest extends MatriceBuilderTest {
 
     /*
         subs1-[f1]----(cbl1)----[f2]-c1
      */
-    @BeforeEach
-    public void init() {
+    @Override
+    protected void createSubstation() {
         substation = SingleCableBuilder.build(0);
-        fuse_subs = substation.getFuses().get(0);
-        fuse_cab = fuse_subs.getOpposite();
-    }
-
-    private double[] buildMatrix() {
-        return new MatrixBuilder().build(substation);
     }
 
 
     @Test
     public void testScenario1_allClose() {
-        assertArrayEquals(new double[]{1}, buildMatrix());
+        genericTest(new double[]{1});
     }
 
     @Test
     public void testScenario1_f1Open() {
-        fuse_subs.openFuse();
-        assertArrayEquals(new double[]{0}, buildMatrix());
+        fusesMap.get(F1_NAME).openFuse();
+        genericTest(new double[]{0});
     }
 
     @Test
     public void testScenario1_f2Open() {
-        fuse_cab.openFuse();
-        assertArrayEquals(new double[]{1}, buildMatrix());
+        fusesMap.get(F2_NAME).openFuse();
+        genericTest(new double[]{1});
     }
 
     @Test
     public void testScenario1_allOpen() {
-        fuse_subs.openFuse();
-        fuse_cab.openFuse();
-        assertArrayEquals(new double[]{0}, buildMatrix());
+        fusesMap.get(F1_NAME).openFuse();
+        fusesMap.get(F2_NAME).openFuse();
+
+        genericTest(new double[]{0});
     }
 }

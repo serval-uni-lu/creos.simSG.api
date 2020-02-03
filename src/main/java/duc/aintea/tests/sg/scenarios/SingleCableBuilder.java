@@ -6,16 +6,18 @@ import duc.aintea.tests.sg.Fuse;
 import duc.aintea.tests.sg.Substation;
 
 public class SingleCableBuilder {
+    public static final String F1_NAME = "fuse_subs";
+    public static final String F2_NAME = "fuse_cabinet";
 
     /*
-        subs-[f1]----(cbl1)----[f2]-cab
-     */
+                subs-[f1]----(cbl1)----[f2]-cab
+             */
     public static Substation build(double consumption) {
         var subs = new Substation("substation");
         var cab = new Cabinet("cabinet");
 
-        var f1 = new Fuse("fuse_subs");
-        var f2 = new Fuse("fuse_cabinet");
+        var f1 = new Fuse(F1_NAME);
+        var f2 = new Fuse(F2_NAME);
 
         var cable = new Cable();
 
