@@ -180,4 +180,45 @@ public class DeadEndTest {
 
     }
 
+
+
+    /*
+               |-[f1]----(cbl1)----[f2]-|
+        subs1-<                          >-c2-]f6[----(cbl3)----[f5]-c3
+               |-]f3[----(cbl1)----[f4]-|
+     */
+    @Test
+    public void testParallelCablesOpenFuses() {
+        Substation subs1 = new Substation("subs1");
+        Cabinet c2 = new Cabinet("c2");
+        Cabinet c3 = new Cabinet("c3");
+
+        Fuse f1 = new Fuse("f1");
+        Fuse f2 = new Fuse("f2");
+        Fuse f3 = new Fuse("f3");
+        Fuse f4 = new Fuse("f4");
+        Fuse f5 = new Fuse("f5");
+        Fuse f6 = new Fuse("f6");
+
+        Cable cbl1 = new Cable();
+        Cable cbl2 = new Cable();
+        Cable cbl3 = new Cable();
+
+        subs1.addFuses(f1, f3);
+        c2.addFuses(f2, f4, f6);
+        c3.addFuses(f5);
+
+        cbl1.setFuses(f1, f2);
+        cbl2.setFuses(f3, f4);
+        cbl3.setFuses(f5, f6);
+
+
+        f3.openFuse();
+        f6.openFuse();
+
+        assertFalse(subs1.isDeadEnd());
+        assertFalse(c2.isDeadEnd());
+        assertTrue(c3.isDeadEnd());
+    }
+
 }

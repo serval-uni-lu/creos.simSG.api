@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Entity {
     private List<Fuse> fuses;
@@ -29,35 +30,35 @@ public abstract class Entity {
         return new ArrayList<>(fuses);
     }
 
-    public List<Entity> getReachableNeighbors() {
-        final var result = new ArrayList<Entity>(fuses.size());
-        fuses.stream().filter(Fuse::isClosed).forEach(f -> {
-            Fuse opposite = f.getOpposite();
-            if(opposite.isClosed()) {
-                result.add(opposite.getOwner());
-            }else if(opposite.getOwner().isDeadEnd()) {
-                result.add(opposite.getOwner());
-            }
-        });
-        return result;
+   private List<Fuse> getClosedFuses() {
+        return fuses.stream().filter(Fuse::isClosed).collect(Collectors.toList());
     }
 
 
     public boolean isDeadEnd() {
-        List<Entity> reachNeigh = getReachableNeighbors();
-        if(reachNeigh.size() == 1) {
+        var closedFuses = getClosedFuses();
+        if(closedFuses.size() == 1) {
             return true;
         }
+        
+        var entityNames = new HashSet<String>(closedFuses.size());
+        for (int i = 0; i < closedFuses.size(); i++) {
+            var current = closedFuses.get(i);
+            var oppFuse = current.getOpposite();
+            var oppOwner = oppFuse.getOwner();
 
-        var names = new HashSet<>(fuses.size());
-        for (int i = 0; i < reachNeigh.size(); i++) {
-            Entity entity = reachNeigh.get(i);
-            if(names.add(entity.getName()) && i>0) {
+            if(oppFuse.isClosed() || oppOwner.isDeadEnd()) {
+                var newElmt = entityNames.add(oppOwner.name);
+                if(newElmt && i>0) {
+                   return false;
+                }
+            } else if(!oppFuse.isClosed()) {
                 return false;
             }
         }
 
         return true;
+
     }
 
     @Override
