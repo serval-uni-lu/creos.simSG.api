@@ -18,8 +18,8 @@ public class ParaTransformerTest extends MatriceBuilderTest {
         return Utils.generator(F6_NAME);
     }
 
-    private static Arguments[] openCloseF4F6OpenF5() {
-        return Utils.generator(new String[]{F5_NAME}, F6_NAME, F4_NAME);
+    private static Arguments[] openCloseF6OpenF5F4() {
+        return Utils.generator(new String[]{F5_NAME, F4_NAME}, F6_NAME);
     }
 
     private static Arguments[] openCloseF6OpenF4() {
@@ -74,6 +74,11 @@ public class ParaTransformerTest extends MatriceBuilderTest {
         return Utils.generator(new String[]{F1_NAME, F2_NAME}, F6_NAME);
     }
 
+    private static Arguments[] openCloseF6OpenF5() {
+//        return Utils.generator(new String[]{F5_NAME}, F6_NAME);
+        return Utils.generator(new String[]{F5_NAME}, new String[]{});
+    }
+
 
 
 
@@ -91,8 +96,8 @@ public class ParaTransformerTest extends MatriceBuilderTest {
     }
 
     @ParameterizedTest
-    @MethodSource("openCloseF4F6OpenF5")
-    public void sc2_testF5Open(String[] toOpen) {
+    @MethodSource("openCloseF6OpenF5F4")
+    public void sc2_testF4F5Open(String[] toOpen) {
         var expected = new double[] {
                 1,0,
                 0,1
@@ -245,6 +250,21 @@ public class ParaTransformerTest extends MatriceBuilderTest {
         var expected = new double[] {1};
         genericTest(expected, toOpen);
     }
+
+//    @ParameterizedTest
+//    @MethodSource("openCloseF6OpenF5")
+//    public void sc17_testF5Open(String[] toOpen) {
+//        var expected = new double[] {
+//                1,1,0,0,
+//                0,0,1,1,
+//                0,1,0,1,
+//                1,0,-1,0
+//        };
+////        genericTest(expected, toOpen);
+//        openFuses(toOpen);
+//        buildMatrix();
+//
+//    }
 
 
 
