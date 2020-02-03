@@ -39,4 +39,11 @@ public class Utils {
     public static Arguments[] generator(String... names) {
         return generator(new String[0], names);
     }
+
+    public static String[] merge(String[] firsts, String... seconds) {
+        var res = new String[firsts.length + seconds.length];
+        System.arraycopy(firsts, 0, res, 0, firsts.length);
+        System.arraycopy(seconds, 0, res, firsts.length, seconds.length);
+        return res;
+    }
 }
