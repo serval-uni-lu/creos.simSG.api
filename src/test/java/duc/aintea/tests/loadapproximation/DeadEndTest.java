@@ -36,7 +36,7 @@ public class DeadEndTest {
         cbl2.setFuses(f3, f4);
 
         assertFalse(subs1.isDeadEnd());
-        assertTrue(c2.isDeadEnd());
+        assertFalse(c2.isDeadEnd());
     }
 
     /*
@@ -104,7 +104,7 @@ public class DeadEndTest {
         cbl2.setFuses(f3, f4);
         cbl3.setFuses(f5, f6);
 
-        assertTrue(c1.isDeadEnd());
+        assertFalse(c1.isDeadEnd());
         assertFalse(c2.isDeadEnd());
         assertFalse(subs1.isDeadEnd());
     }
@@ -139,9 +139,9 @@ public class DeadEndTest {
     }
 
     /*
-                                          |-[f3]----(cbl2)----[f5]-cab2
+                                          |-[f3]----(cbl2)----]f5[-cab2
         subs-[f1]----(cbl1)----[f2]-cab1-<
-                                          |-[f4]----(cbl3)----[f6]-cab3
+                                          |-[f4]----(cbl3)----]f6[-cab3
      */
     @Test
     public void cabinetScenario() {

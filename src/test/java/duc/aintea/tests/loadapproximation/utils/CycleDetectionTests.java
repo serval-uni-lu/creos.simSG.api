@@ -39,10 +39,18 @@ public class CycleDetectionTests {
         cbl2.setFuses(f3, f4);
 
         var actualCrclF1 = Arrays.asList(new CycleDetection().getEndCircle(f1));
-        assertTrue(actualCrclF1.isEmpty(), "actualCrclF1 is not empty and contains: " + Arrays.toString(actualCrclF1.toArray()));
+        assertEquals(4, actualCrclF1.size());
+        assertTrue(actualCrclF1.contains(f1), "actualCrclF1 doesn't contain " + f1);
+        assertTrue(actualCrclF1.contains(f2), "actualCrclF1 doesn't contain " + f2);
+        assertTrue(actualCrclF1.contains(f3), "actualCrclF1 doesn't contain " + f3);
+        assertTrue(actualCrclF1.contains(f4), "actualCrclF1 doesn't contain " + f4);
 
         var actualCrclF3 = Arrays.asList(new CycleDetection().getEndCircle(f3));
-        assertTrue(actualCrclF3.isEmpty(), "actualCrclF3 is not empty and contains: " + Arrays.toString(actualCrclF3.toArray()));
+        assertEquals(4, actualCrclF3.size());
+        assertTrue(actualCrclF3.contains(f1), "actualCrclF3 doesn't contain " + f1);
+        assertTrue(actualCrclF3.contains(f2), "actualCrclF3 doesn't contain " + f2);
+        assertTrue(actualCrclF3.contains(f3), "actualCrclF3 doesn't contain " + f3);
+        assertTrue(actualCrclF3.contains(f4), "actualCrclF3 doesn't contain " + f4);
 
     }
 
@@ -142,7 +150,7 @@ public class CycleDetectionTests {
                                          |-[f4]----(cbl2)----[f3]-|
      */
     @Test
-    public void testNoParallelCablesSub() {
+    public void testParallelCablesCabEnd() {
         Cabinet c1 = new Cabinet("c1");
         Cabinet c2 = new Cabinet("c2");
         Substation subs1 = new Substation("subs1");
@@ -170,10 +178,18 @@ public class CycleDetectionTests {
         assertTrue(actualCrclF5.isEmpty(), "actualCrclF5 is not empty and contains: " + Arrays.toString(actualCrclF5.toArray()));
 
         var actualCrclF2 = Arrays.asList(new CycleDetection().getEndCircle(f2));
-        assertTrue(actualCrclF2.isEmpty(), "actualCrclF2 is not empty and contains: " + Arrays.toString(actualCrclF2.toArray()));
+        assertEquals(4, actualCrclF2.size());
+        assertTrue(actualCrclF2.contains(f1), "actualCrclF2 doesn't contain " + f1);
+        assertTrue(actualCrclF2.contains(f2), "actualCrclF2 doesn't contain " + f2);
+        assertTrue(actualCrclF2.contains(f3), "actualCrclF2 doesn't contain " + f3);
+        assertTrue(actualCrclF2.contains(f4), "actualCrclF2 doesn't contain " + f4);
 
         var actualCrclF4 = Arrays.asList(new CycleDetection().getEndCircle(f4));
-        assertTrue(actualCrclF4.isEmpty(), "actualCrclF4 is not empty and contains: " + Arrays.toString(actualCrclF4.toArray()));
+        assertEquals(4, actualCrclF4.size());
+        assertTrue(actualCrclF4.contains(f1), "actualCrclF4 doesn't contain " + f1);
+        assertTrue(actualCrclF4.contains(f2), "actualCrclF4 doesn't contain " + f2);
+        assertTrue(actualCrclF4.contains(f3), "actualCrclF4 doesn't contain " + f3);
+        assertTrue(actualCrclF4.contains(f4), "actualCrclF4 doesn't contain " + f4);
     }
 
 
