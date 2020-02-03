@@ -251,20 +251,17 @@ public class ParaTransformerTest extends MatriceBuilderTest {
         genericTest(expected, toOpen);
     }
 
-//    @ParameterizedTest
-//    @MethodSource("openCloseF6OpenF5")
-//    public void sc17_testF5Open(String[] toOpen) {
-//        var expected = new double[] {
-//                1,1,0,0,
-//                0,0,1,1,
-//                0,1,0,1,
-//                1,0,-1,0
-//        };
-////        genericTest(expected, toOpen);
-//        openFuses(toOpen);
-//        buildMatrix();
-//
-//    }
+    @ParameterizedTest
+    @MethodSource("openCloseF6OpenF5")
+    public void sc17_testF5Open(String[] toOpen) {
+        var expected = new double[] {
+                1,1,0,0,
+                0,0,1,1,
+                0,1,0,1,
+                1,0,-1,0
+        };
+        genericTest(expected, toOpen);
+    }
 
 
 
