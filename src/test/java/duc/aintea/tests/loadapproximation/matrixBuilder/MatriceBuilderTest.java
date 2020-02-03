@@ -44,11 +44,11 @@ public abstract class MatriceBuilderTest {
         }
     }
 
-    private double[] buildMatrix() {
+    protected double[] buildMatrix() {
         return new MatrixBuilder().build(substation);
     }
 
-    private void openFuses(String[] toOpen) {
+    protected void openFuses(String[] toOpen) {
         for (var fName: toOpen) {
             fusesMap.get(fName).openFuse();
         }
