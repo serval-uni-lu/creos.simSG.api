@@ -98,11 +98,11 @@ public class MatrixBuilder {
             circleEq.addColumns(cableEq.getNumCols() - circleEq.getNumCols());
         }
 
-        System.out.println(cableEq);
-        System.out.println();
-        System.out.println(cabinetEq);
-        System.out.println();
-        System.out.println(circleEq);
+//        System.out.println(cableEq);
+//        System.out.println();
+//        System.out.println(cabinetEq);
+//        System.out.println();
+//        System.out.println(circleEq);
 
         double[] resData = new double[cableEq.getData().length + cabinetEq.getData().length + circleEq.getData().length];
         System.arraycopy(cableEq.getData(), 0, resData, 0, cableEq.getData().length);
