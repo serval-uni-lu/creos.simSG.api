@@ -5,7 +5,13 @@ import duc.aintea.tests.sg.Cable;
 import duc.aintea.tests.sg.Fuse;
 import duc.aintea.tests.sg.Substation;
 
-public class ParaTransformaterBuilder {
+public class ParaTransformerBuilder {
+    public static final  String F1_NAME = "fuse1_subs";
+    public static final  String F2_NAME = "fuse1_cabinet_1";
+    public static final  String F3_NAME = "fuse2_subs";
+    public static final  String F4_NAME = "fuse2_cabinet_1";
+    public static final  String F5_NAME = "fuse3_cabinet_1";
+    public static final  String F6_NAME = "fuse_cabinet2";
 
     /*
               |-[f1]----(cbl1)----[f2]-|
@@ -17,12 +23,12 @@ public class ParaTransformaterBuilder {
         var c1 = new Cabinet("cabinet1");
         var c2 = new Cabinet("cabinet2");
 
-        var f1 = new Fuse("fuse1_subs");
-        var f2 = new Fuse("fuse1_cabinet_1");
-        var f3 = new Fuse("fuse2_subs");
-        var f4 = new Fuse("fuse2_cabinet_1");
-        var f5 = new Fuse("fuse3_cabinet_1");
-        var f6 = new Fuse("fuse_cabinet2");
+        var f1 = new Fuse(F1_NAME);
+        var f2 = new Fuse(F2_NAME);
+        var f3 = new Fuse(F3_NAME);
+        var f4 = new Fuse(F4_NAME);
+        var f5 = new Fuse(F5_NAME);
+        var f6 = new Fuse(F6_NAME);
 
         var cbl1 = new Cable();
         var cbl2 = new Cable();
