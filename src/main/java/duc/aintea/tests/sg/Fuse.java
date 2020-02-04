@@ -8,6 +8,8 @@ public class Fuse {
     private Entity owner;
     private State status;
 
+    private double load;
+
     public Fuse(String name) {
         this.name = name;
         status = State.CLOSED;
@@ -50,6 +52,14 @@ public class Fuse {
         var f = cable.getFirstFuse();
         if(this == f) return cable.getSecondFuse();
         return f;
+    }
+
+    public double getLoad() {
+        return load;
+    }
+
+    public void setLoad(double load) {
+        this.load = load;
     }
 
     @Override

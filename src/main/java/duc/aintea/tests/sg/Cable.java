@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Cable {
-    Fuse[] fuses;
-    List<Meter> meters;
+    private Fuse[] fuses;
+    private List<Meter> meters;
 
     public Cable() {
         fuses = new Fuse[2];
@@ -37,8 +37,6 @@ public class Cable {
         setFuse(1, second);
     }
 
-
-
     public Fuse getFirstFuse() {
         return getFuse(0);
     }
@@ -55,12 +53,24 @@ public class Cable {
         return new ArrayList<>(meters);
     }
 
+    public double getConsumption() {
+        double consumption = 0;
+        for(var m: meters) {
+            consumption+= m.getConsumption();
+        }
+        return consumption;
+    }
+
+    public double getLoad() {
+        return Math.max(fuses[0].getLoad(), fuses[1].getLoad());
+    }
+
 
     @Override
     public String toString() {
          return "Cable(" +
                 "fuses=" + Arrays.toString(Arrays.stream(fuses).map(new MapperFuseName()).toArray()) +
-                ", meters=" + Arrays.toString(meters.stream().map((Meter m) -> m.getName()).toArray()) +
+                ", meters=" + Arrays.toString(meters.stream().map(Meter::getName).toArray()) +
                 ')';
     }
 }
