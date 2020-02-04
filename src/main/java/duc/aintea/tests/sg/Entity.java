@@ -29,7 +29,7 @@ public abstract class Entity {
         return new ArrayList<>(fuses);
     }
 
-    private List<Fuse> getClosedFuses() {
+    public List<Fuse> getClosedFuses() {
         return fuses.stream().filter(Fuse::isClosed).collect(Collectors.toList());
     }
 
