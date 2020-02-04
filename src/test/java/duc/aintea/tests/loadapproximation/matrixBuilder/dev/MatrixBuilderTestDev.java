@@ -51,6 +51,9 @@ public abstract class MatrixBuilderTestDev {
     }
 
     protected double[] buildMatrix() {
+//        var matrixBuilder = new MatrixBuilder();
+//        var res = matrixBuilder.build(substation);
+//        idxFuses = matrixBuilder.getIdxFuses();
         return new MatrixBuilder().build(substation);
     }
 
