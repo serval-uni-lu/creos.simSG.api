@@ -54,7 +54,7 @@ public abstract class MatrixBuilderTestDev {
 //        var matrixBuilder = new MatrixBuilder();
 //        var res = matrixBuilder.build(substation);
 //        idxFuses = matrixBuilder.getIdxFuses();
-        return new MatrixBuilder().build(substation);
+        return MatrixBuilder.build(substation);
     }
 
     protected void openFuses(String[] toOpen) {

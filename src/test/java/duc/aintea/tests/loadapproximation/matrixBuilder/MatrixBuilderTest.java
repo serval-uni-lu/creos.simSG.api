@@ -44,10 +44,6 @@ public abstract class MatrixBuilderTest {
         }
     }
 
-    protected double[] buildMatrix() {
-        return new MatrixBuilder().build(substation);
-    }
-
     protected void openFuses(String[] toOpen) {
         for (var fName: toOpen) {
             fusesMap.get(fName).openFuse();
@@ -56,6 +52,6 @@ public abstract class MatrixBuilderTest {
 
     protected void genericTest(double[] expected, String... toOpen) {
         openFuses(toOpen);
-        Assertions.assertArrayEquals(expected, buildMatrix(), 0.1);
+        Assertions.assertArrayEquals(expected, MatrixBuilder.build(substation), 0.1);
     }
 }

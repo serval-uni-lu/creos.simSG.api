@@ -9,20 +9,9 @@ import duc.aintea.tests.utils.Matrix;
 import java.util.*;
 
 public class MatrixBuilder {
+    private MatrixBuilder(){}
 
-
-    private void setMatrix(Matrix matrix, int row, int column, double value) {
-        if(row >= matrix.getNumRows()) {
-            matrix.addLines(row - matrix.getNumRows() + 1);
-        }
-
-        if(column >= matrix.getNumCols()) {
-            matrix.addColumns(column - matrix.getNumCols() + 1);
-        }
-        matrix.set(row, column, value);
-    }
-
-    public double[] build(Substation substation) {
+    public static double[] build(Substation substation) {
         final var idxFuses = new HashMap<String, Integer>();
         var idxLast = new int[]{-1};
 
@@ -103,7 +92,7 @@ public class MatrixBuilder {
         return (resData.length == 0)? new double[]{0} : resData;
     }
 
-    private int getOrCreateIdx(Fuse fuse, HashMap<String, Integer> map, int[] last) {
+    private static int getOrCreateIdx(Fuse fuse, HashMap<String, Integer> map, int[] last) {
         Integer idx = map.get(fuse.getName());
         if(idx == null) {
             last[0] = last[0] + 1;
@@ -111,5 +100,16 @@ public class MatrixBuilder {
             map.put(fuse.getName(), idx);
         }
         return idx;
+    }
+
+    private static void setMatrix(Matrix matrix, int row, int column, double value) {
+        if(row >= matrix.getNumRows()) {
+            matrix.addLines(row - matrix.getNumRows() + 1);
+        }
+
+        if(column >= matrix.getNumCols()) {
+            matrix.addColumns(column - matrix.getNumCols() + 1);
+        }
+        matrix.set(row, column, value);
     }
 }
