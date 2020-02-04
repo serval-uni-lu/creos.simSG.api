@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static duc.aintea.tests.sg.scenarios.SingleCableBuilder.*;
 
-public class SingleCableTest extends MatriceBuilderTest {
+public class SingleCableTest extends MatrixBuilderTest {
 
     /*
         subs1-[f1]----(cbl1)----[f2]-c1

@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import static duc.aintea.tests.sg.scenarios.ParaCabinetBuilder.*;
 
-public class ParaCabinetTest extends MatriceBuilderTest{
+public class ParaCabinetTest extends MatrixBuilderTest {
 
     @Override
     protected void createSubstation() {

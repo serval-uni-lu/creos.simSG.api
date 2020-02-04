@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-public abstract class MatriceBuilderTest {
+public abstract class MatrixBuilderTest {
     protected Substation substation;
     protected Map<String, Fuse> fusesMap;
 

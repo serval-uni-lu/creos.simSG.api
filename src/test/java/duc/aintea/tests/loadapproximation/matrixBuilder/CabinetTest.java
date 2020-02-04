@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import static duc.aintea.tests.sg.scenarios.CabinetBuilder.*;
 
-public class CabinetTest extends MatriceBuilderTest {
+public class CabinetTest extends MatrixBuilderTest {
 
     @Override
     protected void createSubstation() {
@@ -25,6 +25,8 @@ public class CabinetTest extends MatriceBuilderTest {
     private static Arguments[] openCloseOthers() {
         return Utils.generator(F2_NAME, F3_NAME, F4_NAME, F5_NAME, F6_NAME);
     }
+
+
 
     @ParameterizedTest
     @MethodSource("openCloseF5F6")
@@ -80,5 +82,7 @@ public class CabinetTest extends MatriceBuilderTest {
         var expected = new double[] {0};
         genericTest(expected, Utils.merge(toOpen, F1_NAME));
     }
+
+
 
 }
