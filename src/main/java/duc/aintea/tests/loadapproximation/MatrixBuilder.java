@@ -6,9 +6,7 @@ import duc.aintea.tests.sg.Substation;
 import duc.aintea.tests.utils.CycleDetection;
 import duc.aintea.tests.utils.Matrix;
 
-import java.util.ArrayDeque;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class MatrixBuilder {
 
@@ -43,22 +41,21 @@ public class MatrixBuilder {
             var notYetVisited = entityVisited.add(currEntity);
 
             if(notYetVisited) {
-                final var fuses = currEntity.getFuses();
+                final List<Fuse> fuses = currEntity.getClosedFuses();
 
                 if (!(currEntity instanceof Substation) && fuses.size() > 1) {
                     cabinetEq.addLine();
                 }
 
                 for (Fuse fuse : fuses) {
-                    if (fuse.isClosed()) {
                         if (!idxFuses.containsKey(fuse.getName())) {
-                            var oppFuse = fuse.getOpposite();
+                            Fuse oppFuse = fuse.getOpposite();
                             cableEq.addLine();
-                            var idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
+                            int idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
                             setMatrix(cableEq,cableEq.getNumRows() - 1, idxFuse, 1);
 
                             if (oppFuse.isClosed() && !oppFuse.getOwner().isDeadEnd()) {
-                                var idxOpp = getOrCreateIdx(oppFuse, idxFuses, idxLast);
+                                int idxOpp = getOrCreateIdx(oppFuse, idxFuses, idxLast);
                                 setMatrix(cableEq, cableEq.getNumRows() - 1, idxOpp, 1);
                                 if (!entityVisited.contains(oppFuse.getOwner())) {
                                     waitingList.add(oppFuse.getOwner());
@@ -67,29 +64,24 @@ public class MatrixBuilder {
                         }
 
                         if (!(currEntity instanceof Substation) && fuses.size() > 1) {
-                            var idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
+                            int idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
                             setMatrix(cabinetEq, cabinetEq.getNumRows() - 1, idxFuse, 1);
                         }
 
                         if(!fuseInCircles.contains(fuse)) {
-                            var circle = new CycleDetection().getEndCircle(fuse);
+                            Fuse[] circle = new CycleDetection().getEndCircle(fuse);
                             if(circle.length != 0) {
-                                for (var fC : circle) {
-                                    fuseInCircles.add(fC);
-                                }
+                                Collections.addAll(fuseInCircles, circle);
 
-                                var fuseEnd = circle[0];
-                                var idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
-                                var idxFuseEnd = getOrCreateIdx(fuseEnd, idxFuses, idxLast);
+                                Fuse fuseEnd = circle[0];
+                                int idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
+                                int idxFuseEnd = getOrCreateIdx(fuseEnd, idxFuses, idxLast);
 
                                 circleEq.addLine();
                                 setMatrix(circleEq,circleEq.getNumRows() - 1, idxFuse, 1);
                                 setMatrix(circleEq,circleEq.getNumRows() - 1, idxFuseEnd, -1);
                             }
                         }
-
-
-                    }
                 }
             }
         }
@@ -104,7 +96,7 @@ public class MatrixBuilder {
 //        System.out.println();
 //        System.out.println(circleEq);
 
-        double[] resData = new double[cableEq.getData().length + cabinetEq.getData().length + circleEq.getData().length];
+        var resData = new double[cableEq.getData().length + cabinetEq.getData().length + circleEq.getData().length];
         System.arraycopy(cableEq.getData(), 0, resData, 0, cableEq.getData().length);
         System.arraycopy(cabinetEq.getData(), 0, resData, cableEq.getData().length, cabinetEq.getData().length);
         System.arraycopy(circleEq.getData(), 0, resData, cableEq.getData().length + cabinetEq.getData().length, circleEq.getData().length);
