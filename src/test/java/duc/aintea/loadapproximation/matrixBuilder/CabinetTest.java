@@ -73,14 +73,14 @@ public class CabinetTest extends MatrixBuilderTest {
 
     @ParameterizedTest
     @MethodSource("openCloseF3F4F5F6")
-    public void sc5_testAllClosedButF1(String[] toOpen) {
+    public void sc5_testF2Open(String[] toOpen) {
         var expected = new double[] {1};
         genericTest(expected, Utils.merge(toOpen, F2_NAME));
     }
 
     @ParameterizedTest
     @MethodSource("openCloseOthers")
-    public void sc6_testAllOpen(String[] toOpen) {
+    public void sc6_testF1Open(String[] toOpen) {
         var expected = new double[] {0};
         genericTest(expected, Utils.merge(toOpen, F1_NAME));
     }

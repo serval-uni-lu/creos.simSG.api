@@ -1,6 +1,5 @@
 package duc.aintea.loadapproximation.computation;
 
-import duc.aintea.loadapproximation.LoadApproximator;
 import duc.aintea.loadapproximation.generator.Data;
 import duc.aintea.loadapproximation.generator.Utils;
 import duc.aintea.sg.scenarios.ParaTransformerBuilder;
@@ -9,7 +8,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import static duc.aintea.sg.scenarios.ParaTransformerBuilder.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ParaTransformerTest extends LoadApproximatorTest {
     @Override
@@ -42,16 +40,9 @@ public class ParaTransformerTest extends LoadApproximatorTest {
     }
 
     private void test(String[] toOpen, Double[] consumptions, double[] expectedCables, double[] expectedFuses) {
-        openFuses(toOpen);
-        initConsumptions(consumptions, F1_NAME, F3_NAME, F5_NAME);
-        LoadApproximator.approximate(substation);
-
+        var fuseCable = new String[]{F1_NAME, F3_NAME, F5_NAME};
         var fuses = new String[] {F1_NAME, F2_NAME, F3_NAME, F4_NAME, F5_NAME, F6_NAME};
-        for (int i = 0; i < fuses.length; i++) {
-            var fuse = fusesMap.get(fuses[i]);
-            assertEquals(expectedCables[(int)(i/2)], fuse.getCable().getLoad(), DELTA);
-            assertEquals(expectedFuses[i], fuse.getLoad(), DELTA);
-        }
+        genericTest(toOpen, consumptions, expectedCables, expectedFuses,fuseCable, fuses);
     }
 
 

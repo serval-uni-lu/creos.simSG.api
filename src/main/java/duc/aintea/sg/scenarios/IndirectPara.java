@@ -45,7 +45,7 @@ public class IndirectPara {
               |-[f1]----------------(cbl1)----------------[f2]-|
 
      */
-    public static Substation build(double consumption) {
+    public static Substation build() {
         var subs = new Substation("subs");
         var cab1 = new Cabinet("cab1");
         var cab2 = new Cabinet("cab2");

@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class IndirectParaTest extends MatrixBuilderTest {
     @Override
     protected void createSubstation() {
-        substation = IndirectPara.build(1);
+        substation = IndirectPara.build();
     }
 
     private static Arguments[] openCloseF6F10() {
