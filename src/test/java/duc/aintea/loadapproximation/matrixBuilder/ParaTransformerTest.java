@@ -143,7 +143,7 @@ public class ParaTransformerTest extends MatrixBuilderTest {
 
     @ParameterizedTest
     @MethodSource("openCloseF4F5F6")
-    public void sc10_testF2F4Open(String[] toOpen) {
+    public void sc10_testF2F3Open(String[] toOpen) {
         var expected = new double[]{1};
         genericTest(expected, Utils.merge(toOpen, F2_NAME, F3_NAME));
     }
