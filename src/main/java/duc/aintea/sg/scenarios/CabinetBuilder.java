@@ -18,7 +18,7 @@ public class CabinetBuilder {
         subs-[f1]----(cbl1)----[f2]-cab1-<
                                           |-[f4]----(cbl3)----[f6]-cab3
      */
-    public static Substation build(double consumption) {
+    public static Substation build() {
         var subs = new Substation("substation");
         var cab1 = new Cabinet("cabinet1");
         var cab2 = new Cabinet("cabinet1");

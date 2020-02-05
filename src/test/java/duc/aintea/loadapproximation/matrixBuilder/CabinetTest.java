@@ -1,5 +1,7 @@
 package duc.aintea.loadapproximation.matrixBuilder;
 
+import duc.aintea.loadapproximation.generator.Data;
+import duc.aintea.loadapproximation.generator.Utils;
 import duc.aintea.sg.scenarios.CabinetBuilder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -11,19 +13,19 @@ public class CabinetTest extends MatrixBuilderTest {
 
     @Override
     protected void createSubstation() {
-        substation = CabinetBuilder.build(0);
+        substation = CabinetBuilder.build();
     }
 
     private static Arguments[] openCloseF5F6() {
-        return Utils.generator(F5_NAME, F6_NAME);
+        return Data.generateAllPossibilities(F5_NAME, F6_NAME);
     }
 
     private static Arguments[] openCloseF3F4F5F6() {
-        return Utils.generator(F3_NAME, F4_NAME, F5_NAME, F6_NAME);
+        return Data.generateAllPossibilities(F3_NAME, F4_NAME, F5_NAME, F6_NAME);
     }
 
     private static Arguments[] openCloseOthers() {
-        return Utils.generator(F2_NAME, F3_NAME, F4_NAME, F5_NAME, F6_NAME);
+        return Data.generateAllPossibilities(F2_NAME, F3_NAME, F4_NAME, F5_NAME, F6_NAME);
     }
 
 
@@ -71,14 +73,14 @@ public class CabinetTest extends MatrixBuilderTest {
 
     @ParameterizedTest
     @MethodSource("openCloseF3F4F5F6")
-    public void testAllClosedButF1(String[] toOpen) {
+    public void sc5_testAllClosedButF1(String[] toOpen) {
         var expected = new double[] {1};
         genericTest(expected, Utils.merge(toOpen, F2_NAME));
     }
 
     @ParameterizedTest
     @MethodSource("openCloseOthers")
-    public void testAll(String[] toOpen) {
+    public void sc6_testAllOpen(String[] toOpen) {
         var expected = new double[] {0};
         genericTest(expected, Utils.merge(toOpen, F1_NAME));
     }

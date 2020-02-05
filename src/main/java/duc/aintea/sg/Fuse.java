@@ -79,7 +79,10 @@ public class Fuse {
 
     @Override
     public String toString() {
-        return "Fuse(" + name + ")";
+        return "Fuse(" +
+                "name=" + name +
+                ", load=" + load +
+                ")";
     }
 }
 

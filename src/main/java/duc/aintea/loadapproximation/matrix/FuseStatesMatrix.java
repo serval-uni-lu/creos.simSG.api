@@ -1,5 +1,6 @@
 package duc.aintea.loadapproximation.matrix;
 
+import duc.aintea.sg.Cable;
 import duc.aintea.sg.Fuse;
 
 import java.util.Collections;
@@ -11,12 +12,14 @@ public class FuseStatesMatrix {
     private int nbColumns;
     private Map<Fuse, Integer> indexFuses;
     private Fuse[] reverse;
+    private Cable[] mapRowCable;
 
 
-    public FuseStatesMatrix(double[] data, int nbColumns, Map<Fuse, Integer> indexFuses) {
+    public FuseStatesMatrix(double[] data, int nbColumns, Map<Fuse, Integer> indexFuses, Cable[] mapRowCable) {
         this.data = data;
         this.nbColumns = nbColumns;
         this.indexFuses = indexFuses;
+        this.mapRowCable = mapRowCable;
 
         reverse = new Fuse[indexFuses.size()];
         for(Fuse key: indexFuses.keySet()) {
@@ -41,5 +44,9 @@ public class FuseStatesMatrix {
 
     public Fuse getFuse(int idx) {
         return reverse[idx];
+    }
+
+    public Cable[] getCables(){
+        return mapRowCable;
     }
 }

@@ -1,5 +1,6 @@
 package duc.aintea.loadapproximation.matrix;
 
+import duc.aintea.sg.Cable;
 import duc.aintea.sg.Entity;
 import duc.aintea.sg.Fuse;
 import duc.aintea.sg.Substation;
@@ -22,6 +23,7 @@ public class MatrixBuilder {
         var waitingList = new ArrayDeque<Entity>();
         var entityVisited = new HashSet<Entity>();
         var fuseInCircles = new HashSet<Fuse>();
+        var mapLineFuse = new ArrayList<Cable>();
 
         waitingList.add(substation);
 
@@ -40,6 +42,7 @@ public class MatrixBuilder {
                         if (!idxFuses.containsKey(fuse)) {
                             Fuse oppFuse = fuse.getOpposite();
                             cableEq.addLine();
+                            mapLineFuse.add(fuse.getCable());
                             int idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
                             setMatrix(cableEq,cableEq.getNumRows() - 1, idxFuse, 1);
 
@@ -85,7 +88,7 @@ public class MatrixBuilder {
         System.arraycopy(circleEq.getData(), 0, resData, cableEq.getData().length + cabinetEq.getData().length, circleEq.getData().length);
         resData = (resData.length == 0)? new double[]{0} : resData;
 
-        return new FuseStatesMatrix(resData, cableEq.getNumRows(), idxFuses);
+        return new FuseStatesMatrix(resData, cableEq.getNumCols(), idxFuses, mapLineFuse.toArray(new Cable[0]));
     }
 
     private static int getOrCreateIdx(Fuse fuse, HashMap<Fuse, Integer> map, int[] last) {

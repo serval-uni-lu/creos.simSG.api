@@ -1,5 +1,7 @@
 package duc.aintea.loadapproximation.matrixBuilder;
 
+import duc.aintea.loadapproximation.generator.Data;
+import duc.aintea.loadapproximation.generator.Utils;
 import duc.aintea.sg.scenarios.ParaTransformerBuilder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -15,27 +17,27 @@ public class ParaTransformerTest extends MatrixBuilderTest {
     }
 
     private static Arguments[] openCloseF6() {
-        return Utils.generator(F6_NAME);
+        return Data.generateAllPossibilities(F6_NAME);
     }
 
     private static Arguments[] openCloseF2F6() {
-        return Utils.generator(F2_NAME, F6_NAME);
+        return Data.generateAllPossibilities(F2_NAME, F6_NAME);
     }
 
     private static Arguments[] openCloseF5F6() {
-        return Utils.generator(F5_NAME, F6_NAME);
+        return Data.generateAllPossibilities(F5_NAME, F6_NAME);
     }
 
     private static Arguments[] openCloseF4F5F6() {
-        return Utils.generator(F4_NAME, F5_NAME, F6_NAME);
+        return Data.generateAllPossibilities(F4_NAME, F5_NAME, F6_NAME);
     }
 
     private static Arguments[] openCloseF2F5F6() {
-        return Utils.generator(F2_NAME, F5_NAME, F6_NAME);
+        return Data.generateAllPossibilities(F2_NAME, F5_NAME, F6_NAME);
     }
 
     private static Arguments[] openCloseF2F4F5F6() {
-        return Utils.generator(F2_NAME, F4_NAME, F5_NAME, F6_NAME);
+        return Data.generateAllPossibilities(F2_NAME, F4_NAME, F5_NAME, F6_NAME);
     }
 
 

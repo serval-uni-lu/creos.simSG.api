@@ -1,5 +1,6 @@
 package duc.aintea.loadapproximation.matrixBuilder;
 
+import duc.aintea.loadapproximation.generator.Data;
 import duc.aintea.sg.scenarios.IndirectPara;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -12,7 +13,7 @@ public class IndirectParaTest extends MatrixBuilderTest {
     }
 
     private static Arguments[] openCloseF6F10() {
-        return Utils.generator(IndirectPara.F6_NAME, IndirectPara.F10_NAME);
+        return Data.generateAllPossibilities(IndirectPara.F6_NAME, IndirectPara.F10_NAME);
     }
 
     @ParameterizedTest

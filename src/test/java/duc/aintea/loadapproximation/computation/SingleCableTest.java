@@ -1,6 +1,7 @@
 package duc.aintea.loadapproximation.computation;
 
 import duc.aintea.loadapproximation.LoadApproximator;
+import duc.aintea.loadapproximation.generator.Data;
 import duc.aintea.sg.Cable;
 import duc.aintea.sg.Fuse;
 import duc.aintea.sg.Meter;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class SingleCableTest {
@@ -17,6 +19,12 @@ public class SingleCableTest {
     private Fuse fuse_subs, fuse_cabinet;
     private Cable cable;
     private Meter m1, m2, m3;
+
+
+    private static Arguments[] threeValues() {
+        return Data.generateRandomDoubles(3);
+    }
+
 
     @BeforeEach
     public void init() {
@@ -33,7 +41,7 @@ public class SingleCableTest {
     }
 
     @ParameterizedTest
-    @MethodSource("duc.aintea.loadapproximation.DataGenerator#threeValues")
+    @MethodSource("threeValues")
     public void testAllClosed(double m1Cons, double m2Cons, double m3Cons) {
         m1.setConsumption(m1Cons);
         m2.setConsumption(m2Cons);
@@ -58,7 +66,7 @@ public class SingleCableTest {
     }
 
     @ParameterizedTest
-    @MethodSource("duc.aintea.loadapproximation.DataGenerator#threeValues")
+    @MethodSource("threeValues")
     public void testFCabOpen(double m1Cons, double m2Cons, double m3Cons) {
         fuse_cabinet.openFuse();
 
