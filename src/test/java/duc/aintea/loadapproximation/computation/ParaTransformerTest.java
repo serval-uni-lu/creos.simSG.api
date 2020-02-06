@@ -15,6 +15,16 @@ public class ParaTransformerTest extends LoadApproximatorTest {
         substation = ParaTransformerBuilder.build();
     }
 
+    @Override
+    protected String[] getFuses() {
+        return new String[] {F1_NAME, F2_NAME, F3_NAME, F4_NAME, F5_NAME, F6_NAME};
+    }
+
+    @Override
+    protected String[] getFuseCables() {
+        return new String[]{F1_NAME, F3_NAME, F5_NAME};
+    }
+
     private static Arguments[] openCloseF6() {
         return Data.generateAllPossibilitiesWithValues(3, F6_NAME);
     }
@@ -39,13 +49,6 @@ public class ParaTransformerTest extends LoadApproximatorTest {
         return Data.generateAllPossibilitiesWithValues(3, F2_NAME, F4_NAME, F5_NAME, F6_NAME);
     }
 
-    private void test(String[] toOpen, Double[] consumptions, double[] expectedCables, double[] expectedFuses) {
-        var fuseCable = new String[]{F1_NAME, F3_NAME, F5_NAME};
-        var fuses = new String[] {F1_NAME, F2_NAME, F3_NAME, F4_NAME, F5_NAME, F6_NAME};
-        genericTest(toOpen, consumptions, expectedCables, expectedFuses,fuseCable, fuses);
-    }
-
-
     @ParameterizedTest
     @MethodSource("openCloseF6")
     public void sc1_testOpenCloseDE(String[] toOpen, Double[] consumption) {
@@ -64,7 +67,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 consumption[2],
                 0
         };
-        test(toOpen, consumption, expectedCables, expectedFuses);
+        genericTest(toOpen, consumption, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -83,7 +86,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 0,
                 0
         };
-        test(Utils.merge(toOpen, F4_NAME, F5_NAME), consumption, expectedCbl, expectedFuse);
+        genericTest(Utils.merge(toOpen, F4_NAME, F5_NAME), consumption, expectedCbl, expectedFuse);
     }
 
     @ParameterizedTest
@@ -103,7 +106,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 consumption[2],
                 0
         };
-        test(Utils.merge(toOpen, F4_NAME), consumption, expectedCbl, expectedFuse);
+        genericTest(Utils.merge(toOpen, F4_NAME), consumption, expectedCbl, expectedFuse);
     }
 
     @ParameterizedTest
@@ -122,7 +125,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 consumption[2],
                 0
         };
-        test(Utils.merge(toOpen, F3_NAME), consumption, expectedCbl, expectedFuse);
+        genericTest(Utils.merge(toOpen, F3_NAME), consumption, expectedCbl, expectedFuse);
     }
 
     @ParameterizedTest
@@ -141,7 +144,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 0,
                 0
         };
-        test(Utils.merge(toOpen, F3_NAME, F5_NAME), consumption, expectedCbl, expectedFuse);
+        genericTest(Utils.merge(toOpen, F3_NAME, F5_NAME), consumption, expectedCbl, expectedFuse);
     }
 
     @ParameterizedTest
@@ -160,7 +163,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 0,
                 0,
         };
-        test(Utils.merge(toOpen, F3_NAME, F4_NAME, F5_NAME), consumption, expectedCbl, expectedFuse);
+        genericTest(Utils.merge(toOpen, F3_NAME, F4_NAME, F5_NAME), consumption, expectedCbl, expectedFuse);
     }
 
     @ParameterizedTest
@@ -179,7 +182,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 consumption[2],
                 0
         };
-        test(Utils.merge(toOpen, F2_NAME), consumption, expectedCbl, expectedFuse);
+        genericTest(Utils.merge(toOpen, F2_NAME), consumption, expectedCbl, expectedFuse);
     }
 
     @ParameterizedTest
@@ -198,7 +201,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 0,
                 0
         };
-        test(Utils.merge(toOpen, F2_NAME, F5_NAME), consumption, expectedCbl, expectedFuse);
+        genericTest(Utils.merge(toOpen, F2_NAME, F5_NAME), consumption, expectedCbl, expectedFuse);
     }
 
     @ParameterizedTest
@@ -218,7 +221,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 0
 
         };
-        test(Utils.merge(toOpen, F2_NAME, F4_NAME), consumption, expectedCbl, expectedFuse);
+        genericTest(Utils.merge(toOpen, F2_NAME, F4_NAME), consumption, expectedCbl, expectedFuse);
     }
 
     @ParameterizedTest
@@ -237,7 +240,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 0,
                 0
         };
-        test(Utils.merge(toOpen, F2_NAME, F3_NAME), consumption, expectedCbl, expectedFuse);
+        genericTest(Utils.merge(toOpen, F2_NAME, F3_NAME), consumption, expectedCbl, expectedFuse);
     }
 
     @ParameterizedTest
@@ -256,7 +259,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 consumption[2],
                 0
         };
-        test(Utils.merge(toOpen, F1_NAME), consumption, expectedCbl, expectedFuse);
+        genericTest(Utils.merge(toOpen, F1_NAME), consumption, expectedCbl, expectedFuse);
     }
 
     @ParameterizedTest
@@ -275,7 +278,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 0,
                 0
         };
-        test(Utils.merge(toOpen, F1_NAME, F5_NAME), consumption, expectedCbl, expectedFuse);
+        genericTest(Utils.merge(toOpen, F1_NAME, F5_NAME), consumption, expectedCbl, expectedFuse);
     }
 
     @ParameterizedTest
@@ -294,7 +297,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 0,
                 0
         };
-        test(Utils.merge(toOpen, F1_NAME, F4_NAME), consumption, expectedCbl, expectedFuse);
+        genericTest(Utils.merge(toOpen, F1_NAME, F4_NAME), consumption, expectedCbl, expectedFuse);
     }
 
     @ParameterizedTest
@@ -302,7 +305,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
     public void sc14_testF1F3Open(String[] toOpen, Double[] consumption) {
         var expectedCbl = new double[] {0,0,0};
         var expectedFuse = new double[] {0,0,0,0,0,0};
-        test(Utils.merge(toOpen, F1_NAME, F3_NAME), consumption, expectedCbl, expectedFuse);
+        genericTest(Utils.merge(toOpen, F1_NAME, F3_NAME), consumption, expectedCbl, expectedFuse);
     }
 
     @ParameterizedTest
@@ -321,7 +324,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 consumption[2],
                 0
         };
-        test(Utils.merge(toOpen, F1_NAME, F2_NAME), consumption, expectedCbl, expectedFuse);
+        genericTest(Utils.merge(toOpen, F1_NAME, F2_NAME), consumption, expectedCbl, expectedFuse);
     }
 
     @ParameterizedTest
@@ -340,7 +343,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 0,
                 0
         };
-        test(Utils.merge(toOpen, F1_NAME, F2_NAME, F5_NAME), consumption, expectedCbl, expectedFuse);
+        genericTest(Utils.merge(toOpen, F1_NAME, F2_NAME, F5_NAME), consumption, expectedCbl, expectedFuse);
     }
 
     @ParameterizedTest
@@ -360,6 +363,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 0,
                 0
         };
-        test(Utils.merge(toOpen, F5_NAME), consumption, expectedCbl, expectedFuse);
+        genericTest(Utils.merge(toOpen, F5_NAME), consumption, expectedCbl, expectedFuse);
     }
+
 }

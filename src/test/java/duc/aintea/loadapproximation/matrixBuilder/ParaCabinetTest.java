@@ -7,6 +7,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import static duc.aintea.sg.scenarios.ParaCabinetBuilder.*;
+
 public class ParaCabinetTest extends MatrixBuilderTest {
 
     @Override
@@ -15,35 +17,35 @@ public class ParaCabinetTest extends MatrixBuilderTest {
     }
 
     private static Arguments[] openCloseF8() {
-        return Data.generateAllPossibilities(ParaCabinetBuilder.F8_NAME);
+        return Data.generateAllPossibilities(F8_NAME);
     }
 
     private static Arguments[] openCloseF2F3F4F5F6F7F8() {
-        return Data.generateAllPossibilities(ParaCabinetBuilder.F2_NAME, ParaCabinetBuilder.F3_NAME, ParaCabinetBuilder.F4_NAME, ParaCabinetBuilder.F5_NAME, ParaCabinetBuilder.F6_NAME, ParaCabinetBuilder.F7_NAME, ParaCabinetBuilder.F8_NAME);
+        return Data.generateAllPossibilities(F2_NAME, F3_NAME, F4_NAME, F5_NAME, F6_NAME, F7_NAME, F8_NAME);
     }
 
     private static Arguments[] openCloseF3F4F5F6F7F8() {
-        return Data.generateAllPossibilities(ParaCabinetBuilder.F3_NAME, ParaCabinetBuilder.F4_NAME, ParaCabinetBuilder.F5_NAME, ParaCabinetBuilder.F6_NAME, ParaCabinetBuilder.F7_NAME, ParaCabinetBuilder.F8_NAME);
+        return Data.generateAllPossibilities(F3_NAME, F4_NAME, F5_NAME, F6_NAME, F7_NAME, F8_NAME);
     }
 
     private static Arguments[] openCloseF4F7F8() {
-        return Data.generateAllPossibilities(ParaCabinetBuilder.F4_NAME, ParaCabinetBuilder.F7_NAME, ParaCabinetBuilder.F8_NAME);
+        return Data.generateAllPossibilities(F4_NAME, F7_NAME, F8_NAME);
     }
 
     private static Arguments[] openCloseF4F6F7F8() {
-        return Data.generateAllPossibilities(ParaCabinetBuilder.F4_NAME, ParaCabinetBuilder.F6_NAME, ParaCabinetBuilder.F7_NAME, ParaCabinetBuilder.F8_NAME);
+        return Data.generateAllPossibilities(F4_NAME, F6_NAME, F7_NAME, F8_NAME);
     }
 
     private static Arguments[] openCloseF6F7F8() {
-        return Data.generateAllPossibilities(ParaCabinetBuilder.F6_NAME, ParaCabinetBuilder.F7_NAME, ParaCabinetBuilder.F8_NAME);
+        return Data.generateAllPossibilities(F6_NAME, F7_NAME, F8_NAME);
     }
 
     private static Arguments[] openCloseF7F8() {
-        return Data.generateAllPossibilities(ParaCabinetBuilder.F7_NAME, ParaCabinetBuilder.F8_NAME);
+        return Data.generateAllPossibilities(F7_NAME, F8_NAME);
     }
 
     private static Arguments[] openCloseF4F8() {
-        return Data.generateAllPossibilities(ParaCabinetBuilder.F4_NAME, ParaCabinetBuilder.F8_NAME);
+        return Data.generateAllPossibilities(F4_NAME, F8_NAME);
     }
 
 
@@ -66,19 +68,19 @@ public class ParaCabinetTest extends MatrixBuilderTest {
     @ParameterizedTest
     @MethodSource("openCloseF2F3F4F5F6F7F8")
     public void sc2_f1Open(String[] toOpen) {
-        genericTest(new double[]{0}, Utils.merge(toOpen, ParaCabinetBuilder.F1_NAME));
+        genericTest(new double[]{0}, Utils.merge(toOpen, F1_NAME));
     }
 
     @ParameterizedTest
     @MethodSource("openCloseF3F4F5F6F7F8")
     public void sc3_f2Open(String[] toOpen) {
-        genericTest(new double[]{1}, Utils.merge(toOpen, ParaCabinetBuilder.F2_NAME));
+        genericTest(new double[]{1}, Utils.merge(toOpen, F2_NAME));
     }
 
     @ParameterizedTest
     @MethodSource("openCloseF4F6F7F8")
     public void sc4_f3f5Open(String[] toOpen) {
-        genericTest(new double[]{1}, Utils.merge(toOpen, ParaCabinetBuilder.F3_NAME, ParaCabinetBuilder.F5_NAME));
+        genericTest(new double[]{1}, Utils.merge(toOpen, F3_NAME, F5_NAME));
     }
 
     @ParameterizedTest
@@ -90,7 +92,7 @@ public class ParaCabinetTest extends MatrixBuilderTest {
                 0,0,0,1,
                 0,1,1,1,
         };
-        genericTest(expected, Utils.merge(toOpen, ParaCabinetBuilder.F4_NAME, ParaCabinetBuilder.F6_NAME));
+        genericTest(expected, Utils.merge(toOpen, F4_NAME, F6_NAME));
     }
 
     @ParameterizedTest
@@ -104,7 +106,7 @@ public class ParaCabinetTest extends MatrixBuilderTest {
                 0,0,0,1,0,1,
                 0,0,1,0,-1,0
         };
-        genericTest(expected, Utils.merge(toOpen, ParaCabinetBuilder.F7_NAME));
+        genericTest(expected, Utils.merge(toOpen, F7_NAME));
     }
 
     @ParameterizedTest
@@ -118,7 +120,7 @@ public class ParaCabinetTest extends MatrixBuilderTest {
                 0,1,1,0,1,0,
                 0,0,0,1,0,1,
         };
-        genericTest(expected, Utils.merge(toOpen, ParaCabinetBuilder.F6_NAME));
+        genericTest(expected, Utils.merge(toOpen, F6_NAME));
     }
 
     @ParameterizedTest
@@ -130,7 +132,7 @@ public class ParaCabinetTest extends MatrixBuilderTest {
                 0,0,0,1,
                 0,1,1,1
         };
-        genericTest(expected, Utils.merge(toOpen, ParaCabinetBuilder.F7_NAME, ParaCabinetBuilder.F6_NAME));
+        genericTest(expected, Utils.merge(toOpen, F7_NAME, F6_NAME));
     }
 
     @ParameterizedTest
@@ -144,7 +146,7 @@ public class ParaCabinetTest extends MatrixBuilderTest {
                 0,1,1,0,0,0,
                 0,0,0,1,1,1
         };
-        genericTest(expected, Utils.merge(toOpen, ParaCabinetBuilder.F5_NAME));
+        genericTest(expected, Utils.merge(toOpen, F5_NAME));
     }
 
     @ParameterizedTest
@@ -157,7 +159,7 @@ public class ParaCabinetTest extends MatrixBuilderTest {
                 0,1,1,0,0,
                 0,0,0,1,1,
         };
-        genericTest(expected, Utils.merge(toOpen, ParaCabinetBuilder.F5_NAME, ParaCabinetBuilder.F7_NAME));
+        genericTest(expected, Utils.merge(toOpen, F5_NAME, F7_NAME));
     }
 
     @ParameterizedTest
@@ -170,7 +172,7 @@ public class ParaCabinetTest extends MatrixBuilderTest {
                 0,1,1,0,0,
                 0,0,0,1,1
         };
-        genericTest(expected, Utils.merge(toOpen, ParaCabinetBuilder.F5_NAME, ParaCabinetBuilder.F6_NAME));
+        genericTest(expected, Utils.merge(toOpen, F5_NAME, F6_NAME));
     }
 
     @ParameterizedTest
@@ -181,12 +183,12 @@ public class ParaCabinetTest extends MatrixBuilderTest {
                 0,0,1,
                 0,1,1,
         };
-        genericTest(expected, Utils.merge(toOpen, ParaCabinetBuilder.F5_NAME, ParaCabinetBuilder.F6_NAME, ParaCabinetBuilder.F7_NAME));
+        genericTest(expected, Utils.merge(toOpen, F5_NAME, F6_NAME, F7_NAME));
     }
 
     @ParameterizedTest
     @MethodSource("openCloseF8")
-    public void sc13_f5f6f7Open(String[] toOpen) {
+    public void sc13_f4Open(String[] toOpen) {
         var expected = new double[] {
                 1,1,0,0,0,0,
                 0,0,1,0,0,0,
@@ -195,7 +197,7 @@ public class ParaCabinetTest extends MatrixBuilderTest {
                 0,1,1,1,0,0,
                 0,0,0,0,1,1
         };
-        genericTest(expected, Utils.merge(toOpen, ParaCabinetBuilder.F4_NAME));
+        genericTest(expected, Utils.merge(toOpen, F4_NAME));
     }
 
     @ParameterizedTest
@@ -206,7 +208,7 @@ public class ParaCabinetTest extends MatrixBuilderTest {
                 0,0,1,
                 0,1,1,
         };
-        genericTest(expected, Utils.merge(toOpen, ParaCabinetBuilder.F4_NAME, ParaCabinetBuilder.F5_NAME));
+        genericTest(expected, Utils.merge(toOpen, F4_NAME, F5_NAME));
     }
 
     @ParameterizedTest
@@ -217,7 +219,7 @@ public class ParaCabinetTest extends MatrixBuilderTest {
                 0,0,1,
                 0,1,1,
         };
-        genericTest(expected, Utils.merge(toOpen, ParaCabinetBuilder.F3_NAME, ParaCabinetBuilder.F6_NAME));
+        genericTest(expected, Utils.merge(toOpen, F3_NAME, F6_NAME));
     }
 
     @ParameterizedTest
@@ -230,7 +232,7 @@ public class ParaCabinetTest extends MatrixBuilderTest {
                 0,1,1,0,0,
                 0,0,0,1,1,
         };
-        genericTest(expected, Utils.merge(toOpen, ParaCabinetBuilder.F3_NAME, ParaCabinetBuilder.F7_NAME));
+        genericTest(expected, Utils.merge(toOpen, F3_NAME, F7_NAME));
     }
 
     @ParameterizedTest
@@ -244,7 +246,7 @@ public class ParaCabinetTest extends MatrixBuilderTest {
                 0,1,1,0,0,0,
                 0,0,0,1,1,1
         };
-        genericTest(expected, Utils.merge(toOpen, ParaCabinetBuilder.F3_NAME));
+        genericTest(expected, Utils.merge(toOpen, F3_NAME));
     }
 
     @ParameterizedTest
@@ -257,18 +259,18 @@ public class ParaCabinetTest extends MatrixBuilderTest {
                 0,1,1,0,0,
                 0,0,0,1,1
         };
-        genericTest(expected, Utils.merge(toOpen, ParaCabinetBuilder.F3_NAME, ParaCabinetBuilder.F4_NAME));
+        genericTest(expected, Utils.merge(toOpen, F3_NAME, F4_NAME));
     }
 
     @ParameterizedTest
     @MethodSource("openCloseF8")
-    public void sc19_f3f4f4Open(String[] toOpen) {
+    public void sc19_f3f4f7Open(String[] toOpen) {
         var expected = new double[] {
                 1,1,0,
                 0,0,1,
                 0,1,1,
         };
-        genericTest(expected, Utils.merge(toOpen, ParaCabinetBuilder.F3_NAME, ParaCabinetBuilder.F4_NAME, ParaCabinetBuilder.F7_NAME));
+        genericTest(expected, Utils.merge(toOpen, F3_NAME, F4_NAME, F7_NAME));
     }
 
 }

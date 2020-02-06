@@ -16,6 +16,16 @@ public class CabinetTest extends LoadApproximatorTest {
         substation = CabinetBuilder.build();
     }
 
+    @Override
+    protected String[] getFuses() {
+        return new String[] {F1_NAME, F2_NAME, F3_NAME, F4_NAME, F5_NAME, F6_NAME};
+    }
+
+    @Override
+    protected String[] getFuseCables() {
+        return new String[]{F1_NAME, F3_NAME, F4_NAME};
+    }
+
     private static Arguments[] openCloseF5F6() {
        return Data.generateAllPossibilitiesWithValues(3, F5_NAME, F6_NAME);
     }
@@ -26,12 +36,6 @@ public class CabinetTest extends LoadApproximatorTest {
 
     private static Arguments[] openCloseF2F3F4F5F6() {
         return Data.generateAllPossibilitiesWithValues(3, F2_NAME, F3_NAME, F4_NAME, F5_NAME, F6_NAME);
-    }
-
-    private void test(String[] toOpen, Double[] consumptions, double[] expectedCables, double[] expectedFuses) {
-        var fuseCables = new String[]{F1_NAME, F3_NAME, F4_NAME};
-        var fuses = new String[] {F1_NAME, F2_NAME, F3_NAME, F4_NAME, F5_NAME, F6_NAME};
-        genericTest(toOpen, consumptions, expectedCables, expectedFuses, fuseCables, fuses);
     }
 
     @ParameterizedTest
@@ -51,7 +55,7 @@ public class CabinetTest extends LoadApproximatorTest {
                 0,
                 0
         };
-        test(toOpen, consumptions, expectedCables, expectedFuses);
+        genericTest(toOpen, consumptions, expectedCables, expectedFuses);
     }
 
 
@@ -71,7 +75,7 @@ public class CabinetTest extends LoadApproximatorTest {
                 0,
                 0
         };
-        test(Utils.merge(toOpen, F4_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(Utils.merge(toOpen, F4_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -90,7 +94,7 @@ public class CabinetTest extends LoadApproximatorTest {
                 0,
                 0
         };
-        test(Utils.merge(toOpen, F3_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(Utils.merge(toOpen, F3_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -98,7 +102,7 @@ public class CabinetTest extends LoadApproximatorTest {
     public void sc4_testF3F4Open(String[] toOpen, Double[] consumptions) {
         var expectedCables = new double[] {consumptions[0], 0, 0};
         var expectedFuses = new double[] {consumptions[0], 0, 0, 0, 0, 0};
-        test(Utils.merge(toOpen, F3_NAME, F4_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(Utils.merge(toOpen, F3_NAME, F4_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -106,7 +110,7 @@ public class CabinetTest extends LoadApproximatorTest {
     public void sc5_testF2Open(String[] toOpen, Double[] consumptions) {
         var expectedCables = new double[] {consumptions[0],0,0};
         var expectedFuses = new double[] {consumptions[0],0,0,0,0,0,0};
-        test(Utils.merge(toOpen, F2_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(Utils.merge(toOpen, F2_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -114,7 +118,8 @@ public class CabinetTest extends LoadApproximatorTest {
     public void sc6_testF1Open(String[] toOpen, Double[] consumptions) {
         var expectedCables = new double[] {0,0,0};
         var expectedFuses = new double[] {0,0,0,0,0,0};
-        test(Utils.merge(toOpen, F1_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(Utils.merge(toOpen, F1_NAME), consumptions, expectedCables, expectedFuses);
     }
+
 
 }

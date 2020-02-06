@@ -19,7 +19,9 @@ public abstract class LoadApproximatorTest extends LoadTest {
         }
     }
 
-    protected void genericTest(String[] toOpen, Double[] consumptions, double[] expectedCables, double[] expectedFuses, String[] fuseCables, String[] fuses) {
+    protected void genericTest(String[] toOpen, Double[] consumptions, double[] expectedCables, double[] expectedFuses) {
+        var fuseCables = getFuseCables();
+        var fuses = getFuses();
         openFuses(toOpen);
         initConsumptions(consumptions, fuseCables);
         LoadApproximator.approximate(substation);
@@ -34,6 +36,9 @@ public abstract class LoadApproximatorTest extends LoadTest {
             assertEquals(expectedFuses[i], fuse.getLoad(), DELTA, "Error for fuse " + (i+1));
         }
     }
+
+    protected abstract String[] getFuses();
+    protected abstract String[] getFuseCables();
 
 
 }

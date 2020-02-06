@@ -14,6 +14,16 @@ public class IndirectParaTest extends LoadApproximatorTest {
         substation = IndirectPara.build();
     }
 
+    @Override
+    protected String[] getFuses() {
+        return new String[]{F1_NAME, F2_NAME, F3_NAME, F4_NAME, F5_NAME, F6_NAME, F7_NAME, F8_NAME, F9_NAME};
+    }
+
+    @Override
+    protected String[] getFuseCables() {
+        return new String[]{F1_NAME, F3_NAME, F5_NAME, F7_NAME, F9_NAME};
+    }
+
     private static Arguments[] openCloseF6F10() {
         return Data.generateAllPossibilitiesWithValues(5, IndirectPara.F6_NAME, IndirectPara.F10_NAME);
     }
@@ -49,9 +59,7 @@ public class IndirectParaTest extends LoadApproximatorTest {
 
         };
 
-        var fuseCables = new String[]{F1_NAME, F3_NAME, F5_NAME, F7_NAME, F9_NAME};
-        var fuses = new String[]{F1_NAME, F2_NAME, F3_NAME, F4_NAME, F5_NAME, F6_NAME, F7_NAME, F8_NAME, F9_NAME};
-        genericTest(toOPen, consumptions, expectedCables, expectedFuses, fuseCables, fuses);
+        genericTest(toOPen, consumptions, expectedCables, expectedFuses);
     }
 
 }
