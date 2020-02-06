@@ -12,9 +12,10 @@ public class Data {
     }
 
     public static Arguments[] generateAllPossibilitiesWithValues(int nbCable, String... names) {
-        var args = new Arguments[(int) Math.pow(2, names.length)];
+        int nbSituations =  (int) Math.pow(2, names.length);
+        var args = new Arguments[nbSituations * NB_TESTS];
 
-        for (int i = 0; i < args.length; i++) {
+        for (int i = 0; i < nbSituations; i++) {
             boolean[] fuseStates = intToBinary(i, names.length);
             var fuseNames = new ArrayList<String>(names.length);
             for (int j = 0; j < fuseStates.length; j++) {
@@ -23,9 +24,13 @@ public class Data {
                 }
             }
 
-            args[i] = Arguments.of(
-                    (Object) fuseNames.toArray(new String[0]),
-                    (Object) randomDouble(nbCable));
+            for (int j = 0; j < NB_TESTS; j++) {
+                args[i*NB_TESTS + j] = Arguments.of(
+                        (Object) fuseNames.toArray(new String[0]),
+                        (Object) randomDouble(nbCable));
+            }
+
+
         }
 
         return args;

@@ -6,7 +6,7 @@ public class Utils {
     private static final double MAX_LOAD = 100.;
     private static final Random RANDOM = new Random(12345);
 
-    static final int NB_TESTS = 10;
+    static final int NB_TESTS = 5;
 
     static double randomValue() {
         return RANDOM.nextDouble() * MAX_LOAD;
