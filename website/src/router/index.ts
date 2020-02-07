@@ -3,10 +3,16 @@ import VueRouter from 'vue-router'
 import LuxembourgSG from '../views/LuxembourgGrid.vue'
 import Scenarios from '../views/Scenario.vue'
 import ScenarioBuilder from '../views/ScenarioBuilder.vue'
+import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+    {
+        path: '/',
+        name: 'home',
+        component: Home
+    }
     {
         path: '/scenario',
         name: 'scenario',
