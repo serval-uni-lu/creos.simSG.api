@@ -25,10 +25,11 @@
     "@vue/eslint-config-typescript": "^4.0.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "node-sass": "^4.13.1",
     "pug": "^2.0.4",
     "pug-plain-loader": "^1.0.0",
     "sass": "^1.23.7",
-    "sass-loader": "^8.0.0",
+    "sass-loader": "^8.0.2",
     "typescript": "~3.5.3",
     "vue-loader": "^15.8.3",
     "vue-template-compiler": "^2.6.11"
