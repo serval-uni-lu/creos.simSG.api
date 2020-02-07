@@ -1,47 +1,51 @@
-<template>
-    <div id="header">
-        <h1>SimSG : Smart Grid Simulator</h1>
+<template lang="pug">
+    div 
+        #header
+            p.title SimSG : Smart Grid Simulator
 
-        <div class="logo">
-            <img class="serval" src="../assets/serval.svg" alt="logo serval">
-            <img class="creos" src="../assets/creos.jpg" alt="logo creos">
-        </div>
-    </div>
+        #logos
+            img.creos(src="../assets/creos.jpg" alt="logo creos")
+            img.serval(src="../assets/serval.svg" alt="logo serval")
+        
 </template>
 
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-
-@Component
-export default class Header extends Vue {
-    
-}
+export default {}
 </script>
 
 
 <style lang="scss">
-.logo {
+$creos-logo-height: 67px;
+$snt-logo-height: 97px;
+$creos-logo-top: ($snt-logo-height - $creos-logo-height)/2;
+$position: right;
+
+#header {
+    position: relative;
+    padding-top: 30px;
+
+    p.title {
+        display: inline;
+        font-size: 2em; 
+        font-weight: bold;
+    }
+}
+
+#logos {
     position: absolute;
     top: 10px;
-    width: 100%;
-    height: 20px;
-    
+    right: 60px;
+    float: $position;
 
     .creos {
-        width:7%;
-        float: right;
-        padding-right: 10px;
+            height: $creos-logo-height;
+            padding: $creos-logo-top 10px;
     }
 
     .serval {
-        width:4%;
-        float: right;
-        padding-right: 20px;
+        height: $snt-logo-height;
     }
 
 }
-
-
-
 </style>
