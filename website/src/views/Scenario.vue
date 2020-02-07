@@ -1,5 +1,5 @@
-<template>
-    <h2>TODO: Vue of predefined scenarios</h2>
+<template lang="pug">
+    h2 <strong>TODO:</strong> Vue of predefined scenarios
 </template>
 
 <script lang="ts">

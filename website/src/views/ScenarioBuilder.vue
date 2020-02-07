@@ -1,6 +1,8 @@
-<template>
-    <h2>TODO: Vue of a scenario builder</h2>
+<template lang="pug">
+    h2 <strong>TODO:</strong> Vue of a scenario builder
 </template>
+
+
 
 <script lang="ts">
 export default {

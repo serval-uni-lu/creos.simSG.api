@@ -2,6 +2,7 @@
     <div id="app">
         <Header />
         <div id="nav">
+            <router-link to="/">Home</router-link> | 
             <router-link to="/scenario">Scenarios</router-link> | 
             <router-link to="/scenario-builder">Scenario Builder</router-link> | 
             <router-link to="/lux-sg">Luxembourg Smart Grid</router-link> 
@@ -9,6 +10,10 @@
         <router-view/>
     </div>
 </template>
+
+
+
+
 
 
 <script lang="ts">
