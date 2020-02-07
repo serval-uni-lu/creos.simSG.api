@@ -20,11 +20,11 @@ export default {}
     padding: 30px;
 
     a {
-        font-weight: bold;
-        color: $text-color;
+        font-size: $menu-text-size;
 
         &.router-link-exact-active {
-            color: $link-color;
+            color: $menu-selected-color;
+            font-weight: bold;
         }
     }
 }

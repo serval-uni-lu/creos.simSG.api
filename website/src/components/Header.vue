@@ -27,7 +27,7 @@ $position: right;
 
     p.title {
         display: inline;
-        font-size: 2em; 
+        font-size: $header-title-size; 
         font-weight: bold;
     }
 }

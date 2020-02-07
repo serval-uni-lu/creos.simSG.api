@@ -30,6 +30,21 @@ export default {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     text-align: center;
     color: $text-color;
+
+    p {
+        font-size: $body-text-size;
+    }
+
+    h2 {
+        font-size: $page-title-size;
+    }
+
+    a {
+        text-decoration-line: none;
+        color: $link-color;
+    }
+
+   
 }
 
 
