@@ -7,7 +7,7 @@
             ul.separator
                 li  <router-link to="/">Home</router-link>
                 li  <router-link to="/scenario">Scenarios</router-link>
-                    ul.stop
+                    ol.stop
                         li Scenario 1 - Test
                         li Scenario 1 - Test
                         li Scenario 1 - Test
@@ -37,7 +37,7 @@ ul.separator li + li:before {
     padding: 0 10px;
 }
 
-ul.stop li + li:before {
+ol.stop li + li:before {
     content: "";
     padding: 0px;
 }
