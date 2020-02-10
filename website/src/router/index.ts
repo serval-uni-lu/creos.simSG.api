@@ -4,7 +4,7 @@ import LuxembourgSG from '../components/LuxembourgGrid.vue'
 import Scenarios from '../components/Scenario.vue'
 import ScenarioBuilder from '../components/ScenarioBuilder.vue'
 import Home from '../components/Home.vue'
-import ScenarioTest from '../components/ScenarioTest.vue'
+import ScenarioTest from '../components/ScenarioView.vue'
 
 Vue.use(VueRouter)
 
@@ -22,7 +22,8 @@ const routes = [
     {
         path: '/scenario/:name',
         name: 'FirstRoute',
-        component: ScenarioTest
+        component: ScenarioTest,
+        props: true
     },
     {
         path: '/scenario-builder',
