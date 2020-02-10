@@ -1,10 +1,10 @@
 <template lang="pug">
-   <router-link :to="url">{{title}}</router-link>
+   li <router-link :to="url">{{name}}</router-link>
 </template>
 
 
 <script lang="ts">
 export default{
-    props: ['title', 'url']
+    props: ['name', 'url']
 }
 </script>

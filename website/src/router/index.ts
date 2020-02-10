@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import LuxembourgSG from '../views/LuxembourgGrid.vue'
-import Scenarios from '../views/Scenario.vue'
-import ScenarioBuilder from '../views/ScenarioBuilder.vue'
-import Home from '../views/Home.vue'
+import LuxembourgSG from '../components/LuxembourgGrid.vue'
+import Scenarios from '../components/Scenario.vue'
+import ScenarioBuilder from '../components/ScenarioBuilder.vue'
+import Home from '../components/Home.vue'
 import ScenarioTest from '../components/ScenarioTest.vue'
 
 Vue.use(VueRouter)
@@ -20,6 +20,11 @@ const routes = [
         component: Scenarios
     },
     {
+        path: '/scenario/:name',
+        name: 'FirstRoute',
+        component: ScenarioTest
+    },
+    {
         path: '/scenario-builder',
         name: 'scenario-builder',
         component: ScenarioBuilder
@@ -28,12 +33,7 @@ const routes = [
         path: '/lux-sg',
         name: 'lux-sg',
         component: LuxembourgSG
-    },
-    {
-        path: '/scenario/:name',
-        name: 'FirstRoute',
-        component: ScenarioTest
-      }
+    }
 ]
 
 const router = new VueRouter({

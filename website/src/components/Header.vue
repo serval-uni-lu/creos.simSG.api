@@ -8,7 +8,7 @@
                 li  <router-link to="/">Home</router-link>
                 li  <router-link to="/scenario">Scenarios</router-link>
                     ol.stop
-                        <Test v-for="post in scenarios" v-bind:key="post.id" v-bind:title="post.title" v-bind:url="post.url"/>
+                        <ScenarioList v-for="sc in scenarios" v-bind:key="sc.id" v-bind:name="sc.title" v-bind:url="sc.url"/>
                 li  <router-link to="/scenario-builder">Scenario Builder</router-link>
                 li  <router-link to="/lux-sg">Luxembourg Smart Grid</router-link>
 
@@ -21,17 +21,13 @@
 
 
 <script lang="ts">
-// import Vue from 'vue'
-import Test from "@/components/Test.vue"
+import ScenarioList from "@/components/ScenarioList.vue"
+import json from "@/assets/scenarios/scenarios.json"
 
-var scenarios = [
-                {id: 1, url: "/scenario/myUrl1", title: "My Url 1"}, 
-                {id: 2, url: "/scenario/myUrl2", title: "My Url 2"}, 
-                {id: 3, url: "/scenario/myUrl3", title: "My Url 3"}
-            ];
+var scenarios = json;
 
 export default {
-    components: {Test},
+    components: {ScenarioList},
     data: function() {
         return {
             scenarios: scenarios
@@ -56,17 +52,17 @@ ol.stop li + li:before {
     padding: 0px;
 }
 
-ul li {
+ul.separator li {
     position: relative;
     display: inline-block;
 }
 
-ul a {
+ul.separator a {
     display: inline-block;
 }
 
 
-ul li ol {
+ul.separator li ol.stop {
     padding: 0;
     position: absolute;
     top: 100%;
@@ -77,11 +73,11 @@ ul li ol {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
-ul li:hover ol {
+ul.separator li:hover ol.stop {
     display:inline-block;
 }
 
-ol > li {
+ol.stop > li {
     display: block;
 }
 
@@ -120,16 +116,5 @@ ol > li {
         height: $logo-height;
     }
 
-}
-
-#nav {
-    a {
-        font-size: $menu-text-size;
-
-        &.router-link-exact-active {
-            color: $menu-selected-color;
-            font-weight: bold;
-        }
-    }
 }
 </style>

@@ -1,26 +1,19 @@
 <template>
     <div id="app">
         <Header />
-        <!-- <Menu /> -->
         <router-view/>
     </div>
 </template>
 
 
-
-
-
-
 <script lang="ts">
-// @ is an alias to /src
+
 import Header from '@/components/Header.vue'
-// import Menu from '@/components/Menu.vue'
 
 export default {
     name: 'app',
     components: {
-        Header/*,
-        Menu*/
+        Header
     }
 }
 </script>
@@ -52,5 +45,14 @@ body {
    
 }
 
+#nav {
+    a {
+        font-size: $menu-text-size;
 
+        &.router-link-exact-active {
+            color: $menu-selected-color;
+            font-weight: bold;
+        }
+    }
+}
 </style>

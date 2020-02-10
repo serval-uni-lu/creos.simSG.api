@@ -1,0 +1,5 @@
+[
+    {"id": 1, "url": "/scenario/myUrl1", "title": "My Url 1"}, 
+    {"id": 2, "url": "/scenario/myUrl2", "title": "My Url 2"}, 
+    {"id": 3, "url": "/scenario/myUrl3", "title": "My Url 3"}
+]
