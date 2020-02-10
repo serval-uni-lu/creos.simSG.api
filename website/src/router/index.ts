@@ -4,6 +4,7 @@ import LuxembourgSG from '../views/LuxembourgGrid.vue'
 import Scenarios from '../views/Scenario.vue'
 import ScenarioBuilder from '../views/ScenarioBuilder.vue'
 import Home from '../views/Home.vue'
+import ScenarioTest from '../components/ScenarioTest.vue'
 
 Vue.use(VueRouter)
 
@@ -27,7 +28,12 @@ const routes = [
         path: '/lux-sg',
         name: 'lux-sg',
         component: LuxembourgSG
-    }
+    },
+    {
+        path: '/scenario/:name',
+        name: 'FirstRoute',
+        component: ScenarioTest
+      }
 ]
 
 const router = new VueRouter({

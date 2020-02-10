@@ -8,9 +8,7 @@
                 li  <router-link to="/">Home</router-link>
                 li  <router-link to="/scenario">Scenarios</router-link>
                     ol.stop
-                        li Scenario 1 - Test
-                        li Scenario 1 - Test
-                        li Scenario 1 - Test
+                        <Test v-for="post in scenarios" v-bind:key="post.id" v-bind:title="post.title" v-bind:url="post.url"/>
                 li  <router-link to="/scenario-builder">Scenario Builder</router-link>
                 li  <router-link to="/lux-sg">Luxembourg Smart Grid</router-link>
 
@@ -23,7 +21,23 @@
 
 
 <script lang="ts">
-export default {}
+// import Vue from 'vue'
+import Test from "@/components/Test.vue"
+
+var scenarios = [
+                {id: 1, url: "/scenario/myUrl1", title: "My Url 1"}, 
+                {id: 2, url: "/scenario/myUrl2", title: "My Url 2"}, 
+                {id: 3, url: "/scenario/myUrl3", title: "My Url 3"}
+            ];
+
+export default {
+    components: {Test},
+    data: function() {
+        return {
+            scenarios: scenarios
+        }
+    }
+}
 </script>
 
 
@@ -59,12 +73,16 @@ ul li ol {
     display:none;
     background-color: $header-color;
     left: 10px;
-    width: 150px;
+    width: 100px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 ul li:hover ol {
     display:inline-block;
+}
+
+ol > li {
+    display: block;
 }
 
 #header {
