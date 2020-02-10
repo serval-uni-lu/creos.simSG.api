@@ -1,10 +1,15 @@
 <template lang="pug">
-   li <router-link :to="url">{{name}}</router-link>
+   li <router-link :to="fullUrl">{{title}}</router-link>
 </template>
 
 
-<script lang="ts">
-export default{
-    props: ['name', 'url']
+<script>
+export default {
+    props: ['title', 'url'],
+    computed: {
+        fullUrl: function() {
+            return "/scenario/" + this.url
+        }
+    }
 }
 </script>

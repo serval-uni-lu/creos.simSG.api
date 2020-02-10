@@ -8,7 +8,7 @@
                 li  <router-link to="/">Home</router-link>
                 li  <router-link to="/scenario">Scenarios</router-link>
                     ol.stop
-                        <ScenarioList v-for="sc in scenarios" v-bind:key="sc.id" v-bind:name="sc.title" v-bind:url="sc.url"/>
+                        <ScenarioList v-for="sc in scenarios" v-bind:key="sc.id" v-bind:title="sc.shortTile" v-bind:url="sc.url"/>
                 li  <router-link to="/scenario-builder">Scenario Builder</router-link>
                 li  <router-link to="/lux-sg">Luxembourg Smart Grid</router-link>
 
@@ -25,6 +25,7 @@ import ScenarioList from "@/components/ScenarioList.vue"
 import json from "@/assets/scenarios/scenarios.json"
 
 var scenarios = json;
+
 
 export default {
     components: {ScenarioList},

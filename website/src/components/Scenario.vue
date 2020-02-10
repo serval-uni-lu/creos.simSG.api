@@ -2,7 +2,7 @@
     div
         h2 Predifined scenarios
         ul
-            <ScenarioList v-for="sc in scenarios" v-bind:key="sc.id" v-bind:name="sc.title" v-bind:url="sc.url"/>
+            <ScenarioList v-for="sc in scenarios" v-bind:key="sc.id" v-bind:title="sc.title" v-bind:url="sc.url"/>
 </template>
 
 <script lang="ts">
