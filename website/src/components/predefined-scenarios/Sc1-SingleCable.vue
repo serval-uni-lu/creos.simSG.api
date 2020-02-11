@@ -41,18 +41,8 @@
                 <circle cx="694" cy="291.98997" r="5.00000798950947" fill="black"/>
                 <line x1="630.5" y1="305.50093" x2="630.5" y2="292.02262" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
             </g>
-            <g id="Fuse 1" class="fuse" v-bind:class="{close: fuseStatus[0]}" v-on:click="switchFuse(0)">
-                <rect x="689" y="244.79135" width="10" height="10" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <text transform="translate(699.494 242.29135)" fill="black">
-                    <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="0" y="11">Fuse 1</tspan>
-                </text>
-            </g>
-            <g id="Fuse 2" class="fuse" v-bind:class="{close: fuseStatus[1]}" v-on:click="switchFuse(1)" >
-                <rect x="689" y="360.3567" width="10" height="10" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <text transform="translate(701.5 358.1887)" fill="black">
-                    <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="0" y="11">Fuse 2</tspan>
-                </text>
-            </g>
+            <Fuse :id=0 :xRect=689 :yRect=244.79135 />
+            <Fuse :id=1 :xRect=689 :yRect=360.3567 />
             <g id="DE-Connection">
                 <circle cx="594.5" cy="292.0297" r="7.00001118531321" fill="white"/>
                 <circle cx="594.5" cy="292.0297" r="7.00001118531321" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
@@ -63,16 +53,17 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import Fuse from "@/components/sg-elmts/Fuse.vue"
 
 export default {
+    components: {Fuse},
     computed: {
         ...mapState({
-            fuseStatus: state => state.fuseStatus,
             consumptions: state => state.consumptions,
         })
     },
     methods: {
-        ...mapMutations(['switchFuse', 'showInspector'])
+        ...mapMutations(['showInspector'])
     },
     created() {
         this.$store.commit('init', 2)
@@ -80,16 +71,3 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-g.fuse {
-    rect {
-        fill: white;
-    }
-
-    &.close {
-        rect {
-            fill: black;
-        }
-    }
-}
-</style>
