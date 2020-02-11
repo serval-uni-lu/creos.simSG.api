@@ -1,11 +1,11 @@
 <template>
-    <g v-on:click="showInspector(id + 1)">
-        <rect :x="xRect" :y="yRect" width="37" height="27.04319" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white"/>
-        <circle :cx="cX" :cy="cY" r="7.37542706758215" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white"/>
+    <g v-on:click="showInspector(id)" v-bind:class="{selected: isSelected}">
+        <rect :x="xRect" :y="yRect" width="37" height="27.04319" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white"/>
+        <circle :cx="cX" :cy="cY" r="7.37542706758215" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white"/>
         <text :transform="translate" fill="black">
             <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="5.206" y="11">{{consumptions[id]}} A</tspan>
         </text>
-        <line :x1="xLine" :y1="yRect" :x2="xLine" :y2="y2Line" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <line :x1="xLine" :y1="yRect" :x2="xLine" :y2="y2Line" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
     </g>   
 </template>
 
@@ -34,8 +34,12 @@ export default {
         translate: function() {
             return "translate(" +  (this.xRect) + " " + (this.yRect + 27) + ")";
         },
+        isSelected: function() {
+            return this.selectedMeter === this.id
+        },
         ...mapState({
             consumptions: state => state.consumptions,
+            selectedMeter: state => state.selectedMeter
         })
     },
     methods: {
@@ -43,3 +47,14 @@ export default {
     }
 }
 </script>
+
+
+<style lang="scss" scoped>
+g:not(selected) {
+    stroke: black;
+}
+
+g.selected {
+    stroke: green;
+}
+</style>

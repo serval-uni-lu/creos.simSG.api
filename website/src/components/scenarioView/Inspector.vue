@@ -1,9 +1,9 @@
 <template lang="pug">
     div
-        p.title Inspector Meter - {{meterId}}
+        p.title Inspector Meter - {{meterId + 1}}
         form 
             | Consumption:
-            input(type="number", min="0", v-model.number="consumptions[meterId - 1]")
+            input(type="number", min="0", v-model.number="consumptions[meterId]")
         .closingButton(v-on:click="hideInspector()")
             <svg viewBox="871 749 32 32">
                 <defs/>
