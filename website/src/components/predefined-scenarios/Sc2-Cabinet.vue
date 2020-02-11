@@ -141,32 +141,33 @@ section#container
 
 <script>
 import Vue from "vue"
+import { mapState, mapMutations } from 'vuex'
 
 export default {
     data: function() {
         return {
-            fuseStatus: [true, true, true, true, true, true],
-            consumptions: [0., 0., 0.],
             currentMeterId: 0,
             inspVisible: false
         }
     },
     computed: {
-        currentConsumption: function() {
-            return this.consumptions[this.currentMeterId]
-        }
+        ...mapState({
+            fuseStatus: state => state.fuseStatus,
+            consumptions: state => state.consumptions
+        })
     },
     methods: {
-        switchFuse: function(fuseId) {
-            Vue.set(this.fuseStatus, fuseId, !this.fuseStatus[fuseId])
-        },
         showInspector: function(meterId) {
             this.currentMeterId = meterId;
             this.inspVisible = true;
         },
         hideInspector: function() {
             this.inspVisible = false;
-        }
+        },
+        ...mapMutations(['switchFuse'])
+    },
+    created() {
+        this.$store.commit('init', 6)
     }
 }
 </script>
