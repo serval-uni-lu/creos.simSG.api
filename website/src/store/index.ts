@@ -8,6 +8,7 @@ export default new Vuex.Store({
         fuseStatus: Array<boolean>(),
         consumptions: Array<number>(),
         inspVisible: false,
+        currentMeterId: 0
     },
     mutations: {
         init(state, nbFuses) {
@@ -20,7 +21,8 @@ export default new Vuex.Store({
         hideInspector(state) {
             state.inspVisible = false;
         },
-        showInspector(state) {
+        showInspector(state, meterId) {
+            state.currentMeterId = meterId;
             state.inspVisible = true;
         }
     }

@@ -128,33 +128,21 @@ section#container
 
 
 <script>
-import Vue from "vue"
 import { mapState, mapMutations } from 'vuex'
 import Inspector from "@/components/scenarioView/Inspector.vue"
 
 export default {
     components: {Inspector},
-    data: function() {
-        return {
-            currentMeterId: 0
-        }
-    },
     computed: {
         ...mapState({
             fuseStatus: state => state.fuseStatus,
             consumptions: state => state.consumptions,
-            inspVisible: state => state.inspVisible
+            inspVisible: state => state.inspVisible,
+            currentMeterId: state => state.currentMeterId,
         })
     },
     methods: {
-        showInspector: function(meterId) {
-            this.currentMeterId = meterId;
-            this.$store.commit('showInspector');
-        },
-        switchFuse: function() {
-            this.myCurrentValue++;
-        },
-        ...mapMutations(['switchFuse'])
+        ...mapMutations(['switchFuse', 'showInspector'])
     },
     created() {
         this.$store.commit('init', 6)
