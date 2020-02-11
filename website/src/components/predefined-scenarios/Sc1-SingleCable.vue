@@ -22,15 +22,7 @@
                     <tspan font-family="Helvetica Neue" font-size="12" font-style="italic" font-weight="400" fill="black" x="1.4260004" y="11">Substation</tspan>
                 </text>
             </g>
-            <g id="Meter" v-on:click="showInspector(1)">
-                <rect x="612" y="305.50093" width="37" height="27.04319" fill="white"/>
-                <rect x="612" y="305.50093" width="37" height="27.04319" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <circle cx="623.8007" cy="319.02252" r="7.37542706758215" fill="white"/>
-                <circle cx="623.8007" cy="319.02252" r="7.37542706758215" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <text transform="translate(612 332.5441)" fill="black">
-                    <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="5.206" y="11">{{consumptions[0]}} A</tspan>
-                </text>
-            </g>
+            <Meter :id=0 :xRect=612 :yRect=303 />
             <g id="DeadEnds">
                 <circle cx="694" cy="384" r="7.00001118531325" fill="white"/>
                 <circle cx="694" cy="384" r="7.00001118531325" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
@@ -39,7 +31,6 @@
                 <line x1="694" y1="377" x2="694" y2="242.044" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
                 <line x1="694" y1="291.70832" x2="601.5" y2="292.00708" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
                 <circle cx="694" cy="291.98997" r="5.00000798950947" fill="black"/>
-                <line x1="630.5" y1="305.50093" x2="630.5" y2="292.02262" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
             </g>
             <Fuse :id=0 :xRect=689 :yRect=244.79135 />
             <Fuse :id=1 :xRect=689 :yRect=360.3567 />
@@ -52,19 +43,11 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
 import Fuse from "@/components/sg-elmts/Fuse.vue"
+import Meter from "@/components/sg-elmts/Meter.vue"
 
 export default {
-    components: {Fuse},
-    computed: {
-        ...mapState({
-            consumptions: state => state.consumptions,
-        })
-    },
-    methods: {
-        ...mapMutations(['showInspector'])
-    },
+    components: {Fuse, Meter},
     created() {
         this.$store.commit('init', 2)
     }

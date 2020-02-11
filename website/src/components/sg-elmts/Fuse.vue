@@ -16,10 +16,20 @@ export default {
         id: Number,
         xRect: Number,
         yRect: Number,
+        displayLeft: {
+            type: Boolean,
+            default: false
+        }
     },
     computed: {
         translate: function() {
-            return "translate(" +  (this.xRect + 11) + " " + (this.yRect - 2) + ")";
+            var x;
+            if(this.displayLeft) {
+                x = this.xRect - 38;
+            } else {
+                x = this.xRect + 11;
+            }
+            return "translate(" +  (x) + " " + (this.yRect - 2) + ")";
         },
         ...mapState({
             fuseStatus: state => state.fuseStatus,

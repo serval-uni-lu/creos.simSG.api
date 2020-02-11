@@ -13,33 +13,9 @@
             </font-face>
         </defs>
         <g id="SC2-Cabinet" fill="none" stroke-dasharray="none" stroke="none" stroke-opacity="1" fill-opacity="1">
-            <g id="Meter-Cable3" v-on:click="showInspector(3)">
-                <rect x="345.8" y="341.2" width="37" height="27.04319" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white"/>
-                <circle cx="357.60067" cy="354.7216" r="7.37542706758215" fill="white"/>
-                <circle cx="357.60067" cy="354.7216" r="7.37542706758215" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <text transform="translate(348.42796 368.2432)" fill="black">
-                    <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x=".30804838" y="11">{{consumptions[2]}} A</tspan>
-                </text>
-                <line x1="364.27475" y1="341.2" x2="364.25583" y2="331.0665" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-            </g>
-            <g id="Meter-Cable2" v-on:click="showInspector(2)">
-                <rect x="149" y="341.2" width="37" height="27.04319" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white"/>
-                <circle cx="160.80066" cy="354.7216" r="7.37542706758212" fill="white"/>
-                <circle cx="160.80066" cy="354.7216" r="7.37542706758212" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <line x1="167.47674" y1="341.2" x2="167.45846" y2="330.57293" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <text transform="translate(151.62795 368.2432)" fill="black">
-                    <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x=".30804838" y="11">{{consumptions[1]}} A</tspan>
-                </text>
-            </g>
-            <g id="Meter-Cable1" v-on:click="showInspector(1)">
-                <text transform="translate(210.82796 223.3173)" fill="black">
-                    <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x=".30804838" y="11">{{consumptions[0]}} A</tspan>
-                </text>
-                <rect x="208.2" y="196.2741" width="37" height="27.04319" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white"/>
-                <circle cx="220.00067" cy="209.7957" r="7.37542706758205" fill="white"/>
-                <circle cx="220.00067" cy="209.7957" r="7.37542706758205" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <line x1="226.7" y1="196.2741" x2="226.7" y2="182.7958" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-            </g>
+            <Meter :id=0 :xRect=208.2 :yRect=194 />
+            <Meter :id=1 :xRect=149 :yRect=341.3 />
+            <Meter :id=2 :xRect=345.8 :yRect=341.7 />
             <g id="Cabinet">
                 <rect x="238.2441" y="257.4163" width="71" height="32" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
                 <text transform="translate(309.2441 266.2483)" fill="black">
@@ -79,78 +55,26 @@
                 <circle cx="192" cy="182.50076" r="7.00001118531326" fill="white"/>
                 <circle cx="192" cy="182.50076" r="7.00001118531326" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
             </g>
-            <g id="Fuse6" class="fuse" v-bind:class="{close: fuseStatus[5]}" v-on:click="switchFuse(5)">
-                <text transform="translate(274.8 359.4)" fill="black">
-                    <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="0" y="11">Fuse 6</tspan>
-                </text>
-                <rect x="311.8802" y="360.3309" width="10" height="10" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
-            </g>
-            <g id="Fuse5" class="fuse" v-bind:class="{close: fuseStatus[4]}" v-on:click="switchFuse(4)">
-                <text transform="translate(223.8 358.2345)" fill="black">
-                    <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="0" y="11">Fuse 5</tspan>
-                </text>
-                <rect x="212.78744" y="360.4025" width="10" height="10" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
-            </g>
-            <g id="Fuse4" class="fuse" v-bind:class="{close: fuseStatus[3]}" v-on:click="switchFuse(3)">
-                <rect x="293.67107" y="293.2013" width="10" height="10" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
-                <text transform="translate(306.8 291.55883)" fill="black">
-                    <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="0" y="11">Fuse 4</tspan>
-                </text>
-            </g>
-            <g id="Fuse3" class="fuse" v-bind:class="{close: fuseStatus[2]}" v-on:click="switchFuse(2)">
-                <rect x="243.8201" y="293.38053" width="10" height="10" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
-                <text transform="translate(203.988 291.55883)" fill="black">
-                    <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="0" y="11">Fuse 3</tspan>
-                </text>
-            </g>
-            <g id="Fuse2" class="fuse" v-bind:class="{close: fuseStatus[1]}" v-on:click="switchFuse(1)">
-                <rect x="268.7441" y="241.65787" width="10" height="10" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
-                <text transform="translate(281.2441 240)" fill="black">
-                    <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="0" y="11">Fuse 2</tspan>
-                </text>
-            </g>
-            <g id="Fuse1" class="fuse" v-bind:class="{close: fuseStatus[0]}" v-on:click="switchFuse(0)">
-                <rect x="268.7441" y="139.77368" width="10" height="10" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"  />
-                <text transform="translate(279.2381 137.27368)" fill="black">
-                    <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="0" y="11">Fuse 1</tspan>
-                </text>
-            </g>
+            <Fuse :id=0 :xRect=268.7441 :yRect=139.77368 />
+            <Fuse :id=1 :xRect=268.7441 :yRect=241.65787 />
+            <Fuse :id=2 :xRect=243.8201 :yRect=293.38053 :displayLeft="true" />
+            <Fuse :id=3 :xRect=293.67107 :yRect=293.2013 />
+            <Fuse :id=4 :xRect=212.78744 :yRect=360.4025 />
+            <Fuse :id=5 :xRect=311.8802 :yRect=360.3309 :displayLeft="true"/>
         </g>
-        </svg>
+    </svg>
 </template>
 
 
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import Fuse from "@/components/sg-elmts/Fuse.vue"
+import Meter from "@/components/sg-elmts/Meter.vue"
 
 export default {
-    computed: {
-        ...mapState({
-            fuseStatus: state => state.fuseStatus,
-            consumptions: state => state.consumptions
-        })
-    },
-    methods: {
-        ...mapMutations(['switchFuse', 'showInspector'])
-    },
+    components: {Fuse, Meter},
     created() {
         this.$store.commit('init', 6)
     }
 }
 </script>
-
-
-<style lang="scss" scoped>
-g.fuse {
-    rect {
-        fill: white;
-    }
-
-    &.close {
-        rect {
-            fill: black;
-        }
-    }
-}
-</style>
