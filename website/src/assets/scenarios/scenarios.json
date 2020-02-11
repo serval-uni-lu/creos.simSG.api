@@ -3,7 +3,12 @@
         "id": 1, 
         "url": "sc1-sglCable", 
         "title": "Scenario 1: Single cable",
-        "shortTile": "Single cable",
-        "file": ""
+        "shortTile": "Single cable"
+    },
+    {
+        "id": 2, 
+        "url": "sc2-cabinet", 
+        "title": "Scenario 2: Cabinet",
+        "shortTile": "Cabinet"
     }
 ]
