@@ -158,9 +158,6 @@ export default {
     },
     created() {
         this.$store.commit('init', 6)
-    },
-    destroyed() {
-        this.$store.commit('reset')
     }
 }
 </script>

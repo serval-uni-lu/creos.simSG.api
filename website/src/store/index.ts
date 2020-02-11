@@ -13,10 +13,6 @@ export default new Vuex.Store({
         init(state, nbFuses) {
             state.fuseStatus = new Array(nbFuses).fill(true)
             state.consumptions = new Array(nbFuses/2).fill(0.)
-        }, 
-        reset(state) {
-            state.fuseStatus = [];
-            state.consumptions = [];
         },
         switchFuse(state, fuseId) {
             Vue.set(state.fuseStatus, fuseId, !state.fuseStatus[fuseId])

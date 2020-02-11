@@ -26,13 +26,13 @@ section#container
                         <tspan font-family="Helvetica Neue" font-size="12" font-style="italic" font-weight="400" fill="black" x="1.4260004" y="11">Substation</tspan>
                     </text>
                 </g>
-                <g id="Meter" v-on:click="showInspector()">
+                <g id="Meter" v-on:click="showInspector(1)">
                     <rect x="612" y="305.50093" width="37" height="27.04319" fill="white"/>
                     <rect x="612" y="305.50093" width="37" height="27.04319" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
                     <circle cx="623.8007" cy="319.02252" r="7.37542706758215" fill="white"/>
                     <circle cx="623.8007" cy="319.02252" r="7.37542706758215" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
                     <text transform="translate(612 332.5441)" fill="black">
-                        <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="5.206" y="11">{{consumption}} A</tspan>
+                        <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="5.206" y="11">{{consumptions[0]}} A</tspan>
                     </text>
                 </g>
                 <g id="DeadEnds">
@@ -45,14 +45,14 @@ section#container
                     <circle cx="694" cy="291.98997" r="5.00000798950947" fill="black"/>
                     <line x1="630.5" y1="305.50093" x2="630.5" y2="292.02262" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
                 </g>
-                <g id="Fuse 1">
-                    <rect class="fuse" x="689" y="244.79135" width="10" height="10" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" v-on:click="switchFuse('f1')" v-bind:class="{close: f1Closed}"/>
+                <g id="Fuse 1" class="fuse" v-bind:class="{close: fuseStatus[0]}" v-on:click="switchFuse(0)">
+                    <rect x="689" y="244.79135" width="10" height="10" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
                     <text transform="translate(699.494 242.29135)" fill="black">
                         <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="0" y="11">Fuse 1</tspan>
                     </text>
                 </g>
-                <g id="Fuse 2">
-                    <rect class="fuse" x="689" y="360.3567" width="10" height="10" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" v-on:click="switchFuse('f2')" v-bind:class="{close: f2Closed}"/>
+                <g id="Fuse 2" class="fuse" v-bind:class="{close: fuseStatus[1]}" v-on:click="switchFuse(1)" >
+                    <rect x="689" y="360.3567" width="10" height="10" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
                     <text transform="translate(701.5 358.1887)" fill="black">
                         <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="0" y="11">Fuse 2</tspan>
                     </text>
@@ -65,92 +65,93 @@ section#container
         </svg>
         
 
-    #inspector(v-bind:class="{show: inspVisible}")
-        p.title Inspector
-        form 
-            | Consumption:
-            input(type="number", min="0", v-model="consumption")
+    <Inspector id="inspector" :meterId="currentMeterId" v-bind:class="{show: inspVisible}"/>
 </template>
 
 <script>
+import Vue from "vue"
+import { mapState, mapMutations } from 'vuex'
+import Inspector from "@/components/scenarioView/Inspector.vue"
+
 export default {
+    components: {Inspector},
     data: function() {
         return {
-            f1Closed: true,
-            f2Closed: true,
-            consumption: 0.,
-            inspVisible: false
+            currentMeterId: 0,
         }
     },
+    computed: {
+        ...mapState({
+            fuseStatus: state => state.fuseStatus,
+            consumptions: state => state.consumptions,
+            inspVisible: state => state.inspVisible
+        })
+    },
     methods: {
-        switchFuse: function(fuseId) {
-            if(fuseId === 'f1') {
-                this.f1Closed = !this.f1Closed;
-            } else {
-                this.f2Closed = !this.f2Closed;
-            }
+        showInspector: function(meterId) {
+            this.currentMeterId = meterId;
+            this.$store.commit('showInspector');
         },
-        showInspector: function() {
-            this.inspVisible = !this.inspVisible;
-        }
+        switchFuse: function() {
+            this.myCurrentValue++;
+        },
+        ...mapMutations(['switchFuse'])
+    },
+    beforeCreate() {
+        this.$store.commit('init', 2)
     }
 }
 </script>
 
 <style lang="scss" scoped>
-rect.fuse {
-    fill: white;
+g.fuse {
+    rect {
+        fill: white;
+    }
 
     &.close {
-        fill: black;
+        rect {
+            fill: black;
+        }
     }
 }
+
+$height: 480px;
 
 #container {
     width: 100%;
     margin: auto;
-    height: 400px;
+    height: $height;
 }
 
 #empty {
-    height: 400px;
-    width: 20%;
+    height: $height;
+    width: 19%;
     float: left;
 }
 
 #vue {
-    height: 400px;
+    height: $height;
     width: 60%;
     float: left;
 
      svg {
-        height: 400px;
+        height: $height;
     }
 }
 
 #inspector {
-    height: 400px;
-    width: 20%;
+    height: $height;
+    width: 19%;
     display: none;
     float: right;
+    margin-right: 1%;
+    position: relative;
 
-    &.show {
+     &.show {
         display: inline;
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     }
 
-    form {
-        font-size: $inspector-font-size;
-        text-align: left;
-        padding-left: 10px;
-        input {
-            width: 15%;
-            margin-left: 20px; 
-        }
-    }
-
-    
 }
-
-
 </style>
