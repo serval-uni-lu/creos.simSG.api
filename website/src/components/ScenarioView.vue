@@ -8,6 +8,9 @@
             #vue
                 Sc1SingleCable(v-if="name === 'sc1-sglCable'")
                 Sc2Cable(v-else-if="name === 'sc2-cabinet'")
+                Sc3ParaSub(v-else-if="name === 'sc3-para-transfo'")
+                Sc4ParaCab(v-else-if="name === 'sc4-para-cabinet'")
+                Sc5IndiPara(v-else-if="name === 'sc5-indirect-para'")
                 h3(v-else) Oups...Component not yet implemented.
 
             <Inspector id="inspector" :meterId="currentMeterId" v-bind:class="{show: inspVisible}"/>
@@ -18,11 +21,14 @@
 import scenarios from "@/assets/scenarios/scenarios.json"
 import Sc1SingleCable from "@/components/predefined-scenarios/Sc1-SingleCable.vue"
 import Sc2Cable from "@/components/predefined-scenarios/Sc2-Cabinet.vue"
+import Sc3ParaSub from "@/components/predefined-scenarios/SC3-ParaSubs.vue"
+import Sc4ParaCab from "@/components/predefined-scenarios/Sc4-ParaCab.vue"
+import Sc5IndiPara from "@/components/predefined-scenarios/Sc5-IndiPara.vue"
 import Inspector from "@/components/scenarioView/Inspector.vue"
 import { mapState } from 'vuex'
 
 export default {
-    components: {Sc1SingleCable, Sc2Cable, Inspector},
+    components: {Sc1SingleCable, Sc2Cable, Sc3ParaSub, Sc4ParaCab, Sc5IndiPara, Inspector},
     props: {
         name: String,
     },

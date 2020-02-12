@@ -1,4 +1,4 @@
-<template lang="pug">
+<template>
     <svg viewBox="115 88 298 305">
         <defs>
             <font-face font-family="Helvetica Neue" font-size="12" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
@@ -12,7 +12,7 @@
             </font-face-src>
             </font-face>
         </defs>
-        <g id="SC2-Cabinet" fill="none" stroke-dasharray="none" stroke="none" stroke-opacity="1" fill-opacity="1">
+        <g fill="none" stroke-dasharray="none" stroke="none" stroke-opacity="1" fill-opacity="1">
             <Meter :id=0 :xRect=208.2 :yRect=194 />
             <Meter :id=1 :xRect=149 :yRect=341.3 />
             <Meter :id=2 :xRect=345.8 :yRect=341.7 />
@@ -57,10 +57,10 @@
             </g>
             <Fuse :id=0 :xRect=268.7441 :yRect=139.77368 />
             <Fuse :id=1 :xRect=268.7441 :yRect=241.65787 />
-            <Fuse :id=2 :xRect=243.8201 :yRect=293.38053 :displayLeft="true" />
+            <Fuse :id=2 :xRect=243.8201 :yRect=293.38053 :displayLeft="'left'" />
             <Fuse :id=3 :xRect=293.67107 :yRect=293.2013 />
             <Fuse :id=4 :xRect=212.78744 :yRect=360.4025 />
-            <Fuse :id=5 :xRect=311.8802 :yRect=360.3309 :displayLeft="true"/>
+            <Fuse :id=5 :xRect=311.8802 :yRect=360.3309 :displayLeft="'left'"/>
         </g>
     </svg>
 </template>

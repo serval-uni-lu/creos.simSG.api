@@ -17,19 +17,36 @@ export default {
         xRect: Number,
         yRect: Number,
         displayLeft: {
-            type: Boolean,
-            default: false
+            type: String,
+            default: "right",
+            validator: function(value) {
+                return ["left", "right", "top", "bottom"].indexOf(value) !== -1;
+            }
+        },
+        shiftTextX: {
+            type: Number,
+            default: 0,
+        },
+        shiftTextY: {
+            type: Number,
+            default: 0,
         }
     },
     computed: {
         translate: function() {
-            var x;
-            if(this.displayLeft) {
+            var x = this.xRect;
+            var y = this.yRect - 2;
+            if(this.displayLeft === "left") {
                 x = this.xRect - 38;
-            } else {
+            } else if(this.displayLeft === "right"){
                 x = this.xRect + 11;
+            } else if(this.displayLeft === "top") {
+                y = this.yRect - 14;
+                console.log("here");
+            } else {
+                y = this.yRect + 12;
             }
-            return "translate(" +  (x) + " " + (this.yRect - 2) + ")";
+            return "translate(" +  (x + this.shiftTextX) + " " + (y + this.shiftTextY) + ")";
         },
         ...mapState({
             fuseStatus: state => state.fuseStatus,
