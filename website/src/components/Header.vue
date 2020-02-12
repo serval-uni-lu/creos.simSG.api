@@ -43,9 +43,11 @@ $logo-height: 90px;
 $position: right;
 $header-color: lightgray;
 
+$padding-menu-separator: 10px;
+
 ul.separator li + li:before {
     content: "|";
-    padding: 0 10px;
+    padding: 0 $padding-menu-separator;
 }
 
 ol.stop li + li:before {
@@ -64,14 +66,14 @@ ul.separator a {
 
 
 ul.separator li ol.stop {
-    padding: 0;
+    padding: 0 10px;
     position: absolute;
     top: 100%;
     display:none;
     background-color: $header-color;
-    left: 10px;
-    width: 100px;
+    left: 2 * $padding-menu-separator;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    text-align: left;
 }
 
 ul.separator li:hover ol.stop {

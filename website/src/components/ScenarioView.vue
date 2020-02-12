@@ -8,7 +8,7 @@
             #vue
                 Sc1SingleCable(v-if="name === 'sc1-sglCable'")
                 Sc2Cable(v-else-if="name === 'sc2-cabinet'")
-                h3(v-else) Oups...Component not yet implemented for {{title}}.
+                h3(v-else) Oups...Component not yet implemented.
 
             <Inspector id="inspector" :meterId="currentMeterId" v-bind:class="{show: inspVisible}"/>
 
@@ -34,7 +34,7 @@ export default {
                 }
             }
 
-            return "ERROR"
+            return "Scenario \"" + this.name + "\" does not exist."
         },
         ...mapState({
             inspVisible: state => state.inspVisible,
