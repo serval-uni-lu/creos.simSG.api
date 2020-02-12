@@ -68,7 +68,7 @@
     <Fuse :id=4 :xRect="932.5" :yRect="619.33994" />
     <Fuse :id=5 :xRect="932.5" :yRect="693.7666" />
     <Fuse :id=6 :xRect="909" :yRect="745.2334" :displayLeft="'left'" />
-    <Fuse :id=7 :xRect="909" :yRect="807" :displayLeft="left" />
+    <Fuse :id=7 :xRect="909" :yRect="807" :displayLeft="'left'" />
   </g>
 </svg>    
 </template>
