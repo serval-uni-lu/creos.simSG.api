@@ -9,7 +9,9 @@ export default new Vuex.Store({
         consumptions: Array<number>(),
         inspVisible: false,
         currentMeterId: 0,
-        selectedMeter: -1
+        selectedMeter: -1,
+        isApproximating: false,
+        showAlertApprox: false
     },
     mutations: {
         init(state, nbFuses) {
@@ -27,6 +29,20 @@ export default new Vuex.Store({
             state.currentMeterId = meterId;
             state.inspVisible = true;
             state.selectedMeter = meterId;
+        },
+        startApproximation(state) {
+            state.isApproximating = true;
+            state.showAlertApprox = true;
+        },
+        stopApproximation(state) {
+            state.isApproximating = false;
+            state.showAlertApprox = false;
+        },
+        openAlertApproximation(state) {
+            state.showAlertApprox = true;
+        },
+        closeAlertApproximation(state) {
+            state.showAlertApprox = false;
         }
     }
 })

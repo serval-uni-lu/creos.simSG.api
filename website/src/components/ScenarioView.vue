@@ -3,7 +3,7 @@
         h2 {{title}}
 
         section#container
-            #empty
+            Action(id="action")
 
             #vue
                 Sc1SingleCable(v-if="name === 'sc1-sglCable'")
@@ -12,6 +12,16 @@
                 Sc4ParaCab(v-else-if="name === 'sc4-para-cabinet'")
                 Sc5IndiPara(v-else-if="name === 'sc5-indirect-para'")
                 h3(v-else) Oups...Component not yet implemented.
+
+            #blocker(v-show="isApproximating")
+                <i class="bigLock fas fa-lock" v-show="showIconLock()" v-on:click="openAlertApproximation()"></i>
+                #lockMessage(class="alert alert-info alert-dismissible fade show" role="alert" v-show="showAlert()")
+                    | <i class="fas fa-lock"></i> The load is being approximated. Grid cannot be modified. 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" v-on:click="closeAlertApproximation()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            
+                                    
 
             <Inspector id="inspector" :meterId="currentMeterId" v-bind:class="{show: inspVisible}"/>
 
@@ -25,10 +35,11 @@ import Sc3ParaSub from "@/components/predefined-scenarios/SC3-ParaSubs.vue"
 import Sc4ParaCab from "@/components/predefined-scenarios/Sc4-ParaCab.vue"
 import Sc5IndiPara from "@/components/predefined-scenarios/Sc5-IndiPara.vue"
 import Inspector from "@/components/scenarioView/Inspector.vue"
-import { mapState } from 'vuex'
+import Action from "@/components/scenarioView/Action.vue"
+import { mapState, mapMutations } from 'vuex'
 
 export default {
-    components: {Sc1SingleCable, Sc2Cable, Sc3ParaSub, Sc4ParaCab, Sc5IndiPara, Inspector},
+    components: {Sc1SingleCable, Sc2Cable, Sc3ParaSub, Sc4ParaCab, Sc5IndiPara, Inspector, Action},
     props: {
         name: String,
     },
@@ -45,8 +56,22 @@ export default {
         ...mapState({
             inspVisible: state => state.inspVisible,
             currentMeterId: state => state.currentMeterId,
+            isApproximating: state => state.isApproximating,
+            showAlertApprox: state => state.showAlertApprox
         })
     },
+    methods: {
+        showAlert: function() {
+            return this.isApproximating && this.showAlertApprox;
+        },
+        showIconLock: function() {
+            return !this.showAlert();
+        },
+        ...mapMutations(['closeAlertApproximation', 'openAlertApproximation'])
+    },
+    beforeRouteLeave(to, from, next) {
+        console.log("Moving? seriously?? You stay here!!");
+    }
 }
 </script>
 
@@ -59,10 +84,12 @@ $height: 480px;
     height: $height;
 }
 
-#empty {
+#action {
     height: $height;
     width: 19%;
     float: left;
+    position: relative;
+    background-color: lightgray;
 }
 
 #vue {
@@ -73,6 +100,31 @@ $height: 480px;
      svg {
         height: $height;
     }
+}
+
+#blocker {
+    position: absolute;
+    width: 60%;
+    left: 25%;
+    height: $height;
+    text-align: left;
+    // i {
+    //     font-size: 3em;
+    //     color: red;
+    // }
+
+    .bigLock {
+        font-size: 3em;
+        color: red;
+    }
+
+    #lockMessage {
+        // margin-left: auto;
+        // margin-right: auto;
+        width: 300px;
+        text-align: center;
+    }
+
 }
 
 #inspector {
