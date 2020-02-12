@@ -8,7 +8,10 @@
                 li  <router-link to="/">Home</router-link>
                 li  <router-link to="/scenario">Scenarios</router-link>
                     ol.stop
-                        <ScenarioList v-for="sc in scenarios" v-bind:key="sc.id" v-bind:title="sc.shortTile" v-bind:url="sc.url"/>
+                        li <router-link to="/scenario/sc1-sglCable">Single cable</router-link>
+                        li <router-link to="/scenario/sc2-cabinet">Cabinet</router-link>
+                        li <router-link to="/scenario/sc3-para-transfo">Parallel@Substation</router-link>
+                        //- <ScenarioList v-for="sc in scenarios" v-bind:key="sc.id" v-bind:title="sc.shortTile" v-bind:url="sc.url"/>
                 li  <router-link to="/scenario-builder">Scenario Builder</router-link>
                 li  <router-link to="/lux-sg">Luxembourg Smart Grid</router-link>
 
@@ -20,7 +23,7 @@
 </template>
 
 
-<script lang="ts">
+<script>
 import ScenarioList from "@/components/ScenarioList.vue"
 import json from "@/assets/scenarios/scenarios.json"
 

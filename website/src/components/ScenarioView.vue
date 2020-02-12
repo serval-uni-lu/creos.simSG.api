@@ -67,10 +67,24 @@ export default {
         showIconLock: function() {
             return !this.showAlert();
         },
-        ...mapMutations(['closeAlertApproximation', 'openAlertApproximation'])
+        confirmLeave(next) {
+            if(this.isApproximating) {
+                var ok = confirm("Leaving this page will cancel the load approximation. Are you sure you want to quit?");
+                if(ok) {
+                    this.stopApproximation();
+                    next();
+                }
+            } else {
+                next();
+            }
+        },
+        ...mapMutations(['closeAlertApproximation', 'openAlertApproximation', 'stopApproximation'])
     },
     beforeRouteLeave(to, from, next) {
-        console.log("Moving? seriously?? You stay here!!");
+        this.confirmLeave(next);
+    },
+    beforeRouteUpdate(to, from, next) {
+        this.confirmLeave(next);
     }
 }
 </script>

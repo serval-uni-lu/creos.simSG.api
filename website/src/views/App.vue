@@ -6,7 +6,7 @@
 </template>
 
 
-<script lang="ts">
+<script>
 
 import Header from '@/components/Header.vue'
 
