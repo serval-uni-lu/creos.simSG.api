@@ -1,7 +1,7 @@
 <template lang="pug">
     div
         p.title Inspector Meter - {{meterId + 1}}
-        form 
+        .form 
             | Consumption:
             input(type="number", min="0", v-model.number="consumptions[meterId]")
         .closingButton(v-on:click="hideInspector()")
@@ -37,7 +37,7 @@ export default {
 
 
 <style lang="scss" scoped>
-form {
+.form {
     font-size: $inspector-font-size;
     text-align: left;
     padding-left: 10px;
