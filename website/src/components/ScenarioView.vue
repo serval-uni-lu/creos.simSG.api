@@ -122,10 +122,6 @@ $height: 480px;
     left: 25%;
     height: $height;
     text-align: left;
-    // i {
-    //     font-size: 3em;
-    //     color: red;
-    // }
 
     .bigLock {
         font-size: 3em;
@@ -133,8 +129,6 @@ $height: 480px;
     }
 
     #lockMessage {
-        // margin-left: auto;
-        // margin-right: auto;
         width: 300px;
         text-align: center;
     }

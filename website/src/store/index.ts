@@ -3,6 +3,19 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+
+
+interface Action {
+    name: string,
+    isBlocking: boolean
+}
+
+interface Actuator {
+    name: string;
+    author: string;
+    actions: Array<Action>;
+}
+
 export default new Vuex.Store({
     state: {
         fuseStatus: Array<boolean>(),
@@ -10,8 +23,10 @@ export default new Vuex.Store({
         inspVisible: false,
         currentMeterId: 0,
         selectedMeter: -1,
-        isApproximating: false,
-        showAlertApprox: false
+        // isApproximating: false,
+        // showAlertApprox: false,
+        actuators: Array<Actuator>()
+
     },
     mutations: {
         init(state, nbFuses) {
@@ -30,19 +45,31 @@ export default new Vuex.Store({
             state.inspVisible = true;
             state.selectedMeter = meterId;
         },
-        startApproximation(state) {
-            state.isApproximating = true;
-            state.showAlertApprox = true;
-        },
-        stopApproximation(state) {
-            state.isApproximating = false;
-            state.showAlertApprox = false;
-        },
-        openAlertApproximation(state) {
-            state.showAlertApprox = true;
-        },
-        closeAlertApproximation(state) {
-            state.showAlertApprox = false;
+        // startApproximation(state) {
+        //     state.isApproximating = true;
+        //     state.showAlertApprox = true;
+        //     console.log("Start approximation: " + (state.isApproximating && state.showAlertApprox))
+        // },
+        // stopApproximation(state) {
+        //     state.isApproximating = false;
+        //     state.showAlertApprox = false;
+        //     console.log("Stop approximation: " + (state.isApproximating && state.showAlertApprox))
+        // },
+        // openAlertApproximation(state) {
+        //     state.showAlertApprox = true;
+        //     console.log("Open Alert: " + (state.isApproximating && state.showAlertApprox))
+        // },
+        // closeAlertApproximation(state) {
+        //     state.showAlertApprox = false;
+        //     console.log("Hide Alert: " + (state.isApproximating && state.showAlertApprox))
+        // },
+        addActuator(state, toAdd: Actuator) {
+            state.actuators.push(toAdd);
+        }
+    },
+    actions: {
+        runAction (context, {actName, acts} ) {
+           
         }
     }
 })
