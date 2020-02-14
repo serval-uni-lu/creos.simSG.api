@@ -1,9 +1,6 @@
 package duc.aintea.sg.scenarios;
 
-import duc.aintea.sg.Cabinet;
-import duc.aintea.sg.Cable;
-import duc.aintea.sg.Fuse;
-import duc.aintea.sg.Substation;
+import duc.aintea.sg.*;
 
 public class ParaCabinetBuilder {
     public static final  String F1_NAME = "fuse_subs";
@@ -26,24 +23,65 @@ public class ParaCabinetBuilder {
                                         |-[f5]----(cbl3)----[f6]-|
      */
     public static Substation build() {
+        return build(new boolean[]{true, true, true, true, true, true, true, true}, new double[]{0., 0., 0., 0.});
+
+    }
+
+    public static Substation build(boolean[] fuseClose, double[] consumptions) {
         var subs = new Substation("substation");
         var c1 = new Cabinet("c1");
         var c2 = new Cabinet("c2");
         var c3 = new Cabinet("c3");
 
         var cbl1 = new Cable();
+        var m1 = new Meter("m1");
+        m1.setConsumption(consumptions[0]);
+        cbl1.addMeters(m1);
         var cbl2 = new Cable();
+        var m2 = new Meter("m2");
+        m2.setConsumption(consumptions[1]);
+        cbl2.addMeters(m2);
         var cbl3 = new Cable();
+        var m3 = new Meter("m3");
+        m3.setConsumption(consumptions[2]);
+        cbl3.addMeters(m3);
         var cbl4 = new Cable();
+        var m4 = new Meter("m4");
+        m4.setConsumption(consumptions[3]);
+        cbl4.addMeters(m4);
 
         var f1 = new Fuse(F1_NAME);
+        if(!fuseClose[0]) {
+            f1.openFuse();
+        }
         var f2 = new Fuse(F2_NAME);
+        if(!fuseClose[1]) {
+            f2.openFuse();
+        }
         var f3 = new Fuse(F3_NAME);
+        if(!fuseClose[2]) {
+            f3.openFuse();
+        }
         var f4 = new Fuse(F4_NAME);
+        if(!fuseClose[3]) {
+            f4.openFuse();
+        }
         var f5 = new Fuse(F5_NAME);
+        if(!fuseClose[4]) {
+            f5.openFuse();
+        }
         var f6 = new Fuse(F6_NAME);
+        if(!fuseClose[5]) {
+            f6.openFuse();
+        }
         var f7 = new Fuse(F7_NAME);
+        if(!fuseClose[6]) {
+            f7.openFuse();
+        }
         var f8 = new Fuse(F8_NAME);
+        if(!fuseClose[7]) {
+            f8.openFuse();
+        }
 
         subs.addFuses(f1);
         c1.addFuses(f2, f3, f5);
@@ -56,6 +94,5 @@ public class ParaCabinetBuilder {
         cbl4.setFuses(f7, f8);
 
         return subs;
-
     }
 }

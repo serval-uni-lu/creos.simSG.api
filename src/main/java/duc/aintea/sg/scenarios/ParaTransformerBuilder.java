@@ -1,9 +1,6 @@
 package duc.aintea.sg.scenarios;
 
-import duc.aintea.sg.Cabinet;
-import duc.aintea.sg.Cable;
-import duc.aintea.sg.Fuse;
-import duc.aintea.sg.Substation;
+import duc.aintea.sg.*;
 
 public class ParaTransformerBuilder {
     public static final  String F1_NAME = "fuse1_subs";
@@ -19,20 +16,52 @@ public class ParaTransformerBuilder {
               |-[f3]----(cbl2)----[f4]-|
      */
     public static Substation build() {
+        return build(new boolean[]{true, true, true, true, true, true}, new double[]{0., 0., 0.});
+    }
+
+
+    public static Substation build(boolean[] fuseClose, double[] consumptions) {
         var subs = new Substation("substation");
         var c1 = new Cabinet("cabinet1");
         var c2 = new Cabinet("cabinet2");
 
         var f1 = new Fuse(F1_NAME);
+        if(!fuseClose[0]) {
+            f1.openFuse();
+        }
         var f2 = new Fuse(F2_NAME);
+        if(!fuseClose[1]) {
+            f2.openFuse();
+        }
         var f3 = new Fuse(F3_NAME);
+        if(!fuseClose[2]) {
+            f3.openFuse();
+        }
         var f4 = new Fuse(F4_NAME);
+        if(!fuseClose[3]) {
+            f4.openFuse();
+        }
         var f5 = new Fuse(F5_NAME);
+        if(!fuseClose[4]) {
+            f5.openFuse();
+        }
         var f6 = new Fuse(F6_NAME);
+        if(!fuseClose[5]) {
+            f6.openFuse();
+        }
 
         var cbl1 = new Cable();
+        var m1 = new Meter("m1");
+        m1.setConsumption(consumptions[0]);
+        cbl1.addMeters(m1);
         var cbl2 = new Cable();
+        var m2 = new Meter("m2");
+        m2.setConsumption(consumptions[1]);
+        cbl2.addMeters(m2);
         var cbl3 = new Cable();
+        var m3 = new Meter("m3");
+        m3.setConsumption(consumptions[2]);
+        cbl3.addMeters(m3);
 
         subs.addFuses(f1, f3);
         c1.addFuses(f2, f4, f5);
@@ -45,5 +74,28 @@ public class ParaTransformerBuilder {
         return subs;
     }
 
+    public static Fuse[] extractFuses(Substation substation) {
+        var res = new Fuse[6];
+        res[0] = substation.getFuses().get(0);
+        res[1] = res[0].getOpposite();
+        res[2] = substation.getFuses().get(1);
+        res[3] = res[1].getOpposite();
 
+        var cab = res[2].getOwner();
+        res[4] = cab.getFuses().get(3);
+        res[5] = res[4].getOpposite();
+
+        return res;
+    }
+
+    public static Cable[] extractCables(Substation substation) {
+        var fuses = extractFuses(substation);
+
+        var res = new Cable[3];
+        res[0] = fuses[0].getCable();
+        res[1] = fuses[1].getCable();
+        res[2] = fuses[2].getCable();
+
+        return res;
+    }
 }

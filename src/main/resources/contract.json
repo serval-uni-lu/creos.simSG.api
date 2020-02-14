@@ -1,0 +1,11 @@
+{
+  "messageType": "actuator_hello",
+  "name": "LoadApproximator-Java",
+  "author": "Ludovic Mouline",
+  "actions": [
+    {
+      "name": "Approximate Load - Predefined SC",
+      "isBlocking": true
+    }
+  ]
+}

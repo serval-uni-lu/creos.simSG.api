@@ -5,7 +5,7 @@ import duc.aintea.sg.Cable;
 import duc.aintea.sg.Fuse;
 import duc.aintea.sg.Substation;
 
-public class IndirectPara {
+public class IndirectParaBuilder {
     public static final String F1_NAME = "fuse1_subs";
     public static final String F3_NAME = "fuse2_subs";
 

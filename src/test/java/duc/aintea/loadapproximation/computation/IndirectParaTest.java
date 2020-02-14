@@ -1,17 +1,17 @@
 package duc.aintea.loadapproximation.computation;
 
 import duc.aintea.loadapproximation.generator.Data;
-import duc.aintea.sg.scenarios.IndirectPara;
+import duc.aintea.sg.scenarios.IndirectParaBuilder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import static duc.aintea.sg.scenarios.IndirectPara.*;
+import static duc.aintea.sg.scenarios.IndirectParaBuilder.*;
 
 public class IndirectParaTest extends LoadApproximatorTest {
     @Override
     protected void createSubstation() {
-        substation = IndirectPara.build();
+        substation = IndirectParaBuilder.build();
     }
 
     @Override
@@ -25,7 +25,7 @@ public class IndirectParaTest extends LoadApproximatorTest {
     }
 
     private static Arguments[] openCloseF6F10() {
-        return Data.generateAllPossibilitiesWithValues(5, IndirectPara.F6_NAME, IndirectPara.F10_NAME);
+        return Data.generateAllPossibilitiesWithValues(5, IndirectParaBuilder.F6_NAME, IndirectParaBuilder.F10_NAME);
     }
 
     @ParameterizedTest
