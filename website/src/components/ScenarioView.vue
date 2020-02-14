@@ -3,7 +3,7 @@
         h2 {{title}}
 
         section#container
-            Action(id="action")
+            Action(id="action" :scenarioID="scenarioId")
 
             #vue
                 Sc1SingleCable(v-if="name === 'sc1-sglCable'")
@@ -44,6 +44,15 @@ export default {
         name: String,
     },
     computed: {
+        scenarioId: function() {
+            for (var sc of scenarios) {
+                if(sc.url === this.name) {
+                    return sc.id
+                }
+            }
+
+            return -1
+        },
         title: function() {
             for (var sc of scenarios) {
                 if(sc.url === this.name) {

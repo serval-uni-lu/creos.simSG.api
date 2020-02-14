@@ -1,6 +1,6 @@
 <template lang="pug">
     div
-        p.title Actions
+        p.title Actions - {{scenarioID}}
 
         //- button(v-if="!isApproximating" type="button" class="btn btn-primary" v-on:click="startApproximation()" v-bind:disabled="noActuators()") Approximate load
         //- button(v-else type="button" class="btn btn-danger" v-on:click="stopApproximation()") <i class="fa fa-spinner fa-spin"></i> Cancel load approximation
@@ -9,7 +9,7 @@
             option(selected disabled) {{def_actuator}}
             option(v-for="ac in actuators", v-bind:value="ac") {{ac.name}} - {{ac.author}}
 
-        button(v-for="act in actions" type="button" class="btn btn-primary" v-on:click="startAction(act.name)") {{act.name}}
+        button(v-for="act in actions" type="button" class="btn btn-primary" v-on:click="startAction(act)") {{act.name}}
 
 </template>
 
@@ -20,6 +20,9 @@ import Vue from "vue"
 let select_default = "Choose your actuator"
 
 export default {
+    props: {
+        scenarioID: Number
+    },
     data: function() {
         return {
             def_actuator: select_default,
@@ -45,8 +48,13 @@ export default {
         // noActuators: function() {
         //     return this.actuators.length === 0;
         // },
-        startAction: function(actName) {
-            
+        startAction: function(act) {
+            var info = {
+                scenarioID: this.scenarioID,
+                action: act
+            }
+
+            this.$store.commit('startAction', info)
         }
 
         // ...mapMutations([])

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import WS from '../websocket'
 
 Vue.use(Vuex)
 
@@ -15,6 +16,9 @@ interface Actuator {
     author: string;
     actions: Array<Action>;
 }
+
+let runningActions = new Map<number, Action>();
+let idxGenerator = 0;
 
 export default new Vuex.Store({
     state: {
@@ -44,6 +48,17 @@ export default new Vuex.Store({
             state.currentMeterId = meterId;
             state.inspVisible = true;
             state.selectedMeter = meterId;
+        },
+        startAction(state, {scenarioID, action}: {scenarioID:number, action: Action}) {
+            runningActions.set(idxGenerator, action)
+            var msg = {
+                actionID: idxGenerator,
+                scenario: scenarioID,
+                fuseStates: state.fuseStatus,
+                consumptions: state.consumptions
+            };
+            idxGenerator++;
+            WS.sendActionRequest(msg);
         },
         // startApproximation(state) {
         //     state.isApproximating = true;

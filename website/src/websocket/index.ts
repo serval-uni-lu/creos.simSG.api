@@ -1,6 +1,11 @@
 import {app} from '../main'
 
-let RQ_SAYS_ACT = "actuator-hello/"
+let MSG_SAYS_ACT = "actuator_hello"
+let MSG_RES_ACT = "action_result"
+let MSG_RQ_ACT = "request_action"
+let MSG_ERROR = "error"
+
+
 
 let timeOut: number;
 let wsURL = 'ws://localhost:8585/ws';
@@ -11,17 +16,33 @@ function onOpen() {
     console.debug("WebSocket connected to " + wsURL)
 }
 
+function debugReceivedMessage(message: any) {
+    console.debug("[" + wsURL + "] Data received: ");
+    console.debug(message);
+}
+
 function onMessage(event: any) {
-    var message = event.data;
-    if(message.startsWith(RQ_SAYS_ACT)) {
-        message = message.substr(RQ_SAYS_ACT.length);
-        message = JSON.parse(message);
+    var message;
+    try {
+        message = JSON.parse(event.data);
+    }catch(parseErr) {
+        console.error("Wrongly formatted message received (not a valid JSON): " + parseErr);
+        console.error(event);
+    }
 
-        console.debug("[" + wsURL + "] Data received: ");
-        console.debug(message);
-
+    if(message.messageType === undefined) {
+        console.error("Message received without a message type: ");
+        console.error(message)
+    } else if(message.messageType === MSG_SAYS_ACT) {
+        debugReceivedMessage(message);
         app.$store.commit('addActuator', message);
-
+    } else if(message.messageType === MSG_RES_ACT) {
+        debugReceivedMessage(message);
+    } else if(message.messageType === MSG_ERROR) {
+        debugReceivedMessage(message);
+    } else {
+        console.error("Message with an expected type received: " + message.messageType);
+        console.error(message)
     }
 }
 
@@ -50,5 +71,13 @@ function connect() {
 export default {
     init: function() {
        connect();      
+    },
+    sendActionRequest(message: any) {
+        if(ws !== null && ws.readyState === WebSocket.OPEN) {
+            message.messageType = MSG_RQ_ACT;
+            var msgText = JSON.stringify(message);
+            console.debug("Message sent to actuator: " + msgText)
+            ws.send(msgText);
+        }
     }
 }
