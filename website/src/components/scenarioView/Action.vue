@@ -70,6 +70,7 @@ select {
   font-size: $actuator-list-size;
   border: 1px solid #ccc;
   height: 34px;
+  width: 80%;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
