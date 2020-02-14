@@ -25,16 +25,16 @@ function onMessage(event: any) {
     }
 }
 
-function onClose(event: any) {
-    console.debug("Server has closed the connection");
-    console.log(event);
+function onClose(event: CloseEvent) {
+    console.debug("Connection has been closed. [" + event.code + "]: " + event.reason);
     ws = null;
+    app.$store.commit('removeActuator')
 }
 
 function connect() {
     console.debug("Connection attempt to " + wsURL)
     if(ws !== null && ws !== undefined) {
-        ws.close();
+        ws.close(4000, "Server not connected");
         ws = null;
     }
     ws = new WebSocket(wsURL);
@@ -42,7 +42,7 @@ function connect() {
     ws.onmessage = onMessage;
     ws.onclose = onClose;
     timeOut = setTimeout(function() {   
-        if(ws !== null) ws.close();     
+        if(ws !== null) ws.close(4000, "Server not connected");     
         connect();
     },  5000);
 }

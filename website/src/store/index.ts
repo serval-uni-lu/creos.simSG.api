@@ -65,6 +65,9 @@ export default new Vuex.Store({
         // },
         addActuator(state, toAdd: Actuator) {
             state.actuators.push(toAdd);
+        },
+        removeActuator(state) {
+            state.actuators.pop();
         }
     },
     actions: {
