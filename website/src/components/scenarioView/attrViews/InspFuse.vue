@@ -8,8 +8,7 @@
         span(v-if="fuses[fuseId].isClosed" class="stateInfo") (Closed)
         span(v-else class="stateInfo") (Open)
         br
-        | Load:
-        | {{load}}
+        | Load: {{load}}
         br
         
         
@@ -26,7 +25,7 @@ export default {
     computed: {
         load: function() {
             var load = this.fuses[this.fuseId].load;
-            return (load === -1)? "To be computed..." : load;
+            return (load === -1)? "To be computed..." : load.toFixed(2) + " A";
         },
         ...mapState({
             fuses: state => state.fuses

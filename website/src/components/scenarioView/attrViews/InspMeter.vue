@@ -21,7 +21,7 @@ export default {
 
 <style scoped>
 input {
-    width: 15%;
+    width: 30%;
     margin-left: 20px; 
 }
 </style>

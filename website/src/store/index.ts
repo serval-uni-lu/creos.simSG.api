@@ -121,6 +121,19 @@ export default new Vuex.Store({
         },
         removeActuator(state) {
             state.actuators.pop();
+        },
+        setCableLoads(state, loads: Array<number>) {
+            state.loads = [];
+            for (const idx in loads) {
+                Vue.set(state.loads, idx, loads[idx])
+            }
+        },
+        setFuseLoads(state, loads:Array<number>) {
+            for (const idx in loads) {
+                var fuse = state.fuses[idx]
+                fuse.load = loads[idx]
+                Vue.set(state.fuses, idx, fuse)
+            }
         }
     },
     actions: {

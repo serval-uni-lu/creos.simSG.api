@@ -38,6 +38,8 @@ function onMessage(event: any) {
         app.$store.commit('addActuator', message);
     } else if(message.messageType === MSG_RES_ACT) {
         debugReceivedMessage(message);
+        app.$store.commit('setCableLoads', message.cableLoads)
+        app.$store.commit('setFuseLoads', message.fuseLoads)
     } else if(message.messageType === MSG_ERROR) {
         debugReceivedMessage(message);
     } else {

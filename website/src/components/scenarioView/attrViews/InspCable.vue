@@ -1,7 +1,6 @@
 <template lang="pug">
      div
-        | Load:
-        | {{load}}
+        | Load: {{load}}
 </template>
 
 
@@ -15,7 +14,7 @@ export default {
     computed: {
         load: function() {
             var load = this.loads[this.cableId];
-            return (load === -1)? "To be computed..." : load;
+            return (load === -1)? "To be computed..." : load.toFixed(2) + " A";
         },
         ...mapState({
             loads: state => state.loads
@@ -24,10 +23,3 @@ export default {
 
 }
 </script>
-
-<style scoped>
-input {
-    width: 15%;
-    margin-left: 20px; 
-}
-</style>
