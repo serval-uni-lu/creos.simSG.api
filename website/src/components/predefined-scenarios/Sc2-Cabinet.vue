@@ -13,6 +13,42 @@
             </font-face>
         </defs>
         <g fill="none" stroke-dasharray="none" stroke="none" stroke-opacity="1" fill-opacity="1">
+            <g class="hidden">
+                <g v-on:click="id=2; showInspector();">
+                    <path class="hidden" d="M 273.7441 273.4163 L 298.6681 273.4163 L 298.6726 311 L 317.2561 311 L 316.79254 378.00016" stroke-linecap="round" stroke-linejoin="round"/>
+                    <line class="hidden" x1="322.1173" y1="331.0558" x2="397.8" y2="331.00473" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <g v-on:click="id=1; showInspector();">
+                    <path d="M 273.7441 273.4163 L 248.8201 273.4163 L 248.8201 311 L 217.67497 311 L 217.81348 378"  stroke-linecap="round" stroke-linejoin="round"/>
+                    <line x1="212.71466" y1="330.13425" x2="130.39968" y2="330.93216" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <g v-on:click="id=0; showInspector();">
+                    <line x1="268.7441" y1="182.50076" x2="199" y2="182.50076" stroke-linecap="round" stroke-linejoin="round"/>
+                    <line x1="273.7441" y1="273.4163" x2="273.7441" y2="136.939" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+            </g>
+            <g class="cable" v-bind:class="{selected: isSelected && id===2}" v-on:click="id=2; showInspector();">
+                <path d="M 273.7441 273.4163 L 298.6681 273.4163 L 298.6726 311 L 317.2561 311 L 316.79254 378.00016" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+                <circle cx="404.8" cy="331" r="7.00001118531327" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+                <circle cx="317.1173" cy="331.0592" r="5.00000798950949"/>
+                <line x1="322.1173" y1="331.0558" x2="397.8" y2="331.00473" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+            </g>
+            <g class="cable" v-bind:class="{selected: isSelected && id===1 }" v-on:click="id=1; showInspector();">
+                <path d="M 273.7441 273.4163 L 248.8201 273.4163 L 248.8201 311 L 217.67497 311 L 217.81348 378" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+                <line x1="212.71466" y1="330.13425" x2="130.39968" y2="330.93216" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+                <circle cx="123.4" cy="331" r="7.00001118531328" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+                <circle cx="217.71443" cy="330.0858" r="5.00000798950948" fill="black"/>
+            </g>
+            <g class="cable" v-bind:class="{selected: isSelected && id===0 }" v-on:click="id=0; showInspector();" >
+                <line x1="268.7441" y1="182.50076" x2="199" y2="182.50076" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+                <line x1="273.7441" y1="273.4163" x2="273.7441" y2="136.939" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="273.7441" cy="182.50076" r="5.00000798950948"/>
+                <circle cx="192" cy="182.50076" r="7.00001118531326" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+             <g id="DE">
+                <circle cx="316.7441" cy="385" r="7.00001118531326" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white" stroke="black"/>
+                <circle cx="217.82796" cy="385" r="7.00001118531327" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white"/>
+            </g>
             <Meter :id=0 :xRect=208.2 :yRect=194 />
             <Meter :id=1 :xRect=149 :yRect=341.3 />
             <Meter :id=2 :xRect=345.8 :yRect=341.7 />
@@ -30,31 +66,6 @@
                     <tspan font-family="Helvetica Neue" font-size="12" font-style="italic" font-weight="400" fill="black" x="1.4260004" y="11">Substation</tspan>
                 </text>
             </g>
-            <g id="Cable3">
-                <path d="M 273.7441 273.4163 L 298.6681 273.4163 L 298.6726 311 L 317.2561 311 L 316.79254 378.00016" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <circle cx="404.8" cy="331" r="7.00001118531327" fill="white"/>
-                <circle cx="404.8" cy="331" r="7.00001118531327" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <circle cx="317.1173" cy="331.0592" r="5.00000798950949" fill="black"/>
-                <line x1="322.1173" y1="331.0558" x2="397.8" y2="331.00473" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <circle cx="316.7441" cy="385" r="7.00001118531326" fill="white"/>
-                <circle cx="316.7441" cy="385" r="7.00001118531326" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-            </g>
-            <g id="Cable2">
-                <path d="M 273.7441 273.4163 L 248.8201 273.4163 L 248.8201 311 L 217.67497 311 L 217.81348 378" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <circle cx="217.71443" cy="330.0858" r="5.00000798950948" fill="black"/>
-                <line x1="212.71466" y1="330.13425" x2="130.39968" y2="330.93216" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <circle cx="123.4" cy="331" r="7.00001118531328" fill="white"/>
-                <circle cx="123.4" cy="331" r="7.00001118531328" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <circle cx="217.82796" cy="385" r="7.00001118531327" fill="white"/>
-                <circle cx="217.82796" cy="385" r="7.00001118531327" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-            </g>
-            <g id="Cable1">
-                <line x1="268.7441" y1="182.50076" x2="199" y2="182.50076" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <line x1="273.7441" y1="273.4163" x2="273.7441" y2="136.939" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <circle cx="273.7441" cy="182.50076" r="5.00000798950948" fill="black"/>
-                <circle cx="192" cy="182.50076" r="7.00001118531326" fill="white"/>
-                <circle cx="192" cy="182.50076" r="7.00001118531326" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-            </g>
             <Fuse :id=0 :xRect=268.7441 :yRect=139.77368 />
             <Fuse :id=1 :xRect=268.7441 :yRect=241.65787 />
             <Fuse :id=2 :xRect=243.8201 :yRect=293.38053 :displayLeft="'left'" />
@@ -70,11 +81,39 @@
 <script>
 import Fuse from "@/components/sg-elmts/Fuse.vue"
 import Meter from "@/components/sg-elmts/Meter.vue"
+import { mapState } from 'vuex'
 
 export default {
+     data: function() {
+        return {
+            id: -1
+        }
+        
+    },
     components: {Fuse, Meter},
     created() {
         this.$store.commit('init', 6)
+    },
+    computed: {
+         isSelected: function() {
+            return this.selectedElmt.isSameAs(this.id, 'cable')
+        },
+        ...mapState({
+            selectedElmt: state => state.selectedElmt
+        })
+    },
+    methods: {
+        showInspector: function() {
+            let info = {
+                elemtId: this.id,
+                elemtType: "cable"
+            }
+            this.$store.commit('showInspector', info)
+        }
     }
 }
 </script>
+
+<style lang="scss" scoped>
+@import "@/scss/cable.scss";
+</style>

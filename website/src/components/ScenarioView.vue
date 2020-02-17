@@ -65,7 +65,6 @@ export default {
         ...mapState({
             inspVisible: state => state.inspVisible,
             selection: state => state.selectedElmt
-            // currentMeterId: state => state.currentMeterId,
             // isApproximating: state => state.isApproximating,
             // showAlertApprox: state => state.showAlertApprox
         })

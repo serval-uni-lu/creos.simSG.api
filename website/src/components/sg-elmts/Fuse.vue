@@ -1,8 +1,8 @@
 <template>
-    <g class="fuse" v-bind:class="{fClosed: fuses[id].isClosed}" v-on:click="switchFuse(id)">
-        <rect :x="xRect" :y="yRect" width="10" height="10" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text :transform="translate" fill="black">
-            <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="0" y="11">Fuse {{id + 1}}</tspan>
+    <g class="fuse" v-bind:class="{fClosed: fuses[id].isClosed, selected: isSelected}" v-on:click="showInspector($event, id)">
+        <rect :x="xRect" :y="yRect" width="10" height="10" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text :transform="translate">
+            <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" x="0" y="11">Fuse {{id + 1}}</tspan>
         </text>
     </g>
 </template>
@@ -48,12 +48,26 @@ export default {
             }
             return "translate(" +  (x + this.shiftTextX) + " " + (y + this.shiftTextY) + ")";
         },
+        isSelected: function() {
+            return this.selectedElmt.isSameAs(this.id, 'fuse')
+        },
         ...mapState({
             fuses: state => state.fuses,
+            selectedElmt: state => state.selectedElmt
         })
     },
     methods: {
-        ...mapMutations(['switchFuse'])
+        showInspector: function(event, id) {
+            if(event.altKey) {
+                this.$store.commit('switchFuse', id);
+            } else {
+                let info = {
+                    elemtId: id,
+                    elemtType: "fuse"
+                }
+                this.$store.commit('showInspector', info);
+            }
+        }
     }
 }
 </script>
@@ -61,14 +75,40 @@ export default {
 
 
 <style lang="scss" scoped>
-g.fuse {
+g.fuse:not(selected) {
+    
     rect {
         fill: white;
+        stroke:black;
+    }
+
+    text {
+        stroke: none;
+        fill: black;
     }
 
     &.fClosed {
         rect {
             fill: black;
+        }
+    }
+}
+
+g.fuse.selected {
+    stroke: green;
+
+    rect {
+        fill: white;
+    }
+
+    text {
+        stroke: green;
+        fill: green;
+    }
+
+    &.fClosed {
+        rect {
+            fill: green;
         }
     }
 }

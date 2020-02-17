@@ -1,8 +1,10 @@
 <template lang="pug">
     div
-        p.title Inspector {{elmtTypeFormatted}} - {{elmtId + 1}}
+        p.title {{elmtTypeFormatted}} - {{elmtId + 1}}
         .form 
             <InspMeter v-if="elmtType === 'meter'" :meterId="elmtId"/>
+            <InspFuse v-if="elmtType === 'fuse'" :fuseId="elmtId"/>
+            <InspCable v-if="elmtType === 'cable'" :cableId="elmtId"/>
         .closingButton(v-on:click="hideInspector()")
             <svg viewBox="871 749 32 32">
                 <defs/>
@@ -16,6 +18,8 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import InspMeter from '@/components/scenarioView/attrViews/InspMeter.vue'
+import InspFuse from '@/components/scenarioView/attrViews/InspFuse.vue'
+import InspCable from '@/components/scenarioView/attrViews/InspCable.vue'
 
 export default {
     props: {
@@ -38,7 +42,7 @@ export default {
     methods: {
         ...mapMutations(['hideInspector'])
     },
-    components: {InspMeter}
+    components: {InspMeter, InspFuse, InspCable}
 }
 
 </script>

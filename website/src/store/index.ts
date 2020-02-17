@@ -49,16 +49,9 @@ let idxGenerator = 0;
 export default new Vuex.Store({
     state: {
         consumptions: Array<number>(),
+        loads: Array<number>(),
         inspVisible: false,
-
-        // currentMeterId: 0,
-        // selectedMeter: -1,
-
         selectedElmt: NullSelection,
-
-
-
-
         fuses: Array<Fuse>(),
         cableLoads: Array<number>(),
         // isApproximating: false,
@@ -69,6 +62,7 @@ export default new Vuex.Store({
     mutations: {
         init(state, nbFuses) {
             state.consumptions = new Array(nbFuses/2).fill(0.)
+            state.loads = new Array(nbFuses/2).fill(-1)
 
             for(var i=0; i<nbFuses; i++) {
                 state.fuses.push(new Fuse(true, -1));
@@ -81,18 +75,10 @@ export default new Vuex.Store({
         },
         hideInspector(state) {
             state.inspVisible = false;
-            // state.selectedMeter = -1;
             state.selectedElmt = NullSelection;
         },
         showInspector(state, {elemtId, elemtType}: {elemtId: number, elemtType: string}) {
-            console.log("Show inspector called")
-            console.log(elemtId)
-            console.log(elemtType)
-
-
             state.inspVisible = true;
-            // state.currentMeterId = meterId;
-            // state.selectedMeter = meterId;
             state.selectedElmt = new Selection(elemtId, elemtType)
         },
         startAction(state, {scenarioID, action}: {scenarioID:number, action: Action}) {

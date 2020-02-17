@@ -56,8 +56,6 @@ export default {
 
             this.$store.commit('startAction', info)
         }
-
-        // ...mapMutations([])
     }
 }
 </script>
