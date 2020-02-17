@@ -46,16 +46,18 @@ public class SCBasedApprox {
                 cables = ParaCabinetBuilder.extractCables(substation);
                 break;
             }
-//            case 5: {
-//                substation = CabinetBuilder.build(request.getFuseStatesArr(), request.getConsumptionsArr());
-//                fuses = CabinetBuilder.extractFuses(substation);
-//                cables = CabinetBuilder.extractCables(substation);
-//                break;
-//            }
+            case 5: {
+                substation = IndirectParaBuilder.build(request.getFuseStatesArr(), request.getConsumptionsArr());
+                fuses = IndirectParaBuilder.extractFuses(substation);
+                cables = IndirectParaBuilder.extractCables(substation);
+                break;
+            }
             default: {
                 return new Error(request.getActionID(), "Scenario code " + request.getScenario() + " is not supported by the actuator.");
             }
         }
+
+
         LoadApproximator.approximate(substation);
 
         var cableLoads = new ArrayList<Double>(cables.length);

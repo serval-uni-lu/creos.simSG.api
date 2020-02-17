@@ -16,7 +16,7 @@ public class CabinetBuilder {
                                           |-[f4]----(cbl3)----[f6]-cab3
      */
     public static Substation build() {
-       return build(new boolean[]{true, true, true, true, true, true}, new double[]{0., 0., 0.});
+       return build(new boolean[]{true, true, true, true, true, true}, new double[3]);
     }
 
     public static Substation build(boolean[] fuseClose, double[] consumptions) {

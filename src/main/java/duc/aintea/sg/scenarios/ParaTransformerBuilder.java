@@ -16,7 +16,7 @@ public class ParaTransformerBuilder {
               |-[f3]----(cbl2)----[f4]-|
      */
     public static Substation build() {
-        return build(new boolean[]{true, true, true, true, true, true}, new double[]{0., 0., 0.});
+        return build(new boolean[]{true, true, true, true, true, true}, new double[3]);
     }
 
 
@@ -79,10 +79,10 @@ public class ParaTransformerBuilder {
         res[0] = substation.getFuses().get(0);
         res[1] = res[0].getOpposite();
         res[2] = substation.getFuses().get(1);
-        res[3] = res[1].getOpposite();
+        res[3] = res[2].getOpposite();
 
-        var cab = res[2].getOwner();
-        res[4] = cab.getFuses().get(3);
+        var cab = res[1].getOwner();
+        res[4] = cab.getFuses().get(2);
         res[5] = res[4].getOpposite();
 
         return res;
@@ -93,8 +93,8 @@ public class ParaTransformerBuilder {
 
         var res = new Cable[3];
         res[0] = fuses[0].getCable();
-        res[1] = fuses[1].getCable();
-        res[2] = fuses[2].getCable();
+        res[1] = fuses[2].getCable();
+        res[2] = fuses[4].getCable();
 
         return res;
     }

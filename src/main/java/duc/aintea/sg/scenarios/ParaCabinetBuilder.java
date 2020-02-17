@@ -23,7 +23,7 @@ public class ParaCabinetBuilder {
                                         |-[f5]----(cbl3)----[f6]-|
      */
     public static Substation build() {
-        return build(new boolean[]{true, true, true, true, true, true, true, true}, new double[]{0., 0., 0., 0.});
+        return build(new boolean[]{true, true, true, true, true, true, true, true}, new double[4]);
 
     }
 
@@ -94,5 +94,36 @@ public class ParaCabinetBuilder {
         cbl4.setFuses(f7, f8);
 
         return subs;
+    }
+
+    public static Fuse[] extractFuses(Substation substation) {
+        var res = new Fuse[8];
+        res[0] = substation.getFuses().get(0);
+        res[1] = res[0].getOpposite();
+
+        var cab1 = res[1].getOwner();
+        res[2] = cab1.getFuses().get(1);
+        res[3] = res[2].getOpposite();
+        res[4] = cab1.getFuses().get(2);
+        res[5] = res[4].getOpposite();
+
+        var cab2 = res[3].getOwner();
+        res[6] = cab2.getFuses().get(2);
+        res[7] = res[6].getOpposite();
+
+        return res;
+    }
+
+    public static Cable[] extractCables(Substation substation) {
+        var cables = new Cable[4];
+        var fuses = extractFuses(substation);
+
+        cables[0] = fuses[0].getCable();
+        cables[1] = fuses[2].getCable();
+        cables[2] = fuses[4].getCable();
+        cables[3] = fuses[6].getCable();
+
+
+        return cables;
     }
 }

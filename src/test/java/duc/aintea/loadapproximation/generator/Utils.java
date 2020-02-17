@@ -39,5 +39,29 @@ public class Utils {
         return res;
     }
 
+    static double[] random_double(int nb) {
+        var res = new double[nb];
+        for (int j = 0; j < nb; j++) {
+            res[j] = randomValue();
+        }
+        return res;
+    }
+
+    static Boolean[] randomBool(int nb) {
+        var res = new Boolean[nb];
+        for (int j = 0; j < nb; j++) {
+            res[j] = RANDOM.nextBoolean();
+        }
+        return res;
+    }
+
+    static boolean[] random_bool(int nb) {
+        var res = new boolean[nb];
+        for (int j = 0; j < nb; j++) {
+            res[j] = RANDOM.nextBoolean();
+        }
+        return res;
+    }
+
 
 }

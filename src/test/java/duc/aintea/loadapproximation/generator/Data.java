@@ -46,4 +46,24 @@ public class Data {
         return res;
     }
 
+    public static Arguments[] generateRandomArrDoubles(int size) {
+        Arguments[] res = new Arguments[NB_TESTS];
+
+        for (int i = 0; i < res.length; i++) {
+            res[i] = Arguments.of((Object) random_double(size));
+        }
+
+        return res;
+    }
+
+    public static Arguments[] generateRandomArrBooleans(int nb) {
+        Arguments[] res = new Arguments[NB_TESTS];
+
+        for (int i = 0; i < res.length; i++) {
+            res[i] = Arguments.of((Object) random_bool(nb));
+        }
+
+        return res;
+    }
+
 }

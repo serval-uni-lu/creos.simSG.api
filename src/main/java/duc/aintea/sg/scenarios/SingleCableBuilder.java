@@ -10,7 +10,7 @@ public class SingleCableBuilder {
                 subs-[f1]----(cbl1)----[f2]-cab
              */
     public static Substation build() {
-        return build(new boolean[]{true, true}, new double[]{0.});
+        return build(new boolean[]{true, true}, new double[1]);
     }
 
 
