@@ -79,36 +79,36 @@ g.fuse:not(selected) {
     
     rect {
         fill: white;
-        stroke:black;
+        stroke:$color-schema;
     }
 
     text {
         stroke: none;
-        fill: black;
+        fill: $color-schema;
     }
 
     &.fClosed {
         rect {
-            fill: black;
+            fill: $color-schema;
         }
     }
 }
 
 g.fuse.selected {
-    stroke: green;
-
+    
     rect {
         fill: white;
+        stroke: $color-selection;
     }
 
     text {
-        stroke: green;
-        fill: green;
+        stroke: none;
+        fill: $color-selection;
     }
 
     &.fClosed {
         rect {
-            fill: green;
+            fill: $color-selection;
         }
     }
 }

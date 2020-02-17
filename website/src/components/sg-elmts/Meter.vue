@@ -57,10 +57,10 @@ export default {
 
 <style lang="scss" scoped>
 g:not(selected) {
-    stroke: black;
+    stroke: $color-schema;
 }
 
 g.selected {
-    stroke: green;
+    stroke: $color-selection;
 }
 </style>
