@@ -1,5 +1,5 @@
 <template>
-    <g class="fuse" v-bind:class="{fClosed: fuseStatus[id]}" v-on:click="switchFuse(id)">
+    <g class="fuse" v-bind:class="{fClosed: fuses[id].isClosed}" v-on:click="switchFuse(id)">
         <rect :x="xRect" :y="yRect" width="10" height="10" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
         <text :transform="translate" fill="black">
             <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="0" y="11">Fuse {{id + 1}}</tspan>
@@ -49,7 +49,7 @@ export default {
             return "translate(" +  (x + this.shiftTextX) + " " + (y + this.shiftTextY) + ")";
         },
         ...mapState({
-            fuseStatus: state => state.fuseStatus,
+            fuses: state => state.fuses,
         })
     },
     methods: {

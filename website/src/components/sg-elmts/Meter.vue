@@ -35,15 +35,24 @@ export default {
             return "translate(" +  (this.xRect) + " " + (this.yRect + 27) + ")";
         },
         isSelected: function() {
-            return this.selectedMeter === this.id
+            // return this.selectedMeter === this.id
+            return this.selectedElmt.isSameAs(this.id, 'meter')
         },
         ...mapState({
             consumptions: state => state.consumptions,
-            selectedMeter: state => state.selectedMeter
+            // selectedMeter: state => state.selectedMeter
+            selectedElmt: state => state.selectedElmt
         })
     },
     methods: {
-        ...mapMutations(['showInspector'])
+        // ...mapMutations(['showInspector'])
+        showInspector: function(id) {
+            let info = {
+                elemtId: id,
+                elemtType: "meter"
+            }
+            this.$store.commit('showInspector', info)
+        }
     }
 }
 </script>

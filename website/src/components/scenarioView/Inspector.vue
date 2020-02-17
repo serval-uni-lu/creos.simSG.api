@@ -1,9 +1,8 @@
 <template lang="pug">
     div
-        p.title Inspector Meter - {{meterId + 1}}
+        p.title Inspector {{elmtTypeFormatted}} - {{elmtId + 1}}
         .form 
-            | Consumption:
-            input(type="number", min="0", v-model.number="consumptions[meterId]")
+            <InspMeter v-if="elmtType === 'meter'" :meterId="elmtId"/>
         .closingButton(v-on:click="hideInspector()")
             <svg viewBox="871 749 32 32">
                 <defs/>
@@ -15,22 +14,31 @@
 </template>
 
 <script>
-import Vue from "vue"
 import { mapState, mapMutations } from 'vuex'
+import InspMeter from '@/components/scenarioView/attrViews/InspMeter.vue'
 
 export default {
     props: {
-        meterId: Number,
+        elmtId: Number,
+        elmtType: {
+            type: String,
+            validator: function(value) {
+                return ['meter', 'fuse', 'cable', 'null'].indexOf(value) !== -1
+            }
+        }
     }, 
     computed: {
+        elmtTypeFormatted: function() {
+            return this.elmtType.charAt(0).toUpperCase() + this.elmtType.slice(1)
+        },
         ...mapState({
-            consumptions: state => state.consumptions,
             inspVisible: state => state.inspVisible,
         })
     },
     methods: {
         ...mapMutations(['hideInspector'])
-    }
+    },
+    components: {InspMeter}
 }
 
 </script>
@@ -41,10 +49,6 @@ export default {
     font-size: $inspector-font-size;
     text-align: left;
     padding-left: 10px;
-    input {
-        width: 15%;
-        margin-left: 20px; 
-    }
 }
 
 .closingButton {

@@ -13,17 +13,17 @@
                 Sc5IndiPara(v-else-if="name === 'sc5-indirect-para'")
                 h3(v-else) Oups...Component not yet implemented.
 
-            #blocker(v-show="isApproximating")
-                <i class="bigLock fas fa-lock" v-show="showIconLock()" v-on:click="openAlertApproximation()"></i>
-                #lockMessage(class="alert alert-info alert-dismissible fade show" role="alert" v-show="showAlert()")
-                    | <i class="fas fa-lock"></i> The load is being approximated. Grid cannot be modified. 
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" v-on:click="closeAlertApproximation()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+            //- #blocker(v-show="isApproximating")
+            //-     <i class="bigLock fas fa-lock" v-show="showIconLock()" v-on:click="openAlertApproximation()"></i>
+            //-     #lockMessage(class="alert alert-info alert-dismissible fade show" role="alert" v-show="showAlert()")
+            //-         | <i class="fas fa-lock"></i> The load is being approximated. Grid cannot be modified. 
+            //-         <button type="button" class="close" data-dismiss="alert" aria-label="Close" v-on:click="closeAlertApproximation()">
+            //-             <span aria-hidden="true">&times;</span>
+            //-         </button>
             
                                     
 
-            <Inspector id="inspector" :meterId="currentMeterId" v-bind:class="{show: inspVisible}"/>
+            <Inspector id="inspector" :elmtId="selection.id" :elmtType="selection.type" v-bind:class="{show: inspVisible}"/>
 
 </template>
 
@@ -64,37 +64,38 @@ export default {
         },
         ...mapState({
             inspVisible: state => state.inspVisible,
-            currentMeterId: state => state.currentMeterId,
-            isApproximating: state => state.isApproximating,
-            showAlertApprox: state => state.showAlertApprox
+            selection: state => state.selectedElmt
+            // currentMeterId: state => state.currentMeterId,
+            // isApproximating: state => state.isApproximating,
+            // showAlertApprox: state => state.showAlertApprox
         })
     },
     methods: {
-        showAlert: function() {
-            return this.isApproximating && this.showAlertApprox;
-        },
-        showIconLock: function() {
-            return !this.showAlert();
-        },
-        confirmLeave(next) {
-            if(this.isApproximating) {
-                var ok = confirm("Leaving this page will cancel the load approximation. Are you sure you want to quit?");
-                if(ok) {
-                    this.stopApproximation();
-                    next();
-                }
-            } else {
-                next();
-            }
-        },
+        // showAlert: function() {
+        //     return this.isApproximating && this.showAlertApprox;
+        // },
+        // showIconLock: function() {
+        //     return !this.showAlert();
+        // },
+        // confirmLeave(next) {
+        //     if(this.isApproximating) {
+        //         var ok = confirm("Leaving this page will cancel the load approximation. Are you sure you want to quit?");
+        //         if(ok) {
+        //             this.stopApproximation();
+        //             next();
+        //         }
+        //     } else {
+        //         next();
+        //     }
+        // },
         ...mapMutations(['closeAlertApproximation', 'openAlertApproximation', 'stopApproximation'])
     },
-    beforeRouteLeave(to, from, next) {
-        this.confirmLeave(next);
-    },
-    beforeRouteUpdate(to, from, next) {
-        this.confirmLeave(next);
-    }
+    // beforeRouteLeave(to, from, next) {
+    //     this.confirmLeave(next);
+    // },
+    // beforeRouteUpdate(to, from, next) {
+    //     this.confirmLeave(next);
+    // }
 }
 </script>
 

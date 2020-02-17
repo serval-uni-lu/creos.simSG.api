@@ -17,16 +17,50 @@ interface Actuator {
     actions: Array<Action>;
 }
 
+class Fuse {
+    isClosed: boolean;
+    load: number;
+
+    constructor(isClosed: boolean, load: number) {
+        this.isClosed = isClosed;
+        this.load = load;
+    }
+}
+
+class Selection {
+    id: number;
+    type: string;
+
+    constructor(id: number, type: string) {
+        this.id = id;
+        this.type=type;
+    }
+
+    isSameAs(elemtId: number, elemtType: string): boolean {
+        return this.id === elemtId && this.type === elemtType;
+    }
+}
+
+const NullSelection = new Selection(-1, "null");
+
 let runningActions = new Map<number, Action>();
 let idxGenerator = 0;
 
 export default new Vuex.Store({
     state: {
-        fuseStatus: Array<boolean>(),
         consumptions: Array<number>(),
         inspVisible: false,
-        currentMeterId: 0,
-        selectedMeter: -1,
+
+        // currentMeterId: 0,
+        // selectedMeter: -1,
+
+        selectedElmt: NullSelection,
+
+
+
+
+        fuses: Array<Fuse>(),
+        cableLoads: Array<number>(),
         // isApproximating: false,
         // showAlertApprox: false,
         actuators: Array<Actuator>()
@@ -34,27 +68,45 @@ export default new Vuex.Store({
     },
     mutations: {
         init(state, nbFuses) {
-            state.fuseStatus = new Array(nbFuses).fill(true)
             state.consumptions = new Array(nbFuses/2).fill(0.)
+
+            for(var i=0; i<nbFuses; i++) {
+                state.fuses.push(new Fuse(true, -1));
+            }
         },
         switchFuse(state, fuseId) {
-            Vue.set(state.fuseStatus, fuseId, !state.fuseStatus[fuseId])
+            var currF = state.fuses[fuseId];
+            Vue.set(state.fuses, fuseId, new Fuse(!currF.isClosed, currF.load))
+
         },
         hideInspector(state) {
             state.inspVisible = false;
-            state.selectedMeter = -1;
+            // state.selectedMeter = -1;
+            state.selectedElmt = NullSelection;
         },
-        showInspector(state, meterId) {
-            state.currentMeterId = meterId;
+        showInspector(state, {elemtId, elemtType}: {elemtId: number, elemtType: string}) {
+            console.log("Show inspector called")
+            console.log(elemtId)
+            console.log(elemtType)
+
+
             state.inspVisible = true;
-            state.selectedMeter = meterId;
+            // state.currentMeterId = meterId;
+            // state.selectedMeter = meterId;
+            state.selectedElmt = new Selection(elemtId, elemtType)
         },
         startAction(state, {scenarioID, action}: {scenarioID:number, action: Action}) {
             runningActions.set(idxGenerator, action)
+
+            var fuseStatus = new Array<boolean>();
+            for (const fuse of state.fuses) {
+                fuseStatus.push(fuse.isClosed)
+            }
+
             var msg = {
                 actionID: idxGenerator,
                 scenario: scenarioID,
-                fuseStates: state.fuseStatus,
+                fuseStates: fuseStatus,
                 consumptions: state.consumptions
             };
             idxGenerator++;
