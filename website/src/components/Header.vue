@@ -85,7 +85,7 @@ ol.stop > li {
 }
 
 #header {
-    margin-bottom: 50px;
+    margin-bottom: 10px;
     background-color: $header-color;
     padding-bottom: 20px;
 }

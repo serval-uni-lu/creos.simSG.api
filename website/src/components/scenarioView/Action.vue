@@ -69,6 +69,7 @@ button {
     margin-right: auto;
     margin-top: 20px;
     margin-bottom: 20px;
+    max-width: 80%;
 }
 
 select {
