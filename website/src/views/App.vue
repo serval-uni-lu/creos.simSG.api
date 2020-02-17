@@ -2,6 +2,8 @@
     <div id="app">
         <Header />
         <router-view/>
+
+        <Alert v-if="successMessage !== ''" :text="successMessage"/>
     </div>
 </template>
 
@@ -9,11 +11,19 @@
 <script>
 
 import Header from '@/components/Header.vue'
+import Alert from "@/components/alerts/Success.vue"
+import { mapState } from 'vuex'
 
 export default {
     name: 'app',
     components: {
-        Header
+        Header,
+        Alert
+    }, 
+    computed: {
+        ...mapState({
+            successMessage: state => state.successMessage,
+        })
     }
 }
 </script>

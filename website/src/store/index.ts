@@ -56,7 +56,8 @@ export default new Vuex.Store({
         cableLoads: Array<number>(),
         // isApproximating: false,
         // showAlertApprox: false,
-        actuators: Array<Actuator>()
+        actuators: Array<Actuator>(),
+        successMessage: ""
 
     },
     mutations: {
@@ -134,6 +135,12 @@ export default new Vuex.Store({
                 fuse.load = loads[idx]
                 Vue.set(state.fuses, idx, fuse)
             }
+        },
+        setSuccessMessage(state, msg) {
+            state.successMessage = msg;
+        },
+        removeSuccessMessage(state) {
+            state.successMessage = "";
         }
     },
     actions: {

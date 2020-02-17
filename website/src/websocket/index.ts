@@ -40,6 +40,11 @@ function onMessage(event: any) {
         debugReceivedMessage(message);
         app.$store.commit('setCableLoads', message.cableLoads)
         app.$store.commit('setFuseLoads', message.fuseLoads)
+
+        app.$store.commit('setSuccessMessage', "Accession executed with success.");
+
+        setTimeout(function(){app.$store.commit('removeSuccessMessage')}, 5000)
+
     } else if(message.messageType === MSG_ERROR) {
         debugReceivedMessage(message);
     } else {
