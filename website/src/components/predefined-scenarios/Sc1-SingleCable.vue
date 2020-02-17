@@ -15,15 +15,17 @@
         <g id="SC1-SingleCable" fill="none" stroke-dasharray="none" stroke="none" stroke-opacity="1" fill-opacity="1">
             <g class="hidden">
                 <g v-on:click="id=0; showInspector();">
+                    <title>Load: {{load(0)}}</title>
                     <line x1="694" y1="377" x2="694" y2="242.044" stroke-linecap="round" stroke-linejoin="round"/>
                     <line x1="694" y1="291.70832" x2="601.5" y2="292.00708" stroke-linecap="round" stroke-linejoin="round"/>
                 </g>
             </g>
             <g class="cable" v-bind:class="{selected: isSelected && id===0}" v-on:click="id=0; showInspector();">
-                
+                <title>Load: {{load(0)}}</title>
                 <line x1="694" y1="377" x2="694" y2="242.044" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
                 <line x1="694" y1="291.70832" x2="601.5" y2="292.00708" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
                 <circle cx="694" cy="291.98997" r="5.00000798950947"/>
+                <circle cx="594.5" cy="292.0297" r="7.00001118531321" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
             </g>
             <g id="Substation">
                 <rect x="644" y="194.4" width="99.99999" height="47.644" fill="white"/>
@@ -36,15 +38,10 @@
             </g>
             <Meter :id=0 :xRect=612 :yRect=303 />
             <g id="DeadEnds">
-                <circle cx="694" cy="384" r="7.00001118531325" fill="white"/>
-                <circle cx="694" cy="384" r="7.00001118531325" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+                <circle cx="694" cy="384" r="7.00001118531325" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white"/>
             </g>
             <Fuse :id=0 :xRect=689 :yRect=244.79135 />
             <Fuse :id=1 :xRect=689 :yRect=360.3567 />
-            <g id="DE-Connection">
-                <circle cx="594.5" cy="292.0297" r="7.00001118531321" fill="white"/>
-                <circle cx="594.5" cy="292.0297" r="7.00001118531321" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-            </g>
         </g>
     </svg>
 </template>
@@ -66,14 +63,19 @@ export default {
         
     },
     computed: {
-         isSelected: function() {
+        isSelected: function() {
             return this.selectedElmt.isSameAs(this.id, 'cable')
         },
         ...mapState({
-            selectedElmt: state => state.selectedElmt
+            selectedElmt: state => state.selectedElmt,
+            loads: state => state.loads
         })
     },
     methods: {
+        load: function(id) {
+            var load = this.loads[id];
+            return (load === -1)? "To be computed..." : load.toFixed(2) + " A";
+        },
         showInspector: function() {
             let info = {
                 elemtId: this.id,

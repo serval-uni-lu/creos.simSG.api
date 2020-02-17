@@ -15,18 +15,22 @@
   <g fill="none" stroke-dasharray="none" stroke="none" stroke-opacity="1" fill-opacity="1">
     <g class="hidden">
       <g v-on:click="id=3; showInspector();">
+        <title>Load: {{load(3)}}</title>
         <line x1="913.446" y1="727.439" x2="914.2379" y2="822.6861" stroke-linecap="round" stroke-linejoin="round"/>
         <line x1="919.2961" y1="781.5929" x2="1011.7323" y2="781.5929" stroke-linecap="round" stroke-linejoin="round"/>
       </g>
       <g v-on:click="id=2; showInspector();">
+        <title>Load: {{load(2)}}</title>
         <path d="M 912.446 598.5197 L 936.9761 598.5197 L 936.9761 727.439 L 912.5 727.439" stroke-linecap="round" stroke-linejoin="round"/>
         <line x1="1068.5" y1="659.1596" x2="941.9761" y2="659.1596" stroke-linecap="round" stroke-linejoin="round"/>
       </g>
       <g v-on:click="id=1; showInspector();">
+        <title>Load: {{load(1)}}</title>
         <path d="M 912.446 598.5197 L 889.3459 598.5197 L 888.9699 727.439 L 913.446 727.439" stroke-linecap="round" stroke-linejoin="round"/>
         <line x1="884.1612" y1="661.89924" x2="764.9999" y2="662.4351" stroke-linecap="round" stroke-linejoin="round"/>
       </g>
       <g v-on:click="id=0; showInspector();">
+        <title>Load: {{load(0)}}</title>
         <line x1="912.446" y1="598.5197" x2="911.8566" y2="485.6004" stroke-linecap="round" stroke-linejoin="round"/>
         <line x1="915.7869" y1="529.99085" x2="809.8541" y2="529.8463" stroke-linecap="round" stroke-linejoin="round"/>
       </g>
@@ -44,24 +48,28 @@
         </text>
     </g>
     <g class="cable" v-bind:class="{selected: isSelected && id===3}" v-on:click="id=3; showInspector();">
+      <title>Load: {{load(3)}}</title>
         <circle cx="1018.7323" cy="781.5929" r="7.00001118531325" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
         <line x1="913.446" y1="727.439" x2="914.2379" y2="822.6861" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
         <line x1="919.2961" y1="781.5929" x2="1011.7323" y2="781.5929" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
         <circle cx="914.2961" cy="781.5929" r="5.00000798950945"/>
     </g>
     <g class="cable" v-bind:class="{selected: isSelected && id===2}" v-on:click="id=2; showInspector();">
+        <title>Load: {{load(2)}}</title>
         <circle cx="1075.5" cy="659.1596" r="7.00001118531331" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
         <circle cx="936.9761" cy="659.1596" r="5.0000079895095"/>
         <path d="M 912.446 598.5197 L 936.9761 598.5197 L 936.9761 727.439 L 912.5 727.439" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
         <line x1="1068.5" y1="659.1596" x2="941.9761" y2="659.1596" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
     </g>
     <g class="cable" v-bind:class="{selected: isSelected && id===1}" v-on:click="id=1; showInspector();">
+        <title>Load: {{load(1)}}</title>
         <path d="M 912.446 598.5197 L 889.3459 598.5197 L 888.9699 727.439 L 913.446 727.439" stroke-linecap="round" stroke-linejoin="round"/>
         <line x1="884.1612" y1="661.89924" x2="764.9999" y2="662.4351" stroke-linecap="round" stroke-linejoin="round"/>
         <circle cx="758" cy="662.4666" r="7.00001118531322" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
         <circle cx="889.1611" cy="661.87676" r="5.00000798950948" />
     </g>
     <g class="cable" v-bind:class="{selected: isSelected && id===0}" v-on:click="id=0; showInspector();">
+        <title>Load: {{load(0)}}</title>
         <circle cx="802.6771" cy="529.8365" r="7.00001118531322" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
         <circle cx="911.8072" cy="530.14906" r="5.12648231674885" />
         <line x1="912.446" y1="598.5197" x2="911.8566" y2="485.6004" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
@@ -115,10 +123,15 @@ export default {
             return this.selectedElmt.isSameAs(this.id, 'cable')
         },
         ...mapState({
-            selectedElmt: state => state.selectedElmt
+            selectedElmt: state => state.selectedElmt,
+            loads: state => state.loads
         })
     },
     methods: {
+       load: function(id) {
+            var load = this.loads[id];
+            return (load === -1)? "To be computed..." : load.toFixed(2) + " A";
+        },
         showInspector: function() {
             let info = {
                 elemtId: this.id,

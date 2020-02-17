@@ -1,5 +1,6 @@
 <template>
     <g class="fuse" v-bind:class="{fClosed: fuses[id].isClosed, selected: isSelected}" v-on:click="showInspector($event, id)">
+        <title>Status: {{status}}; Load: {{load}}</title>
         <rect :x="xRect" :y="yRect" width="10" height="10" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
         <text :transform="translate">
             <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" x="0" y="11">Fuse {{id + 1}}</tspan>
@@ -33,6 +34,13 @@ export default {
         }
     },
     computed: {
+        status: function() {
+            return (this.fuses[this.id].isClosed)? "Closed" : "Open";
+        },
+        load: function() {
+            var load = this.fuses[this.id].load;
+            return (load === -1)? "To be computed..." : load.toFixed(2) + " A";
+        },
         translate: function() {
             var x = this.xRect;
             var y = this.yRect - 2;
