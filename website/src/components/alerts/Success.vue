@@ -1,8 +1,10 @@
 <template lang="pug">
     #alert
         i(class="far fa-check-circle symbol")
-        | {{text}}
-        i(class="far fa-times-circle close" v-on:click="removeSuccessMessage")
+        span {{text}}
+        <svg >
+            <use xlink:href="#close-button"></use>
+        </svg>
 </template>
 
 
@@ -28,19 +30,27 @@ export default {
     right: 10px;
     background-color: #E9F5EA;
     color: #4CAF50;
-    min-width: 20%;
     text-align: left;
 
     i.symbol {
-        margin: 10px
+        margin: 15px
     }
 
-    i.close {
-        position: relative;
-        top: 2px;
-        right: 2px;
-        color: green;
-        font-size: 0.9em;
+    span {
+        margin-right: 30px;
     }
+
+    svg {
+        position: absolute;
+        display: block;
+        top: 5px;
+        right: 5px;
+        width: 10px;
+        height: 10px;
+
+        stroke-width: 2;
+        stroke: green;
+    }
+
 }
 </style>

@@ -6,12 +6,8 @@
             <InspFuse v-if="elmtType === 'fuse'" :fuseId="elmtId"/>
             <InspCable v-if="elmtType === 'cable'" :cableId="elmtId"/>
         .closingButton(v-on:click="hideInspector()")
-            <svg viewBox="871 749 32 32">
-                <defs/>
-                <g fill="white" stroke-dasharray="none" stroke="none" stroke-opacity="1" fill-opacity="1">
-                    <line x1="871" y1="749" x2="902.852" y2="780.6595" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                    <line x1="903" y1="748.9037" x2="871.3405" y2="780.7558" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                </g>
+            <svg >
+                <use xlink:href="#close-button"></use>
             </svg>
 </template>
 
@@ -62,16 +58,14 @@ export default {
 
     svg {
         width: 20px;
-
-        line {
-            stroke: lightgray;
-        }
+        height: 20px;
+        stroke: lightgray;
+        stroke-width: 2;
 
         &:hover {
-            line {
-                stroke: black;
-            }
+            stroke: black;
         }
+
     }
 }
 </style>

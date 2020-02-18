@@ -43,7 +43,6 @@ class Selection {
 
 const NullSelection = new Selection(-1, "null");
 
-let runningActions = new Map<number, Action>();
 let idxGenerator = 0;
 
 export default new Vuex.Store({
@@ -54,8 +53,6 @@ export default new Vuex.Store({
         selectedElmt: NullSelection,
         fuses: Array<Fuse>(),
         cableLoads: Array<number>(),
-        // isApproximating: false,
-        // showAlertApprox: false,
         actuators: Array<Actuator>(),
         successMessage: ""
 
@@ -83,8 +80,6 @@ export default new Vuex.Store({
             state.selectedElmt = new Selection(elemtId, elemtType)
         },
         startAction(state, {scenarioID, action}: {scenarioID:number, action: Action}) {
-            runningActions.set(idxGenerator, action)
-
             var fuseStatus = new Array<boolean>();
             for (const fuse of state.fuses) {
                 fuseStatus.push(fuse.isClosed)
@@ -99,24 +94,6 @@ export default new Vuex.Store({
             idxGenerator++;
             WS.sendActionRequest(msg);
         },
-        // startApproximation(state) {
-        //     state.isApproximating = true;
-        //     state.showAlertApprox = true;
-        //     console.log("Start approximation: " + (state.isApproximating && state.showAlertApprox))
-        // },
-        // stopApproximation(state) {
-        //     state.isApproximating = false;
-        //     state.showAlertApprox = false;
-        //     console.log("Stop approximation: " + (state.isApproximating && state.showAlertApprox))
-        // },
-        // openAlertApproximation(state) {
-        //     state.showAlertApprox = true;
-        //     console.log("Open Alert: " + (state.isApproximating && state.showAlertApprox))
-        // },
-        // closeAlertApproximation(state) {
-        //     state.showAlertApprox = false;
-        //     console.log("Hide Alert: " + (state.isApproximating && state.showAlertApprox))
-        // },
         addActuator(state, toAdd: Actuator) {
             state.actuators.push(toAdd);
         },
@@ -141,11 +118,6 @@ export default new Vuex.Store({
         },
         removeSuccessMessage(state) {
             state.successMessage = "";
-        }
-    },
-    actions: {
-        runAction (context, {actName, acts} ) {
-           
         }
     }
 })

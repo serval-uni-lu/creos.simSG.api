@@ -14,8 +14,8 @@
 
 
         #logos
-            img.creos(src="../assets/creos.jpg" alt="logo creos")
-            img.serval(src="../assets/serval.svg" alt="logo serval")
+            img.creos(src="@/assets/creos.jpg" alt="logo creos")
+            img.serval(src="@/assets/serval.svg" alt="logo serval")
   
 </template>
 

@@ -81,7 +81,7 @@ select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: url(/upDown.svg) 96% no-repeat #eee;
+  background: url("../../assets/upDown.svg") 96% no-repeat #eee;
   background-size: $actuator-list-size;
 }
 

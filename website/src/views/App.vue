@@ -4,6 +4,7 @@
         <router-view/>
 
         <Alert v-if="successMessage !== ''" :text="successMessage"/>
+        <!-- <Alert :text="'A message used for debug purpose...'"/> -->
     </div>
 </template>
 
