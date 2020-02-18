@@ -47,6 +47,8 @@ function onMessage(event: any) {
 
     } else if(message.messageType === MSG_ERROR) {
         debugReceivedMessage(message);
+        console.error(message.reason);
+        app.$store.commit('setErrorMessage', "Accession failed: " + message.reason);
     } else {
         console.error("Message with an expected type received: " + message.messageType);
         console.error(message)

@@ -45,9 +45,6 @@ export default {
         })
     },
     methods: {
-        // noActuators: function() {
-        //     return this.actuators.length === 0;
-        // },
         startAction: function(act) {
             var info = {
                 scenarioID: this.scenarioID,

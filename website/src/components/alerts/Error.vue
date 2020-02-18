@@ -2,7 +2,7 @@
     #alert
         i(class="far fa-check-circle symbol")
         span {{text}}
-        <svg v-on:click="removeSuccessMessage">
+        <svg v-on:click="removeErrorMessage">
             <use xlink:href="#close-button"></use>
         </svg>
 </template>
@@ -17,7 +17,7 @@ export default {
         text: String
     },
     methods: {
-        ...mapMutations(['removeSuccessMessage'])
+        ...mapMutations(['removeErrorMessage'])
     },
 }
 </script>
@@ -28,8 +28,8 @@ export default {
     z-index: 30;
     bottom: 10px;
     right: 10px;
-    background-color: #E9F5EA;
-    color: #4CAF50;
+    background-color: #FEE8E6;
+    color: #F44335;
     text-align: left;
 
     i.symbol {
@@ -49,7 +49,7 @@ export default {
         height: 10px;
 
         stroke-width: 2;
-        stroke: green;
+        stroke: red;
     }
 
 }

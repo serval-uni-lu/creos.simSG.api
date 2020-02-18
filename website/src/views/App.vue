@@ -4,6 +4,7 @@
         <router-view/>
 
         <Alert v-if="successMessage !== ''" :text="successMessage"/>
+        <Error v-if="errorMessage !== ''" :text="errorMessage"/>
         <!-- <Alert :text="'A message used for debug purpose...'"/> -->
     </div>
 </template>
@@ -13,17 +14,20 @@
 
 import Header from '@/components/Header.vue'
 import Alert from "@/components/alerts/Success.vue"
+import Error from "@/components/alerts/Error.vue"
 import { mapState } from 'vuex'
 
 export default {
     name: 'app',
     components: {
         Header,
-        Alert
+        Alert,
+        Error
     }, 
     computed: {
         ...mapState({
             successMessage: state => state.successMessage,
+            errorMessage: state => state.errorMessage
         })
     }
 }

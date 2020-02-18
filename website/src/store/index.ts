@@ -4,11 +4,10 @@ import WS from '../websocket'
 
 Vue.use(Vuex)
 
-
-
 interface Action {
+    id: number,
     name: string,
-    isBlocking: boolean
+    type: String
 }
 
 interface Actuator {
@@ -20,10 +19,12 @@ interface Actuator {
 class Fuse {
     isClosed: boolean;
     load: number;
+    confidenceLevel: number;
 
-    constructor(isClosed: boolean, load: number) {
+    constructor(isClosed: boolean, load: number, confidenceLevel: number) {
         this.isClosed = isClosed;
         this.load = load;
+        this.confidenceLevel = confidenceLevel;
     }
 }
 
@@ -54,21 +55,22 @@ export default new Vuex.Store({
         fuses: Array<Fuse>(),
         cableLoads: Array<number>(),
         actuators: Array<Actuator>(),
-        successMessage: ""
+        successMessage: "",
+        errorMessage: ""
 
     },
     mutations: {
-        init(state, nbFuses) {
+        init(state, nbFuses: number) {
             state.consumptions = new Array(nbFuses/2).fill(0.)
             state.loads = new Array(nbFuses/2).fill(-1)
 
             for(var i=0; i<nbFuses; i++) {
-                state.fuses.push(new Fuse(true, -1));
+                state.fuses.push(new Fuse(true, -1, 100));
             }
         },
-        switchFuse(state, fuseId) {
+        switchFuse(state, fuseId: number) {
             var currF = state.fuses[fuseId];
-            Vue.set(state.fuses, fuseId, new Fuse(!currF.isClosed, currF.load))
+            Vue.set(state.fuses, fuseId, new Fuse(!currF.isClosed, currF.load, currF.confidenceLevel))
 
         },
         hideInspector(state) {
@@ -80,19 +82,30 @@ export default new Vuex.Store({
             state.selectedElmt = new Selection(elemtId, elemtType)
         },
         startAction(state, {scenarioID, action}: {scenarioID:number, action: Action}) {
-            var fuseStatus = new Array<boolean>();
-            for (const fuse of state.fuses) {
-                fuseStatus.push(fuse.isClosed)
-            }
+            console.debug("Start action: ")
+            console.debug(action)
+            
+            if(action.type === 'sc-based') {
+                var fuseStatus = new Array<boolean>();
+                var fuseConfidence = new Array<number>();
+                for (const fuse of state.fuses) {
+                    fuseStatus.push(fuse.isClosed);
+                    fuseConfidence.push(fuse.confidenceLevel);
+                }
 
-            var msg = {
-                actionID: idxGenerator,
-                scenario: scenarioID,
-                fuseStates: fuseStatus,
-                consumptions: state.consumptions
-            };
-            idxGenerator++;
-            WS.sendActionRequest(msg);
+                var msg = {
+                    actionID: action.id,
+                    executionID: idxGenerator,
+                    scenario: scenarioID,
+                    fuseStates: fuseStatus,
+                    fuseConfidence: fuseConfidence,
+                    consumptions: state.consumptions
+                };
+                idxGenerator++;
+                WS.sendActionRequest(msg);
+            } else {
+                console.error("Action type not supported by the client.")
+            }
         },
         addActuator(state, toAdd: Actuator) {
             state.actuators.push(toAdd);
@@ -113,11 +126,17 @@ export default new Vuex.Store({
                 Vue.set(state.fuses, idx, fuse)
             }
         },
-        setSuccessMessage(state, msg) {
+        setSuccessMessage(state, msg: string) {
             state.successMessage = msg;
         },
         removeSuccessMessage(state) {
             state.successMessage = "";
-        }
+        },
+        setErrorMessage(state, msg: string) {
+            state.errorMessage = msg;
+        },
+        removeErrorMessage(state) {
+            state.errorMessage = "";
+        },
     }
 })

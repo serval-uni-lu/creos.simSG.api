@@ -10,6 +10,11 @@
         br
         | Load: {{load}}
         br
+        br
+        .confidence
+          | Confidence: 
+          input(type="range" min="0" max="100" class="range" v-model.number="fuses[fuseId].confidenceLevel")
+          input(type="number" min="0" max="100" class="number" v-model.number="fuses[fuseId].confidenceLevel")
         
         
 
@@ -36,6 +41,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.confidence {
+  .range {
+    width: 70%;
+    margin-right: 5%;
+    position: relative;
+    top: 5px;
+  }
+
+  //FF only
+  .range[type="range"]::-moz-range-progress {
+    background-color: $link-color; 
+  }
+  .range[type="range"]::-moz-range-track {  
+    background-color: lightgray;
+  }
+
+  .number {
+    width: 20%;
+  }
+}
 
 .stateInfo {
     display: inline;
