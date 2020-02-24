@@ -1,6 +1,7 @@
 package duc.aintea.server;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import duc.aintea.server.messages.*;
 import duc.aintea.server.messages.Error;
 import duc.aintea.server.worker.SCBasedApprox;
@@ -60,10 +61,7 @@ public class WSHandler implements WebSocketConnectionCallback {
                 try {
                     messageType = MessageType.valueOf(jsonObj.getString("messageType").toUpperCase());
                 }catch (IllegalArgumentException ex) {
-                    var actionId = jsonObj.getLong("actionID");
-                    actionId = (actionId == null)? -1 : actionId;
-                    var error = new Error(actionId, "messageType not defined in the request");
-                    WebSockets.sendText(JSON.toJSONString(error), wsChannel, null);
+                    errorMsg(jsonObj, wsChannel, "messageType not defined in the request");
                     return;
                 }
 
@@ -77,10 +75,7 @@ public class WSHandler implements WebSocketConnectionCallback {
                         break;
                     }
                     default: {
-                        var actionId = jsonObj.getLong("actionID");
-                        actionId = (actionId == null)? -1 : actionId;
-                        var error = new Error(actionId, "messageType not handled by the actuator.");
-                        WebSockets.sendText(JSON.toJSONString(error), wsChannel, null);
+                        errorMsg(jsonObj, wsChannel, "messageType not handled by the actuator.");
                     }
                 }
 
@@ -92,5 +87,14 @@ public class WSHandler implements WebSocketConnectionCallback {
             }
         });
         wsChannel.resumeReceives();
+    }
+
+    private void errorMsg(JSONObject jsonObj, WebSocketChannel wsChannel, String message) {
+        var actionId = jsonObj.getLong("actionID");
+        actionId = (actionId == null)? -1 : actionId;
+        var executionId = jsonObj.getLong("executionID");
+        executionId = (executionId == null)? -1 : executionId;
+        var error = new Error(actionId, executionId,message);
+        WebSockets.sendText(JSON.toJSONString(error), wsChannel, null);
     }
 }

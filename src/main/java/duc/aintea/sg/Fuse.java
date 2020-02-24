@@ -7,6 +7,7 @@ public class Fuse {
     private Cable cable;
     private Entity owner;
     private State status;
+    private double confidence;
 
     private double load;
 
@@ -62,6 +63,14 @@ public class Fuse {
         this.load = load;
     }
 
+    public double getConfidence() {
+        return confidence;
+    }
+
+    public void setConfidence(double confidence) {
+        this.confidence = confidence;
+    }
+
     @Override
     public int hashCode() {
         return name.hashCode();
@@ -82,6 +91,8 @@ public class Fuse {
         return "Fuse(" +
                 "name=" + name +
                 ", load=" + load +
+                ", state=" + status.name() +
+                ", confidence=" + confidence +
                 ")";
     }
 }

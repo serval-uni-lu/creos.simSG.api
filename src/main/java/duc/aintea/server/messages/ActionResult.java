@@ -5,6 +5,7 @@ import java.util.List;
 
 public class ActionResult extends Message{
     private Long actionID;
+    private Long executionID;
     private List<Double> cableLoads;
     private List<Double> fuseLoads;
 
@@ -41,5 +42,13 @@ public class ActionResult extends Message{
 
     public void setFuseLoads(List<Double> fuseLoads) {
         this.fuseLoads = fuseLoads;
+    }
+
+    public Long getExecutionID() {
+        return executionID;
+    }
+
+    public void setExecutionID(Long executionID) {
+        this.executionID = executionID;
     }
 }

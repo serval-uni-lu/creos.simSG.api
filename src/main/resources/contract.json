@@ -4,8 +4,14 @@
   "author": "Ludovic Mouline",
   "actions": [
     {
+      "id": 1,
       "name": "Approximate Load - Predefined SC",
-      "isBlocking": true
+      "type": "sc-based"
+    },
+    {
+      "id": 2,
+      "name": "Uncertain approximation - Predefined SC",
+      "type": "sc-based"
     }
   ]
 }

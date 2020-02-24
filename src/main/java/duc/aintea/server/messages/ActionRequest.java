@@ -5,9 +5,11 @@ import java.util.List;
 
 public class ActionRequest {
     private Long actionID;
+    private Long executionID;
     private Integer scenario;
     private List<Boolean> fuseStates = new ArrayList<>();
     private List<Double> consumptions = new ArrayList<>();
+    private List<Double> fuseConfidence = new ArrayList<>();
 
     public Long getActionID() {
         return actionID;
@@ -54,6 +56,25 @@ public class ActionRequest {
         consumptions.add(c);
     }
 
+    public List<Double> getFuseConfidence() {
+        return fuseConfidence;
+    }
+
+    public void setFuseConfidence(List<Double> fuseConfidence) {
+        this.fuseConfidence = fuseConfidence;
+    }
+
+    public void addFuseConfidence(Double c) {
+        fuseConfidence.add(c);
+    }
+
+    public Long getExecutionID() {
+        return executionID;
+    }
+
+    public void setExecutionID(Long executionID) {
+        this.executionID = executionID;
+    }
 
     public double[] getConsumptionsArr() {
         var res = new double[consumptions.size()];

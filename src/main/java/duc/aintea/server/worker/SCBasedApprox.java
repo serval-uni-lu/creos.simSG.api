@@ -15,8 +15,19 @@ import java.util.ArrayList;
 public class SCBasedApprox {
 
     public static Message execute(ActionRequest request) {
+        if(request.getActionID() == 1) {
+            return executeAction1(request);
+        }
+
+        return new Error(request.getActionID(),
+                request.getExecutionID(),
+                "Action ID " + request.getActionID() + " not supported by the actuator");
+    }
+
+    private static Message executeAction1(ActionRequest request) {
         var result = new ActionResult();
         result.setActionID(request.getActionID());
+        result.setExecutionID(request.getExecutionID());
 
         Substation substation;
         Fuse[] fuses;
@@ -53,7 +64,9 @@ public class SCBasedApprox {
                 break;
             }
             default: {
-                return new Error(request.getActionID(), "Scenario code " + request.getScenario() + " is not supported by the actuator.");
+                return new Error(request.getActionID(),
+                        request.getExecutionID(),
+                        "Scenario code " + request.getScenario() + " is not supported by the actuator.");
             }
         }
 
@@ -61,13 +74,13 @@ public class SCBasedApprox {
         LoadApproximator.approximate(substation);
 
         var cableLoads = new ArrayList<Double>(cables.length);
-        for (var cable: cables) {
+        for (var cable : cables) {
             cableLoads.add(cable.getLoad());
         }
         result.setCableLoads(cableLoads);
 
         var fuseLoads = new ArrayList<Double>(fuses.length);
-        for (var fuse: fuses) {
+        for (var fuse : fuses) {
             fuseLoads.add(fuse.getLoad());
         }
         result.setFuseLoads(fuseLoads);
