@@ -31,7 +31,6 @@ public class CabinetTest extends UncertainMatrixBuilderTest {
     }
 
     private static Arguments[] uncertain() {
-//        return Data.generateAllPossibilities(F1_NAME, F2_NAME, F3_NAME, F4_NAME, F5_NAME, F6_NAME);
         return Data.allUncertainAndOpenPossibilities(F1_NAME, F2_NAME, F3_NAME, F4_NAME, F5_NAME, F6_NAME);
     }
 
@@ -151,34 +150,6 @@ public class CabinetTest extends UncertainMatrixBuilderTest {
 
         genericTest(uFusesName, listPossibilities, expectedCounter, toOpen);
 
-    }
-
-    class Possibility {
-        double[] data;
-
-        Possibility(double[] data) {
-            this.data = data;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Possibility that = (Possibility) o;
-            return Arrays.equals(data, that.data);
-        }
-
-        @Override
-        public int hashCode() {
-            return Arrays.hashCode(data);
-        }
-
-        @Override
-        public String toString() {
-            return "Possibility(" +
-                    "data=" + Arrays.toString(data) +
-                    ')';
-        }
     }
 
 }
