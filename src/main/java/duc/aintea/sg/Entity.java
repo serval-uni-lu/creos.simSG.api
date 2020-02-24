@@ -30,7 +30,9 @@ public abstract class Entity {
     }
 
     public List<Fuse> getClosedFuses() {
-        return fuses.stream().filter(Fuse::isClosed).collect(Collectors.toList());
+        return fuses.stream()
+                .filter(fuse -> fuse.getStatus().isUncertain() || fuse.isClosed())
+                .collect(Collectors.toList());
     }
 
 

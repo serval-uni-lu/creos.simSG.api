@@ -2,13 +2,12 @@ package duc.aintea.loadapproximation.test.matrixBuilder.uncertain;
 
 import duc.aintea.sg.Substation;
 import duc.aintea.sg.scenarios.SingleCableBuilder;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 public class SingleCableTest extends UncertainMatrixBuilderTest {
 
-    @Test
+//    @Test
     public void testF1Uncertain() {
         var possibilities = new ArrayList<double[]>();
         possibilities.add(new double[]{1});
@@ -24,7 +23,7 @@ public class SingleCableTest extends UncertainMatrixBuilderTest {
 
     }
 
-    @Test
+//    @Test
     public void testF2Uncertain() {
         var possibilities = new ArrayList<double[]>();
         possibilities.add(new double[]{1});
@@ -37,7 +36,7 @@ public class SingleCableTest extends UncertainMatrixBuilderTest {
         );
     }
 
-    @Test
+//    @Test
     public void testF1F2Uncertain() {
         var possibilities = new ArrayList<double[]>();
         possibilities.add(new double[]{1});

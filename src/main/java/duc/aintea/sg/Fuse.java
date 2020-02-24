@@ -1,5 +1,7 @@
 package duc.aintea.sg;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 public class Fuse {
@@ -7,13 +9,15 @@ public class Fuse {
     private Cable cable;
     private Entity owner;
     private State status;
-    private double confidence;
 
     private double load;
+    private Map<Double, Double> uncertainLoad;
 
     public Fuse(String name) {
         this.name = name;
-        status = State.CLOSED;
+        status = new State(true, 1.);
+        uncertainLoad = new HashMap<>(1);
+        uncertainLoad.put(0., 1.);
     }
 
 
@@ -38,15 +42,15 @@ public class Fuse {
     }
 
     public void closeFuse() {
-        this.status = State.CLOSED;
+        this.status.close();
     }
 
     public void openFuse() {
-        this.status = State.OPEN;
+        this.status.open();
     }
 
     public boolean isClosed() {
-        return status == State.CLOSED;
+        return status.isClosed();
     }
 
     public Fuse getOpposite() {
@@ -63,12 +67,16 @@ public class Fuse {
         this.load = load;
     }
 
-    public double getConfidence() {
-        return confidence;
+    public Map<Double, Double> getUncertainLoad() {
+        return uncertainLoad;
     }
 
-    public void setConfidence(double confidence) {
-        this.confidence = confidence;
+    public void setLoad(Map<Double, Double> loadConfPair) {
+        this.uncertainLoad = loadConfPair;
+    }
+
+    public State getStatus() {
+        return status;
     }
 
     @Override
@@ -91,10 +99,11 @@ public class Fuse {
         return "Fuse(" +
                 "name=" + name +
                 ", load=" + load +
-                ", state=" + status.name() +
-                ", confidence=" + confidence +
+                ", state=" + status +
                 ")";
     }
+
+
 }
 
 

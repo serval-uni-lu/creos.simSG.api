@@ -1,4 +1,4 @@
-package duc.aintea.loadapproximation.test.computation;
+package duc.aintea.loadapproximation.test.computation.certain;
 
 import duc.aintea.loadapproximation.test.generator.Data;
 import duc.aintea.loadapproximation.test.generator.Utils;

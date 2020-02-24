@@ -4,9 +4,7 @@ import duc.aintea.loadapproximation.test.generator.Data;
 import duc.aintea.sg.Substation;
 import duc.aintea.sg.scenarios.CabinetBuilder;
 import duc.aintea.utils.BaseTransform;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.*;
 
@@ -84,8 +82,8 @@ public class CabinetTest extends UncertainMatrixBuilderTest {
     }
 
 
-    @ParameterizedTest
-    @MethodSource("uncertain")
+//    @ParameterizedTest
+//    @MethodSource("uncertain")
     public void test(String[] uFusesName, String[] toOpen) {
         //filter only u_fuses that will impact the results - i.e. not DE
         List<String> final_uFusesNames = new ArrayList<>(uFusesName.length);

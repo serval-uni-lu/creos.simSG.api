@@ -9,8 +9,8 @@ public class Utils {
 
     static final int NB_TESTS = 5;
 
-    static double randomValue() {
-        return RANDOM.nextDouble() * MAX_LOAD;
+    public static double randomValue(double max) {
+        return RANDOM.nextDouble() * max;
     }
 
     static boolean[] intToBinary(int data, int size) {
@@ -48,20 +48,22 @@ public class Utils {
         return res;
     }
 
-
-
-    static Double[] randomDouble(int nb) {
+    static Double[] randomDouble(int nb, double max) {
         var res = new Double[nb];
         for (int j = 0; j < nb; j++) {
-            res[j] = randomValue();
+            res[j] = randomValue(max);
         }
         return res;
+    }
+
+    static Double[] randomDouble(int nb) {
+        return randomDouble(nb, MAX_LOAD);
     }
 
     static double[] random_double(int nb) {
         var res = new double[nb];
         for (int j = 0; j < nb; j++) {
-            res[j] = randomValue();
+            res[j] = randomValue(MAX_LOAD);
         }
         return res;
     }

@@ -3,29 +3,33 @@ package duc.aintea.loadapproximation.matrix;
 import duc.aintea.sg.Cable;
 import duc.aintea.sg.Fuse;
 
-import java.util.Collections;
 import java.util.Map;
 
 public class FuseStatesMatrix {
 
-    private double[] data;
-    private int nbColumns;
-    private Map<Fuse, Integer> indexFuses;
-    private Fuse[] reverse;
-    private Cable[] mapRowCable;
+    protected double[] data;
+    protected int nbColumns;
+    protected Fuse[] reverse;
+    protected Cable[] mapRowCable;
 
 
     public FuseStatesMatrix(double[] data, int nbColumns, Map<Fuse, Integer> indexFuses, Cable[] mapRowCable) {
         this.data = data;
         this.nbColumns = nbColumns;
-        this.indexFuses = indexFuses;
         this.mapRowCable = mapRowCable;
 
         reverse = new Fuse[indexFuses.size()];
-        for(Fuse key: indexFuses.keySet()) {
-            reverse[indexFuses.get(key)] = key;
+        for(Map.Entry<Fuse, Integer> keyValue: indexFuses.entrySet()) {
+            reverse[keyValue.getValue()] = keyValue.getKey();
         }
 
+    }
+
+    protected FuseStatesMatrix(double[] data, int nbColumns, Fuse[] reverse, Cable[] mapRowCabl) {
+        this.data = data;
+        this.nbColumns = nbColumns;
+        this.reverse = reverse;
+        this.mapRowCable = mapRowCabl;
     }
 
     public double[] getData() {
@@ -36,10 +40,6 @@ public class FuseStatesMatrix {
 
     public int getNbColumns() {
        return nbColumns;
-    }
-
-    public Map<Fuse, Integer> getIndexFuses() {
-        return Collections.unmodifiableMap(indexFuses);
     }
 
     public Fuse getFuse(int idx) {

@@ -26,11 +26,11 @@ public abstract class UncertainMatrixBuilderTest {
 
         while (!waiting.isEmpty()) {
             var current = waiting.pop();
-            current.setConfidence(100);
+            current.getStatus().makeCertain();
             fusesMap.put(current.getName(), current);
 
             var opp = current.getOpposite();
-            opp.setConfidence(100);
+            opp.getStatus().makeCertain();
             fusesMap.put(opp.getName(), opp);
 
             var ownerOpp = opp.getOwner();
@@ -51,14 +51,14 @@ public abstract class UncertainMatrixBuilderTest {
     @AfterEach
     public void tearDown() {
         for(var key: fusesMap.keySet()) {
-            fusesMap.get(key).setConfidence(100);
+            fusesMap.get(key).getStatus().makeCertain();
             fusesMap.get(key).closeFuse();
         }
     }
 
     protected void genericTest(String[] uFusesName, List<double[]> possibilities, int[] expectedCounter, String... toOpen) {
         for (var fName: uFusesName) {
-            fusesMap.get(fName).setConfidence(0.5);
+            fusesMap.get(fName).getStatus().setConfAsProb(0.5);
         }
 
         for(var to: toOpen) {

@@ -7,6 +7,7 @@ import org.ejml.alg.dense.linsol.svd.SolvePseudoInverseSvd;
 import org.ejml.data.DenseMatrix64F;
 
 public class LoadApproximator {
+    private LoadApproximator(){}
 
     public static void approximate(final Substation substation) {
         FuseStatesMatrix matrix = MatrixBuilder.build(substation);

@@ -76,6 +76,16 @@ public class Data {
         return res;
     }
 
+    public static Arguments[] generateRandomDoubles(double max) {
+        Arguments[] res = new Arguments[Utils.NB_TESTS];
+
+        for (int i = 0; i < res.length; i++) {
+            res[i] = Arguments.of(Utils.randomValue(max));
+        }
+
+        return res;
+    }
+
     public static Arguments[] generateRandomArrDoubles(int size) {
         Arguments[] res = new Arguments[Utils.NB_TESTS];
 

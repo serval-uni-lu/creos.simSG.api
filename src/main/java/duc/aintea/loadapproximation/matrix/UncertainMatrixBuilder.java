@@ -21,12 +21,12 @@ public class UncertainMatrixBuilder {
 
         while (!waiting.isEmpty()) {
             var current = waiting.pop();
-            if(!current.getOwner().isDeadEnd() && current.getConfidence() != 100) {
+            if(!current.getOwner().isDeadEnd() && current.getStatus().isUncertain()) {
                 uFuses.add(current);
             }
 
             var opp = current.getOpposite();
-            if(opp.isClosed() && !opp.getOwner().isDeadEnd() && opp.getConfidence() != 100) {
+            if(opp.isClosed() && !opp.getOwner().isDeadEnd() && opp.getStatus().isUncertain()) {
                 uFuses.add(opp);
             }
 
@@ -45,22 +45,25 @@ public class UncertainMatrixBuilder {
         return uFuses;
     }
 
-    public static FuseStatesMatrix[] build(Substation substation) {
+    public static UncertainFuseStatesMatrix[] build(Substation substation) {
         List<Fuse> uFuses = getUncertainFuses(substation);
         var nbPossibilities = (int) Math.pow(2, uFuses.size());
 
-        var res = new FuseStatesMatrix[nbPossibilities];
+        var res = new UncertainFuseStatesMatrix[nbPossibilities];
         for (int idxCase = 0; idxCase < nbPossibilities; idxCase++) {
             boolean[] fuseStates = BaseTransform.toBinary(idxCase, uFuses.size());
+            double confidence = 1;
 
             for (int idxFuse = 0; idxFuse < uFuses.size(); idxFuse++) {
                 if(fuseStates[idxFuse]){
                     uFuses.get(idxFuse).closeFuse();
+                    confidence *= uFuses.get(idxFuse).getStatus().getConfClosedAsProb();
                 } else {
                     uFuses.get(idxFuse).openFuse();
+                    confidence *= uFuses.get(idxFuse).getStatus().getConfOpenAsProb();
                 }
             }
-            res[idxCase] = MatrixBuilder.build(substation);
+            res[idxCase] = new UncertainFuseStatesMatrix(MatrixBuilder.build(substation), confidence);
         }
 
         return res;
