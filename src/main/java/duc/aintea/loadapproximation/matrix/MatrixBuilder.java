@@ -92,13 +92,8 @@ public class MatrixBuilder {
     }
 
     private static int getOrCreateIdx(Fuse fuse, HashMap<Fuse, Integer> map, int[] last) {
-        Integer idx = map.get(fuse);
-        if(idx == null) {
-            last[0] = last[0] + 1;
-            idx = last[0];
-            map.put(fuse, idx);
-        }
-        return idx;
+        map.computeIfAbsent(fuse, keyFuse -> ++last[0]);
+        return map.get(fuse);
     }
 
     private static void setMatrix(Matrix matrix, int row, int column, double value) {
