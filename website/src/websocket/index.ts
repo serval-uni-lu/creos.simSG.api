@@ -38,17 +38,22 @@ function onMessage(event: any) {
         app.$store.commit('addActuator', message);
     } else if(message.messageType === MSG_RES_ACT) {
         debugReceivedMessage(message);
-        app.$store.commit('setCableLoads', message.cableLoads)
-        app.$store.commit('setFuseLoads', message.fuseLoads)
 
-        app.$store.commit('setSuccessMessage', "Accession executed with success.");
-
-        setTimeout(function(){app.$store.commit('removeSuccessMessage')}, 5000)
+        if(message.actionID === 1) {
+            app.$store.commit('setCableLoads', message.cableLoads)
+            app.$store.commit('setFuseLoads', message.fuseLoads)
+            app.$store.commit('setSuccessMessage', "Accession executed with success.");
+            setTimeout(function(){app.$store.commit('removeSuccessMessage')}, 5000)
+        } else {
+            app.$store.commit('setErrorMessage', "Accession executed with success but result is not handled by the UI...");
+            setTimeout(function(){app.$store.commit('removeErrorMessage')}, 5000)
+        }
 
     } else if(message.messageType === MSG_ERROR) {
         debugReceivedMessage(message);
         console.error(message.reason);
         app.$store.commit('setErrorMessage', "Accession failed: " + message.reason);
+        setTimeout(function(){app.$store.commit('removeErrorMessage')}, 5000);
     } else {
         console.error("Message with an expected type received: " + message.messageType);
         console.error(message)

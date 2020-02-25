@@ -1,20 +1,24 @@
 <template lang="pug">
     div
-        | State: 
+      div
+        span.title State 
         .checkbox 
             label(class="switch")
                 input(type="checkbox" id="fuseStatus" v-model.boolean="fuses[fuseId].isClosed")
                 span(class="slider")
         span(v-if="fuses[fuseId].isClosed" class="stateInfo") (Closed)
         span(v-else class="stateInfo") (Open)
-        br
-        | Load: {{load}}
-        br
-        br
         .confidence
-          | Confidence: 
+          span Confidence level:
+          br
           input(type="range" min="0" max="100" class="range" v-model.number="fuses[fuseId].confidenceLevel")
           input(type="number" min="0" max="100" class="number" v-model.number="fuses[fuseId].confidenceLevel")
+          | %
+      .line
+      div
+        span.title Load
+        | {{load}}
+
         
         
 
@@ -41,9 +45,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.title {
+  font-weight: bold;
+  margin: auto;
+  display: block;
+}
+
+
+.line {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 2px;
+  background-color: grey;
+  display: block;
+}
 .confidence {
   .range {
-    width: 70%;
+    width: 65%;
     margin-right: 5%;
     position: relative;
     top: 5px;
@@ -58,7 +79,7 @@ export default {
   }
 
   .number {
-    width: 20%;
+    max-width: 55px;
   }
 }
 

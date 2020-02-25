@@ -1,6 +1,6 @@
 <template lang="pug">
     div
-        p.title Actions - {{scenarioID}}
+        p.title Actions
 
         //- button(v-if="!isApproximating" type="button" class="btn btn-primary" v-on:click="startApproximation()" v-bind:disabled="noActuators()") Approximate load
         //- button(v-else type="button" class="btn btn-danger" v-on:click="stopApproximation()") <i class="fa fa-spinner fa-spin"></i> Cancel load approximation

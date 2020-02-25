@@ -63,10 +63,15 @@ export default new Vuex.Store({
         init(state, nbFuses: number) {
             state.consumptions = new Array(nbFuses/2).fill(0.)
             state.loads = new Array(nbFuses/2).fill(-1)
+            state.fuses = Array<Fuse>();
 
             for(var i=0; i<nbFuses; i++) {
                 state.fuses.push(new Fuse(true, -1, 100));
             }
+
+            state.inspVisible = false;
+            state.selectedElmt = NullSelection;
+            state.cableLoads = new Array<number>();
         },
         switchFuse(state, fuseId: number) {
             var currF = state.fuses[fuseId];
