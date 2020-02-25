@@ -9,11 +9,22 @@ public class ActionResult extends Message{
     private List<Double> cableLoads;
     private List<Double> fuseLoads;
 
+    private List<List<Double>> uFuseLoads;
+    private List<List<Double>> uFuseConf;
+
+    private List<List<Double>> uCableLoads;
+    private List<List<Double>> uCableConf;
+
+
 
     public ActionResult() {
         cableLoads = new ArrayList<>();
         fuseLoads = new ArrayList<>();
         messageType = MessageType.ACTION_RESULT;
+        uFuseLoads = new ArrayList<>();
+        uFuseConf = new ArrayList<>();
+        uCableLoads = new ArrayList<>();
+        uCableConf = new ArrayList<>();
     }
 
     public String getMessageType() {
@@ -50,5 +61,32 @@ public class ActionResult extends Message{
 
     public void setExecutionID(Long executionID) {
         this.executionID = executionID;
+    }
+
+
+    public List<List<Double>> getuFuseLoads() {
+        return uFuseLoads;
+    }
+
+    public List<List<Double>> getuFuseConf() {
+        return uFuseConf;
+    }
+
+    public List<List<Double>> getuCableLoads() {
+        return uCableLoads;
+    }
+
+    public List<List<Double>> getuCableConf() {
+        return uCableConf;
+    }
+
+    public void setUncertainFuseLoads(List<List<Double>> fuseLoads, List<List<Double>> fuseLoadsConf) {
+        this.uFuseLoads= fuseLoads;
+        this.uFuseConf = fuseLoadsConf;
+    }
+
+    public void setUncertainCableLoads(List<List<Double>> cableLoads, List<List<Double>> cableLoadsConf) {
+        this.uCableLoads = cableLoads;
+        this.uCableConf = cableLoadsConf;
     }
 }

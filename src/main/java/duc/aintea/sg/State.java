@@ -16,6 +16,13 @@ public class State {
         this.confidence = confidence;
     }
 
+    public void setConfAsPercentage(double confidence) {
+        if (confidence < 0 || confidence > 100) {
+            throw new IllegalArgumentException("Confidence should be between 0 and 1.");
+        }
+        this.confidence = confidence / 100;
+    }
+
     public double getConfClosedAsProb() {
         if (isClosed) {
             return confidence;
@@ -53,11 +60,17 @@ public class State {
     }
 
     public void close() {
-        this.isClosed = true;
+        if(!isClosed) {
+            isClosed = true;
+            confidence = 1 - confidence;
+        }
     }
 
     public void open() {
-        this.isClosed = false;
+        if(isClosed) {
+            isClosed = false;
+            confidence = 1 - confidence;
+        }
     }
 
     public boolean isClosed() {

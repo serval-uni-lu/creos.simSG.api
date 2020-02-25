@@ -1,9 +1,6 @@
 package duc.aintea.sg;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Cable {
     private Fuse[] fuses;
@@ -64,6 +61,25 @@ public class Cable {
     public double getLoad() {
         return Math.max(fuses[0].getLoad(), fuses[1].getLoad());
     }
+
+    public Map<Double, Double> getUncertainLoad() {
+        var res = new HashMap<Double, Double>();
+
+        for(var fuse1: fuses[0].getUncertainLoad().entrySet()) {
+            for(var fuse2: fuses[1].getUncertainLoad().entrySet()) {
+                var max = Math.max(fuse1.getKey(), fuse2.getKey());
+                res.compute(max, (finalCons, finalConf) -> {
+                    var mult = fuse1.getValue() * fuse2.getValue();
+                    if(finalConf == null) {
+                        return mult;
+                    }
+                    return finalConf + mult;
+                });
+            }
+        }
+
+        return res;
+    };
 
     @Override
     public int hashCode() {

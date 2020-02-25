@@ -68,6 +68,7 @@ public class WSHandler implements WebSocketConnectionCallback {
                 switch (messageType) {
                     case REQUEST_ACTION: {
                         var actionRequest = JSON.parseObject(msg, ActionRequest.class);
+
                         Message result = SCBasedApprox.execute(actionRequest);
 
                         var textMessage = JSON.toJSONString(result);

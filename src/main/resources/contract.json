@@ -12,6 +12,11 @@
       "id": 2,
       "name": "Uncertain approximation - Predefined SC",
       "type": "sc-based"
+    },
+    {
+      "id": 3,
+      "name": "Uncertain approximation - Predefined SC2",
+      "type": "sc-based"
     }
   ]
 }

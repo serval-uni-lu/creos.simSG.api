@@ -17,7 +17,7 @@ public class UncertainMatrixBuilder {
         var uFuses = new ArrayList<Fuse>();
 
         var visited = new HashSet<Fuse>();
-        var waiting = new ArrayDeque<>(substation.getClosedFuses());
+        var waiting = new ArrayDeque<>(substation.getClosedAndUncertainFuses());
 
         while (!waiting.isEmpty()) {
             var current = waiting.pop();
@@ -34,7 +34,7 @@ public class UncertainMatrixBuilder {
             visited.add(opp);
 
             var ownerOpp = opp.getOwner();
-            for(var f: ownerOpp.getClosedFuses()) {
+            for(var f: ownerOpp.getClosedAndUncertainFuses()) {
                 if(!visited.contains(f)) {
                     waiting.add(f);
                 }

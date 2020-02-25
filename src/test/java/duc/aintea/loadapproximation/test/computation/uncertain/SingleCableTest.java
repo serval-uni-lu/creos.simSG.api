@@ -13,7 +13,7 @@ public class SingleCableTest {
     private Substation substation;
     private Fuse fuse_subs, fuse_cabinet;
     private Cable cable;
-    private Meter m1, m2, m3;
+    private Meter m1;
 
     @BeforeEach
     public void init() {
@@ -23,23 +23,17 @@ public class SingleCableTest {
         fuse_cabinet = fuse_subs.getOpposite();
 
         m1 = new Meter("m1");
-        m2 = new Meter("m2");
-        m3 = new Meter("m3");
 
         cable = fuse_subs.getCable();
-        cable.addMeters(m1, m2, m3);
+        cable.addMeters(m1);
     }
 
     @Test
     public void testAllClosed() {
-        m1.setConsumption(10);
-        m2.setConsumption(10);
-        m3.setConsumption(10);
+        m1.setConsumption(20);
 
-        fuse_subs.openFuse();
+        fuse_subs.closeFuse();
         fuse_subs.getStatus().setConfAsProb(0.3);
-
-        fuse_cabinet.getStatus().setConfAsProb(0.5);
 
         UncertainLoadApproximator.approximate(substation);
 

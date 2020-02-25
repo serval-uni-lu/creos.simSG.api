@@ -9,7 +9,6 @@ import duc.aintea.sg.Substation;
 import duc.aintea.sg.scenarios.SingleCableBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -54,8 +53,14 @@ public class SingleCableTest {
         Assertions.assertEquals(0, fuse_cabinet.getLoad(), 0.001);
     }
 
-    @Test
-    public void testFSubsOpen() {
+    @ParameterizedTest
+    @MethodSource("threeValues")
+    public void testFSubsOpen(double m1Cons, double m2Cons, double m3Cons) {
+        m1.setConsumption(m1Cons);
+        m2.setConsumption(m2Cons);
+        m3.setConsumption(m3Cons);
+
+
         fuse_subs.openFuse();
 
         LoadApproximator.approximate(substation);
@@ -82,8 +87,13 @@ public class SingleCableTest {
     }
 
 
-    @Test
-    public void testAllOpen() {
+    @ParameterizedTest
+    @MethodSource("threeValues")
+    public void testAllOpen(double m1Cons, double m2Cons, double m3Cons) {
+        m1.setConsumption(m1Cons);
+        m2.setConsumption(m2Cons);
+        m3.setConsumption(m3Cons);
+
         fuse_subs.openFuse();
         fuse_cabinet.openFuse();
 
