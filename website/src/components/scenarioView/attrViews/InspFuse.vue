@@ -1,23 +1,25 @@
 <template lang="pug">
     div
       div
-        span.title State 
-        .checkbox 
-            label(class="switch")
-                input(type="checkbox" id="fuseStatus" v-model.boolean="fuses[fuseId].isClosed")
-                span(class="slider")
-        span(v-if="fuses[fuseId].isClosed" class="stateInfo") (Closed)
-        span(v-else class="stateInfo") (Open)
-        .confidence
-          span Confidence level:
-          br
-          input(type="range" min="0" max="100" class="range" v-model.number="fuses[fuseId].confidenceLevel")
-          input(type="number" min="0" max="100" class="number" v-model.number="fuses[fuseId].confidenceLevel")
-          | %
+        span.title.collapseAct(v-on:click="show($event)") State 
+        .collapsible
+          .checkbox 
+              label(class="switch")
+                  input(type="checkbox" id="fuseStatus" v-model.boolean="fuses[fuseId].isClosed")
+                  span(class="slider")
+          span(v-if="fuses[fuseId].isClosed" class="stateInfo") (Closed)
+          span(v-else class="stateInfo") (Open)
+          .confidence
+            span Confidence level:
+            br
+            input(type="range" min="0" max="100" class="range" v-model.number="fuses[fuseId].confidenceLevel")
+            input(type="number" min="0" max="100" class="number" v-model.number="fuses[fuseId].confidenceLevel")
+            | %
       .line
       div
-        span.title Load
-        | {{load}}
+        span.title.collapseAct(v-on:click="show($event)") Load
+        .collapsible
+          | {{load}}
 
         
         
@@ -39,18 +41,50 @@ export default {
         ...mapState({
             fuses: state => state.fuses
         })
+    },
+    methods: {
+      show: function(event) {
+        var source = event.srcElement;
+        source.classList.toggle("active");
+        var content = source.nextElementSibling;
+        
+        if (content.style.maxHeight) {
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight =  content.scrollHeight + "px";
+        }
+      }
     }
 
 }
 </script>
 
 <style lang="scss" scoped>
+.collapseAct {
+  width: 100%;
+}
+
+.collapseAct.active::before {
+  content: "\25BE"; /* Unicode character for down arrow sign (▾) */
+}
+
+.collapseAct::before {
+  content: "\25B8"; /* Unicode character for right arrow sign (▸) */
+  padding-right: 10px;
+  color: $text-color;
+}
+
+.collapsible {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.2s ease-out;
+}
+
 .title {
   font-weight: bold;
   margin: auto;
   display: block;
 }
-
 
 .line {
   width: 95%;
