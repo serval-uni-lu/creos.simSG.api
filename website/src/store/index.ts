@@ -42,6 +42,16 @@ class Selection {
     }
 }
 
+class Possibility {
+    value: number;
+    confidence: number;
+
+    constructor(value: number, confidence: number) {
+        this.value = value;
+        this.confidence = confidence;
+    }
+}
+
 const NullSelection = new Selection(-1, "null");
 
 let idxGenerator = 0;
@@ -49,11 +59,12 @@ let idxGenerator = 0;
 export default new Vuex.Store({
     state: {
         consumptions: Array<number>(),
-        loads: Array<number>(),
+        // loads: Array<number>(),
         inspVisible: false,
         selectedElmt: NullSelection,
         fuses: Array<Fuse>(),
         cableLoads: Array<number>(),
+        uCableLoads: Array<Array<Possibility>>(),
         actuators: Array<Actuator>(),
         successMessage: "",
         errorMessage: ""
@@ -62,7 +73,7 @@ export default new Vuex.Store({
     mutations: {
         init(state, nbFuses: number) {
             state.consumptions = new Array(nbFuses/2).fill(0.)
-            state.loads = new Array(nbFuses/2).fill(-1)
+            state.cableLoads = new Array(nbFuses/2).fill(-1)
             state.fuses = Array<Fuse>();
 
             for(var i=0; i<nbFuses; i++) {
@@ -119,10 +130,31 @@ export default new Vuex.Store({
             state.actuators.pop();
         },
         setCableLoads(state, loads: Array<number>) {
-            state.loads = [];
+            state.cableLoads = [];
             for (const idx in loads) {
-                Vue.set(state.loads, idx, loads[idx])
+                Vue.set(state.cableLoads, idx, loads[idx])
             }
+        },
+        setUCableLoads(state, {uCableLoads, uCableConf}: {uCableLoads: Array<Array<number>>, uCableConf: Array<Array<number>>}) {
+            console.log("HOUHOU")
+            state.uCableLoads = Array<Array<Possibility>>();
+
+            for(const idxCables in uCableLoads) {
+                let cableLoads = uCableLoads[idxCables];
+                let cableConfs = uCableConf[idxCables];
+
+                let cablePoss = Array<Possibility>();
+                
+                for(const idxLoads in cableLoads) {
+                    cablePoss.push(new Possibility(cableLoads[idxLoads],cableConfs[idxLoads]));
+                }
+                Vue.set(state.uCableLoads, idxCables, cablePoss);
+            }
+
+            console.log(state.uCableLoads)
+
+
+
         },
         setFuseLoads(state, loads:Array<number>) {
             for (const idx in loads) {

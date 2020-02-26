@@ -44,6 +44,16 @@ function onMessage(event: any) {
             app.$store.commit('setFuseLoads', message.fuseLoads)
             app.$store.commit('setSuccessMessage', "Accession executed with success.");
             setTimeout(function(){app.$store.commit('removeSuccessMessage')}, 5000)
+        } else if(message.actionID === 2) {
+            var cableLoads = {
+                uCableLoads: message.uCableLoads,
+                uCableConf: message.uCableConf,
+            }
+
+            app.$store.commit('setUCableLoads', cableLoads)
+            // app.$store.commit('setFuseLoads', message.fuseLoads)
+            app.$store.commit('setSuccessMessage', "Accession executed with success.");
+            setTimeout(function(){app.$store.commit('removeSuccessMessage')}, 5000)
         } else {
             app.$store.commit('setErrorMessage', "Accession executed with success but result is not handled by the UI...");
             setTimeout(function(){app.$store.commit('removeErrorMessage')}, 5000)

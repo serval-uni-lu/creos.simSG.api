@@ -104,13 +104,13 @@ export default {
         },
         ...mapState({
             selectedElmt: state => state.selectedElmt,
-            loads: state => state.loads
+            loads: state => state.cableLoads
         })
     },
     methods: {
         load: function(id) {
             var load = this.loads[id];
-            return (load === -1)? "To be computed..." : load.toFixed(2) + " A";
+            return (load === undefined || load === -1)? "To be computed..." : load.toFixed(2) + " A";
         },
         showInspector: function() {
             let info = {
