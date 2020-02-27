@@ -50,7 +50,6 @@ export default {
                 x = this.xRect + 11;
             } else if(this.displayLeft === "top") {
                 y = this.yRect - 14;
-                console.log("here");
             } else {
                 y = this.yRect + 12;
             }

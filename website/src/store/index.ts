@@ -59,16 +59,15 @@ let idxGenerator = 0;
 export default new Vuex.Store({
     state: {
         consumptions: Array<number>(),
-        // loads: Array<number>(),
         inspVisible: false,
+        infoOverLayerVis: false,
         selectedElmt: NullSelection,
         fuses: Array<Fuse>(),
         cableLoads: Array<number>(),
         uCableLoads: Array<Array<Possibility>>(),
         actuators: Array<Actuator>(),
         successMessage: "",
-        errorMessage: ""
-
+        errorMessage: "",
     },
     mutations: {
         init(state, nbFuses: number) {
@@ -136,7 +135,6 @@ export default new Vuex.Store({
             }
         },
         setUCableLoads(state, {uCableLoads, uCableConf}: {uCableLoads: Array<Array<number>>, uCableConf: Array<Array<number>>}) {
-            console.log("HOUHOU")
             state.uCableLoads = Array<Array<Possibility>>();
 
             for(const idxCables in uCableLoads) {
@@ -150,11 +148,6 @@ export default new Vuex.Store({
                 }
                 Vue.set(state.uCableLoads, idxCables, cablePoss);
             }
-
-            console.log(state.uCableLoads)
-
-
-
         },
         setFuseLoads(state, loads:Array<number>) {
             for (const idx in loads) {
@@ -174,6 +167,9 @@ export default new Vuex.Store({
         },
         removeErrorMessage(state) {
             state.errorMessage = "";
+        },
+        showHideInfoOL(state) {
+            state.infoOverLayerVis = !state.infoOverLayerVis;
         },
     }
 })

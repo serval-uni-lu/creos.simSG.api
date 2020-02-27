@@ -20,7 +20,7 @@ export default {
         },
         uLoad: function() {
             var uload = this.uLoads[this.cableId];
-            return (uload === undefined || uload.length === 0)? "To be computed..." : uload;
+            return (uload === undefined || uload.length === 0)? [] : uload;
         },
         ...mapState({
             loads: state => state.cableLoads,

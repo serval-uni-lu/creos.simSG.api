@@ -2,6 +2,9 @@
     div
         h2 {{title}}
 
+        .toolbar
+            button.infoLayer(title="Add a layer with all information" type="button" class="btn btn-secondary" v-bind:class="{active: infoOverLayerVis}" v-on:click="showHideInfoOL()")
+
         section#container
             Action(id="action" :scenarioID="scenarioId")
 
@@ -12,16 +15,6 @@
                 Sc4ParaCab(v-else-if="name === 'sc4-para-cabinet'")
                 Sc5IndiPara(v-else-if="name === 'sc5-indirect-para'")
                 h3(v-else) Oups...Component not yet implemented.
-
-            //- #blocker(v-show="isApproximating")
-            //-     <i class="bigLock fas fa-lock" v-show="showIconLock()" v-on:click="openAlertApproximation()"></i>
-            //-     #lockMessage(class="alert alert-info alert-dismissible fade show" role="alert" v-show="showAlert()")
-            //-         | <i class="fas fa-lock"></i> The load is being approximated. Grid cannot be modified. 
-            //-         <button type="button" class="close" data-dismiss="alert" aria-label="Close" v-on:click="closeAlertApproximation()">
-            //-             <span aria-hidden="true">&times;</span>
-            //-         </button>
-            
-                                    
 
             <Inspector id="inspector" :elmtId="selection.id" :elmtType="selection.type" v-bind:class="{show: inspVisible}"/>
 
@@ -64,51 +57,45 @@ export default {
         },
         ...mapState({
             inspVisible: state => state.inspVisible,
-            selection: state => state.selectedElmt
-            // isApproximating: state => state.isApproximating,
-            // showAlertApprox: state => state.showAlertApprox
+            selection: state => state.selectedElmt,
+            infoOverLayerVis: state => state.infoOverLayerVis
         })
     },
     methods: {
-        // showAlert: function() {
-        //     return this.isApproximating && this.showAlertApprox;
-        // },
-        // showIconLock: function() {
-        //     return !this.showAlert();
-        // },
-        // confirmLeave(next) {
-        //     if(this.isApproximating) {
-        //         var ok = confirm("Leaving this page will cancel the load approximation. Are you sure you want to quit?");
-        //         if(ok) {
-        //             this.stopApproximation();
-        //             next();
-        //         }
-        //     } else {
-        //         next();
-        //     }
-        // },
-        ...mapMutations(['closeAlertApproximation', 'openAlertApproximation', 'stopApproximation'])
+        ...mapMutations(['closeAlertApproximation', 'openAlertApproximation', 'stopApproximation', 'showHideInfoOL'])
     },
-    // beforeRouteLeave(to, from, next) {
-    //     this.confirmLeave(next);
-    // },
-    // beforeRouteUpdate(to, from, next) {
-    //     this.confirmLeave(next);
-    // }
 }
 </script>
 
 <style lang="scss" scoped>
-$height: 480px;
+.btn-secondary, .btn-secondary, .btn-primary:visited {
+    background-color: lightgray !important;
+    border-color: lightgray !important;
+}
+
+.btn-secondary.active, .btn-secondary:hover {
+    background-color: gray !important;
+    border-color: gray !important;
+}
+
+.toolbar {
+    margin-bottom: 10px;
+}
+
+.infoLayer:before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f5fd";
+    font-weight: 900;
+}
 
 #container {
     width: 100%;
     margin: auto;
-    height: $height;
+    height: $height-sc-viewer;
 }
 
 #action {
-    height: $height;
+    height: $height-sc-viewer;
     width: 19%;
     float: left;
     position: relative;
@@ -116,20 +103,16 @@ $height: 480px;
 }
 
 #vue {
-    height: $height;
+    height: $height-sc-viewer;
     width: 60%;
     float: left;
-
-     svg {
-        height: $height;
-    }
 }
 
 #blocker {
     position: absolute;
     width: 60%;
     left: 25%;
-    height: $height;
+    height: $height-sc-viewer;
     text-align: left;
 
     .bigLock {
@@ -145,7 +128,7 @@ $height: 480px;
 }
 
 #inspector {
-    height: $height;
+    height: $height-sc-viewer;
     width: 19%;
     display: none;
     float: right;
