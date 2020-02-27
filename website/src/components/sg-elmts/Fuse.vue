@@ -8,10 +8,12 @@
             </text>
         </g>
         <g :transform=gPosition :visibility=showOLInfo class="infoBox">
-            <rect x="0" y="0" rx="8" ry="8" width="75" :height="heightOLBox()" fill="white"  stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            <rect x="0" y="0" rx="8" ry="8" width="90" :height="heightOLBox()" fill="white"  stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
             <text transform="translate(5 5)" fill="black">
                 <tspan font-family="Helvetica Neue" font-size="8" font-weight="700" x="26" y="5">Fuse {{id + 1}}</tspan>
-                <tspan font-family="Helvetica Neue" font-size="8" font-weight="400" x="0" y="15">Status: {{status}}</tspan>
+                <tspan font-family="Helvetica Neue" font-size="8" font-weight="400" x="0" y="15">Status: {{status}} [{{fuses[id].confidenceLevel}}%]</tspan>
+                <tspan font-family="Helvetica Neue" font-size="8" font-weight="400" x="0" y="25">Load:</tspan>
+                <tspan v-for="ul in uloads()" :key="ul.id" font-family="Helvetica Neue" font-size="8" font-weight="400" x="0" :y="ul.y">- {{ul.value}} A [{{ul.confidence}}%]</tspan>
             </text>
         </g>
     </g>
@@ -81,7 +83,26 @@ export default {
     },
     methods: {
          heightOLBox: function() {
-            return 25;
+            return 15 + (this.uloads().length + 2) * 10;
+        },
+        uloads: function() {
+            var uloads = this.fuses[this.id].uLoad;
+            if(uloads === undefined || uloads.length === 0) {
+                return [{id: 0, value: "??", confidence: "??", y: 35}]
+            }
+
+            var result = []
+            for(var ul=0; ul<uloads.length; ul++) {
+                var curr = {
+                    id: ul,
+                    value: uloads[ul].value.toFixed(2),
+                    confidence: (uloads[ul].confidence * 100).toFixed(2),
+                    y: 25 + 10*(ul+1)
+                };
+                result.push(curr);
+            }
+
+            return result;
         },
         showInspector: function(event, id) {
             if(event.altKey) {

@@ -19,12 +19,14 @@ interface Actuator {
 class Fuse {
     isClosed: boolean;
     load: number;
+    uLoad: Array<Possibility>;
     confidenceLevel: number;
 
     constructor(isClosed: boolean, load: number, confidenceLevel: number) {
         this.isClosed = isClosed;
         this.load = load;
         this.confidenceLevel = confidenceLevel;
+        this.uLoad = Array<Possibility>();
     }
 }
 
@@ -154,6 +156,24 @@ export default new Vuex.Store({
                 var fuse = state.fuses[idx]
                 fuse.load = loads[idx]
                 Vue.set(state.fuses, idx, fuse)
+            }
+        },
+        setUFuseLoads(state, {uFuseLoads, uFuseConf}: {uFuseLoads: Array<Array<number>>, uFuseConf: Array<Array<number>>}) {
+            for (const idx in uFuseLoads) {
+                let fuseLoads = uFuseLoads[idx]
+                let confs = uFuseConf[idx]
+
+                let poss = Array<Possibility>();
+                for(const idxLoad in fuseLoads) {
+                    poss.push(new Possibility(fuseLoads[idxLoad], confs[idxLoad]));
+                }
+
+                var fuse = {
+                    ...state.fuses[idx],
+                    uLoad: poss,
+                }
+
+                Vue.set(state.fuses, idx, fuse );
             }
         },
         setSuccessMessage(state, msg: string) {

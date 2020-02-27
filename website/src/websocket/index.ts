@@ -49,9 +49,14 @@ function onMessage(event: any) {
                 uCableLoads: message.uCableLoads,
                 uCableConf: message.uCableConf,
             }
-
             app.$store.commit('setUCableLoads', cableLoads)
-            // app.$store.commit('setFuseLoads', message.fuseLoads)
+
+            var fuseLoads = {
+                uFuseLoads: message.uFuseLoads,
+                uFuseConf: message.uFuseConf,
+            }
+            app.$store.commit('setUFuseLoads', fuseLoads)
+
             app.$store.commit('setSuccessMessage', "Accession executed with success.");
             setTimeout(function(){app.$store.commit('removeSuccessMessage')}, 5000)
         } else {
