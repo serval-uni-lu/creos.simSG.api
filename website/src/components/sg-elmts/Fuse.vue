@@ -1,10 +1,19 @@
 <template>
-    <g class="fuse" v-bind:class="{fClosed: fuses[id].isClosed, selected: isSelected}" v-on:click="showInspector($event, id)">
-        <title>Status: {{status}}; Load: {{load}}</title>
-        <rect :x="xRect" :y="yRect" width="10" height="10" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text :transform="translate">
-            <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" x="0" y="11">Fuse {{id + 1}}</tspan>
-        </text>
+    <g>
+        <g class="fuse" v-bind:class="{fClosed: fuses[id].isClosed, selected: isSelected}" v-on:click="showInspector($event, id)">
+            <title>Status: {{status}}; Load: {{load}}</title>
+            <rect :x="xRect" :y="yRect" width="10" height="10" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+            <text :transform="translate">
+                <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" x="0" y="11">Fuse {{id + 1}}</tspan>
+            </text>
+        </g>
+        <g :transform=gPosition :visibility=showOLInfo class="infoBox">
+            <rect x="0" y="0" rx="8" ry="8" width="75" :height="heightOLBox()" fill="white"  stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            <text transform="translate(5 5)" fill="black">
+                <tspan font-family="Helvetica Neue" font-size="8" font-weight="700" x="26" y="5">Fuse {{id + 1}}</tspan>
+                <tspan font-family="Helvetica Neue" font-size="8" font-weight="400" x="0" y="15">Status: {{status}}</tspan>
+            </text>
+        </g>
     </g>
 </template>
 
@@ -34,6 +43,12 @@ export default {
         }
     },
     computed: {
+        showOLInfo: function() {
+            return (this.infoOverLayerVis)? "visible": "hidden";
+        },
+        gPosition: function() {
+            return "translate(" + (this.xRect - 37.5) + " " + (this.yRect - this.heightOLBox()/2) + ")";
+        },
         status: function() {
             return (this.fuses[this.id].isClosed)? "Closed" : "Open";
         },
@@ -60,10 +75,14 @@ export default {
         },
         ...mapState({
             fuses: state => state.fuses,
-            selectedElmt: state => state.selectedElmt
+            selectedElmt: state => state.selectedElmt,
+            infoOverLayerVis: state => state.infoOverLayerVis
         })
     },
     methods: {
+         heightOLBox: function() {
+            return 25;
+        },
         showInspector: function(event, id) {
             if(event.altKey) {
                 this.$store.commit('switchFuse', id);
@@ -117,6 +136,16 @@ g.fuse.selected {
         rect {
             fill: $color-selection;
         }
+    }
+}
+
+.infoBox {
+    rect {
+        stroke: $color-selection,
+    }
+
+    tspan {
+        fill: $color-selection
     }
 }
 </style>

@@ -22,8 +22,6 @@
     </g>
 </template>
 
-// v-bind:class="{active: infoOverLayerVis}"
-
 <script>
 import { mapState } from 'vuex'
 
