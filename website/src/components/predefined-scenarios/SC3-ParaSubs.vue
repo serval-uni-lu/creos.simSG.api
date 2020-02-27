@@ -128,6 +128,6 @@ export default {
 
 
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "@/scss/cable.scss";
 </style>

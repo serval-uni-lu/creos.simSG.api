@@ -106,6 +106,11 @@ export default {
     height: $height-sc-viewer;
     width: 60%;
     float: left;
+
+    svg {
+        height: inherit;
+        position: relative;
+    }
 }
 
 #blocker {
