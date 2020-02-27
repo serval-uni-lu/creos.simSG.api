@@ -2,10 +2,8 @@
     <g>
         <g class="cable" v-bind:class="{selected: isSelected}" v-on:click="showInspector();">
             <title>Load: {{load()}}</title>
-            <line :x1=line1.x1 :y1=line1.y1 :x2=line1.x2 :y2=line1.y2 stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-            <line :x1=line2.x1 :y1=line2.y1 :x2=line2.x2 :y2=line2.y2 stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-            <circle :cx=line1.x1 :cy=circle.y r="5"/>
-            <circle :cx=circle.x :cy=circle.y r="7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+            <line :x1=line.x1 :y1=line.y :x2=line.x2 :y2=line.y stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+            <circle :cx=circle.x :cy=line.y r="5" />
         </g>
         <g :transform=gPosition :visibility=showOLInfo class="infoBox">
             <rect x="0" y="0" rx="8" ry="8" width="75" :height="heightOLBox()" fill="white"  stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
@@ -17,14 +15,14 @@
     </g>
 </template>
 
+
 <script>
 import { mapState } from 'vuex'
 
 export default {
     props: {
         id: Number,
-        line1: Object,
-        line2: Object,
+        line: Object,
         circle: Object
     },
     computed: {
@@ -35,10 +33,10 @@ export default {
             return "translate(" + (this.xLoadInfo) + " " + this.yLoadInfo + ")";
         },
         xLoadInfo: function() {
-            return this.line1.x1 - 25;
+            return this.circle.x - 25;
         },
         yLoadInfo: function() {
-            return this.circle.y - 22.5;
+            return this.line.y - 22.5;
         },
         isSelected: function() {
             return this.selectedElmt.isSameAs(this.id, 'cable')
@@ -87,17 +85,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss" scoped>
-@import "@/scss/cable.scss";
-
-.infoBox {
-    rect {
-        stroke: $color-selection,
-    }
-
-    tspan {
-        fill: $color-selection
-    }
-}
-</style>

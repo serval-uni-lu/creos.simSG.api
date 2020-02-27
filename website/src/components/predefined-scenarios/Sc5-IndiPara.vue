@@ -13,32 +13,10 @@
     </font-face>
   </defs>
   <g fill="none" stroke-dasharray="none" stroke="none" stroke-opacity="1" fill-opacity="1">
-      <g class="hidden">
-        <g v-on:click="id=4; showInspector();">
-          <title>Load: {{load(4)}}</title>
-          <line x1="253.5" y1="285.5" x2="253.5" y2="364.4185" stroke-linecap="round" stroke-linejoin="round"/>
-          <line x1="169.85413" y1="324.9552" x2="253" y2="324.90842" stroke-linecap="round" stroke-linejoin="round"/>
-        </g>
-        <g v-on:click="id=3; showInspector();">
-          <title>Load: {{load(3)}}</title>
-          <line x1="287" y1="218.96596" x2="377.5" y2="218.96596" stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M 253.5 285.5 L 282 285.5 L 282 189 L 369.5 189 L 369.5 177" stroke-linecap="round" stroke-linejoin="round" />
-        </g>
-        <g v-on:click="id=2; showInspector();">
-          <title>Load: {{load(2)}}</title>
-          <line x1="369.5" y1="177" x2="522.45184" y2="176.38674" stroke-linecap="round" stroke-linejoin="round"/>
-        </g>
-        <g v-on:click="id=1; showInspector();">
-          <title>Load: {{load(1)}}</title>
-          <path d="M 369.5 177 L 369.5 165 L 282 165 L 282 56 L 281.5951 55.644" stroke-linecap="round" stroke-linejoin="round"/>
-          <line x1="287" y1="100.1656" x2="400.5" y2="100.1656" stroke-linecap="round" stroke-linejoin="round"/>
-        </g>
-        <g v-on:click="id=0; showInspector();">
-          <title>Load: {{load(0)}}</title>
-          <line x1="127.85413" y1="170.01229" x2="220.27" y2="170.01229" stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M 225.43436 55.644 L 225 56 L 225 285.5 L 253.5 285.5" stroke-linecap="round" stroke-linejoin="round" />
-        </g>
-      </g>
+      <HiddenSimpleCable :id=4 :line1=cbl5.line1 :line2=cbl5.line2 />
+      <HiddenComplexCable :id=3 :path=cbl4.path :line=cbl4.line />
+      <HiddenComplexCable :id=1 :path=cbl2.path :line=cbl2.line />
+      <HiddenComplexCable :id=0 :path=cbl1.path :line=cbl1.line />
       <Meter :id=4 :xRect="187" :yRect="336" />
       <Meter :id=3 :xRect="334.6" :yRect="230" />
       <Meter :id=2 :xRect="445.5" :yRect="187.3" />
@@ -63,39 +41,17 @@
             <tspan font-family="Helvetica Neue" font-size="12" font-style="italic" font-weight="400" fill="black" x="2.0160011" y="11">Cabinet</tspan>
           </text>
       </g>
-      <g class="cable" v-bind:class="{selected: isSelected && id===4}" v-on:click="id=4; showInspector();">
-          <title>Load: {{load(4)}}</title>
-          <line x1="253.5" y1="285.5" x2="253.5" y2="364.4185" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <line x1="169.85413" y1="324.9552" x2="253" y2="324.90842" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <circle cx="162.67706" cy="324.95926" r="7.17707524344848" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <circle cx="253.5" cy="325.5" r="5.00000798950949" fill="black"/>
-      </g>
-      <g class="cable" v-bind:class="{selected: isSelected && id===3}" v-on:click="id=3; showInspector();">
-          <title>Load: {{load(3)}}</title>
-          <circle cx="282" cy="218.96596" r="5.00000798950948"/>
-          <circle cx="384.67706" cy="218.96596" r="7.17707524344849" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <line x1="287" y1="218.96596" x2="377.5" y2="218.96596" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-           <path d="M 253.5 285.5 L 282 285.5 L 282 189 L 369.5 189 L 369.5 177" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g class="cable" v-bind:class="{selected: isSelected && id===2}" v-on:click="id=2; showInspector();">
+      <SimpleCable :id=4 :line1=cbl5.line1 :line2=cbl5.line2 :circle=cbl5.circle />
+      <ComplexCable :id=3 :path=cbl4.path :line=cbl4.line :circle=cbl4.circle />
+      <OneLineCable :id=2 :line=cbl3.line :circle=cbl3.circle />
+      <ComplexCable :id=1 :path=cbl2.path :line=cbl2.line :circle=cbl2.circle />
+      <ComplexCable :id=0 :path=cbl1.path :line=cbl1.line :circle=cbl1.circle />
+
+      <!-- <g class="cable" v-bind:class="{selected: isSelected && id===2}" v-on:click="id=2; showInspector();">
           <title>Load: {{load(2)}}</title>
           <line x1="369.5" y1="177" x2="522.45184" y2="176.38674" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
           <circle cx="464" cy="176.39287" r="5.00000798950948" />
-      </g>
-      <g class="cable" v-bind:class="{selected: isSelected && id===1}" v-on:click="id=1; showInspector();">
-          <title>Load: {{load(1)}}</title>
-          <path d="M 369.5 177 L 369.5 165 L 282 165 L 282 56 L 281.5951 55.644" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <line x1="287" y1="100.1656" x2="400.5" y2="100.1656" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <circle cx="407.67706" cy="100.1656" r="7.17707524344855" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <circle cx="282" cy="100.1656" r="5.00000798950949"/>
-      </g>
-      <g class="cable" v-bind:class="{selected: isSelected && id===0}" v-on:click="id=0; showInspector();">
-          <title>Load: {{load(0)}}</title>
-          <circle cx="120.67706" cy="170.01229" r="7.17707524344849" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <circle cx="225.27" cy="170.01229" r="5.00000798950947"/>
-          <line x1="127.85413" y1="170.01229" x2="220.27" y2="170.01229" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <path d="M 225.43436 55.644 L 225 56 L 225 285.5 L 253.5 285.5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
+      </g> -->
       <g id="DE">
         <circle cx="253.5" cy="363.62933" r="7.1770752434485" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white"/>
         <circle cx="520.9223" cy="176.39287" r="7.17707524344844"  stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white"/>
@@ -119,16 +75,47 @@
 <script>
 import Fuse from "@/components/sg-elmts/Fuse.vue"
 import Meter from "@/components/sg-elmts/Meter.vue"
+import SimpleCable from "@/components/sg-elmts/SimpleCable.vue"
+import HiddenSimpleCable from "@/components/sg-elmts/HiddenSimpleCable.vue"
+import ComplexCable from "@/components/sg-elmts/ComplexCable.vue"
+import HiddenComplexCable from "@/components/sg-elmts/HiddenComplexCable.vue"
+import OneLineCable from "@/components/sg-elmts/OneLineCable.vue"
+
 import { mapState } from 'vuex'
 
 export default {
     data: function() {
           return {
-              id: -2
+              id: -2,
+              cbl1: {
+                path: "M 225.43436 55.644 L 225 56 L 225 285.5 L 253.5 285.5",
+                line: {x1:127.85 , y1:170.01, x2: 220.27, y2:170.01},
+                circle: {onLineX: 225.27, endX: 120.67706, y: 170.01}
+              },
+              cbl2: {
+                path: "M 369.5 177 L 369.5 165 L 282 165 L 282 56 L 281.5951 55.644",
+                line: {x1:287 , y1:100.17, x2: 400.5, y2:100.17},
+                circle: {onLineX: 282, endX: 407.68, y: 100.16}
+              },
+              cbl3: {
+                line: {x1: 369.5, x2: 522.45, y:177 },
+                circle: {x: 464}
+              },
+              cbl4: {
+                path: "M 253.5 285.5 L 282 285.5 L 282 189 L 369.5 189 L 369.5 177",
+                line: {x1:287 , y1:218.97, x2: 377.5, y2:218.97},
+                circle: {onLineX: 282, endX: 384.68, y: 218.97}
+              },
+              cbl5: {
+                line1: {x1:253.5, y1:285.5, x2:253.5, y2:364.42},
+                line2: {x1:169.85, y1:324.96, x2:253, y2:325},
+                circle: {x: 162.68, y: 325}
+              },
+
           }
           
     },
-    components: {Fuse, Meter},
+    components: {Fuse, Meter, SimpleCable, HiddenSimpleCable, ComplexCable, HiddenComplexCable, OneLineCable},
     created() {
         this.$store.commit('init', 10)
     },
@@ -161,4 +148,3 @@ export default {
 <style lang="scss" scoped>
 @import "@/scss/cable.scss";
 </style>
-

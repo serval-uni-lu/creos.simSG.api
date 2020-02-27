@@ -13,6 +13,7 @@
             </font-face>
         </defs>
         <g id="SC1-SingleCable" fill="none" stroke-dasharray="none" stroke="none" stroke-opacity="1" fill-opacity="1">
+            <HiddenSimpleCable :id=0 :line1=line1 :line2=line2 />
             <SimpleCable :id=0 :line1=line1 :line2=line2 :circle=circle />
             <g id="Substation">
                 <rect x="644" y="194.4" width="99.99999" height="47.644" fill="white"/>
@@ -37,20 +38,15 @@
 import Fuse from "@/components/sg-elmts/Fuse.vue"
 import Meter from "@/components/sg-elmts/Meter.vue"
 import SimpleCable from "@/components/sg-elmts/SimpleCable.vue"
+import HiddenSimpleCable from "@/components/sg-elmts/HiddenSimpleCable.vue"
 
 export default {
-    components: {Fuse, Meter, SimpleCable},
-    data: function() {
-        let line1= {x1: 694, y1: 377, x2:694, y2: 242.04};
-        let line2= {x1: 694, y1: 291.70832, x2:601.5, y2: 292};
-        let circle= {x: 594.5, y: 292};
-        let cableInfoBox = {x: line1.x1, y: circle.y};
-
+    components: {Fuse, Meter, SimpleCable, HiddenSimpleCable},
+    data: function() {   
         return {
-            line1: line1,
-            line2: line2,
-            circle: circle,
-            cableInfoBox: cableInfoBox
+            line1: {x1: 694, y1: 377, x2:694, y2: 242.04},
+            line2: {x1: 694, y1: 292, x2:601.5, y2: 292},
+            circle: {x: 594.5, y: 292},
         }
     },
     created() {
@@ -59,7 +55,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import "@/scss/cable.scss";
-</style>
 
