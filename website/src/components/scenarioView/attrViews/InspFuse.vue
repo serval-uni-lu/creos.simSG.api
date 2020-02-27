@@ -1,7 +1,7 @@
 <template lang="pug">
     div
       div
-        span.title.collapseAct(v-on:click="show($event)") State 
+        span.title.collapseAct(v-on:click="show($event)" class="active") State 
         .collapsible
           .checkbox 
               label(class="switch")
@@ -17,7 +17,7 @@
             | %
       .line
       div
-        span.title.collapseAct(v-on:click="show($event)") Load
+        span.title.collapseAct(v-on:click="show($event)" class="active") Load
         .collapsible
           | {{load}}
 
@@ -48,8 +48,8 @@ export default {
         source.classList.toggle("active");
         var content = source.nextElementSibling;
         
-        if (content.style.maxHeight) {
-          content.style.maxHeight = null;
+        if (content.style.maxHeight !== "0px") {
+          content.style.maxHeight = "0px";
         } else {
           content.style.maxHeight =  content.scrollHeight + "px";
         }
@@ -76,7 +76,7 @@ export default {
 
 .collapsible {
   overflow: hidden;
-  max-height: 0;
+  max-height: max-content;
   transition: max-height 0.2s ease-out;
 }
 
