@@ -183,25 +183,6 @@ export default {
     }
 }
 
-#blocker {
-    position: absolute;
-    width: 60%;
-    left: 25%;
-    height: $height-sc-viewer;
-    text-align: left;
-
-    .bigLock {
-        font-size: 3em;
-        color: red;
-    }
-
-    #lockMessage {
-        width: 300px;
-        text-align: center;
-    }
-
-}
-
 #inspector {
     height: $height-sc-viewer;
     width: 19%;
