@@ -165,7 +165,7 @@ export default {
 }
 
 #action {
-    height: $height-sc-viewer;
+    height: inherit;
     width: 19%;
     float: left;
     position: relative;
@@ -173,7 +173,7 @@ export default {
 }
 
 #vue {
-    height: $height-sc-viewer;
+    height: inherit;
     width: 60%;
     float: left;
 
@@ -184,7 +184,7 @@ export default {
 }
 
 #inspector {
-    height: $height-sc-viewer;
+    height: inherit;
     width: 19%;
     display: none;
     float: right;
