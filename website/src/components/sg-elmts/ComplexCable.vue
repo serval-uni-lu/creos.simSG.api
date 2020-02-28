@@ -1,19 +1,10 @@
 <template>
-    <g>
-        <g class="cable" v-bind:class="{selected: isSelected}" v-on:click="showInspector();">
-            <title>Load: {{load()}}</title>
-            <path :d=path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-            <circle :cx=circle.endX :cy=circle.y r="7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-            <circle :cx=circle.onLineX :cy=circle.y r="5"/>
-            <line :x1=line.x1 :y1=line.y1 :x2=line.x2 :y2=line.y2 stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        </g>
-        <g :transform=gPosition :visibility=showOLInfo class="infoBox">
-            <rect x="0" y="0" rx="8" ry="8" width="75" :height="heightOLBox()" fill="white"  stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-            <text transform="translate(5 5)" fill="black">
-                <tspan font-family="Helvetica Neue" font-size="8" font-weight="700" x="26" y="5">Load</tspan>
-                <tspan v-for="ul in uloads()" :key="ul.id" font-family="Helvetica Neue" font-size="8" font-weight="400" x="0" :y="ul.y">- {{ul.value}} A [{{ul.confidence}}%]</tspan>
-            </text>
-        </g>    
+    <g class="cable" v-bind:class="{selected: isSelected}" v-on:click="showInspector();">
+        <title>Load: {{load()}}</title>
+        <path :d=path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <circle :cx=circle.endX :cy=circle.y r="7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <circle :cx=circle.onLineX :cy=circle.y r="5"/>
+        <line :x1=line.x1 :y1=line.y1 :x2=line.x2 :y2=line.y2 stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
     </g>
 </template>
 
@@ -90,5 +81,4 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/scss/cable.scss";
-@import "@/scss/infoBox.scss";
 </style>

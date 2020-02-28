@@ -30,6 +30,9 @@
             </g>
             <Fuse :id=0 :xRect=689 :yRect=244.79135 />
             <Fuse :id=1 :xRect=689 :yRect=360.3567 />
+            <InfoBoxSimpleCable :id=0 :line1=line1 :line2=line2 :circle=circle />
+            <InfoBoxFuse :id=0 :xRect=689 :yRect=244.79135 />
+            <InfoBoxFuse :id=1 :xRect=689 :yRect=360.3567 />
         </g>
     </svg>
 </template>
@@ -39,9 +42,11 @@ import Fuse from "@/components/sg-elmts/Fuse.vue"
 import Meter from "@/components/sg-elmts/Meter.vue"
 import SimpleCable from "@/components/sg-elmts/SimpleCable.vue"
 import HiddenSimpleCable from "@/components/sg-elmts/HiddenSimpleCable.vue"
+import InfoBoxFuse from "@/components/infoBox/InfoBoxFuse.vue"
+import InfoBoxSimpleCable from "@/components/infoBox/InfoBoxSimpleCable.vue"
 
 export default {
-    components: {Fuse, Meter, SimpleCable, HiddenSimpleCable},
+    components: {Fuse, Meter, SimpleCable, HiddenSimpleCable, InfoBoxFuse, InfoBoxSimpleCable},
     data: function() {   
         return {
             line1: {x1: 694, y1: 377, x2:694, y2: 242.04},

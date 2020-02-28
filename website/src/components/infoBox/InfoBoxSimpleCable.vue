@@ -1,11 +1,12 @@
 <template>
-    <g class="cable" v-bind:class="{selected: isSelected}" v-on:click="showInspector();">
-        <title>Load: {{load()}}</title>
-        <line :x1=line.x1 :y1=line.y :x2=line.x2 :y2=line.y stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <circle :cx=circle.x :cy=line.y r="5" />
-    </g>
+    <g :transform=gPosition :visibility=showOLInfo class="infoBox">
+        <rect x="0" y="0" rx="8" ry="8" width="75" :height="heightOLBox()" fill="white"  stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        <text transform="translate(5 5)" fill="black">
+            <tspan font-family="Helvetica Neue" font-size="8" font-weight="700" x="26" y="5">Cable {{id + 1}}</tspan>
+            <tspan v-for="ul in uloads()" :key="ul.id" font-family="Helvetica Neue" font-size="8" font-weight="400" x="0" :y="ul.y">- {{ul.value}} A [{{ul.confidence}}%]</tspan>
+        </text>
+    </g>   
 </template>
-
 
 <script>
 import { mapState } from 'vuex'
@@ -13,7 +14,8 @@ import { mapState } from 'vuex'
 export default {
     props: {
         id: Number,
-        line: Object,
+        line1: Object,
+        line2: Object,
         circle: Object
     },
     computed: {
@@ -24,17 +26,12 @@ export default {
             return "translate(" + (this.xLoadInfo) + " " + this.yLoadInfo + ")";
         },
         xLoadInfo: function() {
-            return this.circle.x - 25;
+            return this.line1.x1 - 25;
         },
         yLoadInfo: function() {
-            return this.line.y - 22.5;
-        },
-        isSelected: function() {
-            return this.selectedElmt.isSameAs(this.id, 'cable')
+            return this.circle.y - 22.5;
         },
         ...mapState({
-            selectedElmt: state => state.selectedElmt,
-            loads: state => state.cableLoads,
             uCableLoads: state => state.uCableLoads,
             infoOverLayerVis: state => state.infoOverLayerVis
         })
@@ -42,10 +39,6 @@ export default {
     methods: {
         heightOLBox: function() {
             return 15 + this.uloads().length * 10;
-        },
-        load: function() {
-            var p_load = this.loads[this.id];
-            return (p_load === undefined || p_load === -1)? "To be computed..." : p_load.toFixed(2) + " A";
         },
         uloads: function() {
             var uloads = this.uCableLoads[this.id];
@@ -65,18 +58,11 @@ export default {
             }
             
             return result;
-        },
-        showInspector: function() {
-            let info = {
-                elemtId: this.id,
-                elemtType: "cable"
-            }
-            this.$store.commit('showInspector', info)
-        },
+        }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/scss/cable.scss";
+@import "@/scss/infoBox.scss";
 </style>

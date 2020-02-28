@@ -60,7 +60,22 @@
       <Fuse :id=2 :xRect="277" :yRect="58.61098" />
       <Fuse :id=1 :xRect="220.27" :yRect="255" :displayLeft="'left'" />
       <Fuse :id=0 :xRect="220" :yRect="60" :displayLeft="'left'" />
-      
+
+      <InfoBoxFuse :id=9 :xRect="248.5" :yRect="343" />
+      <InfoBoxFuse :id=8 :xRect="248.5" :yRect="306" />
+      <InfoBoxFuse :id=7 :xRect="277" :yRect="255" />
+      <InfoBoxFuse :id=6 :xRect="320.5" :yRect="183.135" />
+      <InfoBoxFuse :id=5 :xRect="500" :yRect="171.69337" />
+      <InfoBoxFuse :id=4 :xRect="408.5" :yRect="171.69337" />
+      <InfoBoxFuse :id=3 :xRect="320.5" :yRect="161" />
+      <InfoBoxFuse :id=2 :xRect="277" :yRect="58.61098" />
+      <InfoBoxFuse :id=1 :xRect="220.27" :yRect="255" />
+      <InfoBoxFuse :id=0 :xRect="220" :yRect="60" />
+      <InfoBoxSimpleCable :id=4 :line1=cbl5.line1 :line2=cbl5.line2 :circle=cbl5.circle />
+      <InfoBoxComplexCable :id=3 :path=cbl4.path :line=cbl4.line :circle=cbl4.circle />    
+      <InfoBoxComplexCable :id=1 :path=cbl2.path :line=cbl2.line :circle=cbl2.circle />
+      <InfoBoxComplexCable :id=0 :path=cbl1.path :line=cbl1.line :circle=cbl1.circle />
+      <InfoOneLineCable :id=2 :line=cbl3.line :circle=cbl3.circle />
   </g>
 </svg> 
 </template>
@@ -74,7 +89,10 @@ import HiddenSimpleCable from "@/components/sg-elmts/HiddenSimpleCable.vue"
 import ComplexCable from "@/components/sg-elmts/ComplexCable.vue"
 import HiddenComplexCable from "@/components/sg-elmts/HiddenComplexCable.vue"
 import OneLineCable from "@/components/sg-elmts/OneLineCable.vue"
-
+import InfoBoxFuse from "@/components/infoBox/InfoBoxFuse.vue"
+import InfoBoxSimpleCable from "@/components/infoBox/InfoBoxSimpleCable.vue"
+import InfoBoxComplexCable from "@/components/infoBox/InfoBoxComplexCable.vue"
+import InfoOneLineCable from "@/components/infoBox/InfoOneLineCable.vue"
 import { mapState } from 'vuex'
 
 export default {
@@ -108,7 +126,11 @@ export default {
           }
           
     },
-    components: {Fuse, Meter, SimpleCable, HiddenSimpleCable, ComplexCable, HiddenComplexCable, OneLineCable},
+    components: {
+      Fuse, Meter, SimpleCable, ComplexCable, OneLineCable,
+      HiddenSimpleCable, HiddenComplexCable,
+      InfoOneLineCable, InfoBoxComplexCable, InfoBoxFuse, InfoBoxSimpleCable
+    },
     created() {
         this.$store.commit('init', 10)
     }

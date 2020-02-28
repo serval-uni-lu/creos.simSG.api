@@ -46,6 +46,15 @@
             <Fuse :id=3 :xRect=293.67107 :yRect=293.2013 />
             <Fuse :id=4 :xRect=212.78744 :yRect=360.4025 />
             <Fuse :id=5 :xRect=311.8802 :yRect=360.3309 :displayLeft="'left'"/>
+            <InfoBoxFuse :id=0 :xRect=268.7441 :yRect=139.77368 />
+            <InfoBoxFuse :id=1 :xRect=268.7441 :yRect=241.65787 />
+            <InfoBoxFuse :id=2 :xRect=243.8201 :yRect=293.38053 />
+            <InfoBoxFuse :id=3 :xRect=293.67107 :yRect=293.2013 />
+            <InfoBoxFuse :id=4 :xRect=212.78744 :yRect=360.4025 />
+            <InfoBoxFuse :id=5 :xRect=311.8802 :yRect=360.3309 /> 
+            <InfoBoxComplexCable :id=2 :path=cbl2_path :line=cbl2_line :circle=cbl2_circle  />
+            <InfoBoxComplexCable :id=1 :path=cbl1_path :line=cbl1_line :circle=cbl1_circle  />
+            <InfoBoxSimpleCable :id=0 :line1=c1_line1 :line2=c1_line2 :circle=c1_circle />
         </g>
     </svg>
 </template>
@@ -59,6 +68,9 @@ import SimpleCable from "@/components/sg-elmts/SimpleCable.vue"
 import HiddenSimpleCable from "@/components/sg-elmts/HiddenSimpleCable.vue"
 import ComplexCable from "@/components/sg-elmts/ComplexCable.vue"
 import HiddenComplexCable from "@/components/sg-elmts/HiddenComplexCable.vue"
+import InfoBoxFuse from "@/components/infoBox/InfoBoxFuse.vue"
+import InfoBoxSimpleCable from "@/components/infoBox/InfoBoxSimpleCable.vue"
+import InfoBoxComplexCable from "@/components/infoBox/InfoBoxComplexCable.vue"
 import { mapState } from 'vuex'
 
 export default {
@@ -75,7 +87,11 @@ export default {
             cbl1_circle: {onLineX: 217.71, endX: 123.4, y: 331}
         }
     },
-    components: {Fuse, Meter, SimpleCable, ComplexCable, HiddenComplexCable, HiddenSimpleCable},
+    components: {
+        Fuse, Meter, SimpleCable, ComplexCable, 
+        HiddenComplexCable, HiddenSimpleCable, 
+        InfoBoxFuse, InfoBoxSimpleCable, InfoBoxComplexCable
+    },
     created() {
         this.$store.commit('init', 6)
     }

@@ -1,21 +1,10 @@
 <template>
-    <g>
-        <g class="fuse" v-bind:class="{fClosed: fuses[id].isClosed, selected: isSelected}" v-on:click="showInspector($event, id)">
-            <title>Status: {{status}}; Load: {{load}}</title>
-            <rect :x="xRect" :y="yRect" width="10" height="10" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-            <text :transform="translate">
-                <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" x="0" y="11">Fuse {{id + 1}}</tspan>
-            </text>
-        </g>
-        <g :transform=gPosition :visibility=showOLInfo class="infoBox">
-            <rect x="0" y="0" rx="8" ry="8" width="90" :height="heightOLBox()" fill="white"  stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-            <text transform="translate(5 5)" fill="black">
-                <tspan font-family="Helvetica Neue" font-size="8" font-weight="700" x="26" y="5">Fuse {{id + 1}}</tspan>
-                <tspan font-family="Helvetica Neue" font-size="8" font-weight="400" x="0" y="15">Status: {{status}} [{{fuses[id].confidenceLevel}}%]</tspan>
-                <tspan font-family="Helvetica Neue" font-size="8" font-weight="400" x="0" y="25">Load:</tspan>
-                <tspan v-for="ul in uloads()" :key="ul.id" font-family="Helvetica Neue" font-size="8" font-weight="400" x="0" :y="ul.y">- {{ul.value}} A [{{ul.confidence}}%]</tspan>
-            </text>
-        </g>
+    <g class="fuse" v-bind:class="{fClosed: fuses[id].isClosed, selected: isSelected}" v-on:click="showInspector($event, id)">
+        <title>Status: {{status}}; Load: {{load}}</title>
+        <rect :x="xRect" :y="yRect" width="10" height="10" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text :transform="translate">
+            <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" x="0" y="11">Fuse {{id + 1}}</tspan>
+        </text>
     </g>
 </template>
 
@@ -122,7 +111,6 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "@/scss/infoBox.scss";
 g.fuse:not(selected) {
     
     rect {

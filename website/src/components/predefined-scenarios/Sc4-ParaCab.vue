@@ -55,6 +55,18 @@
     <Fuse :id=5 :xRect="932.5" :yRect="693.7666" />
     <Fuse :id=6 :xRect="909" :yRect="745.2334" :displayLeft="'left'" />
     <Fuse :id=7 :xRect="909" :yRect="807" :displayLeft="'left'" />
+    <InfoBoxSimpleCable :id=0 :line1=cbl1.line1 :line2=cbl1.line2 :circle=cbl1.circle />
+    <InfoBoxComplexCable :id=1 :line=cbl2.line :path=cbl2.path :circle=cbl2.circle />
+    <InfoBoxComplexCable :id=2 :line=cbl3.line :path=cbl3.path :circle=cbl3.circle />
+    <InfoBoxSimpleCable :id=3 :line1=cbl4.line1 :line2=cbl4.line2 :circle=cbl4.circle />
+    <InfoBoxFuse :id=0 :xRect="906.9337" :yRect="495.3649" />
+    <InfoBoxFuse :id=1 :xRect="907.3112" :yRect="567.6995" />
+    <InfoBoxFuse :id=2 :xRect="884.5" :yRect="619.33994" />
+    <InfoBoxFuse :id=3 :xRect="884.5" :yRect="693.7666" />
+    <InfoBoxFuse :id=4 :xRect="932.5" :yRect="619.33994" />
+    <InfoBoxFuse :id=5 :xRect="932.5" :yRect="693.7666" />
+    <InfoBoxFuse :id=6 :xRect="909" :yRect="745.2334" />
+    <InfoBoxFuse :id=7 :xRect="909" :yRect="807" />
   </g>
 </svg>    
 </template>
@@ -67,6 +79,9 @@ import SimpleCable from "@/components/sg-elmts/SimpleCable.vue"
 import HiddenSimpleCable from "@/components/sg-elmts/HiddenSimpleCable.vue"
 import ComplexCable from "@/components/sg-elmts/ComplexCable.vue"
 import HiddenComplexCable from "@/components/sg-elmts/HiddenComplexCable.vue"
+import InfoBoxFuse from "@/components/infoBox/InfoBoxFuse.vue"
+import InfoBoxSimpleCable from "@/components/infoBox/InfoBoxSimpleCable.vue"
+import InfoBoxComplexCable from "@/components/infoBox/InfoBoxComplexCable.vue"
 import { mapState } from 'vuex'
 
 export default {
@@ -95,7 +110,11 @@ export default {
         }
         
     },
-    components: {Fuse, Meter, SimpleCable, HiddenSimpleCable, ComplexCable, HiddenComplexCable},
+    components: {
+      Fuse, Meter, SimpleCable, ComplexCable,
+      HiddenSimpleCable, HiddenComplexCable,
+      InfoBoxFuse, InfoBoxSimpleCable, InfoBoxComplexCable
+    },
     created() {
         this.$store.commit('init', 8)
     }

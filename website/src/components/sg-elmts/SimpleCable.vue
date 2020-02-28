@@ -1,20 +1,11 @@
 <template>
-    <g>
-        <g class="cable" v-bind:class="{selected: isSelected}" v-on:click="showInspector();">
-            <title>Load: {{load()}}</title>
-            <line :x1=line1.x1 :y1=line1.y1 :x2=line1.x2 :y2=line1.y2 stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-            <line :x1=line2.x1 :y1=line2.y1 :x2=line2.x2 :y2=line2.y2 stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-            <circle :cx=line1.x1 :cy=circle.y r="5"/>
-            <circle :cx=circle.x :cy=circle.y r="7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        </g>
-        <g :transform=gPosition :visibility=showOLInfo class="infoBox">
-            <rect x="0" y="0" rx="8" ry="8" width="75" :height="heightOLBox()" fill="white"  stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-            <text transform="translate(5 5)" fill="black">
-                <tspan font-family="Helvetica Neue" font-size="8" font-weight="700" x="26" y="5">Load</tspan>
-                <tspan v-for="ul in uloads()" :key="ul.id" font-family="Helvetica Neue" font-size="8" font-weight="400" x="0" :y="ul.y">- {{ul.value}} A [{{ul.confidence}}%]</tspan>
-            </text>
-        </g>    
-    </g>
+    <g class="cable" v-bind:class="{selected: isSelected}" v-on:click="showInspector();">
+        <title>Load: {{load()}}</title>
+        <line :x1=line1.x1 :y1=line1.y1 :x2=line1.x2 :y2=line1.y2 stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <line :x1=line2.x1 :y1=line2.y1 :x2=line2.x2 :y2=line2.y2 stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <circle :cx=line1.x1 :cy=circle.y r="5"/>
+        <circle :cx=circle.x :cy=circle.y r="7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    </g> 
 </template>
 
 <script>
@@ -90,5 +81,4 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/scss/cable.scss";
-@import "@/scss/infoBox.scss";
 </style>
