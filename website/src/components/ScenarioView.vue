@@ -8,7 +8,7 @@
         section#container
             Action(id="action" :scenarioID="scenarioId")
 
-            #vue
+            #vue(v-on:mousedown="startDrag($event)", v-on:mousemove="drag($event)", v-on:mouseup="stopDrag($event)", v-on:mouseleave="leave()")
                 Sc1SingleCable(v-if="name === 'sc1-sglCable'")
                 Sc2Cable(v-else-if="name === 'sc2-cabinet'")
                 Sc3ParaSub(v-else-if="name === 'sc3-para-transfo'")
@@ -36,6 +36,12 @@ export default {
     props: {
         name: String,
     },
+    data: function() {
+        return {
+            elmtDragged: false,
+            offSetDrag: {},
+        }
+    },
     computed: {
         scenarioId: function() {
             for (var sc of scenarios) {
@@ -62,6 +68,70 @@ export default {
         })
     },
     methods: {
+        getTransform: function() {
+            var transStr = this.elmtDragged.getAttributeNS(null, "transform");
+            var idxParen = transStr.indexOf("(");
+            var idxEndPar = transStr.indexOf(")");
+            var idxSpace = transStr.indexOf(" ");
+
+            var xString = transStr.slice(idxParen + 1, idxSpace).trim();
+            var yString = transStr.slice(idxSpace + 1, idxEndPar).trim();
+
+            return {x: Number(xString), y: Number(yString)};
+
+        },
+        toSvgTransf: function(position) {
+            return "translate(" + position.x + " " + position.y + ")";
+        },
+        getMousePosition(evt, srcElmt) {
+            var svg = srcElmt;
+            while(svg.tagName !== "svg") {
+                svg = svg.parentNode;
+            }
+
+            var CTM = svg.getScreenCTM();
+            return {
+                x: (evt.clientX - CTM.e) / CTM.a,
+                y: (evt.clientY - CTM.f) / CTM.d
+            }
+        },
+        startDrag: function(evt) {
+            var src = evt.target;
+            while(!src.classList.contains("infoBox") && src.id !== "vue") {
+                src = src.parentNode;
+            }
+
+            if(src.classList.contains("infoBox")) {
+                this.elmtDragged = src;
+                var mousePosition = this.getMousePosition(evt, this.elmtDragged);
+                var position = this.getTransform();
+
+                mousePosition.x -= position.x;
+                mousePosition.y -= position.y;
+
+                this.offSetDrag = mousePosition;
+
+            }
+
+        },
+        drag: function(evt) {
+            if(this.elmtDragged) {
+                var position = this.getTransform();
+                
+                evt.preventDefault();
+                var mouseCoord = this.getMousePosition(evt, this.elmtDragged);
+                position.x = mouseCoord.x - this.offSetDrag.x;
+                position.y = mouseCoord.y - this.offSetDrag.y;
+
+                this.elmtDragged.setAttributeNS(null, "transform", this.toSvgTransf(position))
+            }
+        },
+        stopDrag: function(evt) {
+            this.elmtDragged = null;
+        },
+        leave: function() {
+            console.log("Je pars!");
+        },
         ...mapMutations(['closeAlertApproximation', 'openAlertApproximation', 'stopApproximation', 'showHideInfoOL'])
     },
 }
@@ -108,7 +178,7 @@ export default {
     float: left;
 
     svg {
-        height: inherit;
+        height: 100%;
         position: relative;
     }
 }

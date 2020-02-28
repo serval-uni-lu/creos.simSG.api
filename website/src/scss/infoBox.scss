@@ -1,4 +1,7 @@
 .infoBox {
+    cursor: move;
+    user-select: none;
+
     rect {
         stroke: $color-selection,
     }

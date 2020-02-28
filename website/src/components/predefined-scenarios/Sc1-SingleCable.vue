@@ -1,5 +1,5 @@
 <template>
-    <svg id="sc-viewer" viewBox="587 193 222 199">
+    <svg viewBox="587 193 222 199">
         <defs>
             <font-face font-family="Helvetica Neue" font-size="12" panose-1="2 0 5 3 0 0 0 9 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="-1e3" x-height="517" cap-height="714" ascent="957.0007" descent="-212.99744" font-style="italic" font-weight="400">
             <font-face-src>
