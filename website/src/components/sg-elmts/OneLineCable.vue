@@ -85,3 +85,8 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+@import "@/scss/cable.scss";
+@import "@/scss/infoBox.scss";
+</style>

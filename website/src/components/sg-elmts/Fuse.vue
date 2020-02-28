@@ -122,6 +122,7 @@ export default {
 
 
 <style lang="scss" scoped>
+@import "@/scss/infoBox.scss";
 g.fuse:not(selected) {
     
     rect {
@@ -157,16 +158,6 @@ g.fuse.selected {
         rect {
             fill: $color-selection;
         }
-    }
-}
-
-.infoBox {
-    rect {
-        stroke: $color-selection,
-    }
-
-    tspan {
-        fill: $color-selection
     }
 }
 </style>

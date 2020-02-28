@@ -64,7 +64,6 @@ import { mapState } from 'vuex'
 export default {
      data: function() {
         return {
-            id: -1,
             c1_line1: {x1: 273.74, y1: 273.42, x2:273.74, y2: 137},
             c1_line2: {x1: 268.74, y1: 182.5, x2:199, y2: 182.5},
             c1_circle: {x: 192, y: 182.5},
@@ -79,28 +78,6 @@ export default {
     components: {Fuse, Meter, SimpleCable, ComplexCable, HiddenComplexCable, HiddenSimpleCable},
     created() {
         this.$store.commit('init', 6)
-    },
-    computed: {
-         isSelected: function() {
-            return this.selectedElmt.isSameAs(this.id, 'cable')
-        },
-        ...mapState({
-            selectedElmt: state => state.selectedElmt,
-            loads: state => state.cableLoads
-        })
-    },
-    methods: {
-        load: function(id) {
-            var load = this.loads[id];
-            return (load === undefined || load === -1)? "To be computed..." : load.toFixed(2) + " A";
-        },
-        showInspector: function() {
-            let info = {
-                elemtId: this.id,
-                elemtType: "cable"
-            }
-            this.$store.commit('showInspector', info)
-        }
     }
 }
 </script>

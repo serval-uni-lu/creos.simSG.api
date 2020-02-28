@@ -1,9 +1,8 @@
 <template>
     <g class="hidden" v-on:click="showInspector();">
         <title>Load: {{load()}}</title>
-        <line :x1=line1.x1 :y1=line1.y1 :x2=line1.x2 :y2=line1.y2 stroke-linecap="round" stroke-linejoin="round"/>
-        <line :x1=line2.x1 :y1=line2.y1 :x2=line2.x2 :y2=line2.y2 stroke-linecap="round" stroke-linejoin="round"/>
-    </g>   
+        <line :x1=line.x1 :y1=line.y :x2=line.x2 :y2=line.y stroke-linecap="round" stroke-linejoin="round" />
+    </g>
 </template>
 
 <script>
@@ -12,8 +11,7 @@ import { mapState } from 'vuex'
 export default {
     props: {
         id: Number,
-        line1: Object,
-        line2: Object,
+        line: Object,
     },
     computed: {
         ...mapState({

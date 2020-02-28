@@ -90,14 +90,5 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/scss/cable.scss";
-
-.infoBox {
-    rect {
-        stroke: $color-selection,
-    }
-
-    tspan {
-        fill: $color-selection
-    }
-}
+@import "@/scss/infoBox.scss";
 </style>

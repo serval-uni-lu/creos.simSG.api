@@ -42,16 +42,10 @@
           </text>
       </g>
       <SimpleCable :id=4 :line1=cbl5.line1 :line2=cbl5.line2 :circle=cbl5.circle />
-      <ComplexCable :id=3 :path=cbl4.path :line=cbl4.line :circle=cbl4.circle />
-      <OneLineCable :id=2 :line=cbl3.line :circle=cbl3.circle />
+      <ComplexCable :id=3 :path=cbl4.path :line=cbl4.line :circle=cbl4.circle />    
       <ComplexCable :id=1 :path=cbl2.path :line=cbl2.line :circle=cbl2.circle />
       <ComplexCable :id=0 :path=cbl1.path :line=cbl1.line :circle=cbl1.circle />
-
-      <!-- <g class="cable" v-bind:class="{selected: isSelected && id===2}" v-on:click="id=2; showInspector();">
-          <title>Load: {{load(2)}}</title>
-          <line x1="369.5" y1="177" x2="522.45184" y2="176.38674" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-          <circle cx="464" cy="176.39287" r="5.00000798950948" />
-      </g> -->
+      <OneLineCable :id=2 :line=cbl3.line :circle=cbl3.circle />
       <g id="DE">
         <circle cx="253.5" cy="363.62933" r="7.1770752434485" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white"/>
         <circle cx="520.9223" cy="176.39287" r="7.17707524344844"  stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white"/>
@@ -86,7 +80,6 @@ import { mapState } from 'vuex'
 export default {
     data: function() {
           return {
-              id: -2,
               cbl1: {
                 path: "M 225.43436 55.644 L 225 56 L 225 285.5 L 253.5 285.5",
                 line: {x1:127.85 , y1:170.01, x2: 220.27, y2:170.01},
@@ -118,33 +111,6 @@ export default {
     components: {Fuse, Meter, SimpleCable, HiddenSimpleCable, ComplexCable, HiddenComplexCable, OneLineCable},
     created() {
         this.$store.commit('init', 10)
-    },
-    computed: {
-         isSelected: function() {
-            return this.selectedElmt.isSameAs(this.id, 'cable')
-        },
-        ...mapState({
-            selectedElmt: state => state.selectedElmt,
-            loads: state => state.cableLoads
-        })
-    },
-    methods: {
-        load: function(id) {
-              var load = this.loads[id];
-              return (load === undefined ||  load === -1)? "To be computed..." : load.toFixed(2) + " A";
-        },
-        showInspector: function() {
-            let info = {
-                elemtId: this.id,
-                elemtType: "cable"
-            }
-            this.$store.commit('showInspector', info)
-        }
     }
 }
 </script>
-
-
-<style lang="scss" scoped>
-@import "@/scss/cable.scss";
-</style>

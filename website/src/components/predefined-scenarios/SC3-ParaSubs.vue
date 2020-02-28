@@ -18,50 +18,18 @@
             </font-face>
         </defs>
         <g id="Canvas_5" fill="none" stroke-dasharray="none" stroke="none" stroke-opacity="1" fill-opacity="1">
-            <g class="hidden">
-                <g v-on:click="id=0; showInspector();">
-                    <title>Load: {{load(0)}}</title>
-                    <path d="M 891.5825 485.6004 L 891.5825 598.5197 L 911.7323 598.5197" stroke-linecap="round" stroke-linejoin="round"/>
-                    <line x1="891.5825" y1="532" x2="791.9999" y2="531.53284" stroke-linecap="round" stroke-linejoin="round" />
-                </g>
-                <g v-on:click="id=1; showInspector();">
-                    <title>Load: {{load(1)}}</title>
-                    <path d="M 931.8821 485.6004 L 931.8821 598.5197 L 911.7323 598.5197" stroke-linecap="round" stroke-linejoin="round"/>
-                    <line x1="1020.5" y1="531.5" x2="932" y2="531.5" stroke-linecap="round" stroke-linejoin="round" />
-                </g>
-                <g v-on:click="id=2; showInspector();">
-                    <title>Load: {{load(2)}}</title>
-                    <line x1="911.7323" y1="706.5" x2="911.7323" y2="598.5197" stroke-linecap="round" stroke-linejoin="round" />
-                    <line x1="1001.1179" y1="660.50986" x2="912.6179" y2="660.50986" stroke-linecap="round" stroke-linejoin="round"/>
-                </g>
-            </g>
+            <HiddenComplexCable :id=0 :path=cbl1.path :line=cbl1.line />
+            <HiddenComplexCable :id=1 :path=cbl2.path :line=cbl2.line />
+            <HiddenSimpleCable :id=0 :line1=cbl3.line1 :line2=cbl3.line2 />
             <g id="Cabinet">
                 <rect x="876.8251" y="582.5197" width="71" height="32" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white"/>
                 <text transform="translate(947.8251 591.3517)" fill="black">
                     <tspan font-family="Helvetica Neue" font-size="12" font-style="italic" font-weight="400" fill="black" x="2.0160011" y="11">Cabinet</tspan>
                 </text>
             </g>
-            <g class="cable" v-bind:class="{selected: isSelected && id===0}" v-on:click="id=0; showInspector();">
-                <title>Load: {{load(0)}}</title>
-                <path d="M 891.5825 485.6004 L 891.5825 598.5197 L 911.7323 598.5197" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <line x1="891.5825" y1="532" x2="791.9999" y2="531.53284" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <circle cx="785" cy="531.5" r="7.00001118531322" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <circle cx="891.5825" cy="532.03756" r="5.00000798950946"/>
-            </g>
-            <g class="cable" v-bind:class="{selected: isSelected && id===1}" v-on:click="id=1; showInspector();">
-                <title>Load: {{load(1)}}</title>
-                <path d="M 931.8821 485.6004 L 931.8821 598.5197 L 911.7323 598.5197" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <line x1="1020.5" y1="531.5" x2="932" y2="531.5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <circle cx="931.8821" cy="531.86574" r="5.00000798950949"/>
-                <circle cx="1027.5" cy="531.5" r="7.00001118531322" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-            </g>
-            <g class="cable" v-bind:class="{selected: isSelected && id===2}" v-on:click="id=2; showInspector();">
-                <title>Load: {{load(2)}}</title>
-                <line x1="911.7323" y1="706.5" x2="911.7323" y2="598.5197" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <line x1="1001.1179" y1="660.50986" x2="912.6179" y2="660.50986" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-                <circle cx="912.5" cy="660.8756" r="5.00000798950948"/>
-                <circle cx="1008.1179" cy="660.50986" r="7.00001118531324" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-            </g>
+            <ComplexCable :id=0 :path=cbl1.path :line=cbl1.line :circle=cbl1.circle />
+            <ComplexCable :id=1 :path=cbl2.path :line=cbl2.line :circle=cbl2.circle />
+            <SimpleCable :id=0 :line1=cbl3.line1 :line2=cbl3.line2 :circle=cbl3.circle />
             <g id="DE">
                 <circle cx="911.7323" cy="713.5" r="7.00001118531318" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white"/>
             </g>
@@ -88,44 +56,36 @@
 <script>
 import Fuse from "@/components/sg-elmts/Fuse.vue"
 import Meter from "@/components/sg-elmts/Meter.vue"
+import ComplexCable from "@/components/sg-elmts/ComplexCable.vue"
+import HiddenComplexCable from "@/components/sg-elmts/HiddenComplexCable.vue"
+import SimpleCable from "@/components/sg-elmts/SimpleCable.vue"
+import HiddenSimpleCable from "@/components/sg-elmts/HiddenSimpleCable.vue"
 import { mapState } from 'vuex'
 
 export default {
     data: function() {
         return {
-            id: -1
+            cbl1: {
+                path: "M 891.5825 485.6004 L 891.5825 598.5197 L 911.7323 598.5197",
+                line: {x1: 891.58, y1: 532, x2: 792, y2: 531.53},
+                circle: {y: 531.53, onLineX: 891.58, endX: 785}
+            },
+            cbl2: {
+                path: "M 931.8821 485.6004 L 931.8821 598.5197 L 911.7323 598.5197",
+                line: {x1: 1020.5, y1: 531.5, x2: 932, y2: 531.5},
+                circle: {y: 531.87, onLineX: 931.88, endX: 1027.5}
+            },
+            cbl3: {
+                line1: {x1: 911.73, y1: 706.5, x2: 911.73, y2: 598.52},
+                line2: {x1: 1001.12, y1: 660.51, x2: 912.62, y2: 660.51},
+                circle: {x: 1008.12, y: 660.87}
+            }
         }
         
     },
-    components: {Fuse, Meter},
-    computed: {
-         isSelected: function() {
-            return this.selectedElmt.isSameAs(this.id, 'cable')
-        },
-        ...mapState({
-            selectedElmt: state => state.selectedElmt,
-            loads: state => state.cableLoads
-        })
-    },
-    methods: {
-        load: function(id) {
-            var load = this.loads[id];
-            return (load === undefined || load === -1)? "To be computed..." : load.toFixed(2) + " A";
-        },
-        showInspector: function() {
-            let info = {
-                elemtId: this.id,
-                elemtType: "cable"
-            }
-            this.$store.commit('showInspector', info)
-        }
-    },
+    components: {Fuse, Meter, ComplexCable, HiddenComplexCable, SimpleCable, HiddenSimpleCable},
     created() {
         this.$store.commit('init', 6)
     }
 }
 </script>
-
-<style lang="scss" scoped>
-@import "@/scss/cable.scss";
-</style>
