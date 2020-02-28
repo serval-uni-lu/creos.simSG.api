@@ -21,7 +21,7 @@ export default {
     },
     computed: {
         showOLInfo: function() {
-            return (this.infoOverLayerVis)? "visible": "hidden";
+            return (this.infoFuseVis)? "visible": "hidden";
         },
         gPosition: function() {
             return "translate(" + (this.xRect - 37.5) + " " + (this.yRect - this.heightOLBox()/2) + ")";
@@ -31,7 +31,7 @@ export default {
         },
         ...mapState({
             fuses: state => state.fuses,
-            infoOverLayerVis: state => state.infoOverLayerVis
+            infoFuseVis: state => state.infoFuseVis
         })
     },
     methods: {

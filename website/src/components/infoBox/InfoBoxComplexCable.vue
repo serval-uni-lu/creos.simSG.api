@@ -20,7 +20,7 @@ export default {
     },
     computed: {
         showOLInfo: function() {
-            return (this.infoOverLayerVis)? "visible": "hidden";
+            return (this.infoCblVis)? "visible": "hidden";
         },
         gPosition: function() {
             return "translate(" + (this.xLoadInfo) + " " + this.yLoadInfo + ")";
@@ -33,7 +33,7 @@ export default {
         },
         ...mapState({
             uCableLoads: state => state.uCableLoads,
-            infoOverLayerVis: state => state.infoOverLayerVis
+            infoCblVis: state => state.infoCblVis
         })
     },
     methods: {

@@ -62,7 +62,9 @@ export default new Vuex.Store({
     state: {
         consumptions: Array<number>(),
         inspVisible: false,
-        infoOverLayerVis: false,
+        // infoOverLayerVis: false,
+        infoCblVis: false,
+        infoFuseVis: false,
         selectedElmt: NullSelection,
         fuses: Array<Fuse>(),
         cableLoads: Array<number>(),
@@ -189,7 +191,20 @@ export default new Vuex.Store({
             state.errorMessage = "";
         },
         showHideInfoOL(state) {
-            state.infoOverLayerVis = !state.infoOverLayerVis;
+            if(state.infoCblVis && state.infoFuseVis) {
+                state.infoCblVis = false;
+                state.infoFuseVis = false;
+            } else {
+                state.infoCblVis = true;
+                state.infoFuseVis = true;
+            } 
+            // state.infoOverLayerVis = !state.infoOverLayerVis;
         },
+        showHideInfoCable(state) {
+            state.infoCblVis = !state.infoCblVis;
+        },
+        showHideInfoFuse(state) {
+            state.infoFuseVis = !state.infoFuseVis;
+        }
     }
 })

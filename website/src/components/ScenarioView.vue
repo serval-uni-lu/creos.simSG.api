@@ -4,6 +4,8 @@
 
         .toolbar
             button.infoLayer(title="Add a layer with all information" type="button" class="btn btn-secondary" v-bind:class="{active: infoOverLayerVis}" v-on:click="showHideInfoOL()")
+            img.cableLayer(src="@/assets/infoLayerCable.svg" title="Add a layer with cables information" type="button" class="btn btn-secondary" v-bind:class="{active: infoCblVis}" v-on:click="showHideInfoCable()" )
+            img.cableLayer(src="@/assets/infoLayerFuse.svg" title="Add a layer with fuses information" type="button" class="btn btn-secondary" v-bind:class="{active: infoFuseVis}" v-on:click="showHideInfoFuse()")
 
         section#container
             Action(id="action" :scenarioID="scenarioId")
@@ -61,10 +63,15 @@ export default {
 
             return "Scenario \"" + this.name + "\" does not exist."
         },
+        infoOverLayerVis: function() {
+            return this.infoCblVis && this.infoFuseVis;
+        },
         ...mapState({
             inspVisible: state => state.inspVisible,
             selection: state => state.selectedElmt,
-            infoOverLayerVis: state => state.infoOverLayerVis
+            // infoOverLayerVis: state => state.infoOverLayerVis
+            infoCblVis: state => state.infoCblVis,
+            infoFuseVis: state => state.infoFuseVis
         })
     },
     methods: {
@@ -132,7 +139,7 @@ export default {
         leave: function() {
             console.log("Je pars!");
         },
-        ...mapMutations(['closeAlertApproximation', 'openAlertApproximation', 'stopApproximation', 'showHideInfoOL'])
+        ...mapMutations(['closeAlertApproximation', 'openAlertApproximation', 'stopApproximation', 'showHideInfoOL', 'showHideInfoCable', 'showHideInfoFuse'])
     },
 }
 </script>
@@ -152,10 +159,22 @@ export default {
     margin-bottom: 10px;
 }
 
+.infoLayer {
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
 .infoLayer:before {
     font-family: "Font Awesome 5 Free";
     content: "\f5fd";
     font-weight: 900;
+}
+
+.cableLayer {
+    margin-left: 3px;
+    margin-right: 3px;
+    width:  41.1;
+    height: 37.9333px;
 }
 
 #container {
