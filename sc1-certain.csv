@@ -1,0 +1,5 @@
+"Benchmark","Mode","Threads","Samples","Score","Score Error (99.9%)","Unit"
+"duc.aintea.benchmark.loadapproximator.certain.sc1.AllClosed.benchUncertainApprox","avgt",1,25,0.001591,0.000078,"ms/op"
+"duc.aintea.benchmark.loadapproximator.certain.sc1.AllOpen.benchUncertainApprox","avgt",1,25,0.001207,0.000083,"ms/op"
+"duc.aintea.benchmark.loadapproximator.certain.sc1.FCabOpen.benchUncertainApprox","avgt",1,25,0.001399,0.000149,"ms/op"
+"duc.aintea.benchmark.loadapproximator.certain.sc1.FSubsOpen.benchUncertainApprox","avgt",1,25,0.001573,0.000117,"ms/op"
