@@ -19,7 +19,7 @@
       div
         span.title.collapseAct(v-on:click="show($event)" class="active") Load
         .collapsible
-          | {{load}}
+          span(v-for="ul in uloads()" :key="ul.id") - {{ul.value}} A [{{ul.confidence}}%] <br/>
 
         
         
@@ -53,6 +53,24 @@ export default {
         } else {
           content.style.maxHeight =  content.scrollHeight + "px";
         }
+      },
+      uloads: function() {
+          var uloads = this.fuses[this.fuseId].uLoad;
+          if(uloads === undefined || uloads.length === 0) {
+              return [{id: 0, value: "??", confidence: "??", y: 35}]
+          }
+
+          var result = []
+          for(var ul=0; ul<uloads.length; ul++) {
+              var curr = {
+                  id: ul,
+                  value: uloads[ul].value.toFixed(2),
+                  confidence: (uloads[ul].confidence * 100).toFixed(2),
+              };
+              result.push(curr);
+          }
+
+          return result;
       }
     }
 

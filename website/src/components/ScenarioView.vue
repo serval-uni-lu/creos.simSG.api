@@ -10,7 +10,7 @@
         section#container
             Action(id="action" :scenarioID="scenarioId")
 
-            #vue(v-on:mousedown="startDrag($event)", v-on:mousemove="drag($event)", v-on:mouseup="stopDrag($event)", v-on:mouseleave="leave()")
+            #vue(v-on:mousedown="startDrag($event)", v-on:mousemove="drag($event)", v-on:mouseup="stopDrag($event)", v-on:mouseleave="stopDrag($event)")
                 Sc1SingleCable(v-if="name === 'sc1-sglCable'")
                 Sc2Cable(v-else-if="name === 'sc2-cabinet'")
                 Sc3ParaSub(v-else-if="name === 'sc3-para-transfo'")
@@ -135,9 +135,6 @@ export default {
         },
         stopDrag: function(evt) {
             this.elmtDragged = null;
-        },
-        leave: function() {
-            console.log("Je pars!");
         },
         ...mapMutations(['closeAlertApproximation', 'openAlertApproximation', 'stopApproximation', 'showHideInfoOL', 'showHideInfoCable', 'showHideInfoFuse'])
     },
