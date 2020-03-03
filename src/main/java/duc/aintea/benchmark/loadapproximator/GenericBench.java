@@ -115,10 +115,10 @@ public abstract class GenericBench {
                 .include(duc.aintea.benchmark.loadapproximator.indirectPara.Sc2F2Open.class.getSimpleName())
                 .include(duc.aintea.benchmark.loadapproximator.indirectPara.Sc3F7Open.class.getSimpleName())
                 .shouldDoGC(true)
-                .threads(Threads.MAX)
+                .threads(3)
                 .shouldFailOnError(true)
                 .resultFormat(ResultFormatType.CSV)
-                .result("sc1-certain.csv")
+                .result("bench-result.csv")
                 .build();
         new Runner(options).run();
     }
