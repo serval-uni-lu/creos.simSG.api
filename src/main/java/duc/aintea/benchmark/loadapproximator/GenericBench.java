@@ -6,7 +6,6 @@ import duc.aintea.benchmark.loadapproximator.singleCable.AllOpen;
 import duc.aintea.benchmark.loadapproximator.singleCable.FCabOpen;
 import duc.aintea.benchmark.loadapproximator.singleCable.FSubsOpen;
 import duc.aintea.loadapproximation.LoadApproximator;
-import duc.aintea.loadapproximation.UncertainLoadApproximator;
 import duc.aintea.sg.Cable;
 import duc.aintea.sg.Fuse;
 import duc.aintea.sg.Meter;
@@ -34,6 +33,24 @@ public abstract class GenericBench {
     protected abstract Cable[] getCables();
 
 
+    protected void makeUncertain(int nb) {
+        if(nb > fuses.length) {
+            nb = fuses.length;
+        }
+
+       int idx = 0;
+        boolean[] done = new boolean[fuses.length];
+       while (idx < nb) {
+           int randIdx = random.nextInt(fuses.length);
+           if(!done[randIdx]) {
+               idx++;
+               done[randIdx] = true;
+               fuses[randIdx].getStatus().setConfAsProb(random.nextDouble());
+           }
+       }
+    }
+
+
     @Setup
     public void setup() {
         substation = initSubs();
@@ -51,11 +68,6 @@ public abstract class GenericBench {
     @Benchmark
     public void benchCertainApprox() {
         LoadApproximator.approximate(substation);
-    }
-
-    @Benchmark
-    public void benchUncertainApprox() {
-        UncertainLoadApproximator.approximate(substation);
     }
 
     public static void main(String[] args) throws RunnerException {

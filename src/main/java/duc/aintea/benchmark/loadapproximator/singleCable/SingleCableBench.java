@@ -1,10 +1,12 @@
 package duc.aintea.benchmark.loadapproximator.singleCable;
 
 import duc.aintea.benchmark.loadapproximator.GenericBench;
+import duc.aintea.loadapproximation.UncertainLoadApproximator;
 import duc.aintea.sg.Cable;
 import duc.aintea.sg.Fuse;
 import duc.aintea.sg.Substation;
 import duc.aintea.sg.scenarios.SingleCableBuilder;
+import org.openjdk.jmh.annotations.Benchmark;
 
 public abstract class SingleCableBench extends GenericBench  {
 
@@ -23,5 +25,16 @@ public abstract class SingleCableBench extends GenericBench  {
         return SingleCableBuilder.extractCables(substation);
     }
 
+    @Benchmark
+    public void benchUncertainApprox1Fuse() {
+        makeUncertain(1);
+        UncertainLoadApproximator.approximate(substation);
+    }
 
+    @Benchmark
+    public void benchUncertainApprox2Fuse() {
+        makeUncertain(2);
+        UncertainLoadApproximator.approximate(substation);
+    }
+    
 }
