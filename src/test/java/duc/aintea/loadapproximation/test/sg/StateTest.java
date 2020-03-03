@@ -2,7 +2,6 @@ package duc.aintea.loadapproximation.test.sg;
 
 import duc.aintea.loadapproximation.test.generator.Data;
 import duc.aintea.sg.State;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -65,21 +64,21 @@ public class StateTest {
     }
 
 
-    @Test
-    public void test() {
-        var state = new State(true, 1);
-        System.out.println(state);
-
-        state.close();
-        state.setConfAsProb(0.3);
-        System.out.println(state);
-        System.out.println(state.getConfClosedAsProb());
-        System.out.println(state.getConfOpenAsProb());
-
-        state.open();
-        System.out.println(state);
-        System.out.println(state.getConfClosedAsProb());
-        System.out.println(state.getConfOpenAsProb());
-    }
+//    @Test
+//    public void test() {
+//        var state = new State(true, 1);
+//        System.out.println(state);
+//
+//        state.close();
+//        state.setConfAsProb(0.3);
+//        System.out.println(state);
+//        System.out.println(state.getConfClosedAsProb());
+//        System.out.println(state.getConfOpenAsProb());
+//
+//        state.open();
+//        System.out.println(state);
+//        System.out.println(state.getConfClosedAsProb());
+//        System.out.println(state.getConfOpenAsProb());
+//    }
 
 }
