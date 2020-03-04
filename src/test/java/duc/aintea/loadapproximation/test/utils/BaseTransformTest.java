@@ -2,12 +2,9 @@ package duc.aintea.loadapproximation.test.utils;
 
 import duc.aintea.utils.BaseTransform;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.Arrays;
 
 public class BaseTransformTest {
 
@@ -41,10 +38,10 @@ public class BaseTransformTest {
 
     }
 
-    @Test
-    public void test() {
-        System.out.println(Arrays.toString(BaseTransform.toBinary(8, 7)));
-    }
+//    @Test
+//    public void test() {
+//        System.out.println(Arrays.toString(BaseTransform.toBinary(8, 7)));
+//    }
 
 
     @ParameterizedTest
