@@ -21,10 +21,12 @@ public class SingleCableBuilder {
         var f1 = new Fuse(F1_NAME);
         if(!fuseClose[0]) {
             f1.openFuse();
+            f1.getStatus().makeCertain();
         }
         var f2 = new Fuse(F2_NAME);
         if(!fuseClose[1]) {
             f2.openFuse();
+            f2.getStatus().makeCertain();
         }
 
         var cable = new Cable();

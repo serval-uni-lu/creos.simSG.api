@@ -1,0 +1,12 @@
+{
+  "scenario": 2,
+  "consumptions": [14.0, 20.6, 168.2],
+  "openFuses": [1, 4],
+  "uncertainFuses": [
+    {
+      "id": 3,
+      "status": "Closed",
+      "confidenceLevel": 0.8
+    }
+  ]
+}

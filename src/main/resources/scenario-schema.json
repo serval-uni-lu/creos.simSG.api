@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "scenario": {
+      "type": "number",
+      "enum": [1, 2, 3, 4, 5]
+    },
+    "openFuses": {
+      "type": "array",
+      "items": {"type": "number"}
+    },
+    "consumptions": {
+      "type": "array",
+      "items": {"type": "number"}
+    },
+    "uncertainFuses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "number"},
+          "status": {
+            "type": "string",
+            "enum": ["CLOSED", "Closed","closed", "OPEN", "open", "Open"]
+          },
+          "confidenceLevel": {"type":  "number"}
+        },
+        "additionalProperties": false,
+        "required": ["id", "status", "confidenceLevel"]
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["scenario", "consumptions"]
+}

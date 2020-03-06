@@ -53,34 +53,42 @@ public class ParaCabinetBuilder {
         var f1 = new Fuse(F1_NAME);
         if(!fuseClose[0]) {
             f1.openFuse();
+            f1.getStatus().makeCertain();
         }
         var f2 = new Fuse(F2_NAME);
         if(!fuseClose[1]) {
             f2.openFuse();
+            f2.getStatus().makeCertain();
         }
         var f3 = new Fuse(F3_NAME);
         if(!fuseClose[2]) {
             f3.openFuse();
+            f3.getStatus().makeCertain();
         }
         var f4 = new Fuse(F4_NAME);
         if(!fuseClose[3]) {
             f4.openFuse();
+            f4.getStatus().makeCertain();
         }
         var f5 = new Fuse(F5_NAME);
         if(!fuseClose[4]) {
             f5.openFuse();
+            f5.getStatus().makeCertain();
         }
         var f6 = new Fuse(F6_NAME);
         if(!fuseClose[5]) {
             f6.openFuse();
+            f6.getStatus().makeCertain();
         }
         var f7 = new Fuse(F7_NAME);
         if(!fuseClose[6]) {
             f7.openFuse();
+            f7.getStatus().makeCertain();
         }
         var f8 = new Fuse(F8_NAME);
         if(!fuseClose[7]) {
             f8.openFuse();
+            f8.getStatus().makeCertain();
         }
 
         subs.addFuses(f1);
