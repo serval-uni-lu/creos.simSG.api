@@ -128,6 +128,17 @@ public class JSONImporter {
         });
     }
 
+    public static Optional<Substation> from(String jsonText) throws ValidationException {
+        JsonNode toImport;
+        try {
+            toImport = JsonLoader.fromString(jsonText);
+        } catch (IOException e) {
+            throw new ValidationException(e);
+        }
+
+        return extractSubstation(toImport);
+    }
+
 
     public static Optional<Substation> from(File jsonFile) throws ValidationException {
         JsonNode toImport;
@@ -137,7 +148,10 @@ public class JSONImporter {
             throw new ValidationException(e);
         }
 
+        return extractSubstation(toImport);
+    }
 
+    private static Optional<Substation> extractSubstation(JsonNode toImport) throws ValidationException {
         if(validate(toImport)) {
             Substation substation;
             Fuse[] fuses;
