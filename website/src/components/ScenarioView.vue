@@ -170,7 +170,7 @@ export default {
 .cableLayer {
     margin-left: 3px;
     margin-right: 3px;
-    width:  41.1;
+    width:  41.1px;
     height: 37.9333px;
 }
 

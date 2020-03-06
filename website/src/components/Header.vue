@@ -1,7 +1,7 @@
 <template lang="pug">
     #header 
         #title
-            p SimSG : Smart Grid Simulator
+            p SimSG: Smart Grid Simulator
 
         #nav
             ul.separator
