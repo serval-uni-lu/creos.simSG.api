@@ -3,7 +3,7 @@ package duc.aintea.loadapproximation.test.sg.importer;
 import duc.aintea.sg.Cable;
 import duc.aintea.sg.Fuse;
 import duc.aintea.sg.Substation;
-import duc.aintea.sg.importer.JsonImporter;
+import duc.aintea.sg.importer.LalalLand;
 import duc.aintea.sg.scenarios.IndirectParaBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,20 +16,20 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class JsonImporterTest {
+public class LalalLandTest {
 
     @ParameterizedTest
     @MethodSource("duc.aintea.loadapproximation.test.sg.importer.ScBasedJsonTest#getInvalidJsonFiles")
     public void testInvalidFile(File jsonFile) {
         assertDoesNotThrow(() -> {
-            Optional<List<Substation>> substation = JsonImporter.from(jsonFile);
+            Optional<List<Substation>> substation = LalalLand.from(jsonFile);
             assertTrue(substation.isEmpty());
         });
     }
 
     @Test
     public void testImportIndirectPara() {
-        final String jsonPath = JsonImporterTest.class
+        final String jsonPath = LalalLandTest.class
                 .getClassLoader()
                 .getResource("validJson/sg/indirectPara.json")
                 .getPath();
@@ -37,7 +37,7 @@ public class JsonImporterTest {
 
         final var subs = new Substation[1];
         Assertions.assertDoesNotThrow(() -> {
-            Optional<List<Substation>> optionalSubstations = JsonImporter.from(file);
+            Optional<List<Substation>> optionalSubstations = LalalLand.from(file);
             assertTrue(optionalSubstations.isPresent());
 
             List<Substation> substations = optionalSubstations.get();
