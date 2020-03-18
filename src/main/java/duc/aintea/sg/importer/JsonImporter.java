@@ -9,8 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class LalalLand {
-    private LalalLand() {}
+public class JsonImporter {
+    private JsonImporter() {}
 
     private static final String ENTITIES = "entities";
     private static final String FUSES = "fuses";
