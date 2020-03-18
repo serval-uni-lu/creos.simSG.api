@@ -3,214 +3,102 @@ package duc.aintea.loadapproximation.test.sg.importer;
 import duc.aintea.sg.Cable;
 import duc.aintea.sg.Fuse;
 import duc.aintea.sg.Substation;
-import duc.aintea.sg.importer.JSONImporter;
-import duc.aintea.sg.scenarios.*;
+import duc.aintea.sg.importer.JsonImporter;
+import duc.aintea.sg.scenarios.IndirectParaBuilder;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class JSONImporterTest {
-
-
-    private static Arguments[] getInvalidJsonFiles() {
-        var rootFolder = JSONImporterTest.class
-                .getClassLoader()
-                .getResource("invalidJson")
-                .getPath();
-        var path = Paths.get(rootFolder);
-
-        final var arsList = new ArrayList<Arguments>();
-
-        try {
-            Files.walkFileTree(path, new FileVisitor<Path>() {
-                @Override
-                public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-                    return FileVisitResult.CONTINUE;
-                }
-
-                @Override
-                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                   arsList.add(Arguments.of(file.toFile()));
-                   return FileVisitResult.CONTINUE;
-                }
-
-                @Override
-                public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
-                    throw exc;
-                }
-
-                @Override
-                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                    return FileVisitResult.CONTINUE;
-                }
-            });
-        } catch (IOException ex) {
-            //should not happen
-        }
-
-       return arsList.toArray(new Arguments[0]);
-
-    }
-
-
+public class JsonImporterTest {
 
     @ParameterizedTest
-    @MethodSource("getInvalidJsonFiles")
+    @MethodSource("duc.aintea.loadapproximation.test.sg.importer.ScBasedJsonTest#getInvalidJsonFiles")
     public void testInvalidFile(File jsonFile) {
         assertDoesNotThrow(() -> {
-            Optional<Substation> substation = JSONImporter.from(jsonFile);
+            Optional<List<Substation>> substation = JsonImporter.from(jsonFile);
             assertTrue(substation.isEmpty());
         });
     }
 
-    private File getValidFile(String fileName) {
-        String jsonPath = JSONImporter.class
+    @Test
+    public void testImportIndirectPara() {
+        final String jsonPath = JsonImporterTest.class
                 .getClassLoader()
-                .getResource("validJson/" + fileName)
+                .getResource("validJson/sg/indirectPara.json")
                 .getPath();
-        return new File(jsonPath);
-    }
+        final var file = new File(jsonPath);
 
-    private Substation testNoException(String fileName) {
-        File jsonFIle = getValidFile(fileName);
-        final Substation[] substation = new Substation[1];
-        assertDoesNotThrow(() -> {
-            Optional<Substation> opt = JSONImporter.from(jsonFIle);
-            assertTrue(opt.isPresent());
-            substation[0] = opt.get();
+        final var subs = new Substation[1];
+        Assertions.assertDoesNotThrow(() -> {
+            Optional<List<Substation>> optionalSubstations = JsonImporter.from(file);
+            assertTrue(optionalSubstations.isPresent());
+
+            List<Substation> substations = optionalSubstations.get();
+            assertEquals(1, substations.size());
+            subs[0] = substations.get(0);
         });
-        return substation[0];
-    }
-
-    private void genericTest(Cable[] cables, double[] consumptions, Fuse[] fuses, boolean[] fuseStatus, boolean[] uncertainFuses) {
-        for (int i = 0; i < cables.length; i++) {
-            assertEquals(consumptions[i], cables[i].getConsumption());
-        }
-
-        for (int i = 0; i < fuses.length; i++) {
-            assertEquals(fuses[i].isClosed(), fuseStatus[i], i + "");
-            assertEquals(fuses[i].getStatus().isUncertain(), uncertainFuses[i], i + "");
-        }
-    }
-
-    @Test
-    public void testValidSc1() {
-        Substation substation = testNoException("sc1.json");
-
-        Cable[] cables = SingleCableBuilder.extractCables(substation);
-        double[] expCons = new double[]{14.0};
-
-        var fuseStatus = new boolean[]{true, false};
-        var fIsUc = new boolean[]{true, false};
-
-        Fuse[] fuses = SingleCableBuilder.extractFuses(substation);
-
-        genericTest(cables, expCons, fuses, fuseStatus, fIsUc);
-
-        assertEquals(0.5, fuses[0].getStatus().getConfClosedAsProb());
-    }
 
 
-    @Test
-    public void testValidSc2() {
-        Substation substation = testNoException("sc2.json");
-
-        Cable[] cables = CabinetBuilder.extractCables(substation);
-        double[] expCons = new double[]{14.0, 20.6, 168.2};
-
-        var fuseStatus = new boolean[6];
-        Arrays.fill(fuseStatus, true);
-        fuseStatus[0] = fuseStatus[3] = false;
-
-        var fIsUc = new boolean[6];
-        Arrays.fill(fIsUc, false);
-        fIsUc[2] = true;
-
-        Fuse[] fuses = CabinetBuilder.extractFuses(substation);
-
-        genericTest(cables, expCons, fuses, fuseStatus, fIsUc);
-
-        assertEquals(0.8, fuses[2].getStatus().getConfClosedAsProb());
-    }
-
-
-    @Test
-    public void testValidSc3() {
-        Substation substation = testNoException("sc3.json");
-
-        Cable[] cables = ParaTransformerBuilder.extractCables(substation);
-        double[] expCons = new double[]{14.0, 20.6, 168.2};
-
-        var fuseStatus = new boolean[6];
-        Arrays.fill(fuseStatus, true);
-        fuseStatus[0] = fuseStatus[1] = fuseStatus[5] =false;
-
-        var fIsUc = new boolean[6];
-        Arrays.fill(fIsUc, false);
-        fIsUc[1] = true;
-
-        Fuse[] fuses = ParaTransformerBuilder.extractFuses(substation);
-
-        genericTest(cables, expCons, fuses, fuseStatus, fIsUc);
-
-        assertEquals(0.8, fuses[1].getStatus().getConfOpenAsProb());
-    }
-
-    @Test
-    public void testValidSc4() {
-        Substation substation = testNoException("sc4.json");
-
-        Cable[] cables = ParaCabinetBuilder.extractCables(substation);
-        double[] expCons = new double[]{14.0, 20.6, 168.2, 658};
-
-        var fuseStatus = new boolean[8];
-        Arrays.fill(fuseStatus, true);
-        fuseStatus[0] = fuseStatus[5] = fuseStatus[2] = fuseStatus[1] = fuseStatus[3] =false;
-
-        var fIsUc = new boolean[8];
-        Arrays.fill(fIsUc, false);
-        fIsUc[1] = fIsUc[3] = true;
-
-        Fuse[] fuses = ParaCabinetBuilder.extractFuses(substation);
-
-        genericTest(cables, expCons, fuses, fuseStatus, fIsUc);
-
-        assertEquals(0.8, fuses[1].getStatus().getConfOpenAsProb());
-        assertEquals(0.1, fuses[3].getStatus().getConfOpenAsProb());
-    }
-
-    @Test
-    public void testValidSc5() {
-        Substation substation = testNoException("sc5.json");
-
-        Cable[] cables = IndirectParaBuilder.extractCables(substation);
-        double[] expCons = new double[]{14.0, 20.6, 168.2, 658, 12.0};
-
-        var fuseStatus = new boolean[10];
-        Arrays.fill(fuseStatus, true);
-        fuseStatus[0] = fuseStatus[5] = fuseStatus[2] = fuseStatus[1] = false;
-
-        var fIsUc = new boolean[10];
-        Arrays.fill(fIsUc, false);
-        fIsUc[1] = fIsUc[3] = true;
+        Substation substation = subs[0];
 
         Fuse[] fuses = IndirectParaBuilder.extractFuses(substation);
+        assertEquals("Fuse 1", fuses[0].getName());
+        assertTrue(fuses[0].isClosed());
+        assertEquals(0.7, fuses[0].getStatus().getConfClosedAsProb());
 
-        genericTest(cables, expCons, fuses, fuseStatus, fIsUc);
+        assertEquals("Fuse 2", fuses[1].getName());
+        assertTrue(fuses[1].isClosed());
+        assertEquals(0.7, fuses[1].getStatus().getConfClosedAsProb());
 
-        assertEquals(0.8, fuses[1].getStatus().getConfOpenAsProb());
-        assertEquals(0.1, fuses[3].getStatus().getConfClosedAsProb());
+        assertEquals("Fuse 3", fuses[2].getName());
+        assertTrue(fuses[2].isClosed());
+        assertEquals(0.7, fuses[2].getStatus().getConfClosedAsProb());
+
+        assertEquals("Fuse 4", fuses[3].getName());
+        assertFalse(fuses[3].isClosed());
+        assertEquals(0.7, fuses[3].getStatus().getConfOpenAsProb());
+
+        assertEquals("Fuse 5", fuses[4].getName());
+        assertFalse(fuses[4].isClosed());
+        assertEquals(0.7, fuses[4].getStatus().getConfOpenAsProb());
+
+        assertEquals("Fuse 6", fuses[5].getName());
+        assertFalse(fuses[5].isClosed());
+        assertEquals(0.7, fuses[5].getStatus().getConfOpenAsProb());
+
+        assertEquals("Fuse 7", fuses[6].getName());
+        assertTrue(fuses[6].isClosed());
+        assertEquals(0.7, fuses[6].getStatus().getConfClosedAsProb());
+
+        assertEquals("Fuse 8", fuses[7].getName());
+        assertTrue(fuses[7].isClosed());
+        assertEquals(0.7, fuses[7].getStatus().getConfClosedAsProb());
+
+        assertEquals("Fuse 9", fuses[8].getName());
+        assertTrue(fuses[8].isClosed());
+        assertEquals(0.7, fuses[8].getStatus().getConfClosedAsProb());
+
+        assertEquals("Fuse 10", fuses[9].getName());
+        assertTrue(fuses[9].isClosed());
+        assertEquals(0.7, fuses[9].getStatus().getConfClosedAsProb());
+
+
+        Cable[] cables = IndirectParaBuilder.extractCables(substation);
+        assertEquals(30, cables[0].getConsumption());
+        assertEquals(40, cables[1].getConsumption());
+        assertEquals(50, cables[2].getConsumption());
+        assertEquals(60, cables[3].getConsumption());
+        assertEquals(70, cables[4].getConsumption());
+
+
     }
+
 
 }

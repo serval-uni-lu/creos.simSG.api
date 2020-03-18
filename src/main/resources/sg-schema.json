@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["substation", "Substation", "SUBSTATION", "cabinet", "Cabinet", "CABINET"]
+          },
+          "name": {"type":  "string"},
+          "fuses": {
+            "type": "array",
+            "items": {"type":  "number"}
+          }
+        },
+        "additionalProperties": false,
+        "required": ["type", "name", "fuses"]
+      }
+    },
+    "fuses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "number"},
+          "name": {"type": "string"},
+          "state": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": ["CLOSED", "Closed","closed", "OPEN", "open", "Open"]
+              },
+              "confidence": {
+                "type":  "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "additionalProperties": false,
+            "required": ["status", "confidence"]
+          },
+          "load": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "confidence": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "additionalProperties": false,
+              "required": ["value", "confidence"]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": ["id", "name"]
+      }
+    },
+    "cables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "number"},
+          "fuses": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "uniqueItems": true
+          },
+          "meters": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {"type": "string"},
+                "consumption": {"type": "number"}
+              },
+              "additionalProperties": false,
+              "required": ["name", "consumption"]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": ["id", "fuses"]
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["entities", "fuses", "cables"]
+}
