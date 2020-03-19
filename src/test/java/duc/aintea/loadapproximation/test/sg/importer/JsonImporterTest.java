@@ -96,8 +96,6 @@ public class JsonImporterTest {
         assertEquals(50, cables[2].getConsumption());
         assertEquals(60, cables[3].getConsumption());
         assertEquals(70, cables[4].getConsumption());
-
-
     }
 
 
