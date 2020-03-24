@@ -1,39 +1,32 @@
 package duc.aintea.sg;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class Extractor {
     private Extractor(){}
 
-    public static List<Fuse> extractFuses(Substation substation) {
-        var res = new ArrayList<Fuse>();
-
+    public static Collection<Fuse> extractFuses(Substation substation) {
         var waiting = new Stack<Fuse>();
+
         var visited = new HashSet<Fuse>();
+        var added = new HashSet<Fuse>();
 
         waiting.add(substation.getFuses().get(0));
 
         while (!waiting.isEmpty()) {
             var current = waiting.pop();
             visited.add(current);
-            res.add(current);
 
-            var opp = current.getOpposite();
-            visited.add(opp);
-            res.add(opp);
-
-            var ownerOpp = opp.getOwner();
+            var ownerOpp = current.getOpposite().getOwner();
             for(var f: ownerOpp.getFuses()) {
-                if(!visited.contains(f)) {
+                if(!visited.contains(f) && !added.contains(f)) {
                     waiting.add(f);
+                    added.add(f);
                 }
             }
         }
 
-        return res;
+        return visited;
     }
 
     public static List<Cable> extractCables(Substation substation) {
@@ -41,21 +34,23 @@ public class Extractor {
 
         var waiting = new Stack<Fuse>();
         var visited = new HashSet<Fuse>();
+        var added = new HashSet<Fuse>();
 
         waiting.add(substation.getFuses().get(0));
 
         while (!waiting.isEmpty()) {
             var current = waiting.pop();
             visited.add(current);
-            res.add(current.getCable());
 
-            var opp = current.getOpposite();
-            visited.add(opp);
+            if(visited.contains(current) && visited.contains(current.getOpposite())) {
+                res.add(current.getCable());
+            }
 
-            var ownerOpp = opp.getOwner();
+            var ownerOpp = current.getOpposite().getOwner();
             for(var f: ownerOpp.getFuses()) {
-                if(!visited.contains(f)) {
+                if(!visited.contains(f) && !added.contains(f) ) {
                     waiting.add(f);
+                    added.add(f);
                 }
             }
         }
