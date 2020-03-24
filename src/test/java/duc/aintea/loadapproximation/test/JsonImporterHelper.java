@@ -1,6 +1,5 @@
 package duc.aintea.loadapproximation.test;
 
-import duc.aintea.loadapproximation.test.matrixBuilder.certain.SuccessiveParaTest;
 import duc.aintea.sg.Substation;
 import duc.aintea.sg.importer.JsonImporter;
 import duc.aintea.sg.importer.ValidationException;
@@ -15,7 +14,7 @@ public class JsonImporterHelper {
     private JsonImporterHelper() {}
 
     public static Substation importSubs(String fileName) throws ValidationException {
-        final String jsonPath = SuccessiveParaTest.class
+        final String jsonPath = JsonImporterHelper.class
                 .getClassLoader()
                 .getResource("validJson/sg/" + fileName)
                 .getPath();
