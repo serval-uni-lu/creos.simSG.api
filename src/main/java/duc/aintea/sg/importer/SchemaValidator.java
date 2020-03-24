@@ -6,23 +6,39 @@ import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.main.JsonSchema;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
 
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.io.*;
 
 public class SchemaValidator {
     private SchemaValidator(){}
 
+    private static File extractSchema(String schemaFilePath) throws IOException{
+        InputStream schemaStream = SchemaValidator.class
+                .getClassLoader()
+                .getResourceAsStream(schemaFilePath);
+
+        var reader = new BufferedReader(new InputStreamReader(schemaStream));
+        String line;
+
+        var tmpFile = File.createTempFile("schema",".json");
+        var writer = new FileWriter(tmpFile);
+        while ((line=reader.readLine())!=null) {
+            writer.append(line);
+        }
+        writer.flush();
+        writer.close();
+        reader.close();
+
+        return tmpFile;
+    }
+
     public static boolean validate(JsonNode toCheck, String schemaFilePath) throws ValidationException {
         try {
-            URL schemaURL = ScBasedJson.class.getClassLoader().getResource(schemaFilePath);
-            if(schemaURL == null) {
-                throw new ValidationException("Schema scenario-schema.json not found in the root resource folder.");
-            }
-            JsonSchema schema = JsonSchemaFactory.byDefault().getJsonSchema(schemaURL.toURI().toString());
+            File schemaFile = extractSchema(schemaFilePath);
+            JsonSchema schema = JsonSchemaFactory.byDefault().getJsonSchema(schemaFile.toURI().toString());
 
             ProcessingReport report = schema.validate(toCheck);
             return report.isSuccess();
-        } catch (URISyntaxException | ProcessingException ex) {
+        } catch (ProcessingException | IOException ex) {
             throw new ValidationException(ex);
         }
     }
