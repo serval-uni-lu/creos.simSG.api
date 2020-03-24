@@ -26,7 +26,7 @@ public class ScBasedJson {
     private ScBasedJson(){}
 
     private static boolean validate(JsonNode toCheck) throws ValidationException {
-        if(!SchemaValidator.validate(toCheck,"./scenario-schema.json")) {
+        if(!SchemaValidator.validate(toCheck,"scenario-schema.json")) {
             return false;
         }
 
