@@ -4,10 +4,10 @@ import duc.aintea.sg.Fuse;
 import duc.aintea.sg.Substation;
 import duc.aintea.utils.BaseTransform;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Stack;
 
 public class UncertainMatrixBuilder {
     private UncertainMatrixBuilder(){}
@@ -15,32 +15,28 @@ public class UncertainMatrixBuilder {
 
     private static List<Fuse> getUncertainFuses(Substation substation) {
         var uFuses = new ArrayList<Fuse>();
+        var waiting = new Stack<Fuse>();
 
         var visited = new HashSet<Fuse>();
-        var waiting = new ArrayDeque<>(substation.getClosedAndUncertainFuses());
+        var added = new HashSet<Fuse>();
+
+        waiting.add(substation.getFuses().get(0));
 
         while (!waiting.isEmpty()) {
             var current = waiting.pop();
-            if(!current.getOwner().isDeadEnd() && current.getStatus().isUncertain()) {
+            if(!visited.contains(current) && !current.getOwner().isDeadEnd() && current.getStatus().isUncertain()) {
                 uFuses.add(current);
             }
-
-            var opp = current.getOpposite();
-            if(opp.isClosed() && !opp.getOwner().isDeadEnd() && opp.getStatus().isUncertain()) {
-                uFuses.add(opp);
-            }
-
             visited.add(current);
-            visited.add(opp);
 
-            var ownerOpp = opp.getOwner();
-            for(var f: ownerOpp.getClosedAndUncertainFuses()) {
-                if(!visited.contains(f)) {
+            var ownerOpp = current.getOpposite().getOwner();
+            for(var f: ownerOpp.getFuses()) {
+                if(!visited.contains(f) && !added.contains(f)) {
                     waiting.add(f);
+                    added.add(f);
                 }
             }
         }
-
 
         return uFuses;
     }
