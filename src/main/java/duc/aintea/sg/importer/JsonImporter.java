@@ -7,6 +7,7 @@ import duc.aintea.sg.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.*;
 
 public class JsonImporter {
@@ -40,7 +41,7 @@ public class JsonImporter {
 
 
     private static boolean validate(JsonNode toCheck) throws ValidationException {
-        if(!SchemaValidator.validate(toCheck,"./sg-schema.json")) {
+        if(!SchemaValidator.validate(toCheck,"sg-schema.json")) {
             return false;
         }
 
@@ -138,7 +139,20 @@ public class JsonImporter {
         } catch (IOException e) {
             throw new ValidationException(e);
         }
+        return extractSubstations(toImport);
+    }
 
+    public static Optional<List<Substation>> from(Reader jsonReader) throws ValidationException {
+        JsonNode toImport;
+        try {
+            toImport = JsonLoader.fromReader(jsonReader);
+        } catch (IOException e) {
+            throw new ValidationException(e);
+        }
+        return extractSubstations(toImport);
+    }
+
+    private static Optional<List<Substation>> extractSubstations(JsonNode toImport) throws ValidationException {
         if(validate(toImport)) {
             HashMap<Integer, Fuse> fuses = extractFuses(toImport);
             extractCables(toImport, fuses);
@@ -146,7 +160,6 @@ public class JsonImporter {
         } else {
             return Optional.empty();
         }
-
     }
 
     private static List<Substation> extractEntities(JsonNode toImport, HashMap<Integer, Fuse> fuses) {
@@ -183,12 +196,15 @@ public class JsonImporter {
         fuseArrayNode.forEach(fuseNode -> {
             var fuse = new Fuse(fuseNode.get(FUSE_NAME).asText());
             fuses.put(fuseNode.get(FUSE_ID).asInt(), fuse);
-            var stateNode = fuseNode.get(FUSE_STATE);
 
-            if(!stateNode.get(FUSE_STATE_STATUS).asText().equalsIgnoreCase("closed")) {
-                fuse.openFuse();
+            var stateNode = fuseNode.get(FUSE_STATE);
+            if(stateNode != null) {
+                if (!stateNode.get(FUSE_STATE_STATUS).asText().equalsIgnoreCase("closed")) {
+                    fuse.openFuse();
+                }
+                fuse.getStatus().setConfAsProb(stateNode.get(FUSE_STATE_CONF).asDouble());
+
             }
-            fuse.getStatus().setConfAsProb(stateNode.get(FUSE_STATE_CONF).asDouble());
 
             var loads = (ArrayNode) fuseNode.get(FUSE_LOAD);
             if(loads != null) {
@@ -207,12 +223,16 @@ public class JsonImporter {
         var cableArrayNode = (ArrayNode) toImport.get(CABLES);
         cableArrayNode.forEach(cableNode -> {
             final var cable = new Cable();
+
             var metersNodes = (ArrayNode) cableNode.get(CABLE_METERS);
-            metersNodes.forEach(meterNode -> {
-                var meter = new Meter(meterNode.get(CABLE_METER_NAME).asText());
-                meter.setConsumption(meterNode.get(CABLE_METER_CONSUMPTION).asDouble());
-                cable.addMeters(meter);
-            });
+            if(metersNodes != null) {
+                metersNodes.forEach(meterNode -> {
+                    var meter = new Meter(meterNode.get(CABLE_METER_NAME).asText());
+                    meter.setConsumption(meterNode.get(CABLE_METER_CONSUMPTION).asDouble());
+                    cable.addMeters(meter);
+                });
+            }
+
             var fusesIds = (ArrayNode) cableNode.get(CABLE_FUSES);
             var fuse1 = fuses.get(fusesIds.get(0).asInt());
             var fuse2 = fuses.get(fusesIds.get(1).asInt());
