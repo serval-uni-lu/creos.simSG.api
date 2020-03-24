@@ -23,6 +23,8 @@ public class MatrixBuilder {
         var waitingList = new ArrayDeque<Entity>();
         var entityVisited = new HashSet<Entity>();
         var fuseInCircles = new HashSet<Fuse>();
+        var paraCableFusesDone = new HashSet<>();
+
         var mapLineFuse = new ArrayList<Cable>();
 
         waitingList.add(substation);
@@ -66,6 +68,8 @@ public class MatrixBuilder {
                                 Collections.addAll(fuseInCircles, circle);
 
                                 Fuse fuseEnd = circle[0];
+                                paraCableFusesDone.add(fuse);
+                                paraCableFusesDone.add(fuseEnd);
                                 int idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
                                 int idxFuseEnd = getOrCreateIdx(fuseEnd, idxFuses, idxLast);
 
@@ -73,6 +77,22 @@ public class MatrixBuilder {
                                 setMatrix(circleEq,circleEq.getNumRows() - 1, idxFuse, 1);
                                 setMatrix(circleEq,circleEq.getNumRows() - 1, idxFuseEnd, -1);
                             }
+                        } else if(!entityVisited.contains(fuse.getOpposite().getOwner()) &&
+                                !paraCableFusesDone.contains(fuse)) {
+                            Optional<Fuse> oppFuse = getOtherFusePara(fuse, fuses);
+                            if(oppFuse.isPresent()) {
+                                Fuse fuseEnd = oppFuse.get();
+                                paraCableFusesDone.add(fuse);
+                                paraCableFusesDone.add(fuseEnd);
+
+                                int idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
+                                int idxFuseEnd = getOrCreateIdx(fuseEnd, idxFuses, idxLast);
+
+                                circleEq.addLine();
+                                setMatrix(circleEq, circleEq.getNumRows() - 1, idxFuse, 1);
+                                setMatrix(circleEq, circleEq.getNumRows() - 1, idxFuseEnd, -1);
+                            }
+
                         }
                 }
             }
@@ -89,6 +109,22 @@ public class MatrixBuilder {
         resData = (resData.length == 0)? new double[]{0} : resData;
 
         return new FuseStatesMatrix(resData, cableEq.getNumCols(), idxFuses, mapLineFuse.toArray(new Cable[0]));
+    }
+
+    private static Optional<Fuse> getOtherFusePara(Fuse current, List<Fuse> entFuses) {
+        if(entFuses.size() < 2) return Optional.empty();
+
+        var otherEntity = current.getOpposite().getOwner();
+        for (var fuse: entFuses) {
+            if(!fuse.equals(current)) {
+                var oppEntity = fuse.getOpposite().getOwner();
+                if(oppEntity.equals(otherEntity)) {
+                    return Optional.of(fuse);
+                }
+            }
+        }
+
+        return Optional.empty();
     }
 
     private static int getOrCreateIdx(Fuse fuse, HashMap<Fuse, Integer> map, int[] last) {
