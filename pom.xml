@@ -2,9 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>duc.propagation</groupId>
-    <artifactId>sg.loadapproximation.java</artifactId>
+    <groupId>duc.sg.java</groupId>
+    <artifactId>parent</artifactId>
+    <packaging>pom</packaging>
     <version>2020.04.0D-SNAPSHOT</version>
+    <modules>
+        <module>model</module>
+        <module>importer/json</module>
+        <module>server/ws</module>
+        <module>loadapproximator</module>
+        <module>scenarios</module>
+        <module>uncertainty</module>
+    </modules>
 
     <name>DucPropagationJava</name>
 
@@ -14,55 +23,7 @@
         <jmh.version>1.23</jmh.version>
     </properties>
 
-
-
     <dependencies>
-        <dependency>
-            <groupId>com.github.java-json-tools</groupId>
-            <artifactId>json-schema-validator</artifactId>
-            <version>2.2.13</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>com.googlecode.efficient-java-matrix-library</groupId>
-            <artifactId>core</artifactId>
-            <version>0.26</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.61</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.openjdk.jmh</groupId>
-            <artifactId>jmh-core</artifactId>
-            <version>${jmh.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjdk.jmh</groupId>
-            <artifactId>jmh-generator-annprocess</artifactId>
-            <version>${jmh.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.undertow</groupId>
-            <artifactId>undertow-core</artifactId>
-            <version>${undertow.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.undertow</groupId>
-            <artifactId>undertow-servlet</artifactId>
-            <version>${undertow.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.undertow</groupId>
-            <artifactId>undertow-websockets-jsr</artifactId>
-            <version>${undertow.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -82,6 +43,58 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+
+
+<!--    <dependencies>-->
+<!--        <dependency>-->
+<!--            <groupId>com.github.java-json-tools</groupId>-->
+<!--            <artifactId>json-schema-validator</artifactId>-->
+<!--            <version>2.2.13</version>-->
+<!--        </dependency>-->
+
+
+<!--        <dependency>-->
+<!--            <groupId>com.googlecode.efficient-java-matrix-library</groupId>-->
+<!--            <artifactId>core</artifactId>-->
+<!--            <version>0.26</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba</groupId>-->
+<!--            <artifactId>fastjson</artifactId>-->
+<!--            <version>1.2.61</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.openjdk.jmh</groupId>-->
+<!--            <artifactId>jmh-core</artifactId>-->
+<!--            <version>${jmh.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.openjdk.jmh</groupId>-->
+<!--            <artifactId>jmh-generator-annprocess</artifactId>-->
+<!--            <version>${jmh.version}</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>io.undertow</groupId>-->
+<!--            <artifactId>undertow-core</artifactId>-->
+<!--            <version>${undertow.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>io.undertow</groupId>-->
+<!--            <artifactId>undertow-servlet</artifactId>-->
+<!--            <version>${undertow.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>io.undertow</groupId>-->
+<!--            <artifactId>undertow-websockets-jsr</artifactId>-->
+<!--            <version>${undertow.version}</version>-->
+<!--        </dependency>-->
+
+
+<!--    </dependencies>-->
 
 
     <build>
@@ -108,7 +121,7 @@
                 <version>3.0.0-M1</version>
             </plugin>
 
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <version>3.2.1</version>
@@ -121,7 +134,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
 
         </plugins>
     </build>
