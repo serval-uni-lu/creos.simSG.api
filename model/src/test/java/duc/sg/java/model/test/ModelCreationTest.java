@@ -1,9 +1,9 @@
 package duc.sg.java.model.test;
 
-import duc.aintea.sg.Cable;
-import duc.aintea.sg.Entity;
-import duc.aintea.sg.Fuse;
-import duc.aintea.sg.Substation;
+import duc.sg.java.model.Cable;
+import duc.sg.java.model.Entity;
+import duc.sg.java.model.Fuse;
+import duc.sg.java.model.Substation;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

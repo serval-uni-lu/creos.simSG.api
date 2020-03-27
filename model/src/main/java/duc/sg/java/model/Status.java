@@ -6,14 +6,23 @@ public class Status {
     private State state;
     private Bernoulli confidence;
 
+    public Status(State state) {
+       this(state, 1);
+    }
+
     public Status(State state, double confidence) {
         this.state = state;
-        this.confidence = new Bernoulli();
+        this.confidence = new Bernoulli(1);
         this.confidence.setProbability(confidence);
     }
 
     public void setConfIsClosed(double confidence) {
         double realConf = isClosed()? confidence : Bernoulli.getOpposite(confidence);
+        this.confidence.setProbability(realConf);
+    }
+
+    public void setConfIsOpen(double confidence) {
+        double realConf = isClosed()? Bernoulli.getOpposite(confidence) : confidence;
         this.confidence.setProbability(realConf);
     }
 

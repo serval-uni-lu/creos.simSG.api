@@ -1,7 +1,8 @@
 package duc.sg.java.model.test;
 
-import duc.sg.java.loadapproximator.test.generator.Data;
-import duc.aintea.sg.State;
+import duc.sg.java.model.State;
+import duc.sg.java.model.Status;
+import duc.sg.java.uncertainty.Bernoulli;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -12,73 +13,77 @@ public class StateTest {
 
 
     private static Arguments[] values() {
-        return Data.generateRandomDoubles(1.);
+        return DataGenerator.generateRandomDoubles(1.);
     }
 
     @ParameterizedTest
     @MethodSource("values")
     public void testOpen(double confVal) {
-        var state = new State(false, 1);
+        var state = new Status(State.OPEN);
         assertTrue(state.isCertain());
-        assertEquals(1, state.getConfOpenAsProb());
-        assertEquals(0, state.getConfClosedAsProb());
+        assertFalse(state.isUncertain());
+        assertEquals(1, state.confIsOpen());
+        assertEquals(0, state.confIsClosed());
 
-        state.setConfAsProb(confVal);
+        state.setConfIsOpen(confVal);
         assertFalse(state.isCertain());
-        assertEquals(confVal, state.getConfOpenAsProb());
-        assertEquals(1-confVal, state.getConfClosedAsProb());
+        assertTrue(state.isUncertain());
+        assertEquals(confVal, state.confIsOpen());
+        assertEquals(Bernoulli.getOpposite(confVal), state.confIsClosed());
 
-        assertThrows(IllegalArgumentException.class, () -> state.setConfAsProb(-1));
-        assertThrows(IllegalArgumentException.class, () -> state.setConfAsProb(-0.5));
-        assertThrows(IllegalArgumentException.class, () -> state.setConfAsProb(5));
-        assertThrows(IllegalArgumentException.class, () -> state.setConfAsProb(1.01));
+        assertThrows(IllegalArgumentException.class, () -> state.setConfIsClosed(-1));
+        assertThrows(IllegalArgumentException.class, () -> state.setConfIsOpen(-0.5));
+        assertThrows(IllegalArgumentException.class, () -> state.setConfIsClosed(5));
+        assertThrows(IllegalArgumentException.class, () -> state.setConfIsOpen(1.01));
 
         state.makeCertain();
         assertTrue(state.isCertain());
-        assertEquals(1, state.getConfOpenAsProb());
-        assertEquals(0, state.getConfClosedAsProb());
+        assertFalse(state.isUncertain());
+        assertEquals(1, state.confIsOpen());
+        assertEquals(0, state.confIsClosed());
     }
 
     @ParameterizedTest
     @MethodSource("values")
     public void testClosed(double confVal) {
-        var state = new State(true, 1);
+        var state = new Status(State.CLOSED);
         assertTrue(state.isCertain());
-        assertEquals(1, state.getConfClosedAsProb());
-        assertEquals(0, state.getConfOpenAsProb());
+        assertFalse(state.isUncertain());
+        assertEquals(1, state.confIsClosed());
+        assertEquals(0, state.confIsOpen());
 
-        state.setConfAsProb(confVal);
+        state.setConfIsClosed(confVal);
         assertFalse(state.isCertain());
-        assertEquals(confVal, state.getConfClosedAsProb());
-        assertEquals(1-confVal, state.getConfOpenAsProb());
+        assertTrue(state.isUncertain());
+        assertEquals(confVal, state.confIsClosed());
+        assertEquals(Bernoulli.getOpposite(confVal), state.confIsOpen());
 
-        assertThrows(IllegalArgumentException.class, () -> state.setConfAsProb(-1));
-        assertThrows(IllegalArgumentException.class, () -> state.setConfAsProb(-0.5));
-        assertThrows(IllegalArgumentException.class, () -> state.setConfAsProb(5));
-        assertThrows(IllegalArgumentException.class, () -> state.setConfAsProb(1.01));
+        assertThrows(IllegalArgumentException.class, () -> state.setConfIsClosed(-1));
+        assertThrows(IllegalArgumentException.class, () -> state.setConfIsOpen(-0.5));
+        assertThrows(IllegalArgumentException.class, () -> state.setConfIsClosed(5));
+        assertThrows(IllegalArgumentException.class, () -> state.setConfIsOpen(1.01));
 
         state.makeCertain();
         assertTrue(state.isCertain());
-        assertEquals(1, state.getConfClosedAsProb());
-        assertEquals(0, state.getConfOpenAsProb());
+        assertFalse(state.isUncertain());
+        assertEquals(1, state.confIsClosed());
+        assertEquals(0, state.confIsOpen());
     }
 
 
-//    @Test
-//    public void test() {
-//        var state = new State(true, 1);
-//        System.out.println(state);
-//
-//        state.close();
-//        state.setConfAsProb(0.3);
-//        System.out.println(state);
-//        System.out.println(state.getConfClosedAsProb());
-//        System.out.println(state.getConfOpenAsProb());
-//
-//        state.open();
-//        System.out.println(state);
-//        System.out.println(state.getConfClosedAsProb());
-//        System.out.println(state.getConfOpenAsProb());
-//    }
+    @ParameterizedTest
+    @MethodSource("values")
+    public void test(double confVal) {
+        var state = new Status(State.CLOSED);
+
+        state.close();
+        state.setConfIsClosed(confVal);
+        assertEquals(confVal, state.confIsClosed());
+        assertEquals(Bernoulli.getOpposite(confVal), state.confIsOpen());
+
+        state.open();
+        assertEquals(confVal, state.confIsClosed(), 0.0001);
+        assertEquals(Bernoulli.getOpposite(confVal), state.confIsOpen(),0.0001);
+    }
 
 }

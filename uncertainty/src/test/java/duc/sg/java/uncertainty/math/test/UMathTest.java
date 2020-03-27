@@ -44,6 +44,10 @@ public class UMathTest {
         var actualBNull = UMath.or(a, null);
         assertEquals(a.getValue(), actualBNull.getValue());
         assertEquals(a.getConfidence().getProbability(), actualBNull.getConfidence().getProbability());
+
+        a.setValue(1);
+        assertThrows(RuntimeException.class, () -> UMath.or(a, b));
+
     }
 
 

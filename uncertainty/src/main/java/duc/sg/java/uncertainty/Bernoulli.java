@@ -6,8 +6,12 @@ public class Bernoulli extends Confidence {
         super(probability);
     }
 
+    public Bernoulli() {
+        super(1);
+    }
+
     public double getOppProbability() {
-        return 1 - probability;
+        return getOpposite(probability);
     }
 
     public void inverse() {
