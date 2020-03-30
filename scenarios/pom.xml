@@ -11,5 +11,13 @@
 
     <artifactId>scenarios</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>duc.sg.java</groupId>
+            <artifactId>model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
 
 </project>

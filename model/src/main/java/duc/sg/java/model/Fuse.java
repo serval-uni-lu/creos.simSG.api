@@ -11,8 +11,12 @@ public class Fuse {
 
 
     public Fuse(String name) {
+        this(name, State.CLOSED);
+    }
+
+    public Fuse(String name, State state) {
         this.name = name;
-        status = new Status(State.CLOSED, 1.);
+        status = new Status(state, 1.);
         uload = new MultDblePossibilities();
     }
 
