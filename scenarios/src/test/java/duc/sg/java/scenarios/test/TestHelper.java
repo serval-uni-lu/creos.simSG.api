@@ -30,17 +30,10 @@ public class TestHelper {
         return res;
     }
 
-
-
-    public static double randomValue(double max) {
-        return RANDOM.nextDouble() * max;
-    }
-
-
     private static double[] random_double(int nb) {
         var res = new double[nb];
         for (int j = 0; j < nb; j++) {
-            res[j] = randomValue(MAX_LOAD);
+            res[j] = RANDOM.nextDouble() * MAX_LOAD;
         }
         return res;
     }
