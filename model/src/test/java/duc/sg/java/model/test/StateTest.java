@@ -13,7 +13,7 @@ public class StateTest {
 
 
     private static Arguments[] values() {
-        return DataGenerator.generateRandomDoubles(1.);
+        return TestHelper.generateRandomDoubles(1.);
     }
 
     @ParameterizedTest
