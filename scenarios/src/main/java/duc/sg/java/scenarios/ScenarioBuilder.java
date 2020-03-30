@@ -156,8 +156,8 @@ public final class ScenarioBuilder {
         var cab2 = new Cabinet(ParaTransformerSC.CABINET2_NAME);
 
         createCable(ParaTransformerSC.F1_NAME, ParaTransformerSC.F2_NAME, pFuseState[0], pFuseState[1], subs, cab1, pConsumptions[0]);
-        createCable(ParaTransformerSC.F3_NAME, ParaTransformerSC.F4_NAME, pFuseState[2], pFuseState[3], subs, cab1, pConsumptions[0]);
-        createCable(ParaTransformerSC.F4_NAME, ParaTransformerSC.F6_NAME, pFuseState[4], pFuseState[5], cab1, cab2, pConsumptions[0]);
+        createCable(ParaTransformerSC.F3_NAME, ParaTransformerSC.F4_NAME, pFuseState[2], pFuseState[3], subs, cab1, pConsumptions[1]);
+        createCable(ParaTransformerSC.F5_NAME, ParaTransformerSC.F6_NAME, pFuseState[4], pFuseState[5], cab1, cab2, pConsumptions[2]);
 
 
         var grid = new SmartGrid();

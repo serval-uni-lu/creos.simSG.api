@@ -47,6 +47,13 @@ public final class CabinetSC extends Scenario {
 
     @Override
     public Cable[] extractCables() {
-        return new Cable[0];
+        var cables = new Cable[3];
+
+        var fuses = extractFuses();
+        cables[0] = fuses[0].getCable();
+        cables[1] = fuses[2].getCable();
+        cables[2] = fuses[3].getCable();
+
+        return cables;
     }
 }
