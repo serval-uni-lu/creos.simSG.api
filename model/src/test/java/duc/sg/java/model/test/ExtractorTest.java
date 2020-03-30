@@ -3,14 +3,22 @@ package duc.sg.java.model.test;
 
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
+import duc.sg.java.scenarios.*;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.HashSet;
 
 public class ExtractorTest {
 
-    private void genExtCableTest(Cable[] expected, Collection<Cable> actual) {
+    private void genExtCableTest(Scenario scenario, String subName) {
+        Cable[] expected = scenario.extractCables();
+        Collection<Cable> actual = scenario.getGrid()
+                .getSubstation(subName)
+                .get()
+                .extractCables();
+
         var uniqueSet = new HashSet<>(actual);
         Assertions.assertEquals(expected.length, uniqueSet.size());
         for(Cable c: expected) {
@@ -18,7 +26,13 @@ public class ExtractorTest {
         }
     }
 
-    private void genExtFusesTest(Fuse[] expected, Collection<Fuse> actual) {
+    private void genExtFusesTest(Scenario scenario, String subName) {
+        Fuse[] expected = scenario.extractFuses();
+        Collection<Fuse> actual = scenario.getGrid()
+                .getSubstation(subName)
+                .get()
+                .extractFuses();
+
         var uniqueSet = new HashSet<>(actual);
         Assertions.assertEquals(expected.length, uniqueSet.size());
         for(Fuse f: expected) {
@@ -26,86 +40,86 @@ public class ExtractorTest {
         }
     }
 
-//    @Test
-//    public void testExtCableSingleCable() {
-//        Substation substation = SingleCableBuilder.build();
-//        Cable[] expected = SingleCableBuilder.extractCables(substation);
-//        List<Cable> actual = Extractor.extractCables(substation);
-//        genExtCableTest(expected, actual);
-//    }
-//
-//    @Test
-//    public void testExtCableCab() {
-//        Substation substation = CabinetBuilder.build();
-//        Cable[] expected = CabinetBuilder.extractCables(substation);
-//        List<Cable> actual = Extractor.extractCables(substation);
-//        genExtCableTest(expected, actual);
-//    }
-//
-//    @Test
-//    public void testExtCableParaTrans() {
-//        Substation substation = ParaTransformerBuilder.build();
-//        Cable[] expected = ParaTransformerBuilder.extractCables(substation);
-//        List<Cable> actual = Extractor.extractCables(substation);
-//        genExtCableTest(expected, actual);
-//    }
-//
-//    @Test
-//    public void testExtCableParaCab() {
-//        Substation substation = ParaCabinetBuilder.build();
-//        Cable[] expected = ParaCabinetBuilder.extractCables(substation);
-//        List<Cable> actual = Extractor.extractCables(substation);
-//        genExtCableTest(expected, actual);
-//    }
-//
-//    @Test
-//    public void testExtCableIndPara() {
-//        Substation substation = IndirectParaBuilder.build();
-//        Cable[] expected = IndirectParaBuilder.extractCables(substation);
-//        List<Cable> actual = Extractor.extractCables(substation);
-//        genExtCableTest(expected, actual);
-//    }
-//
-//    @Test
-//    public void testExtFusesSingleCable() {
-//        Substation substation = SingleCableBuilder.build();
-//        Fuse[] expected = SingleCableBuilder.extractFuses(substation);
-//        Collection<Fuse> actual = Extractor.extractFuses(substation);
-//        genExtFusesTest(expected, actual);
-//    }
-//
-//    @Test
-//    public void testExtFuseCab() {
-//        Substation substation = CabinetBuilder.build();
-//        Fuse[] expected = CabinetBuilder.extractFuses(substation);
-//        Collection<Fuse> actual = Extractor.extractFuses(substation);
-//        genExtFusesTest(expected, actual);
-//    }
-//
-//    @Test
-//    public void testExtFuseParaTrans() {
-//        Substation substation = ParaTransformerBuilder.build();
-//        Fuse[] expected = ParaTransformerBuilder.extractFuses(substation);
-//        Collection<Fuse> actual = Extractor.extractFuses(substation);
-//        genExtFusesTest(expected, actual);
-//    }
-//
-//    @Test
-//    public void testExtFuseParaCab() {
-//        Substation substation = ParaCabinetBuilder.build();
-//        Fuse[] expected = ParaCabinetBuilder.extractFuses(substation);
-//        Collection<Fuse> actual = Extractor.extractFuses(substation);
-//        genExtFusesTest(expected, actual);
-//    }
-//
-//    @Test
-//    public void testExtFuseIndPara() {
-//        Substation substation = IndirectParaBuilder.build();
-//        Fuse[] expected = IndirectParaBuilder.extractFuses(substation);
-//        Collection<Fuse> actual = Extractor.extractFuses(substation);
-//        genExtFusesTest(expected, actual);
-//    }
-//
+    @Test
+    public void testExtCableSingleCable() {
+        Scenario scenario = new ScenarioBuilder()
+                .chooseScenario(ScenarioName.SINGLE_CABLE)
+                .build();
+        genExtCableTest(scenario, SingleCableSC.SUBSTATION_NAME);
+    }
+
+    @Test
+    public void testExtCableCab() {
+        Scenario scenario = new ScenarioBuilder()
+                .chooseScenario(ScenarioName.CABINET)
+                .build();
+        genExtCableTest(scenario, CabinetSC.SUBSTATION_NAME);
+    }
+
+    @Test
+    public void testExtCableParaTrans() {
+        Scenario scenario = new ScenarioBuilder()
+                .chooseScenario(ScenarioName.PARA_TRANSFORMER)
+                .build();
+        genExtCableTest(scenario, ParaTransformerSC.SUBSTATION_NAME);
+    }
+
+    @Test
+    public void testExtCableParaCab() {
+        Scenario scenario = new ScenarioBuilder()
+                .chooseScenario(ScenarioName.PARA_CABINET)
+                .build();
+        genExtCableTest(scenario, ParaCabinetSC.SUBSTATION_NAME);
+    }
+
+    @Test
+    public void testExtCableIndPara() {
+        Scenario scenario = new ScenarioBuilder()
+                .chooseScenario(ScenarioName.INDIRECT_PARALLEL)
+                .build();
+        genExtCableTest(scenario, IndirectParaSC.SUBSTATION_NAME);
+    }
+
+    @Test
+    public void testExtFusesSingleCable() {
+        Scenario scenario = new ScenarioBuilder()
+                .chooseScenario(ScenarioName.SINGLE_CABLE)
+                .build();
+        genExtFusesTest(scenario, SingleCableSC.SUBSTATION_NAME);
+    }
+
+    @Test
+    public void testExtFuseCab() {
+        Scenario scenario = new ScenarioBuilder()
+                .chooseScenario(ScenarioName.CABINET)
+                .build();
+        genExtFusesTest(scenario, CabinetSC.SUBSTATION_NAME);
+    }
+
+    @Test
+    public void testExtFuseParaTrans() {
+        Scenario scenario = new ScenarioBuilder()
+                .chooseScenario(ScenarioName.PARA_TRANSFORMER)
+                .build();
+        genExtFusesTest(scenario, ParaTransformerSC.SUBSTATION_NAME);
+    }
+
+    @Test
+    public void testExtFuseParaCab() {
+        Scenario scenario = new ScenarioBuilder()
+                .chooseScenario(ScenarioName.PARA_CABINET)
+                .build();
+        genExtFusesTest(scenario, ParaCabinetSC.SUBSTATION_NAME);
+    }
+
+    @Test
+    public void testExtFuseIndPara() {
+        Scenario scenario = new ScenarioBuilder()
+                .chooseScenario(ScenarioName.INDIRECT_PARALLEL)
+                .build();
+        genExtFusesTest(scenario, IndirectParaSC.SUBSTATION_NAME);
+    }
+
 //    @Test
 //    public void testRealCase() {
 //        final String jsonPath = ExtractorTest.class

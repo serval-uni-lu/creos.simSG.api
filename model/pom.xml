@@ -17,6 +17,13 @@
             <artifactId>uncertainty</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>duc.sg.java</groupId>
+            <artifactId>scenarios</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 

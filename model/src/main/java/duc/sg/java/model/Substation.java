@@ -16,7 +16,6 @@ public class Substation extends Entity {
     }
 
     private <T> void extract(Collection<T> collection, Collector<T> collector) {
-
         var waiting = new Stack<Fuse>();
         var inWaitingList = new HashSet<Fuse>(); //real optimization ??
         var visited = new HashSet<Fuse>();
@@ -39,11 +38,6 @@ public class Substation extends Entity {
         }
     }
 
-
-
-
-
-
     public Collection<Fuse> extractFuses() {
         final var res = new HashSet<Fuse>();
         extract(res, (collection, currentFuse) -> {
@@ -52,29 +46,6 @@ public class Substation extends Entity {
             }
         });
         return Collections.unmodifiableCollection(res);
-
-
-        /*var waiting = new Stack<Fuse>();
-
-        var visited = new HashSet<Fuse>();
-        var added = new HashSet<Fuse>();
-
-        waiting.add(this.getFuses().get(0));
-
-        while (!waiting.isEmpty()) {
-            var current = waiting.pop();
-            visited.add(current);
-
-            var ownerOpp = current.getOpposite().getOwner();
-            for(var f: ownerOpp.getFuses()) {
-                if(!visited.contains(f) && !added.contains(f)) {
-                    waiting.add(f);
-                    added.add(f);
-                }
-            }
-        }
-
-        return Collections.unmodifiableCollection(visited);*/
     }
 
     public Collection<Cable> extractCables() {
@@ -86,33 +57,6 @@ public class Substation extends Entity {
             }
         });
         return Collections.unmodifiableCollection(res);
-
-        /*var res = new ArrayList<Cable>();
-
-        var waiting = new Stack<Fuse>();
-        var visited = new HashSet<Fuse>();
-        var added = new HashSet<Fuse>();
-
-        waiting.add(this.getFuses().get(0));
-
-        while (!waiting.isEmpty()) {
-            var current = waiting.pop();
-            visited.add(current);
-
-            if(visited.contains(current) && visited.contains(current.getOpposite())) {
-                res.add(current.getCable());
-            }
-
-            var ownerOpp = current.getOpposite().getOwner();
-            for(var f: ownerOpp.getFuses()) {
-                if(!visited.contains(f) && !added.contains(f) ) {
-                    waiting.add(f);
-                    added.add(f);
-                }
-            }
-        }
-
-        return Collections.unmodifiableCollection(res);*/
     }
 
     private interface Collector<T> {

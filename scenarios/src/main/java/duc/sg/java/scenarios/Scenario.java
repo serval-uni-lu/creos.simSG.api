@@ -13,4 +13,8 @@ public abstract class Scenario {
 
     public abstract Fuse[] extractFuses();
     public abstract Cable[] extractCables();
+
+    public SmartGrid getGrid() {
+        return grid;
+    }
 }
