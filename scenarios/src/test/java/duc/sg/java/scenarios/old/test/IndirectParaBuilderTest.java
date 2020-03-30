@@ -1,4 +1,4 @@
-package duc.sg.java.scenarios.test;
+package duc.sg.java.scenarios.old.test;
 
 import duc.aintea.sg.Cable;
 import duc.aintea.sg.Fuse;

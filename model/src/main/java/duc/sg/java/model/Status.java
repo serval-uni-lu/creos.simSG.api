@@ -35,11 +35,11 @@ public class Status {
     }
 
     public boolean isCertain() {
-        return confidence.probIsMax();
+        return confidence.probIsMax() || confidence.oppIsMax();
     }
 
     public boolean isUncertain() {
-        return !confidence.probIsMax();
+        return !isCertain();
     }
 
 

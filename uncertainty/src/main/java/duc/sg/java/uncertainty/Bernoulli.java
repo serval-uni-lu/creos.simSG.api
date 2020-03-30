@@ -7,11 +7,15 @@ public class Bernoulli extends Confidence {
     }
 
     public Bernoulli() {
-        super(1);
+        super(MAX_PROBABILITY);
     }
 
     public double getOppProbability() {
         return getOpposite(probability);
+    }
+
+    public boolean oppIsMax() {
+        return getOppProbability() == MAX_PROBABILITY;
     }
 
     public void inverse() {
@@ -20,7 +24,7 @@ public class Bernoulli extends Confidence {
 
     public static double getOpposite(double confidence) {
         checkProb(confidence);
-        return 1 - confidence;
+        return MAX_PROBABILITY - confidence;
     }
 
 

@@ -9,6 +9,11 @@ public class PossibilityDouble {
         this.confidence = confidence;
     }
 
+    public PossibilityDouble(double value, double confidence) {
+        this.value = value;
+        this.confidence = new Confidence(confidence);
+    }
+
     public double getValue() {
         return value;
     }

@@ -72,24 +72,6 @@ public class Cable {
         }
 
         return fuses[1].getUncertainLoad();
-
-
-        /*var res = new HashMap<Double, Double>();
-
-        for(var fuse1: fuses[0].getUncertainLoad().entrySet()) {
-            for(var fuse2: fuses[1].getUncertainLoad().entrySet()) {
-                var max = Math.max(fuse1.getKey(), fuse2.getKey());
-                res.compute(max, (finalCons, finalConf) -> {
-                    var mult = fuse1.getValue() * fuse2.getValue();
-                    if(finalConf == null) {
-                        return mult;
-                    }
-                    return finalConf + mult;
-                });
-            }
-        }
-
-        return res;*/
     }
 
     @Override

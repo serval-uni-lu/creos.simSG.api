@@ -49,6 +49,14 @@ public class Fuse {
         return status.isClosed();
     }
 
+    public void setConfIsClosed(double confidence) {
+        status.setConfIsClosed(confidence);
+    }
+
+    public void setConfIsOpen(double confidence) {
+        status.setConfIsOpen(confidence);
+    }
+
     public Fuse getOpposite() {
         var f = cable.getFirstFuse();
         if(this == f) return cable.getSecondFuse();

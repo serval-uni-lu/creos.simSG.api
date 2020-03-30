@@ -1,4 +1,4 @@
-package duc.sg.java.model.test;
+package duc.sg.java.scenarios.old.test;
 
 
 import duc.sg.java.model.Cable;
@@ -108,7 +108,7 @@ public class ExtractorTest {
 //
 //    @Test
 //    public void testRealCase() {
-//        final String jsonPath = ExtractorTest.class
+//        final String jsonPath = JsonImporterTest.class
 //                .getClassLoader()
 //                .getResource("validJson/sg/realCase-1Subs.json")
 //                .getPath();

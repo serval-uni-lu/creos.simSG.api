@@ -1,4 +1,4 @@
-package duc.sg.java.scenarios;
+package duc.sg.java.scenarios.old;
 
 import duc.aintea.sg.*;
 
