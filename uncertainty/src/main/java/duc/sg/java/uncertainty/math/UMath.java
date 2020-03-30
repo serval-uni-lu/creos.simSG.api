@@ -4,6 +4,8 @@ import duc.sg.java.uncertainty.Confidence;
 import duc.sg.java.uncertainty.MultDblePossibilities;
 import duc.sg.java.uncertainty.PossibilityDouble;
 
+import java.util.List;
+
 public class UMath {
     private UMath(){}
 
@@ -38,6 +40,18 @@ public class UMath {
 
 
     public static MultDblePossibilities max(MultDblePossibilities a, MultDblePossibilities b) {
+        List<PossibilityDouble> possibilitiesA = a.getPossibilities();
+        List<PossibilityDouble> possibilitiesB = b.getPossibilities();
+
+        if(possibilitiesA.isEmpty()) {
+            return new MultDblePossibilities(b);
+        }
+
+        if(possibilitiesB.isEmpty()) {
+            return new MultDblePossibilities(a);
+        }
+
+
         var res = new MultDblePossibilities();
         for (PossibilityDouble possA : a) {
             for (PossibilityDouble possB : b) {

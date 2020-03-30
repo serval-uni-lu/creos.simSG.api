@@ -1,7 +1,8 @@
 package duc.sg.java.loadapproximator.loadapproximation.matrix;
 
-import duc.aintea.sg.Cable;
-import duc.aintea.sg.Fuse;
+
+import duc.sg.java.model.Cable;
+import duc.sg.java.model.Fuse;
 
 import java.util.Map;
 

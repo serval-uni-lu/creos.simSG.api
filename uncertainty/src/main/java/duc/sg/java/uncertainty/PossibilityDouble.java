@@ -10,8 +10,11 @@ public class PossibilityDouble {
     }
 
     public PossibilityDouble(double value, double confidence) {
-        this.value = value;
-        this.confidence = new Confidence(confidence);
+        this(value, new Confidence(confidence));
+    }
+
+    public PossibilityDouble(PossibilityDouble other) {
+        this(other.getValue(), other.getConfidence().getProbability());
     }
 
     public double getValue() {

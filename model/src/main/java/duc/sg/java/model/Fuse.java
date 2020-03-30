@@ -1,6 +1,8 @@
 package duc.sg.java.model;
 
+import duc.sg.java.uncertainty.Confidence;
 import duc.sg.java.uncertainty.MultDblePossibilities;
+import duc.sg.java.uncertainty.PossibilityDouble;
 
 public class Fuse {
     private String name;
@@ -18,6 +20,7 @@ public class Fuse {
         this.name = name;
         status = new Status(state, 1.);
         uload = new MultDblePossibilities();
+        uload.addOrReplace(new PossibilityDouble(0., Confidence.MAX_PROBABILITY));
     }
 
 

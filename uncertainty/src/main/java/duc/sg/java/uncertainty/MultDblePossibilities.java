@@ -1,5 +1,7 @@
 package duc.sg.java.uncertainty;
 
+import duc.sg.java.uncertainty.math.UMath;
+
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
@@ -13,8 +15,19 @@ public class MultDblePossibilities implements Iterable<PossibilityDouble> {
         possIdx = new HashMap<>();
     }
 
-    public void add(PossibilityDouble value) {
+    public MultDblePossibilities(MultDblePossibilities other) {
+        this();
+        for(PossibilityDouble poss: other) {
+            addOrReplace(new PossibilityDouble(poss));
+        }
+    }
+
+    public void addOrReplace(PossibilityDouble value) {
         compute(value, current -> value);
+    }
+
+    public void add(PossibilityDouble value) {
+        compute(value, (PossibilityDouble current) -> UMath.or(value, current));
     }
 
     public void compute(PossibilityDouble value, UnaryOperator<PossibilityDouble> toCompute) {
@@ -31,6 +44,9 @@ public class MultDblePossibilities implements Iterable<PossibilityDouble> {
         }
     }
 
+    public List<PossibilityDouble> getPossibilities() {
+        return Collections.unmodifiableList(possibilities);
+    }
 
 
     @Override

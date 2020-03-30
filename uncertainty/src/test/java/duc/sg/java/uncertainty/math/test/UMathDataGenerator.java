@@ -76,19 +76,19 @@ class UMathDataGenerator {
         var res = new Arguments[1];
 
         var multA = new MultDblePossibilities();
-        multA.add(new PossibilityDouble(0, new Confidence(0.1)));
-        multA.add(new PossibilityDouble(20, new Confidence(0.6)));
-        multA.add(new PossibilityDouble(50, new Confidence(0.3)));
+        multA.addOrReplace(new PossibilityDouble(0, new Confidence(0.1)));
+        multA.addOrReplace(new PossibilityDouble(20, new Confidence(0.6)));
+        multA.addOrReplace(new PossibilityDouble(50, new Confidence(0.3)));
 
         var multB = new MultDblePossibilities();
-        multB.add(new PossibilityDouble(15, new Confidence(0.1)));
-        multB.add(new PossibilityDouble(20, new Confidence(0.5)));
-        multB.add(new PossibilityDouble(50, new Confidence(0.4)));
+        multB.addOrReplace(new PossibilityDouble(15, new Confidence(0.1)));
+        multB.addOrReplace(new PossibilityDouble(20, new Confidence(0.5)));
+        multB.addOrReplace(new PossibilityDouble(50, new Confidence(0.4)));
 
         var expt = new MultDblePossibilities();
-        expt.add(new PossibilityDouble(15, new Confidence(0.01)));
-        expt.add(new PossibilityDouble(20, new Confidence(0.41)));
-        expt.add(new PossibilityDouble(50, new Confidence(0.58)));
+        expt.addOrReplace(new PossibilityDouble(15, new Confidence(0.01)));
+        expt.addOrReplace(new PossibilityDouble(20, new Confidence(0.41)));
+        expt.addOrReplace(new PossibilityDouble(50, new Confidence(0.58)));
 
         res[0] = Arguments.of(multA, multB, expt);
 

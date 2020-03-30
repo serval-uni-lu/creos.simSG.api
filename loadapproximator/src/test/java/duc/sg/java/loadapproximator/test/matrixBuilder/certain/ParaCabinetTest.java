@@ -2,18 +2,26 @@ package duc.sg.java.loadapproximator.test.matrixBuilder.certain;
 
 import duc.sg.java.loadapproximator.test.generator.Data;
 import duc.sg.java.loadapproximator.test.generator.Utils;
-import duc.aintea.sg.scenarios.ParaCabinetBuilder;
+import duc.sg.java.scenarios.ParaCabinetSC;
+import duc.sg.java.scenarios.ScenarioBuilder;
+import duc.sg.java.scenarios.ScenarioName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import static duc.aintea.sg.scenarios.ParaCabinetBuilder.*;
+import static duc.sg.java.scenarios.ParaCabinetSC.*;
+
 
 public class ParaCabinetTest extends MatrixBuilderTest {
 
     @Override
     protected void createSubstation() {
-        substation = ParaCabinetBuilder.build();
+        substation = new ScenarioBuilder()
+                .chooseScenario(ScenarioName.PARA_CABINET)
+                .build()
+                .getGrid()
+                .getSubstation(ParaCabinetSC.SUBSTATION_NAME)
+                .get();
     }
 
     private static Arguments[] openCloseF8() {

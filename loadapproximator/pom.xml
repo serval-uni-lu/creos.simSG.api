@@ -11,5 +11,25 @@
 
     <artifactId>loadapproximator</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>duc.sg.java</groupId>
+            <artifactId>model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>duc.sg.java</groupId>
+            <artifactId>scenarios</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.efficient-java-matrix-library</groupId>
+            <artifactId>core</artifactId>
+            <version>0.26</version>
+        </dependency>
+
+    </dependencies>
+
 
 </project>

@@ -1,11 +1,13 @@
 package duc.sg.java.loadapproximator.test.computation.uncertain;
 
 import duc.sg.java.loadapproximator.loadapproximation.UncertainLoadApproximator;
-import duc.aintea.sg.Cable;
-import duc.aintea.sg.Fuse;
-import duc.aintea.sg.Meter;
-import duc.aintea.sg.Substation;
-import duc.aintea.sg.scenarios.SingleCableBuilder;
+import duc.sg.java.model.Cable;
+import duc.sg.java.model.Fuse;
+import duc.sg.java.model.Meter;
+import duc.sg.java.model.Substation;
+import duc.sg.java.scenarios.ScenarioBuilder;
+import duc.sg.java.scenarios.ScenarioName;
+import duc.sg.java.scenarios.SingleCableSC;
 import org.junit.jupiter.api.BeforeEach;
 
 public class SingleCableTest {
@@ -16,7 +18,12 @@ public class SingleCableTest {
 
     @BeforeEach
     public void init() {
-        substation = SingleCableBuilder.build();
+        substation = new ScenarioBuilder()
+                .chooseScenario(ScenarioName.SINGLE_CABLE)
+                .build()
+                .getGrid()
+                .getSubstation(SingleCableSC.SUBSTATION_NAME)
+                .get();
         fuse_subs = substation.getFuses().get(0);
 
         fuse_cabinet = fuse_subs.getOpposite();
@@ -32,7 +39,7 @@ public class SingleCableTest {
         m1.setConsumption(20);
 
         fuse_subs.closeFuse();
-        fuse_subs.getStatus().setConfAsProb(0.3);
+        fuse_subs.getStatus().setConfIsClosed(0.3);
 
         UncertainLoadApproximator.approximate(substation);
 

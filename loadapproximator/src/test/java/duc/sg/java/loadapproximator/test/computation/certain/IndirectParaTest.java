@@ -1,17 +1,25 @@
 package duc.sg.java.loadapproximator.test.computation.certain;
 
 import duc.sg.java.loadapproximator.test.generator.Data;
-import duc.aintea.sg.scenarios.IndirectParaBuilder;
+import duc.sg.java.scenarios.IndirectParaSC;
+import duc.sg.java.scenarios.ScenarioBuilder;
+import duc.sg.java.scenarios.ScenarioName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import static duc.aintea.sg.scenarios.IndirectParaBuilder.*;
+import static duc.sg.java.scenarios.IndirectParaSC.*;
+
 
 public class IndirectParaTest extends LoadApproximatorTest {
     @Override
     protected void createSubstation() {
-        substation = IndirectParaBuilder.build();
+        substation = new ScenarioBuilder()
+                .chooseScenario(ScenarioName.INDIRECT_PARALLEL)
+                .build()
+                .getGrid()
+                .getSubstation(IndirectParaSC.SUBSTATION_NAME)
+                .get();
     }
 
     @Override
@@ -25,7 +33,7 @@ public class IndirectParaTest extends LoadApproximatorTest {
     }
 
     private static Arguments[] openCloseF6F10() {
-        return Data.generateAllPossibilitiesWithValues(5, IndirectParaBuilder.F6_NAME, IndirectParaBuilder.F10_NAME);
+        return Data.generateAllPossibilitiesWithValues(5, F6_NAME, F10_NAME);
     }
 
     @ParameterizedTest

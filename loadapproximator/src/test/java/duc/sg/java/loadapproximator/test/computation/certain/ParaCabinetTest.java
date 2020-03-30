@@ -2,18 +2,25 @@ package duc.sg.java.loadapproximator.test.computation.certain;
 
 import duc.sg.java.loadapproximator.test.generator.Data;
 import duc.sg.java.loadapproximator.test.generator.Utils;
-import duc.aintea.sg.scenarios.ParaCabinetBuilder;
+import duc.sg.java.scenarios.ParaCabinetSC;
+import duc.sg.java.scenarios.ScenarioBuilder;
+import duc.sg.java.scenarios.ScenarioName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import static duc.aintea.sg.scenarios.ParaCabinetBuilder.*;
+import static duc.sg.java.scenarios.ParaCabinetSC.*;
 
 
 public class ParaCabinetTest extends LoadApproximatorTest {
     @Override
     protected void createSubstation() {
-        substation = ParaCabinetBuilder.build();
+        substation = new ScenarioBuilder()
+                .chooseScenario(ScenarioName.PARA_CABINET)
+                .build()
+                .getGrid()
+                .getSubstation(ParaCabinetSC.SUBSTATION_NAME)
+                .get();
     }
 
     @Override
@@ -28,35 +35,35 @@ public class ParaCabinetTest extends LoadApproximatorTest {
 
 
     private static Arguments[] openCloseF8() {
-        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetBuilder.F8_NAME);
+        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F8_NAME);
     }
 
     private static Arguments[] openCloseF2F3F4F5F6F7F8() {
-        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetBuilder.F2_NAME, ParaCabinetBuilder.F3_NAME, ParaCabinetBuilder.F4_NAME, ParaCabinetBuilder.F5_NAME, ParaCabinetBuilder.F6_NAME, ParaCabinetBuilder.F7_NAME, ParaCabinetBuilder.F8_NAME);
+        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F2_NAME, ParaCabinetSC.F3_NAME, ParaCabinetSC.F4_NAME, ParaCabinetSC.F5_NAME, ParaCabinetSC.F6_NAME, ParaCabinetSC.F7_NAME, ParaCabinetSC.F8_NAME);
     }
 
     private static Arguments[] openCloseF3F4F5F6F7F8() {
-        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetBuilder.F3_NAME, ParaCabinetBuilder.F4_NAME, ParaCabinetBuilder.F5_NAME, ParaCabinetBuilder.F6_NAME, ParaCabinetBuilder.F7_NAME, ParaCabinetBuilder.F8_NAME);
+        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F3_NAME, ParaCabinetSC.F4_NAME, ParaCabinetSC.F5_NAME, ParaCabinetSC.F6_NAME, ParaCabinetSC.F7_NAME, ParaCabinetSC.F8_NAME);
     }
 
     private static Arguments[] openCloseF4F7F8() {
-        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetBuilder.F4_NAME, ParaCabinetBuilder.F7_NAME, ParaCabinetBuilder.F8_NAME);
+        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F4_NAME, ParaCabinetSC.F7_NAME, ParaCabinetSC.F8_NAME);
     }
 
     private static Arguments[] openCloseF4F6F7F8() {
-        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetBuilder.F4_NAME, ParaCabinetBuilder.F6_NAME, ParaCabinetBuilder.F7_NAME, ParaCabinetBuilder.F8_NAME);
+        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F4_NAME, ParaCabinetSC.F6_NAME, ParaCabinetSC.F7_NAME, ParaCabinetSC.F8_NAME);
     }
 
     private static Arguments[] openCloseF6F7F8() {
-        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetBuilder.F6_NAME, ParaCabinetBuilder.F7_NAME, ParaCabinetBuilder.F8_NAME);
+        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F6_NAME, ParaCabinetSC.F7_NAME, ParaCabinetSC.F8_NAME);
     }
 
     private static Arguments[] openCloseF7F8() {
-        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetBuilder.F7_NAME, ParaCabinetBuilder.F8_NAME);
+        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F7_NAME, ParaCabinetSC.F8_NAME);
     }
 
     private static Arguments[] openCloseF4F8() {
-        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetBuilder.F4_NAME, ParaCabinetBuilder.F8_NAME);
+        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F4_NAME, ParaCabinetSC.F8_NAME);
     }
 
 

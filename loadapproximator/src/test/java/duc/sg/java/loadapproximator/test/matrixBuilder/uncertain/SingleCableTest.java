@@ -1,7 +1,10 @@
 package duc.sg.java.loadapproximator.test.matrixBuilder.uncertain;
 
-import duc.aintea.sg.Substation;
-import duc.aintea.sg.scenarios.SingleCableBuilder;
+
+import duc.sg.java.model.Substation;
+import duc.sg.java.scenarios.ScenarioBuilder;
+import duc.sg.java.scenarios.ScenarioName;
+import duc.sg.java.scenarios.SingleCableSC;
 
 import java.util.ArrayList;
 
@@ -15,7 +18,7 @@ public class SingleCableTest extends UncertainMatrixBuilderTest {
 
 
         genericTest(
-                new String[]{SingleCableBuilder.F1_NAME},
+                new String[]{SingleCableSC.F1_NAME},
                 possibilities,
                 new int[]{1,1}
 
@@ -29,7 +32,7 @@ public class SingleCableTest extends UncertainMatrixBuilderTest {
         possibilities.add(new double[]{1});
 
         genericTest(
-                new String[]{SingleCableBuilder.F2_NAME},
+                new String[]{SingleCableSC.F2_NAME},
                 possibilities,
                 new int[]{1}
 
@@ -44,7 +47,7 @@ public class SingleCableTest extends UncertainMatrixBuilderTest {
 
 
         genericTest(
-                new String[]{SingleCableBuilder.F1_NAME, SingleCableBuilder.F2_NAME},
+                new String[]{SingleCableSC.F1_NAME, SingleCableSC.F2_NAME},
                 possibilities,
                 new int[]{1,1}
 
@@ -53,6 +56,11 @@ public class SingleCableTest extends UncertainMatrixBuilderTest {
 
     @Override
     protected Substation createSubstation() {
-        return SingleCableBuilder.build();
+        return new ScenarioBuilder()
+                .chooseScenario(ScenarioName.SINGLE_CABLE)
+                .build()
+                .getGrid()
+                .getSubstation(SingleCableSC.SUBSTATION_NAME)
+                .get();
     }
 }

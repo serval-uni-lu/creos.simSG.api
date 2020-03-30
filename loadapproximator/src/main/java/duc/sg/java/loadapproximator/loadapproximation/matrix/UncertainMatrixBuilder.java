@@ -1,8 +1,8 @@
 package duc.sg.java.loadapproximator.loadapproximation.matrix;
 
-import duc.aintea.sg.Fuse;
-import duc.aintea.sg.Substation;
 import duc.sg.java.loadapproximator.utils.BaseTransform;
+import duc.sg.java.model.Fuse;
+import duc.sg.java.model.Substation;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -53,10 +53,10 @@ public class UncertainMatrixBuilder {
             for (int idxFuse = 0; idxFuse < uFuses.size(); idxFuse++) {
                 if(fuseStates[idxFuse]){
                     uFuses.get(idxFuse).closeFuse();
-                    confidence *= uFuses.get(idxFuse).getStatus().getConfClosedAsProb();
+                    confidence *= uFuses.get(idxFuse).getStatus().confIsClosed();
                 } else {
                     uFuses.get(idxFuse).openFuse();
-                    confidence *= uFuses.get(idxFuse).getStatus().getConfOpenAsProb();
+                    confidence *= uFuses.get(idxFuse).getStatus().confIsOpen();
                 }
             }
             res[idxCase] = new UncertainFuseStatesMatrix(MatrixBuilder.build(substation), confidence);

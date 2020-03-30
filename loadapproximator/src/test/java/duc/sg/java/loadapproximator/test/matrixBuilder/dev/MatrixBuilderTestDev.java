@@ -1,8 +1,8 @@
 package duc.sg.java.loadapproximator.test.matrixBuilder.dev;
 
-import duc.aintea.sg.Cabinet;
-import duc.aintea.sg.Fuse;
-import duc.aintea.sg.Substation;
+import duc.sg.java.model.Cabinet;
+import duc.sg.java.model.Fuse;
+import duc.sg.java.model.Substation;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 

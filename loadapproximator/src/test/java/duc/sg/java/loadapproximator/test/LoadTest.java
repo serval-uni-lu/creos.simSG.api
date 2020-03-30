@@ -1,7 +1,7 @@
 package duc.sg.java.loadapproximator.test;
 
-import duc.aintea.sg.Fuse;
-import duc.aintea.sg.Substation;
+import duc.sg.java.model.Fuse;
+import duc.sg.java.model.Substation;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayDeque;

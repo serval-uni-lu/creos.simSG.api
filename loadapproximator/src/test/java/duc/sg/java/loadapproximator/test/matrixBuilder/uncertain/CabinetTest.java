@@ -1,14 +1,16 @@
 package duc.sg.java.loadapproximator.test.matrixBuilder.uncertain;
 
 import duc.sg.java.loadapproximator.test.generator.Data;
-import duc.aintea.sg.Substation;
-import duc.aintea.sg.scenarios.CabinetBuilder;
 import duc.sg.java.loadapproximator.utils.BaseTransform;
+import duc.sg.java.model.Substation;
+import duc.sg.java.scenarios.ScenarioBuilder;
+import duc.sg.java.scenarios.ScenarioName;
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.util.*;
 
-import static duc.aintea.sg.scenarios.CabinetBuilder.*;
+import static duc.sg.java.scenarios.CabinetSC.*;
+
 
 public class CabinetTest extends UncertainMatrixBuilderTest {
     protected static Map<String, Integer> fuseIdx;
@@ -25,7 +27,12 @@ public class CabinetTest extends UncertainMatrixBuilderTest {
 
     @Override
     protected Substation createSubstation() {
-        return CabinetBuilder.build();
+        return new ScenarioBuilder()
+                .chooseScenario(ScenarioName.CABINET)
+                .build()
+                .getGrid()
+                .getSubstation(SUBSTATION_NAME)
+                .get();
     }
 
     private static Arguments[] uncertain() {

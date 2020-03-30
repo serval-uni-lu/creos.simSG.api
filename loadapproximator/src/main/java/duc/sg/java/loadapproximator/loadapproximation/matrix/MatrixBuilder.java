@@ -1,11 +1,11 @@
 package duc.sg.java.loadapproximator.loadapproximation.matrix;
 
-import duc.aintea.sg.Cable;
-import duc.aintea.sg.Entity;
-import duc.aintea.sg.Fuse;
-import duc.aintea.sg.Substation;
 import duc.sg.java.loadapproximator.utils.CycleDetection;
 import duc.sg.java.loadapproximator.utils.Matrix;
+import duc.sg.java.model.Cable;
+import duc.sg.java.model.Entity;
+import duc.sg.java.model.Fuse;
+import duc.sg.java.model.Substation;
 
 import java.util.*;
 

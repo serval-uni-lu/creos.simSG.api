@@ -1,10 +1,10 @@
 package duc.sg.java.loadapproximator.test.utils;
 
-import duc.aintea.sg.Cabinet;
-import duc.aintea.sg.Cable;
-import duc.aintea.sg.Fuse;
-import duc.aintea.sg.Substation;
 import duc.sg.java.loadapproximator.utils.CycleDetection;
+import duc.sg.java.model.Cabinet;
+import duc.sg.java.model.Cable;
+import duc.sg.java.model.Fuse;
+import duc.sg.java.model.Substation;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

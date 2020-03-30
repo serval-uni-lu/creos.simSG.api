@@ -2,7 +2,11 @@ package duc.sg.java.loadapproximator.test.computation.certain;
 
 import duc.sg.java.loadapproximator.loadapproximation.LoadApproximator;
 import duc.sg.java.loadapproximator.test.LoadTest;
-import duc.aintea.sg.Meter;
+import duc.sg.java.model.Cable;
+import duc.sg.java.model.Fuse;
+import duc.sg.java.model.Meter;
+import duc.sg.java.uncertainty.MultDblePossibilities;
+import duc.sg.java.uncertainty.PossibilityDouble;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -27,13 +31,17 @@ public abstract class LoadApproximatorTest extends LoadTest {
         LoadApproximator.approximate(substation);
 
         for (int i = 0; i < fuseCables.length; i++) {
-            var fuse = fusesMap.get(fuseCables[i]);
-            assertEquals(expectedCables[i], fuse.getCable().getLoad(), DELTA, "Error for cable " + (i+1));
+            Cable cable = fusesMap.get(fuseCables[i]).getCable();
+            MultDblePossibilities cableULoad = cable.getUncertainLoad();
+            PossibilityDouble cableLoad = cableULoad.iterator().next();
+            assertEquals(expectedCables[i], cableLoad.getValue(), DELTA, "Error for cable " + (i+1));
         }
 
         for (int i = 0; i < fuses.length; i++) {
-            var fuse = fusesMap.get(fuses[i]);
-            assertEquals(expectedFuses[i], fuse.getLoad(), DELTA, "Error for fuse " + (i+1));
+            Fuse fuse = fusesMap.get(fuses[i]);
+            MultDblePossibilities fuseULoad = fuse.getUncertainLoad();
+            PossibilityDouble fuseLoad = fuseULoad.iterator().next();
+            assertEquals(expectedFuses[i], fuseLoad.getValue(), DELTA, "Error for fuse " + (i+1));
         }
     }
 

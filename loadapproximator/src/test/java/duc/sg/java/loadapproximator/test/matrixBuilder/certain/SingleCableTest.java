@@ -1,9 +1,10 @@
 package duc.sg.java.loadapproximator.test.matrixBuilder.certain;
 
-import duc.aintea.sg.scenarios.SingleCableBuilder;
+import duc.sg.java.scenarios.ScenarioBuilder;
+import duc.sg.java.scenarios.ScenarioName;
+import duc.sg.java.scenarios.SingleCableSC;
 import org.junit.jupiter.api.Test;
 
-import static duc.aintea.sg.scenarios.SingleCableBuilder.*;
 
 public class SingleCableTest extends MatrixBuilderTest {
 
@@ -12,7 +13,12 @@ public class SingleCableTest extends MatrixBuilderTest {
      */
     @Override
     protected void createSubstation() {
-        substation = SingleCableBuilder.build();
+        substation = new ScenarioBuilder()
+                .chooseScenario(ScenarioName.SINGLE_CABLE)
+                .build()
+                .getGrid()
+                .getSubstation(SingleCableSC.SUBSTATION_NAME)
+                .get();
     }
 
 
@@ -23,20 +29,20 @@ public class SingleCableTest extends MatrixBuilderTest {
 
     @Test
     public void testScenario1_f1Open() {
-        fusesMap.get(F1_NAME).openFuse();
+        fusesMap.get(SingleCableSC.F1_NAME).openFuse();
         genericTest(new double[]{0});
     }
 
     @Test
     public void testScenario1_f2Open() {
-        fusesMap.get(F2_NAME).openFuse();
+        fusesMap.get(SingleCableSC.F2_NAME).openFuse();
         genericTest(new double[]{1});
     }
 
     @Test
     public void testScenario1_allOpen() {
-        fusesMap.get(F1_NAME).openFuse();
-        fusesMap.get(F2_NAME).openFuse();
+        fusesMap.get(SingleCableSC.F1_NAME).openFuse();
+        fusesMap.get(SingleCableSC.F2_NAME).openFuse();
 
         genericTest(new double[]{0});
     }

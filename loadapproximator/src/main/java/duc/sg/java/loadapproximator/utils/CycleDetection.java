@@ -1,7 +1,8 @@
 package duc.sg.java.loadapproximator.utils;
 
-import duc.aintea.sg.Entity;
-import duc.aintea.sg.Fuse;
+
+import duc.sg.java.model.Entity;
+import duc.sg.java.model.Fuse;
 
 import java.util.*;
 

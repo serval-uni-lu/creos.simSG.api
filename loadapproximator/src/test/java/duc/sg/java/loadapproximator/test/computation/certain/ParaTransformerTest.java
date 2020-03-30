@@ -2,17 +2,25 @@ package duc.sg.java.loadapproximator.test.computation.certain;
 
 import duc.sg.java.loadapproximator.test.generator.Data;
 import duc.sg.java.loadapproximator.test.generator.Utils;
-import duc.aintea.sg.scenarios.ParaTransformerBuilder;
+import duc.sg.java.scenarios.ParaTransformerSC;
+import duc.sg.java.scenarios.ScenarioBuilder;
+import duc.sg.java.scenarios.ScenarioName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import static duc.aintea.sg.scenarios.ParaTransformerBuilder.*;
+import static duc.sg.java.scenarios.ParaTransformerSC.*;
+
 
 public class ParaTransformerTest extends LoadApproximatorTest {
     @Override
     protected void createSubstation() {
-        substation = ParaTransformerBuilder.build();
+        substation = new ScenarioBuilder()
+                .chooseScenario(ScenarioName.PARA_TRANSFORMER)
+                .build()
+                .getGrid()
+                .getSubstation(ParaTransformerSC.SUBSTATION_NAME)
+                .get();
     }
 
     @Override

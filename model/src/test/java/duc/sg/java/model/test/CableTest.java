@@ -19,27 +19,27 @@ public class CableTest {
     public void uncertainLoadTest() {
         var f1 = new Fuse("f1");
         var uloadF1 = new MultDblePossibilities();
-        uloadF1.add(new PossibilityDouble(0, 0.1));
-        uloadF1.add(new PossibilityDouble(20, 0.6));
-        uloadF1.add(new PossibilityDouble(50, 0.3));
+        uloadF1.addOrReplace(new PossibilityDouble(0, 0.1));
+        uloadF1.addOrReplace(new PossibilityDouble(20, 0.6));
+        uloadF1.addOrReplace(new PossibilityDouble(50, 0.3));
         f1.setLoad(uloadF1);
 
         var f2 = new Fuse("f2");
         var uloadF2 = new MultDblePossibilities();
-        uloadF2.add(new PossibilityDouble(15, 0.1));
-        uloadF2.add(new PossibilityDouble(20, 0.5));
-        uloadF2.add(new PossibilityDouble(50, 0.2));
-        uloadF2.add(new PossibilityDouble(60, 0.2));
+        uloadF2.addOrReplace(new PossibilityDouble(15, 0.1));
+        uloadF2.addOrReplace(new PossibilityDouble(20, 0.5));
+        uloadF2.addOrReplace(new PossibilityDouble(50, 0.2));
+        uloadF2.addOrReplace(new PossibilityDouble(60, 0.2));
         f2.setLoad(uloadF2);
 
         var cable = new Cable();
         cable.setFuses(f1, f2);
         var actuals = cable.getUncertainLoad();
         var expected = new MultDblePossibilities();
-        expected.add(new PossibilityDouble(15, 0.01));
-        expected.add(new PossibilityDouble(20, 0.41));
-        expected.add(new PossibilityDouble(50, 0.38));
-        expected.add(new PossibilityDouble(60, 0.2));
+        expected.addOrReplace(new PossibilityDouble(15, 0.01));
+        expected.addOrReplace(new PossibilityDouble(20, 0.41));
+        expected.addOrReplace(new PossibilityDouble(50, 0.38));
+        expected.addOrReplace(new PossibilityDouble(60, 0.2));
 
         int nb=0;
         for (PossibilityDouble actual: actuals) {

@@ -2,8 +2,8 @@ package duc.sg.java.loadapproximator.test.matrixBuilder.uncertain;
 
 import duc.sg.java.loadapproximator.loadapproximation.matrix.FuseStatesMatrix;
 import duc.sg.java.loadapproximator.loadapproximation.matrix.UncertainMatrixBuilder;
-import duc.aintea.sg.Fuse;
-import duc.aintea.sg.Substation;
+import duc.sg.java.model.Fuse;
+import duc.sg.java.model.Substation;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -58,7 +58,7 @@ public abstract class UncertainMatrixBuilderTest {
 
     protected void genericTest(String[] uFusesName, List<double[]> possibilities, int[] expectedCounter, String... toOpen) {
         for (var fName: uFusesName) {
-            fusesMap.get(fName).getStatus().setConfAsProb(0.5);
+            fusesMap.get(fName).getStatus().setConfIsClosed(0.5);
         }
 
         for(var to: toOpen) {

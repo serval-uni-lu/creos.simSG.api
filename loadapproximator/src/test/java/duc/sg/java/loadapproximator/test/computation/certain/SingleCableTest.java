@@ -2,11 +2,15 @@ package duc.sg.java.loadapproximator.test.computation.certain;
 
 import duc.sg.java.loadapproximator.loadapproximation.LoadApproximator;
 import duc.sg.java.loadapproximator.test.generator.Data;
-import duc.aintea.sg.Cable;
-import duc.aintea.sg.Fuse;
-import duc.aintea.sg.Meter;
-import duc.aintea.sg.Substation;
-import duc.aintea.sg.scenarios.SingleCableBuilder;
+import duc.sg.java.model.Cable;
+import duc.sg.java.model.Fuse;
+import duc.sg.java.model.Meter;
+import duc.sg.java.model.Substation;
+import duc.sg.java.scenarios.ScenarioBuilder;
+import duc.sg.java.scenarios.ScenarioName;
+import duc.sg.java.scenarios.SingleCableSC;
+import duc.sg.java.uncertainty.MultDblePossibilities;
+import duc.sg.java.uncertainty.PossibilityDouble;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,7 +31,12 @@ public class SingleCableTest {
 
     @BeforeEach
     public void init() {
-        substation = SingleCableBuilder.build();
+        substation = new ScenarioBuilder()
+                .chooseScenario(ScenarioName.SINGLE_CABLE)
+                .build()
+                .getGrid()
+                .getSubstation(SingleCableSC.SUBSTATION_NAME)
+                .get();
         fuse_subs = substation.getFuses().get(0);
         fuse_cabinet = fuse_subs.getOpposite();
 
@@ -48,9 +57,19 @@ public class SingleCableTest {
 
         LoadApproximator.approximate(substation);
 
-        Assertions.assertEquals(m1Cons + m2Cons + m3Cons, cable.getLoad(), 0.001);
-        Assertions.assertEquals(m1Cons + m2Cons + m3Cons, fuse_subs.getLoad(), 0.001);
-        Assertions.assertEquals(0, fuse_cabinet.getLoad(), 0.001);
+
+        MultDblePossibilities cableULoad = cable.getUncertainLoad();
+        PossibilityDouble cableLoad = cableULoad.iterator().next();
+
+        MultDblePossibilities fuseLoad = fuse_subs.getUncertainLoad();
+        PossibilityDouble fuseSubsLoad = fuseLoad.iterator().next();
+
+        MultDblePossibilities fuseCabULoad = fuse_cabinet.getUncertainLoad();
+        PossibilityDouble fuseCabLoad = fuseCabULoad.iterator().next();
+
+        Assertions.assertEquals(m1Cons + m2Cons + m3Cons, fuseSubsLoad.getValue(), 0.001);
+        Assertions.assertEquals(m1Cons + m2Cons + m3Cons, cableLoad.getValue(), 0.001);
+        Assertions.assertEquals(0, fuseCabLoad.getValue(), 0.001);
     }
 
     @ParameterizedTest
@@ -65,9 +84,18 @@ public class SingleCableTest {
 
         LoadApproximator.approximate(substation);
 
-        Assertions.assertEquals(0, cable.getLoad(), 0.001);
-        Assertions.assertEquals(0, fuse_subs.getLoad(), 0.001);
-        Assertions.assertEquals(0, fuse_cabinet.getLoad(), 0.001);
+        MultDblePossibilities cableULoad = cable.getUncertainLoad();
+        PossibilityDouble cableLoad = cableULoad.iterator().next();
+
+        MultDblePossibilities fuseLoad = fuse_subs.getUncertainLoad();
+        PossibilityDouble fuseSubsLoad = fuseLoad.iterator().next();
+
+        MultDblePossibilities fuseCabULoad = fuse_cabinet.getUncertainLoad();
+        PossibilityDouble fuseCabLoad = fuseCabULoad.iterator().next();
+
+        Assertions.assertEquals(0, cableLoad.getValue(), 0.001);
+        Assertions.assertEquals(0, fuseSubsLoad.getValue(), 0.001);
+        Assertions.assertEquals(0, fuseCabLoad.getValue(), 0.001);
     }
 
     @ParameterizedTest
@@ -81,9 +109,18 @@ public class SingleCableTest {
 
         LoadApproximator.approximate(substation);
 
-        Assertions.assertEquals(m1Cons + m2Cons + m3Cons, cable.getLoad(), 0.001);
-        Assertions.assertEquals(m1Cons + m2Cons + m3Cons, fuse_subs.getLoad(), 0.001);
-        Assertions.assertEquals(0, fuse_cabinet.getLoad(), 0.001);
+        MultDblePossibilities cableULoad = cable.getUncertainLoad();
+        PossibilityDouble cableLoad = cableULoad.iterator().next();
+
+        MultDblePossibilities fuseLoad = fuse_subs.getUncertainLoad();
+        PossibilityDouble fuseSubsLoad = fuseLoad.iterator().next();
+
+        MultDblePossibilities fuseCabULoad = fuse_cabinet.getUncertainLoad();
+        PossibilityDouble fuseCabLoad = fuseCabULoad.iterator().next();
+
+        Assertions.assertEquals(m1Cons + m2Cons + m3Cons, cableLoad.getValue(), 0.001);
+        Assertions.assertEquals(m1Cons + m2Cons + m3Cons, fuseSubsLoad.getValue(), 0.001);
+        Assertions.assertEquals(0, fuseCabLoad.getValue(), 0.001);
     }
 
 
@@ -99,8 +136,17 @@ public class SingleCableTest {
 
         LoadApproximator.approximate(substation);
 
-        Assertions.assertEquals(0, cable.getLoad(), 0.001);
-        Assertions.assertEquals(0, fuse_subs.getLoad(), 0.001);
-        Assertions.assertEquals(0, fuse_cabinet.getLoad(), 0.001);
+        MultDblePossibilities cableULoad = cable.getUncertainLoad();
+        PossibilityDouble cableLoad = cableULoad.iterator().next();
+
+        MultDblePossibilities fuseLoad = fuse_subs.getUncertainLoad();
+        PossibilityDouble fuseSubsLoad = fuseLoad.iterator().next();
+
+        MultDblePossibilities fuseCabULoad = fuse_cabinet.getUncertainLoad();
+        PossibilityDouble fuseCabLoad = fuseCabULoad.iterator().next();
+
+        Assertions.assertEquals(0, cableLoad.getValue(), 0.001);
+        Assertions.assertEquals(0, fuseSubsLoad.getValue(), 0.001);
+        Assertions.assertEquals(0, fuseCabLoad.getValue(), 0.001);
     }
 }
