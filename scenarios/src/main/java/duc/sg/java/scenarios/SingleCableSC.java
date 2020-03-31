@@ -17,6 +17,11 @@ public final class SingleCableSC extends Scenario {
     }
 
     @Override
+    public String substationName() {
+        return SUBSTATION_NAME;
+    }
+
+    @Override
     public Fuse[] extractFuses() {
         Substation substation = grid.getSubstation(SUBSTATION_NAME).get();
 

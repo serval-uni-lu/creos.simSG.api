@@ -3,8 +3,11 @@ package duc.sg.java.importer.json;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.github.fge.jackson.JsonLoader;
-import duc.aintea.sg.Fuse;
-import duc.aintea.sg.Substation;
+import duc.sg.java.model.Fuse;
+import duc.sg.java.model.State;
+import duc.sg.java.scenarios.Scenario;
+import duc.sg.java.scenarios.ScenarioBuilder;
+import duc.sg.java.scenarios.ScenarioName;
 
 import java.io.File;
 import java.io.IOException;
@@ -73,20 +76,20 @@ public class ScBasedJson {
 
     }
 
-    private static boolean[] getFuseStates(int nbFuses, JsonNode toImport) {
-        JsonNode openFusesVal = toImport.get(OPEN_FUSES_KEY);
-        final var fuseStates = new boolean[nbFuses];
-        Arrays.fill(fuseStates, true);
-        openFusesVal.elements().forEachRemaining((JsonNode idxNode) -> fuseStates[idxNode.asInt() - 1] = false);
+    private static State[] getFuseStates(int nbFuses, JsonNode toImport) {
+        ArrayNode openFusesVal = (ArrayNode) toImport.get(OPEN_FUSES_KEY);
+        final var fuseStates = new State[nbFuses];
+        Arrays.fill(fuseStates, State.CLOSED);
+        openFusesVal.elements().forEachRemaining((JsonNode idxNode) -> fuseStates[idxNode.asInt() - 1] = State.OPEN);
         return fuseStates;
     }
 
     private static double[] getConsumptions(int nbCables, JsonNode toImport) {
+        ArrayNode consumptionsNode = (ArrayNode) toImport.get(CONSUMPTIONS_KEY);
         final double[] consumptions = new double[nbCables];
-        JsonNode consumptionsNode = toImport.get(CONSUMPTIONS_KEY);
         Iterator<JsonNode> vals = consumptionsNode.elements();
         int idx = 0;
-        while (vals.hasNext() && idx<nbCables) {
+        while (vals.hasNext() && idx<consumptions.length) {
             consumptions[idx] = vals.next().asDouble();
             idx++;
         }
@@ -101,15 +104,17 @@ public class ScBasedJson {
             String status = nodeUc.get(UC_STATUS_KEY).asText();
 
             var fuse = fuses[idx];
+            var conf = nodeUc.get(UC_CONF_LVL_KEY).asDouble();
             if(status.equalsIgnoreCase("OPEN")) {
                 fuse.openFuse();
+                fuse.getStatus().setConfIsOpen(conf);
+            } else {
+                fuse.getStatus().setConfIsClosed(conf);
             }
-            var conf = nodeUc.get(UC_CONF_LVL_KEY).asDouble();
-            fuse.getStatus().setConfAsProb(conf);
         });
     }
 
-    public static Optional<Substation> from(String jsonText) throws ValidationException {
+    public static Optional<Scenario> from(String jsonText) throws ValidationException {
         JsonNode toImport;
         try {
             toImport = JsonLoader.fromString(jsonText);
@@ -121,7 +126,7 @@ public class ScBasedJson {
     }
 
 
-    public static Optional<Substation> from(File jsonFile) throws ValidationException {
+    public static Optional<Scenario> from(File jsonFile) throws ValidationException {
         JsonNode toImport;
         try {
             toImport = JsonLoader.fromFile(jsonFile);
@@ -132,50 +137,70 @@ public class ScBasedJson {
         return extractSubstation(toImport);
     }
 
-    private static Optional<Substation> extractSubstation(JsonNode toImport) throws ValidationException {
+    private static Optional<Scenario> extractSubstation(JsonNode toImport) throws ValidationException {
         if(validate(toImport)) {
-            Substation substation;
-            Fuse[] fuses;
+//            Substation substation;
+//            Fuse[] fuses;
+            ScenarioName name;
+            int nbFuses;
             switch(toImport.get(SC_ID_KEY).asInt()) {
                 case 1: {
-                    boolean[] fuseClosed = getFuseStates(2, toImport);
-                    double[] consumptions = getConsumptions(1, toImport);
-                    substation = SingleCableBuilder.build(fuseClosed, consumptions);
-                    fuses = SingleCableBuilder.extractFuses(substation);
+                    name = ScenarioName.SINGLE_CABLE;
+                    nbFuses = 2;
+//                    boolean[] fuseClosed = getFuseStates(2, toImport);
+//                    double[] consumptions = getConsumptions(1, toImport);
+//                    substation = SingleCableBuilder.build(fuseClosed, consumptions);
+//                    fuses = SingleCableBuilder.extractFuses(substation);
                     break;
                 }
                 case 2: {
-                    boolean[] fuseClosed = getFuseStates(6, toImport);
-                    double[] consumptions = getConsumptions(3, toImport);
-                    substation = CabinetBuilder.build(fuseClosed, consumptions);
-                    fuses = CabinetBuilder.extractFuses(substation);
+                    name = ScenarioName.CABINET;
+                    nbFuses = 6;
+//                    boolean[] fuseClosed = getFuseStates(6, toImport);
+//                    double[] consumptions = getConsumptions(3, toImport);
+//                    substation = CabinetBuilder.build(fuseClosed, consumptions);
+//                    fuses = CabinetBuilder.extractFuses(substation);
                     break;
                 }
                 case 3: {
-                    boolean[] fuseClosed = getFuseStates(6, toImport);
-                    double[] consumptions = getConsumptions(3, toImport);
-                    substation = ParaTransformerBuilder.build(fuseClosed, consumptions);
-                    fuses = ParaTransformerBuilder.extractFuses(substation);
+                    name = ScenarioName.PARA_TRANSFORMER;
+                    nbFuses = 6;
+//                    boolean[] fuseClosed = getFuseStates(6, toImport);
+//                    double[] consumptions = getConsumptions(3, toImport);
+//                    substation = ParaTransformerBuilder.build(fuseClosed, consumptions);
+//                    fuses = ParaTransformerBuilder.extractFuses(substation);
                     break;
                 }
                 case 4: {
-                    boolean[] fuseClosed = getFuseStates(8, toImport);
-                    double[] consumptions = getConsumptions(4, toImport);
-                    substation = ParaCabinetBuilder.build(fuseClosed, consumptions);
-                    fuses = ParaCabinetBuilder.extractFuses(substation);
+                    name = ScenarioName.PARA_CABINET;
+                    nbFuses = 8;
+//                    boolean[] fuseClosed = getFuseStates(8, toImport);
+//                    double[] consumptions = getConsumptions(4, toImport);
+//                    substation = ParaCabinetBuilder.build(fuseClosed, consumptions);
+//                    fuses = ParaCabinetBuilder.extractFuses(substation);
                     break;
                 }
                 case 5: {
-                    boolean[] fuseClosed = getFuseStates(10, toImport);
-                    double[] consumptions = getConsumptions(5, toImport);
-                    substation = IndirectParaBuilder.build(fuseClosed, consumptions);
-                    fuses = IndirectParaBuilder.extractFuses(substation);
+                    name = ScenarioName.INDIRECT_PARALLEL;
+                    nbFuses = 10;
+//                    boolean[] fuseClosed = getFuseStates(10, toImport);
+//                    double[] consumptions = getConsumptions(5, toImport);
+//                    substation = IndirectParaBuilder.build(fuseClosed, consumptions);
+//                    fuses = IndirectParaBuilder.extractFuses(substation);
                     break;
                 }
                 default: return Optional.empty();
             }
-            makesUncertain(fuses, toImport);
-            return Optional.of(substation);
+
+            State[] fuseClosed = getFuseStates(nbFuses, toImport);
+            double[] consumptions = getConsumptions(nbFuses/2, toImport);
+            Scenario sc = new ScenarioBuilder()
+                    .chooseScenario(name)
+                    .setConsumptions(consumptions)
+                    .setFuseStates(fuseClosed)
+                    .build();
+            makesUncertain(sc.extractFuses(), toImport);
+            return Optional.of(sc);
         } else {
             return Optional.empty();
         }

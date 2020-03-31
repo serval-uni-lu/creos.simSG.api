@@ -33,7 +33,7 @@ public final class IndirectParaSC extends Scenario {
     public static final String F10_NAME = "fuse_cab_4";
 
 
-    public static final String SUBSTATION_NAME = "SUBSTATION";
+    public static final String SUBSTATION_NAME = "Substation";
     public static final String CABINET1_NAME = "Cabinet 1";
     public static final String CABINET2_NAME = "Cabinet 2";
     public static final String CABINET3_NAME = "Cabinet 3";
@@ -41,6 +41,11 @@ public final class IndirectParaSC extends Scenario {
 
     IndirectParaSC(SmartGrid grid) {
         super(grid);
+    }
+
+    @Override
+    public String substationName() {
+        return SUBSTATION_NAME;
     }
 
 

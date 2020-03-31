@@ -28,6 +28,11 @@ public final class CabinetSC extends Scenario {
     }
 
     @Override
+    public String substationName() {
+        return SUBSTATION_NAME;
+    }
+
+    @Override
     public Fuse[] extractFuses() {
         var substation = grid.getSubstation(SUBSTATION_NAME).get();
 

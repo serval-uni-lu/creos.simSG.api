@@ -1,10 +1,11 @@
 package duc.sg.java.importer.json.test;
 
-import duc.aintea.sg.Cable;
-import duc.aintea.sg.Fuse;
-import duc.aintea.sg.Substation;
-import duc.aintea.sg.importer.ScBasedJson;
-import duc.aintea.sg.scenarios.*;
+import duc.sg.java.importer.json.ScBasedJson;
+import duc.sg.java.model.Cable;
+import duc.sg.java.model.Fuse;
+import duc.sg.java.scenarios.Scenario;
+import duc.sg.java.scenarios.SingleCableSC;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -18,8 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ScBasedJsonTest {
 
@@ -70,7 +70,7 @@ public class ScBasedJsonTest {
     @MethodSource("getInvalidJsonFiles")
     public void testInvalidFile(File jsonFile) {
         assertDoesNotThrow(() -> {
-            Optional<Substation> substation = ScBasedJson.from(jsonFile);
+            Optional<Scenario> substation = ScBasedJson.from(jsonFile);
             assertTrue(substation.isEmpty());
         });
     }
@@ -83,15 +83,15 @@ public class ScBasedJsonTest {
         return new File(jsonPath);
     }
 
-    private Substation testNoException(String fileName) {
+    private Scenario testNoException(String fileName) {
         File jsonFIle = getValidFile(fileName);
-        final Substation[] substation = new Substation[1];
+        final Scenario[] scenario = new Scenario[1];
         assertDoesNotThrow(() -> {
-            Optional<Substation> opt = ScBasedJson.from(jsonFIle);
+            Optional<Scenario> opt = ScBasedJson.from(jsonFIle);
             assertTrue(opt.isPresent());
-            substation[0] = opt.get();
+            scenario[0] = opt.get();
         });
-        return substation[0];
+        return scenario[0];
     }
 
     private void genericTest(Cable[] cables, double[] consumptions, Fuse[] fuses, boolean[] fuseStatus, boolean[] uncertainFuses) {
@@ -107,27 +107,26 @@ public class ScBasedJsonTest {
 
     @Test
     public void testValidSc1() {
-        Substation substation = testNoException("sc1.json");
+        Scenario scenario = testNoException("sc1.json");
+        Assertions.assertEquals(SingleCableSC.class, scenario.getClass());
 
-        Cable[] cables = SingleCableBuilder.extractCables(substation);
+        Cable[] cables = scenario.extractCables();
         double[] expCons = new double[]{14.0};
 
         var fuseStatus = new boolean[]{true, false};
         var fIsUc = new boolean[]{true, false};
 
-        Fuse[] fuses = SingleCableBuilder.extractFuses(substation);
-
+        Fuse[] fuses = scenario.extractFuses();
         genericTest(cables, expCons, fuses, fuseStatus, fIsUc);
 
-        assertEquals(0.5, fuses[0].getStatus().getConfClosedAsProb());
+        assertEquals(0.5, fuses[0].getStatus().confIsClosed());
     }
 
 
     @Test
     public void testValidSc2() {
-        Substation substation = testNoException("sc2.json");
-
-        Cable[] cables = CabinetBuilder.extractCables(substation);
+        Scenario scenario = testNoException("sc2.json");
+        Cable[] cables = scenario.extractCables();
         double[] expCons = new double[]{14.0, 20.6, 168.2};
 
         var fuseStatus = new boolean[6];
@@ -138,19 +137,19 @@ public class ScBasedJsonTest {
         Arrays.fill(fIsUc, false);
         fIsUc[2] = true;
 
-        Fuse[] fuses = CabinetBuilder.extractFuses(substation);
+        Fuse[] fuses = scenario.extractFuses();
 
         genericTest(cables, expCons, fuses, fuseStatus, fIsUc);
 
-        assertEquals(0.8, fuses[2].getStatus().getConfClosedAsProb());
+        assertEquals(0.8, fuses[2].getStatus().confIsClosed());
     }
 
 
     @Test
     public void testValidSc3() {
-        Substation substation = testNoException("sc3.json");
+        Scenario scenario = testNoException("sc3.json");
 
-        Cable[] cables = ParaTransformerBuilder.extractCables(substation);
+        Cable[] cables = scenario.extractCables();
         double[] expCons = new double[]{14.0, 20.6, 168.2};
 
         var fuseStatus = new boolean[6];
@@ -161,18 +160,18 @@ public class ScBasedJsonTest {
         Arrays.fill(fIsUc, false);
         fIsUc[1] = true;
 
-        Fuse[] fuses = ParaTransformerBuilder.extractFuses(substation);
+        Fuse[] fuses = scenario.extractFuses();
 
         genericTest(cables, expCons, fuses, fuseStatus, fIsUc);
 
-        assertEquals(0.8, fuses[1].getStatus().getConfOpenAsProb());
+        assertEquals(0.8, fuses[1].getStatus().confIsOpen());
     }
 
     @Test
     public void testValidSc4() {
-        Substation substation = testNoException("sc4.json");
+        Scenario scenario = testNoException("sc4.json");
 
-        Cable[] cables = ParaCabinetBuilder.extractCables(substation);
+        Cable[] cables = scenario.extractCables();
         double[] expCons = new double[]{14.0, 20.6, 168.2, 658};
 
         var fuseStatus = new boolean[8];
@@ -183,19 +182,19 @@ public class ScBasedJsonTest {
         Arrays.fill(fIsUc, false);
         fIsUc[1] = fIsUc[3] = true;
 
-        Fuse[] fuses = ParaCabinetBuilder.extractFuses(substation);
+        Fuse[] fuses = scenario.extractFuses();
 
         genericTest(cables, expCons, fuses, fuseStatus, fIsUc);
 
-        assertEquals(0.8, fuses[1].getStatus().getConfOpenAsProb());
-        assertEquals(0.1, fuses[3].getStatus().getConfOpenAsProb());
+        assertEquals(0.8, fuses[1].getStatus().confIsOpen());
+        assertEquals(0.1, fuses[3].getStatus().confIsOpen());
     }
 
     @Test
     public void testValidSc5() {
-        Substation substation = testNoException("sc5.json");
+        Scenario scenario = testNoException("sc5.json");
 
-        Cable[] cables = IndirectParaBuilder.extractCables(substation);
+        Cable[] cables = scenario.extractCables();
         double[] expCons = new double[]{14.0, 20.6, 168.2, 658, 12.0};
 
         var fuseStatus = new boolean[10];
@@ -206,12 +205,12 @@ public class ScBasedJsonTest {
         Arrays.fill(fIsUc, false);
         fIsUc[1] = fIsUc[3] = true;
 
-        Fuse[] fuses = IndirectParaBuilder.extractFuses(substation);
+        Fuse[] fuses = scenario.extractFuses();
 
         genericTest(cables, expCons, fuses, fuseStatus, fIsUc);
 
-        assertEquals(0.8, fuses[1].getStatus().getConfOpenAsProb());
-        assertEquals(0.1, fuses[3].getStatus().getConfClosedAsProb());
+        assertEquals(0.8, fuses[1].getStatus().confIsOpen());
+        assertEquals(0.1, fuses[3].getStatus().confIsClosed());
     }
 
 }

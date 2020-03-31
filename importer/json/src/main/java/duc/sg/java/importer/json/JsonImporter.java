@@ -3,6 +3,9 @@ package duc.sg.java.importer.json;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.github.fge.jackson.JsonLoader;
+import duc.sg.java.model.*;
+import duc.sg.java.uncertainty.MultDblePossibilities;
+import duc.sg.java.uncertainty.PossibilityDouble;
 
 import java.io.File;
 import java.io.IOException;
@@ -131,7 +134,7 @@ public class JsonImporter {
         return false;
     }
 
-    public static Optional<List<Substation>> from(File jsonFile) throws ValidationException {
+    public static Optional<SmartGrid> from(File jsonFile) throws ValidationException {
         JsonNode toImport;
         try {
             toImport = JsonLoader.fromFile(jsonFile);
@@ -141,7 +144,7 @@ public class JsonImporter {
         return extractSubstations(toImport);
     }
 
-    public static Optional<List<Substation>> from(Reader jsonReader) throws ValidationException {
+    public static Optional<SmartGrid> from(Reader jsonReader) throws ValidationException {
         JsonNode toImport;
         try {
             toImport = JsonLoader.fromReader(jsonReader);
@@ -151,7 +154,7 @@ public class JsonImporter {
         return extractSubstations(toImport);
     }
 
-    private static Optional<List<Substation>> extractSubstations(JsonNode toImport) throws ValidationException {
+    private static Optional<SmartGrid> extractSubstations(JsonNode toImport) throws ValidationException {
         if(validate(toImport)) {
             HashMap<Integer, Fuse> fuses = extractFuses(toImport);
             extractCables(toImport, fuses);
@@ -161,16 +164,19 @@ public class JsonImporter {
         }
     }
 
-    private static List<Substation> extractEntities(JsonNode toImport, HashMap<Integer, Fuse> fuses) {
+    private static SmartGrid extractEntities(JsonNode toImport, HashMap<Integer, Fuse> fuses) {
         var entitiesNodes = (ArrayNode) toImport.get(ENTITIES);
-        final var listSubstations = new ArrayList<Substation>(entitiesNodes.size());
+//        final var listSubstations = new ArrayList<Substation>(entitiesNodes.size());
+        var sg = new SmartGrid();
+
         entitiesNodes.forEach(entityNode -> {
             var type = entityNode.get(ENT_TYPE).asText();
             var name = entityNode.get(ENT_NAME).asText();
             Entity entity;
             if(type.equalsIgnoreCase("substation")) {
                 entity = new Substation(name);
-                listSubstations.add((Substation) entity);
+//                listSubstations.add((Substation) entity);
+                sg.addSubstations((Substation) entity);
             } else {
                 entity = new Cabinet(name);
             }
@@ -185,8 +191,8 @@ public class JsonImporter {
 
         });
 
-
-        return listSubstations;
+//        return listSubstations;
+        return sg;
     }
 
     private static HashMap<Integer, Fuse> extractFuses(JsonNode toImport) {
@@ -200,16 +206,22 @@ public class JsonImporter {
             if(stateNode != null) {
                 if (!stateNode.get(FUSE_STATE_STATUS).asText().equalsIgnoreCase("closed")) {
                     fuse.openFuse();
+                    fuse.getStatus().setConfIsOpen(stateNode.get(FUSE_STATE_CONF).asDouble());
+                } else {
+                    fuse.getStatus().setConfIsClosed(stateNode.get(FUSE_STATE_CONF).asDouble());
                 }
-                fuse.getStatus().setConfAsProb(stateNode.get(FUSE_STATE_CONF).asDouble());
 
             }
 
             var loads = (ArrayNode) fuseNode.get(FUSE_LOAD);
             if(loads != null) {
-                var uLoad = new HashMap<Double, Double>(loads.size());
+                final var uLoad = new MultDblePossibilities();
                 loads.forEach(loadNode -> {
-                    uLoad.put(loadNode.get(FUSE_LOAD_VAL).asDouble(), loadNode.get(FUSE_LOAD_CONF).asDouble());
+                    var possibility = new PossibilityDouble(
+                            loadNode.get(FUSE_LOAD_VAL).asDouble(),
+                            loadNode.get(FUSE_LOAD_CONF).asDouble()
+                    );
+                    uLoad.addOrReplace(possibility);
                 });
                 fuse.setLoad(uLoad);
             }

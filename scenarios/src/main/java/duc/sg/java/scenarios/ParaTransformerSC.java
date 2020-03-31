@@ -27,6 +27,11 @@ public final class ParaTransformerSC extends Scenario {
     }
 
     @Override
+    public String substationName() {
+        return SUBSTATION_NAME;
+    }
+
+    @Override
     public Fuse[] extractFuses() {
         var substation = grid.getSubstation(SUBSTATION_NAME).get();
 

@@ -8,6 +8,7 @@ public final class ScenarioBuilder {
     private ScenarioName name;
     private State[] fuseState;
     private  double[] consumptions;
+    private SmartGrid toWrap;
 
     public ScenarioBuilder chooseScenario(ScenarioName name) {
         this.name = name;
@@ -32,9 +33,25 @@ public final class ScenarioBuilder {
         return this;
     }
 
+    public ScenarioBuilder wrap(SmartGrid grid) {
+        this.toWrap = grid;
+        return this;
+    }
+
     public Scenario build() {
         if(name == null) {
             throw new BuilderException("Scenario to build has not been defined.");
+        }
+
+        if(toWrap != null) {
+            switch (name) {
+                case SINGLE_CABLE: return new SingleCableSC(toWrap);
+                case CABINET: return new CabinetSC(toWrap);
+                case INDIRECT_PARALLEL: return new IndirectParaSC(toWrap);
+                case PARA_CABINET: return new ParaCabinetSC(toWrap);
+                case PARA_TRANSFORMER: return new ParaTransformerSC(toWrap);
+                default: throw new BuilderException("Builder for " + name + "has not been implemented yet.");
+            }
         }
 
         switch (name) {

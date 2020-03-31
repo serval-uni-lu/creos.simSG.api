@@ -12,5 +12,23 @@
 
     <artifactId>importer.json</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.github.java-json-tools</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>2.2.13</version>
+        </dependency>
+        <dependency>
+            <groupId>duc.sg.java</groupId>
+            <artifactId>model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>duc.sg.java</groupId>
+            <artifactId>scenarios</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
 
 </project>
