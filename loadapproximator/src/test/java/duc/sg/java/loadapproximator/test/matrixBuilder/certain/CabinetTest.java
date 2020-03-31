@@ -19,7 +19,7 @@ public class CabinetTest extends MatrixBuilderTest {
                 .build()
                 .getGrid()
                 .getSubstation(CabinetSC.SUBSTATION_NAME)
-                .get();;
+                .get();
     }
 
     private static Arguments[] openCloseF5F6() {

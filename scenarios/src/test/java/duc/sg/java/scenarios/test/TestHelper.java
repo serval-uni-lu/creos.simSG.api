@@ -14,7 +14,7 @@ public class TestHelper {
         Arguments[] res = new Arguments[NB_TESTS];
 
         for (int i = 0; i < res.length; i++) {
-            res[i] = Arguments.of((Object) random_double(size));
+            res[i] = Arguments.of(random_double(size));
         }
 
         return res;

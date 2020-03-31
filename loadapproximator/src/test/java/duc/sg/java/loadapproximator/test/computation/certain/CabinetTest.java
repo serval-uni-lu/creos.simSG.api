@@ -20,7 +20,7 @@ public class CabinetTest extends LoadApproximatorTest {
                 .build()
                 .getGrid()
                 .getSubstation(CabinetSC.SUBSTATION_NAME)
-                .get();;
+                .get();
     }
 
     @Override

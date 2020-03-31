@@ -12,7 +12,7 @@ public class ConfidenceDataGenerator {
     public static Arguments[] generateWrongProb() {
         var args = new Arguments[NB_TESTS];
 
-        var half = (int)(NB_TESTS/2);
+        var half = NB_TESTS/2;
         for (int i = 0; i <half; i++) {
             args[i] = Arguments.of(RANDOM.nextDouble() - 1);
         }

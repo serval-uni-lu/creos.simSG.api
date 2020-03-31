@@ -32,8 +32,8 @@ public class TestHelper {
             }
 
             args[iPoss] = Arguments.of(
-                    (Object) uFusesNames.toArray(new String[0]),
-                    (Object) uFusesOpen.toArray(new String[0])
+                    uFusesNames.toArray(new String[0]),
+                    uFusesOpen.toArray(new String[0])
             );
 
         }
@@ -61,8 +61,8 @@ public class TestHelper {
 
             for (int j = 0; j < NB_TESTS; j++) {
                 args[i* NB_TESTS + j] = Arguments.of(
-                        (Object) fuseNames.toArray(new String[0]),
-                        (Object) randomDouble(nbCable));
+                        fuseNames.toArray(new String[0]),
+                        randomDouble(nbCable));
             }
 
 
@@ -75,7 +75,7 @@ public class TestHelper {
         Arguments[] res = new Arguments[NB_TESTS];
 
         for (int i = 0; i < res.length; i++) {
-            res[i] = Arguments.of((Object[]) randomDouble(nb));
+            res[i] = Arguments.of(randomDouble(nb));
         }
 
         return res;
