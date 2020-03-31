@@ -1,7 +1,6 @@
 package duc.sg.java.loadapproximator.test.matrixBuilder.certain;
 
-import duc.sg.java.loadapproximator.test.generator.Data;
-import duc.sg.java.loadapproximator.test.generator.Utils;
+import duc.sg.java.loadapproximator.test.TestHelper;
 import duc.sg.java.scenarios.ParaTransformerSC;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
@@ -25,27 +24,27 @@ public class ParaTransformerTest extends MatrixBuilderTest {
     }
 
     private static Arguments[] openCloseF6() {
-        return Data.generateAllPossibilities(F6_NAME);
+        return TestHelper.generateAllPossibilities(F6_NAME);
     }
 
     private static Arguments[] openCloseF2F6() {
-        return Data.generateAllPossibilities(F2_NAME, F6_NAME);
+        return TestHelper.generateAllPossibilities(F2_NAME, F6_NAME);
     }
 
     private static Arguments[] openCloseF5F6() {
-        return Data.generateAllPossibilities(F5_NAME, F6_NAME);
+        return TestHelper.generateAllPossibilities(F5_NAME, F6_NAME);
     }
 
     private static Arguments[] openCloseF4F5F6() {
-        return Data.generateAllPossibilities(F4_NAME, F5_NAME, F6_NAME);
+        return TestHelper.generateAllPossibilities(F4_NAME, F5_NAME, F6_NAME);
     }
 
     private static Arguments[] openCloseF2F5F6() {
-        return Data.generateAllPossibilities(F2_NAME, F5_NAME, F6_NAME);
+        return TestHelper.generateAllPossibilities(F2_NAME, F5_NAME, F6_NAME);
     }
 
     private static Arguments[] openCloseF2F4F5F6() {
-        return Data.generateAllPossibilities(F2_NAME, F4_NAME, F5_NAME, F6_NAME);
+        return TestHelper.generateAllPossibilities(F2_NAME, F4_NAME, F5_NAME, F6_NAME);
     }
 
 
@@ -69,7 +68,7 @@ public class ParaTransformerTest extends MatrixBuilderTest {
                 1, 0,
                 0, 1
         };
-        genericTest(expected, Utils.merge(toOpen, F4_NAME, F5_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F4_NAME, F5_NAME));
 
     }
 
@@ -82,7 +81,7 @@ public class ParaTransformerTest extends MatrixBuilderTest {
                 0, 0, 0, 1,
                 0, 1, 0, 1
         };
-        genericTest(expected, Utils.merge(toOpen, F4_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F4_NAME));
     }
 
     @ParameterizedTest
@@ -95,7 +94,7 @@ public class ParaTransformerTest extends MatrixBuilderTest {
                 0, 1, 1, 1,
         };
 
-        genericTest(expected, Utils.merge(toOpen, F3_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F3_NAME));
     }
 
     @ParameterizedTest
@@ -107,14 +106,14 @@ public class ParaTransformerTest extends MatrixBuilderTest {
                 0, 1, 1,
         };
 
-        genericTest(expected, Utils.merge(toOpen, F3_NAME, F5_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F3_NAME, F5_NAME));
     }
 
     @ParameterizedTest
     @MethodSource("openCloseF2F6")
     public void sc6_testF3F4F5Open(String[] toOpen) {
         var expected = new double[]{1};
-        genericTest(expected, Utils.merge(toOpen, F3_NAME, F4_NAME, F5_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F3_NAME, F4_NAME, F5_NAME));
     }
 
     @ParameterizedTest
@@ -126,7 +125,7 @@ public class ParaTransformerTest extends MatrixBuilderTest {
                 0, 0, 0, 1,
                 0, 0, 1, 1,
         };
-        genericTest(expected, Utils.merge(toOpen, F2_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F2_NAME));
     }
 
     @ParameterizedTest
@@ -136,7 +135,7 @@ public class ParaTransformerTest extends MatrixBuilderTest {
                 1, 0,
                 0, 1,
         };
-        genericTest(expected, Utils.merge(toOpen, F2_NAME, F5_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F2_NAME, F5_NAME));
     }
 
     @ParameterizedTest
@@ -146,14 +145,14 @@ public class ParaTransformerTest extends MatrixBuilderTest {
                 1, 0,
                 0, 1,
         };
-        genericTest(expected, Utils.merge(toOpen, F2_NAME, F4_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F2_NAME, F4_NAME));
     }
 
     @ParameterizedTest
     @MethodSource("openCloseF4F5F6")
     public void sc10_testF2F3Open(String[] toOpen) {
         var expected = new double[]{1};
-        genericTest(expected, Utils.merge(toOpen, F2_NAME, F3_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F2_NAME, F3_NAME));
     }
 
     @ParameterizedTest
@@ -166,7 +165,7 @@ public class ParaTransformerTest extends MatrixBuilderTest {
                 0, 1, 1, 1,
         };
 
-        genericTest(expected, Utils.merge(toOpen, F1_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F1_NAME));
     }
 
     @ParameterizedTest
@@ -178,21 +177,21 @@ public class ParaTransformerTest extends MatrixBuilderTest {
                 0, 1, 1,
         };
 
-        genericTest(expected, Utils.merge(toOpen, F1_NAME, F5_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F1_NAME, F5_NAME));
     }
 
     @ParameterizedTest
     @MethodSource("openCloseF2F5F6")
     public void sc13_testF1F4Open(String[] toOpen) {
         var expected = new double[]{1};
-        genericTest(expected, Utils.merge(toOpen, F1_NAME, F4_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F1_NAME, F4_NAME));
     }
 
     @ParameterizedTest
     @MethodSource("openCloseF2F4F5F6")
     public void sc14_testF1F3Open(String[] toOpen) {
         var expected = new double[]{0};
-        genericTest(expected, Utils.merge(toOpen, F1_NAME, F3_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F1_NAME, F3_NAME));
     }
 
     @ParameterizedTest
@@ -204,7 +203,7 @@ public class ParaTransformerTest extends MatrixBuilderTest {
                 0, 1, 1,
         };
 
-        genericTest(expected, Utils.merge(toOpen, F1_NAME, F2_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F1_NAME, F2_NAME));
     }
 
 
@@ -212,7 +211,7 @@ public class ParaTransformerTest extends MatrixBuilderTest {
     @MethodSource("openCloseF6")
     public void sc16_testF1F2F5Open(String[] toOpen) {
         var expected = new double[]{1};
-        genericTest(expected, Utils.merge(toOpen, F1_NAME, F2_NAME, F5_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F1_NAME, F2_NAME, F5_NAME));
     }
 
     @ParameterizedTest
@@ -224,7 +223,7 @@ public class ParaTransformerTest extends MatrixBuilderTest {
                 0, 1, 0, 1,
                 1, 0, -1, 0
         };
-        genericTest(expected, Utils.merge(toOpen, F5_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F5_NAME));
     }
 
 

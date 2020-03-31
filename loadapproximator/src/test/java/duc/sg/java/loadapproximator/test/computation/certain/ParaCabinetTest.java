@@ -1,7 +1,6 @@
 package duc.sg.java.loadapproximator.test.computation.certain;
 
-import duc.sg.java.loadapproximator.test.generator.Data;
-import duc.sg.java.loadapproximator.test.generator.Utils;
+import duc.sg.java.loadapproximator.test.TestHelper;
 import duc.sg.java.scenarios.ParaCabinetSC;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
@@ -35,35 +34,35 @@ public class ParaCabinetTest extends LoadApproximatorTest {
 
 
     private static Arguments[] openCloseF8() {
-        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F8_NAME);
+        return TestHelper.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F8_NAME);
     }
 
     private static Arguments[] openCloseF2F3F4F5F6F7F8() {
-        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F2_NAME, ParaCabinetSC.F3_NAME, ParaCabinetSC.F4_NAME, ParaCabinetSC.F5_NAME, ParaCabinetSC.F6_NAME, ParaCabinetSC.F7_NAME, ParaCabinetSC.F8_NAME);
+        return TestHelper.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F2_NAME, ParaCabinetSC.F3_NAME, ParaCabinetSC.F4_NAME, ParaCabinetSC.F5_NAME, ParaCabinetSC.F6_NAME, ParaCabinetSC.F7_NAME, ParaCabinetSC.F8_NAME);
     }
 
     private static Arguments[] openCloseF3F4F5F6F7F8() {
-        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F3_NAME, ParaCabinetSC.F4_NAME, ParaCabinetSC.F5_NAME, ParaCabinetSC.F6_NAME, ParaCabinetSC.F7_NAME, ParaCabinetSC.F8_NAME);
+        return TestHelper.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F3_NAME, ParaCabinetSC.F4_NAME, ParaCabinetSC.F5_NAME, ParaCabinetSC.F6_NAME, ParaCabinetSC.F7_NAME, ParaCabinetSC.F8_NAME);
     }
 
     private static Arguments[] openCloseF4F7F8() {
-        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F4_NAME, ParaCabinetSC.F7_NAME, ParaCabinetSC.F8_NAME);
+        return TestHelper.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F4_NAME, ParaCabinetSC.F7_NAME, ParaCabinetSC.F8_NAME);
     }
 
     private static Arguments[] openCloseF4F6F7F8() {
-        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F4_NAME, ParaCabinetSC.F6_NAME, ParaCabinetSC.F7_NAME, ParaCabinetSC.F8_NAME);
+        return TestHelper.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F4_NAME, ParaCabinetSC.F6_NAME, ParaCabinetSC.F7_NAME, ParaCabinetSC.F8_NAME);
     }
 
     private static Arguments[] openCloseF6F7F8() {
-        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F6_NAME, ParaCabinetSC.F7_NAME, ParaCabinetSC.F8_NAME);
+        return TestHelper.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F6_NAME, ParaCabinetSC.F7_NAME, ParaCabinetSC.F8_NAME);
     }
 
     private static Arguments[] openCloseF7F8() {
-        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F7_NAME, ParaCabinetSC.F8_NAME);
+        return TestHelper.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F7_NAME, ParaCabinetSC.F8_NAME);
     }
 
     private static Arguments[] openCloseF4F8() {
-        return Data.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F4_NAME, ParaCabinetSC.F8_NAME);
+        return TestHelper.generateAllPossibilitiesWithValues(4, ParaCabinetSC.F4_NAME, ParaCabinetSC.F8_NAME);
     }
 
 
@@ -96,7 +95,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
     public void sc2_f1Open(String[] toOpen, Double[] consumptions) {
         var expectedCables = new double[] {0,0,0,0};
         var expectedFuses = new double[] {0,0,0,0,0,0,0,0};
-        genericTest(Utils.merge(toOpen, F1_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(TestHelper.merge(toOpen, F1_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -104,7 +103,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
     public void sc3_f2Open(String[] toOpen, Double[] consumptions) {
         var expectedCables = new double[] {consumptions[0],0,0,0};
         var expectedFuses = new double[] {consumptions[0],0,0,0,0,0,0,0};
-        genericTest(Utils.merge(toOpen, F2_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(TestHelper.merge(toOpen, F2_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -112,7 +111,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
     public void sc4_f3f5Open(String[] toOpen, Double[] consumptions) {
         var expectedCables = new double[] {consumptions[0],0,0,0};
         var expectedFuses = new double[] {consumptions[0],0,0,0,0,0,0,0};
-        genericTest(Utils.merge(toOpen, F3_NAME, F5_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(TestHelper.merge(toOpen, F3_NAME, F5_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -133,7 +132,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 0,
                 0,
                 0};
-        genericTest(Utils.merge(toOpen, F4_NAME, F6_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(TestHelper.merge(toOpen, F4_NAME, F6_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -158,7 +157,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 Math.max(expectedFuses[4], expectedFuses[5]),
                 0
         };
-        genericTest(Utils.merge(toOpen, F7_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(TestHelper.merge(toOpen, F7_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -182,7 +181,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 consumptions[3],
                 0
         };
-        genericTest(Utils.merge(toOpen, F6_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(TestHelper.merge(toOpen, F6_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -206,7 +205,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 0,
                 0
         };
-        genericTest(Utils.merge(toOpen, F6_NAME, F7_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(TestHelper.merge(toOpen, F6_NAME, F7_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -230,7 +229,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 consumptions[3],
                 0
         };
-        genericTest(Utils.merge(toOpen, F5_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(TestHelper.merge(toOpen, F5_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -254,7 +253,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 0,
                 0
         };
-        genericTest(Utils.merge(toOpen, F5_NAME, F7_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(TestHelper.merge(toOpen, F5_NAME, F7_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -277,7 +276,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 consumptions[3],
                 0
         };
-        genericTest(Utils.merge(toOpen, F5_NAME, F6_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(TestHelper.merge(toOpen, F5_NAME, F6_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -300,7 +299,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 0,
                 0
         };
-        genericTest(Utils.merge(toOpen, F5_NAME, F6_NAME, F7_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(TestHelper.merge(toOpen, F5_NAME, F6_NAME, F7_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -323,7 +322,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 consumptions[3],
                 0
         };
-        genericTest(Utils.merge(toOpen, F4_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(TestHelper.merge(toOpen, F4_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -346,7 +345,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 0,
                 0
         };
-        genericTest(Utils.merge(toOpen, F5_NAME, F4_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(TestHelper.merge(toOpen, F5_NAME, F4_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -369,7 +368,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 0,
                 0
         };
-        genericTest(Utils.merge(toOpen, F3_NAME, F6_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(TestHelper.merge(toOpen, F3_NAME, F6_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -393,7 +392,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 0
 
         };
-        genericTest(Utils.merge(toOpen, F3_NAME, F7_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(TestHelper.merge(toOpen, F3_NAME, F7_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -417,7 +416,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 0
 
         };
-        genericTest(Utils.merge(toOpen, F3_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(TestHelper.merge(toOpen, F3_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -440,7 +439,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 consumptions[3],
                 0
         };
-        genericTest(Utils.merge(toOpen, F3_NAME, F4_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(TestHelper.merge(toOpen, F3_NAME, F4_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
@@ -463,7 +462,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 0,
                 0
         };
-        genericTest(Utils.merge(toOpen, F3_NAME, F4_NAME, F7_NAME), consumptions, expectedCables, expectedFuses);
+        genericTest(TestHelper.merge(toOpen, F3_NAME, F4_NAME, F7_NAME), consumptions, expectedCables, expectedFuses);
     }
 
 

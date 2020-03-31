@@ -1,6 +1,6 @@
 package duc.sg.java.loadapproximator.test.matrixBuilder.certain;
 
-import duc.sg.java.loadapproximator.test.generator.Data;
+import duc.sg.java.loadapproximator.test.TestHelper;
 import duc.sg.java.scenarios.IndirectParaSC;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
@@ -20,7 +20,7 @@ public class IndirectParaTest extends MatrixBuilderTest {
     }
 
     private static Arguments[] openCloseF6F10() {
-        return Data.generateAllPossibilities(IndirectParaSC.F6_NAME, IndirectParaSC.F10_NAME);
+        return TestHelper.generateAllPossibilities(IndirectParaSC.F6_NAME, IndirectParaSC.F10_NAME);
     }
 
     @ParameterizedTest

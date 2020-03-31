@@ -1,7 +1,7 @@
 package duc.sg.java.loadapproximator.test.computation.certain;
 
 import duc.sg.java.loadapproximator.loadapproximation.LoadApproximator;
-import duc.sg.java.loadapproximator.test.generator.Data;
+import duc.sg.java.loadapproximator.test.TestHelper;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Meter;
@@ -25,7 +25,7 @@ public class SingleCableTest {
 
 
     private static Arguments[] threeValues() {
-        return Data.generateRandomDoubles(3);
+        return TestHelper.generateRandomDoubles(3);
     }
 
 

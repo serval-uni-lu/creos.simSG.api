@@ -1,6 +1,6 @@
 package duc.sg.java.loadapproximator.test.matrixBuilder.uncertain;
 
-import duc.sg.java.loadapproximator.test.generator.Data;
+import duc.sg.java.loadapproximator.test.TestHelper;
 import duc.sg.java.loadapproximator.utils.BaseTransform;
 import duc.sg.java.model.Substation;
 import duc.sg.java.scenarios.ScenarioBuilder;
@@ -36,7 +36,7 @@ public class CabinetTest extends UncertainMatrixBuilderTest {
     }
 
     private static Arguments[] uncertain() {
-        return Data.allUncertainAndOpenPossibilities(F1_NAME, F2_NAME, F3_NAME, F4_NAME, F5_NAME, F6_NAME);
+        return TestHelper.allUncertainAndOpenPossibilities(F1_NAME, F2_NAME, F3_NAME, F4_NAME, F5_NAME, F6_NAME);
     }
 
     Possibility getScenario(boolean[] closedFused) {

@@ -1,6 +1,6 @@
 package duc.sg.java.loadapproximator.test.computation.certain;
 
-import duc.sg.java.loadapproximator.test.generator.Data;
+import duc.sg.java.loadapproximator.test.TestHelper;
 import duc.sg.java.scenarios.IndirectParaSC;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
@@ -33,7 +33,7 @@ public class IndirectParaTest extends LoadApproximatorTest {
     }
 
     private static Arguments[] openCloseF6F10() {
-        return Data.generateAllPossibilitiesWithValues(5, F6_NAME, F10_NAME);
+        return TestHelper.generateAllPossibilitiesWithValues(5, F6_NAME, F10_NAME);
     }
 
     @ParameterizedTest

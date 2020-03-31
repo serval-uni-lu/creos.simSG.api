@@ -1,7 +1,6 @@
 package duc.sg.java.loadapproximator.test.matrixBuilder.certain;
 
-import duc.sg.java.loadapproximator.test.generator.Data;
-import duc.sg.java.loadapproximator.test.generator.Utils;
+import duc.sg.java.loadapproximator.test.TestHelper;
 import duc.sg.java.scenarios.CabinetSC;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
@@ -24,15 +23,15 @@ public class CabinetTest extends MatrixBuilderTest {
     }
 
     private static Arguments[] openCloseF5F6() {
-        return Data.generateAllPossibilities(F5_NAME, F6_NAME);
+        return TestHelper.generateAllPossibilities(F5_NAME, F6_NAME);
     }
 
     private static Arguments[] openCloseF3F4F5F6() {
-        return Data.generateAllPossibilities(F3_NAME, F4_NAME, F5_NAME, F6_NAME);
+        return TestHelper.generateAllPossibilities(F3_NAME, F4_NAME, F5_NAME, F6_NAME);
     }
 
     private static Arguments[] openCloseOthers() {
-        return Data.generateAllPossibilities(F2_NAME, F3_NAME, F4_NAME, F5_NAME, F6_NAME);
+        return TestHelper.generateAllPossibilities(F2_NAME, F3_NAME, F4_NAME, F5_NAME, F6_NAME);
     }
 
 
@@ -57,7 +56,7 @@ public class CabinetTest extends MatrixBuilderTest {
                 0,0,1,
                 0,1,1,
         };
-        genericTest(expected, Utils.merge(toOpen, F4_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F4_NAME));
     }
 
     @ParameterizedTest
@@ -68,28 +67,28 @@ public class CabinetTest extends MatrixBuilderTest {
                 0,0,1,
                 0,1,1,
         };
-        genericTest(expected, Utils.merge(toOpen, F3_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F3_NAME));
     }
 
     @ParameterizedTest
     @MethodSource("openCloseF5F6")
     public void sc4_testF3F4Open(String[] toOpen) {
         var expected = new double[] {1};
-        genericTest(expected, Utils.merge(toOpen, F3_NAME, F4_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F3_NAME, F4_NAME));
     }
 
     @ParameterizedTest
     @MethodSource("openCloseF3F4F5F6")
     public void sc5_testF2Open(String[] toOpen) {
         var expected = new double[] {1};
-        genericTest(expected, Utils.merge(toOpen, F2_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F2_NAME));
     }
 
     @ParameterizedTest
     @MethodSource("openCloseOthers")
     public void sc6_testF1Open(String[] toOpen) {
         var expected = new double[] {0};
-        genericTest(expected, Utils.merge(toOpen, F1_NAME));
+        genericTest(expected, TestHelper.merge(toOpen, F1_NAME));
     }
 
 
