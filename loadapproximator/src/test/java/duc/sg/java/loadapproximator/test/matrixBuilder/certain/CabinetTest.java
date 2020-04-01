@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import static duc.sg.java.scenarios.CabinetSC.*;
 
-public class CabinetTest extends MatrixBuilderTest {
+public class  CabinetTest extends MatrixBuilderTest {
 
     @Override
     protected void createSubstation() {
