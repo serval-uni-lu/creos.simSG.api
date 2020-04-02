@@ -72,6 +72,7 @@ public class Fuse {
         if(uload == null) {
             var dft = new MultDblePossibilities();
             dft.addOrReplace(new PossibilityDouble(0, Confidence.MAX_PROBABILITY));
+            return dft;
         }
         return uload;
     }
