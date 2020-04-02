@@ -17,7 +17,7 @@ class UMathDataGenerator {
     }
 
     private static Confidence randConfidence() {
-        return new Confidence(RANDOM.nextDouble() * 0.5);
+        return new Confidence(RANDOM.nextDouble() * 0.5 + Confidence.PRECISION);
     }
 
     public static Arguments[] generateConfAndData() {
@@ -25,7 +25,10 @@ class UMathDataGenerator {
         for (int i = 0; i < res.length; i++) {
             Confidence a = randConfidence();
             Confidence b = randConfidence();
-            res[i] = Arguments.of(a, b, a.getProbability() * b.getProbability());
+            double expected = a.getProbability() * b.getProbability();
+            if(Math.abs(expected - Confidence.MIN_PROBABILITY) <= Confidence.PRECISION) expected = Confidence.MIN_PROBABILITY;
+            else if(Math.abs(expected - Confidence.MAX_PROBABILITY) <= Confidence.PRECISION) expected = Confidence.MAX_PROBABILITY;
+            res[i] = Arguments.of(a, b, expected);
         }
 
         return res;

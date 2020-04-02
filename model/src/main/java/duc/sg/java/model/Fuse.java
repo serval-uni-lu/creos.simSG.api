@@ -19,8 +19,7 @@ public class Fuse {
     public Fuse(String name, State state) {
         this.name = name;
         status = new Status(state, 1.);
-        uload = new MultDblePossibilities();
-        uload.addOrReplace(new PossibilityDouble(0., Confidence.MAX_PROBABILITY));
+        resetULoad();
     }
 
 
@@ -78,9 +77,17 @@ public class Fuse {
         this.uload = uload;
     }
 
+    public void resetULoad() {
+        uload = new MultDblePossibilities();
+        uload.addOrReplace(new PossibilityDouble(0., Confidence.MAX_PROBABILITY));
+    }
+
+
     public Status getStatus() {
         return status;
     }
+
+
 
     @Override
     public int hashCode() {
@@ -105,7 +112,6 @@ public class Fuse {
                 ", state=" + status +
                 ")";
     }
-
 
 }
 
