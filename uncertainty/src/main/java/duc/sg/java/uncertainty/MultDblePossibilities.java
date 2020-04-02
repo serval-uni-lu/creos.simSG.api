@@ -71,4 +71,16 @@ public class MultDblePossibilities implements Iterable<PossibilityDouble> {
         return possibilities.spliterator();
     }
 
+    public Map<Category, Double> format() {
+        Map<Category, Double> values = new EnumMap<>(Category.class);
+
+        possibilities.forEach((PossibilityDouble poss) -> {
+            Category category = Category.probToCategory(poss.getConfidence().getProbability());
+            values.compute(category, (key, current) -> {
+                double toAdd = poss.getValue() * poss.getConfidence().probability;
+                return current == null ? toAdd : current + toAdd;
+            });
+        });
+        return values;
+    }
 }

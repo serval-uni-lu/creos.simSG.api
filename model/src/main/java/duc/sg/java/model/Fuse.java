@@ -1,8 +1,11 @@
 package duc.sg.java.model;
 
+import duc.sg.java.uncertainty.Category;
 import duc.sg.java.uncertainty.Confidence;
 import duc.sg.java.uncertainty.MultDblePossibilities;
 import duc.sg.java.uncertainty.PossibilityDouble;
+
+import java.util.Map;
 
 public class Fuse {
     private String name;
@@ -75,6 +78,15 @@ public class Fuse {
             return dft;
         }
         return uload;
+    }
+
+    public Map<Category, Double> formattedULoad() {
+        if(uload == null) {
+            var dft = new MultDblePossibilities();
+            dft.addOrReplace(new PossibilityDouble(0, Confidence.MAX_PROBABILITY));
+            return dft.format();
+        }
+        return uload.format();
     }
 
     public void setLoad(MultDblePossibilities uload) {
