@@ -4,7 +4,6 @@ import duc.sg.java.loadapproximator.loadapproximation.matrix.UncertainFuseStates
 import duc.sg.java.loadapproximator.loadapproximation.matrix.UncertainMatrixBuilder;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
-import duc.sg.java.uncertainty.Confidence;
 import duc.sg.java.uncertainty.PossibilityDouble;
 import org.ejml.alg.dense.linsol.svd.SolvePseudoInverseSvd;
 import org.ejml.data.DenseMatrix64F;
@@ -44,14 +43,6 @@ public class UncertainLoadApproximator {
 
                 var newPoss = new PossibilityDouble(solData[i], usfm.getConfidence());
                 current.getUncertainLoad().add(newPoss);
-
-                var zeroPoss = new PossibilityDouble(0, Confidence.MAX_PROBABILITY);
-                current.getUncertainLoad().compute(zeroPoss, currentZero ->
-                        new PossibilityDouble(
-                                0,
-                                currentZero.getConfidence().getProbability() - newPoss.getConfidence().getProbability()
-                        ));
-
             }
         }
 

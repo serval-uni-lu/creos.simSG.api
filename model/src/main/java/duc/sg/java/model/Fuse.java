@@ -19,7 +19,6 @@ public class Fuse {
     public Fuse(String name, State state) {
         this.name = name;
         status = new Status(state, 1.);
-        resetULoad();
     }
 
 
@@ -70,6 +69,10 @@ public class Fuse {
     }
 
     public MultDblePossibilities getUncertainLoad() {
+        if(uload == null) {
+            var dft = new MultDblePossibilities();
+            dft.addOrReplace(new PossibilityDouble(0, Confidence.MAX_PROBABILITY));
+        }
         return uload;
     }
 
@@ -78,8 +81,7 @@ public class Fuse {
     }
 
     public void resetULoad() {
-        uload = new MultDblePossibilities();
-        uload.addOrReplace(new PossibilityDouble(0., Confidence.MAX_PROBABILITY));
+        uload = null;
     }
 
 
