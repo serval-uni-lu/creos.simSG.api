@@ -37,16 +37,8 @@ public class ScBasedJson {
         ArrayNode openFuses = (ArrayNode) toCheck.get(OPEN_FUSES_KEY);
         ArrayNode uncertainFuses = (ArrayNode) toCheck.get(UC_FUSES_KEY);
 
-        int nbFuses;
-        if(scId == 1) {
-            nbFuses = 2;
-        } else if(scId == 2 || scId == 3) {
-           nbFuses = 6;
-        } else if(scId == 4) {
-            nbFuses = 8;
-        } else if(scId == 5) {
-            nbFuses = 10;
-        } else {
+        int nbFuses =  ScenarioName.idToName(scId).getNbFuses();
+        if(nbFuses == ScenarioName.UNDEFINED.getNbFuses()) {
             return false;
         }
 
@@ -139,8 +131,6 @@ public class ScBasedJson {
 
     private static Optional<Scenario> extractSubstation(JsonNode toImport) throws ValidationException {
         if(validate(toImport)) {
-//            Substation substation;
-//            Fuse[] fuses;
             ScenarioName name;
             int nbFuses;
             switch(toImport.get(SC_ID_KEY).asInt()) {

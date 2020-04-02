@@ -36,51 +36,11 @@ public class SCBasedApprox {
         result.setActionID(request.getActionID());
         result.setExecutionID(request.getExecutionID());
 
-//        Substation substation;
-//        Fuse[] fuses;
-//        Cable[] cables;
-        ScenarioName scenarioName;
-        switch (request.getScenario()) {
-            case 1: {
-                scenarioName = ScenarioName.SINGLE_CABLE;
-//                substation = SingleCableBuilder.build(request.getFuseStatesArr(), request.getConsumptionsArr());
-//                fuses = SingleCableBuilder.extractFuses(substation);
-//                cables = SingleCableBuilder.extractCables(substation);
-                break;
-            }
-            case 2: {
-                scenarioName = ScenarioName.CABINET;
-//                substation = CabinetBuilder.build(request.getFuseStatesArr(), request.getConsumptionsArr());
-//                fuses = CabinetBuilder.extractFuses(substation);
-//                cables = CabinetBuilder.extractCables(substation);
-                break;
-            }
-            case 3: {
-                scenarioName = ScenarioName.PARA_TRANSFORMER;
-//                substation = ParaTransformerBuilder.build(request.getFuseStatesArr(), request.getConsumptionsArr());
-//                fuses = ParaTransformerBuilder.extractFuses(substation);
-//                cables = ParaTransformerBuilder.extractCables(substation);
-                break;
-            }
-            case 4: {
-                scenarioName = ScenarioName.PARA_CABINET;
-//                substation = ParaCabinetBuilder.build(request.getFuseStatesArr(), request.getConsumptionsArr());
-//                fuses = ParaCabinetBuilder.extractFuses(substation);
-//                cables = ParaCabinetBuilder.extractCables(substation);
-                break;
-            }
-            case 5: {
-                scenarioName = ScenarioName.INDIRECT_PARALLEL;
-//                substation = IndirectParaBuilder.build(request.getFuseStatesArr(), request.getConsumptionsArr());
-//                fuses = IndirectParaBuilder.extractFuses(substation);
-//                cables = IndirectParaBuilder.extractCables(substation);
-                break;
-            }
-            default: {
-                return new Error(request.getActionID(),
+        ScenarioName scenarioName = ScenarioName.idToName(request.getScenario());
+        if(scenarioName == ScenarioName.UNDEFINED) {
+            return new Error(request.getActionID(),
                         request.getExecutionID(),
                         "Scenario code " + request.getScenario() + " is not supported by the actuator.");
-            }
         }
 
         Scenario scenario = new ScenarioBuilder()
@@ -117,89 +77,11 @@ public class SCBasedApprox {
         result.setActionID(request.getActionID());
         result.setExecutionID(request.getExecutionID());
 
-//        Substation substation;
-//        Fuse[] fuses;
-//        Cable[] cables;
-//        switch (request.getScenario()) {
-//            case 1: {
-//                substation = SingleCableBuilder.build(request.getFuseStatesArr(), request.getConsumptionsArr());
-//                fuses = SingleCableBuilder.extractFuses(substation);
-//                cables = SingleCableBuilder.extractCables(substation);
-//                break;
-//            }
-//            case 2: {
-//                substation = CabinetBuilder.build(request.getFuseStatesArr(), request.getConsumptionsArr());
-//                fuses = CabinetBuilder.extractFuses(substation);
-//                cables = CabinetBuilder.extractCables(substation);
-//                break;
-//            }
-//            case 3: {
-//                substation = ParaTransformerBuilder.build(request.getFuseStatesArr(), request.getConsumptionsArr());
-//                fuses = ParaTransformerBuilder.extractFuses(substation);
-//                cables = ParaTransformerBuilder.extractCables(substation);
-//                break;
-//            }
-//            case 4: {
-//                substation = ParaCabinetBuilder.build(request.getFuseStatesArr(), request.getConsumptionsArr());
-//                fuses = ParaCabinetBuilder.extractFuses(substation);
-//                cables = ParaCabinetBuilder.extractCables(substation);
-//                break;
-//            }
-//            case 5: {
-//                substation = IndirectParaBuilder.build(request.getFuseStatesArr(), request.getConsumptionsArr());
-//                fuses = IndirectParaBuilder.extractFuses(substation);
-//                cables = IndirectParaBuilder.extractCables(substation);
-//                break;
-//            }
-//            default: {
-//                return new Error(request.getActionID(),
-//                        request.getExecutionID(),
-//                        "Scenario code " + request.getScenario() + " is not supported by the actuator.");
-//            }
-//        }
-
-        ScenarioName scenarioName;
-        switch (request.getScenario()) {
-            case 1: {
-                scenarioName = ScenarioName.SINGLE_CABLE;
-//                substation = SingleCableBuilder.build(request.getFuseStatesArr(), request.getConsumptionsArr());
-//                fuses = SingleCableBuilder.extractFuses(substation);
-//                cables = SingleCableBuilder.extractCables(substation);
-                break;
-            }
-            case 2: {
-                scenarioName = ScenarioName.CABINET;
-//                substation = CabinetBuilder.build(request.getFuseStatesArr(), request.getConsumptionsArr());
-//                fuses = CabinetBuilder.extractFuses(substation);
-//                cables = CabinetBuilder.extractCables(substation);
-                break;
-            }
-            case 3: {
-                scenarioName = ScenarioName.PARA_TRANSFORMER;
-//                substation = ParaTransformerBuilder.build(request.getFuseStatesArr(), request.getConsumptionsArr());
-//                fuses = ParaTransformerBuilder.extractFuses(substation);
-//                cables = ParaTransformerBuilder.extractCables(substation);
-                break;
-            }
-            case 4: {
-                scenarioName = ScenarioName.PARA_CABINET;
-//                substation = ParaCabinetBuilder.build(request.getFuseStatesArr(), request.getConsumptionsArr());
-//                fuses = ParaCabinetBuilder.extractFuses(substation);
-//                cables = ParaCabinetBuilder.extractCables(substation);
-                break;
-            }
-            case 5: {
-                scenarioName = ScenarioName.INDIRECT_PARALLEL;
-//                substation = IndirectParaBuilder.build(request.getFuseStatesArr(), request.getConsumptionsArr());
-//                fuses = IndirectParaBuilder.extractFuses(substation);
-//                cables = IndirectParaBuilder.extractCables(substation);
-                break;
-            }
-            default: {
-                return new Error(request.getActionID(),
-                        request.getExecutionID(),
-                        "Scenario code " + request.getScenario() + " is not supported by the actuator.");
-            }
+        ScenarioName scenarioName = ScenarioName.idToName(request.getScenario());
+        if(scenarioName == ScenarioName.UNDEFINED) {
+            return new Error(request.getActionID(),
+                    request.getExecutionID(),
+                    "Scenario code " + request.getScenario() + " is not supported by the actuator.");
         }
 
         Scenario scenario = new ScenarioBuilder()
@@ -211,7 +93,6 @@ public class SCBasedApprox {
         var fuseConf = request.getFuseConfidence();
         for (int i = 0; i < fuses.length; i++) {
             Fuse fuse = fuses[i];
-//            fuse.getStatus().setConfAsPercentage(fuseConf.get(i));
             fuse.getStatus().setConfIsClosed(fuseConf.get(i));
         }
 
@@ -224,11 +105,6 @@ public class SCBasedApprox {
             var uLoad = cable.getUncertainLoad();
             var currLoads = new ArrayList<Double>();
             var currConf = new ArrayList<Double>();
-
-//            for(var entry: uLoad.entrySet()) {
-//                currLoads.add(entry.getKey());
-//                currConf.add(entry.getValue());
-//            }
 
             for(PossibilityDouble possibility: uLoad) {
                 currLoads.add(possibility.getValue());
@@ -246,11 +122,6 @@ public class SCBasedApprox {
             var uLoad = fuse.getUncertainLoad();
             var currLoads = new ArrayList<Double>();
             var currConf = new ArrayList<Double>();
-
-//            for(var entry: uLoad.entrySet()) {
-//                currLoads.add(entry.getKey());
-//                currConf.add(entry.getValue());
-//            }
 
             for(PossibilityDouble possibility: uLoad) {
                 currLoads.add(possibility.getValue());
