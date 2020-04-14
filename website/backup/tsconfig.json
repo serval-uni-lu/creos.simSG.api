@@ -10,10 +10,12 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "baseUrl": ".",
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "baseUrl": "..",
     "types": [
-      "webpack-env",
-      "jest"
+      "webpack-env"
     ],
     "paths": {
       "@/*": [
@@ -25,12 +27,13 @@
       "dom",
       "dom.iterable",
       "scripthost"
-    ]
+    ],
+    "resolveJsonModule": true
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
+    "backup/src/**/*.ts",
+    "backup/src/**/*.tsx",
+    "backup/src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],

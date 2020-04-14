@@ -1,26 +1,12 @@
-import Vue from 'vue'
-import App from './views/App.vue'
-import router from './router'
-import store from './store'
-import WS from "./websocket"
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
 
+Vue.config.productionTip = false;
 
-Vue.config.productionTip = false
-
-let app = new Vue({
+new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#app')
-
-export { app };
-
-WS.init();
-
-
-
-
-
-
-
-
+}).$mount("#app");
