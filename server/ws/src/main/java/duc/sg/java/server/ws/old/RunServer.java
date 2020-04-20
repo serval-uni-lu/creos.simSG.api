@@ -1,4 +1,4 @@
-package duc.sg.java.server.ws;
+package duc.sg.java.server.ws.old;
 
 import io.undertow.Handlers;
 import io.undertow.Undertow;

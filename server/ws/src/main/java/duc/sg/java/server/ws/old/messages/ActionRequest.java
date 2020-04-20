@@ -1,4 +1,4 @@
-package duc.sg.java.server.ws.messages;
+package duc.sg.java.server.ws.old.messages;
 
 import java.util.ArrayList;
 import java.util.List;

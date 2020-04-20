@@ -1,4 +1,4 @@
-package duc.sg.java.server.ws.messages;
+package duc.sg.java.server.ws.old.messages;
 
 public enum MessageType {
     REQUEST_ACTION("request_action"),

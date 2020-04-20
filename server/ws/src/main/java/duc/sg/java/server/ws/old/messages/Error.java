@@ -1,4 +1,4 @@
-package duc.sg.java.server.ws.messages;
+package duc.sg.java.server.ws.old.messages;
 
 public class Error extends Message{
     private Long actionID;

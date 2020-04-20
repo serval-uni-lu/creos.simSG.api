@@ -1,4 +1,4 @@
-package duc.sg.java.server.ws.worker;
+package duc.sg.java.server.ws.old.worker;
 
 import duc.sg.java.loadapproximator.loadapproximation.LoadApproximator;
 import duc.sg.java.loadapproximator.loadapproximation.UncertainLoadApproximator;
@@ -7,10 +7,10 @@ import duc.sg.java.model.Fuse;
 import duc.sg.java.scenarios.Scenario;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
-import duc.sg.java.server.ws.messages.ActionRequest;
-import duc.sg.java.server.ws.messages.ActionResult;
-import duc.sg.java.server.ws.messages.Error;
-import duc.sg.java.server.ws.messages.Message;
+import duc.sg.java.server.ws.old.messages.ActionRequest;
+import duc.sg.java.server.ws.old.messages.ActionResult;
+import duc.sg.java.server.ws.old.messages.Error;
+import duc.sg.java.server.ws.old.messages.Message;
 import duc.sg.java.uncertainty.MultDblePossibilities;
 import duc.sg.java.uncertainty.PossibilityDouble;
 
