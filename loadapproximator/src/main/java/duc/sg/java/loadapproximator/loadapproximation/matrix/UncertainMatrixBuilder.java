@@ -1,6 +1,6 @@
 package duc.sg.java.loadapproximator.loadapproximation.matrix;
 
-import duc.sg.java.loadapproximator.utils.BaseTransform;
+import duc.sg.java.utils.BaseTransform;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
 

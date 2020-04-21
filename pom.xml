@@ -14,6 +14,7 @@
         <module>scenarios</module>
         <module>uncertainty</module>
         <module>validator/umatrix</module>
+        <module>utils</module>
     </modules>
 
     <name>DucPropagationJava</name>

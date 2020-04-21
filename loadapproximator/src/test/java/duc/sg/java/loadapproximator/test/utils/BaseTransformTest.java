@@ -1,6 +1,6 @@
 package duc.sg.java.loadapproximator.test.utils;
 
-import duc.sg.java.loadapproximator.utils.BaseTransform;
+import duc.sg.java.utils.BaseTransform;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

@@ -1,6 +1,6 @@
 package duc.sg.java.validator.umatrix;
 
-import duc.sg.java.loadapproximator.utils.BaseTransform;
+import duc.sg.java.utils.BaseTransform;
 import duc.sg.java.model.Entity;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;

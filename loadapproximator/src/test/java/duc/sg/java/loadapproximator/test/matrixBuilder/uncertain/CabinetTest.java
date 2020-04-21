@@ -1,7 +1,7 @@
 package duc.sg.java.loadapproximator.test.matrixBuilder.uncertain;
 
 import duc.sg.java.loadapproximator.test.TestHelper;
-import duc.sg.java.loadapproximator.utils.BaseTransform;
+import duc.sg.java.utils.BaseTransform;
 import duc.sg.java.model.Substation;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
