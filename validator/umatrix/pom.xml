@@ -20,7 +20,7 @@
         </dependency>
         <dependency>
             <groupId>duc.sg.java</groupId>
-            <artifactId>loadapproximator</artifactId>
+            <artifactId>utils</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
