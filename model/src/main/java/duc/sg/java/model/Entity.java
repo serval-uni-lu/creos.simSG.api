@@ -2,6 +2,7 @@ package duc.sg.java.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,22 @@ public abstract class Entity {
 
     public boolean isDeadEnd() {
         return getClosedFuses().size() <= 1;
+    }
+
+    public boolean mightBeDeadEnd() {
+        if(fuses.size() == 1) {
+            return true;
+        }
+
+        var neighbors = new HashSet<Entity>(fuses.size());
+        for(Fuse f: fuses) {
+            neighbors.add(f.getOwner());
+        }
+        return neighbors.size() == 1;
+    }
+
+    public boolean isAlwaysDeadEnd() {
+        return fuses.size() == 1;
     }
 
     @Override

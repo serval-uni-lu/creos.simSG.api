@@ -39,11 +39,14 @@ public class PossibilityMatrix {
                         idxColumns.put(fuse, ++nextIdxFuse);
 
                         Fuse oppFuse = fuse.getOpposite();
-                        idxColumns.put(oppFuse, ++nextIdxFuse);
-
-                        if(!entityVisited.contains(oppFuse.getOwner())) {
-                            waitingList.add(oppFuse.getOwner());
+                        Entity oppOwner = oppFuse.getOwner();
+                        if(!oppOwner.isAlwaysDeadEnd()) {
+                            idxColumns.put(oppFuse, ++nextIdxFuse);
+                            if(!entityVisited.contains(oppFuse.getOwner())) {
+                                waitingList.add(oppFuse.getOwner());
+                            }
                         }
+
                     }
                 }
             }
