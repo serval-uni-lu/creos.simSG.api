@@ -15,6 +15,7 @@
         <module>uncertainty</module>
         <module>validator/umatrix</module>
         <module>utils</module>
+        <module>preprocessor/powerflow</module>
     </modules>
 
     <name>DucPropagationJava</name>
