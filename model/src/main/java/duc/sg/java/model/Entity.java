@@ -47,7 +47,7 @@ public abstract class Entity {
 
         var neighbors = new HashSet<Entity>(fuses.size());
         for(Fuse f: fuses) {
-            neighbors.add(f.getOwner());
+            neighbors.add(f.getOpposite().getOwner());
         }
         return neighbors.size() == 1;
     }
