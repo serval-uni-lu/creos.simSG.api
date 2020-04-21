@@ -13,6 +13,7 @@
         <module>loadapproximator</module>
         <module>scenarios</module>
         <module>uncertainty</module>
+        <module>validator/umatrix</module>
     </modules>
 
     <name>DucPropagationJava</name>
