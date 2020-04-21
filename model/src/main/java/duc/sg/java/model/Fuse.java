@@ -123,7 +123,7 @@ public class Fuse {
     public String toString() {
         return "Fuse(" +
                 "name=" + name +
-                "uload=" + uload +
+                ", uload=" + uload +
                 ", state=" + status +
                 ")";
     }
