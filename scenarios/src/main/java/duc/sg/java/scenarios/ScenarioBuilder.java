@@ -50,6 +50,7 @@ public final class ScenarioBuilder {
                 case INDIRECT_PARALLEL: return new IndirectParaSC(toWrap);
                 case PARA_CABINET: return new ParaCabinetSC(toWrap);
                 case PARA_TRANSFORMER: return new ParaTransformerSC(toWrap);
+                case PARA_W_DEADEND: return new ParaWithDeadendSC(toWrap);
                 default: throw new BuilderException("Builder for " + name + "has not been implemented yet.");
             }
         }
@@ -60,6 +61,7 @@ public final class ScenarioBuilder {
             case INDIRECT_PARALLEL: return buildIndirectPara();
             case PARA_CABINET: return buildParaCabinet();
             case PARA_TRANSFORMER: return buildParaTransformer();
+            case PARA_W_DEADEND: return buildParaWDe();
             default: throw new BuilderException("Builder for " + name + "has not been implemented yet.");
         }
     }
@@ -180,6 +182,21 @@ public final class ScenarioBuilder {
         var grid = new SmartGrid();
         grid.addSubstations(subs);
         return new ParaTransformerSC(grid);
+    }
+
+    private ParaWithDeadendSC buildParaWDe() {
+        var pFuseState = getOrDefaultFuseStatus(ScenarioName.PARA_W_DEADEND.getNbFuses());
+        var pConsumptions = getOrDefaultConsumptions(ScenarioName.PARA_W_DEADEND.getNbFuses()/2);
+
+        var subs = new Substation(ParaWithDeadendSC.SUBSTATION_NAME);
+        var cab1 = new Cabinet(ParaWithDeadendSC.CABINET1_NAME);
+
+        createCable(ParaWithDeadendSC.F1_NAME, ParaWithDeadendSC.F2_NAME, pFuseState[0], pFuseState[1], subs, cab1, pConsumptions[0]);
+        createCable(ParaWithDeadendSC.F3_NAME, ParaWithDeadendSC.F4_NAME, pFuseState[2], pFuseState[3], subs, cab1, pConsumptions[1]);
+
+        var grid = new SmartGrid();
+        grid.addSubstations(subs);
+        return new ParaWithDeadendSC(grid);
     }
 
 

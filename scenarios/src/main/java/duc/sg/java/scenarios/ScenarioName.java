@@ -4,6 +4,7 @@ public enum ScenarioName {
     SINGLE_CABLE(2),
     CABINET(6),
     PARA_TRANSFORMER(6),
+    PARA_W_DEADEND(4),
     PARA_CABINET(8),
     INDIRECT_PARALLEL(10),
     UNDEFINED(-1);
@@ -25,6 +26,7 @@ public enum ScenarioName {
             case 3: return PARA_TRANSFORMER;
             case 4: return PARA_CABINET;
             case 5: return INDIRECT_PARALLEL;
+            case 6: return PARA_W_DEADEND;
             default: return UNDEFINED;
         }
     }
