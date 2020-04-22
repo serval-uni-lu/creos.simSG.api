@@ -13,6 +13,7 @@ public class Fuse {
     private Entity owner;
     private Status status;
     private MultDblePossibilities uload;
+    private Fuse[] getPowerFrom;
 
 
     public Fuse(String name) {
@@ -128,6 +129,13 @@ public class Fuse {
                 ")";
     }
 
+    public Fuse[] getPowerFrom() {
+        return getPowerFrom;
+    }
+
+    public void setPowerFrom(Fuse[] getPowerFrom) {
+        this.getPowerFrom = getPowerFrom;
+    }
 }
 
 
