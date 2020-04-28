@@ -1,7 +1,7 @@
 package duc.sg.java.server.ws.old.worker;
 
 import duc.sg.java.loadapproximator.loadapproximation.LoadApproximator;
-import duc.sg.java.loadapproximator.loadapproximation.UncertainLoadApproximator;
+import duc.sg.java.loadapproximator.uncertain.naive.UncertainLoadApproximator;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.scenarios.Scenario;
