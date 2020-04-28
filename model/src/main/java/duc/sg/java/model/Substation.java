@@ -1,13 +1,28 @@
 package duc.sg.java.model;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Stack;
+
+import java.util.*;
 
 public class Substation extends Entity {
+    private Collection<Fuse> allFuses;
+    private Collection<Fuse[]> cycles;
+
+
+
     public Substation(String name) {
         super(name);
+    }
+
+    public Collection<Fuse> getAllFuses() {
+        return allFuses;
+    }
+
+    public Collection<Fuse[]> getCycles() {
+        return cycles;
+    }
+
+    public void setCycles(Collection<Fuse[]> cycles) {
+        this.cycles = cycles;
     }
 
     @Override
@@ -38,6 +53,10 @@ public class Substation extends Entity {
         }
     }
 
+    public void updateAllFuses() {
+        allFuses = extractFuses();
+    }
+
     public Collection<Fuse> extractFuses() {
         final var res = new HashSet<Fuse>();
         extract(res, (collection, currentFuse) -> {
@@ -58,6 +77,8 @@ public class Substation extends Entity {
         });
         return Collections.unmodifiableCollection(res);
     }
+
+
 
     private interface Collector<T> {
         void collect(Collection<T> collection, Fuse currentFuse);

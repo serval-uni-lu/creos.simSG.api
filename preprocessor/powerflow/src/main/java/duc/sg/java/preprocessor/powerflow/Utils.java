@@ -6,10 +6,9 @@ import duc.sg.java.model.Substation;
 
 import java.util.*;
 
-public class InitPowerFlows2 {
-    private InitPowerFlows2(){}
+class Utils {
 
-    private static List<Fuse> getNeighbors(Fuse start) {
+    static List<Fuse> getNeighbors(Fuse start) {
         var res = new ArrayList<Fuse>();
 
         res.add(start.getOpposite());
@@ -22,7 +21,21 @@ public class InitPowerFlows2 {
         return res;
     }
 
-    private static boolean pathToSubs(Fuse start, Fuse origin) {
+    static boolean contain(Fuse[] src, Fuse toSearch) {
+        if(src == null || src.length == 0) {
+            return false;
+        }
+
+        for(var s: src) {
+            if(s.equals(toSearch)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    static boolean pathToSubs(Fuse start, Fuse origin) {
         var visited = new HashSet<Fuse>();
         var nbHopsEntities = new HashMap<Entity, Integer>();
 
@@ -94,44 +107,6 @@ public class InitPowerFlows2 {
         visited.remove(start);
         nbHopsEntities.compute(start.getOwner(), (Entity key, Integer currVal) -> currVal-1);
         return false;
-    }
-
-
-    public static void initPowerFlow(Substation substation) {
-        var waiting = new Stack<Fuse>();
-        var inWaitingList = new HashSet<Fuse>(); //real optimization ??
-        var visited = new HashSet<Fuse>();
-
-        waiting.add(substation.getFuses().get(0));
-
-        while (!waiting.isEmpty()) {
-            var current = waiting.pop();
-            visited.add(current);
-
-            var powerOrigins = new ArrayList<Fuse>();
-            if(!(current.getOwner() instanceof Substation)) {
-                List<Fuse> neighbors = getNeighbors(current);
-                for (var neighbor : neighbors) {
-                    if (pathToSubs(neighbor, current)) {
-                        powerOrigins.add(neighbor);
-                    }
-                }
-
-
-
-            }
-            current.setPowerFrom(powerOrigins.toArray(new Fuse[0]));
-
-
-            // next fuses to check
-            var ownerOpp = current.getOpposite().getOwner();
-            for(var f: ownerOpp.getFuses()) {
-                if(!visited.contains(f) && !inWaitingList.contains(f)) {
-                    waiting.add(f);
-                    inWaitingList.add(f);
-                }
-            }
-        }
     }
 
 }

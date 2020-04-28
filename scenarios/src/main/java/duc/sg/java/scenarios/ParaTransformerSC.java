@@ -10,12 +10,12 @@ import duc.sg.java.model.SmartGrid;
           |-[f3]----(cbl2)----[f4]-|
 */
 public final class ParaTransformerSC extends Scenario {
-    public static final  String F1_NAME = "fuse1_subs";
-    public static final  String F2_NAME = "fuse1_cabinet_1";
-    public static final  String F3_NAME = "fuse2_subs";
-    public static final  String F4_NAME = "fuse2_cabinet_1";
-    public static final  String F5_NAME = "fuse3_cabinet_1";
-    public static final  String F6_NAME = "fuse_cabinet2";
+    public static final  String F1_NAME = "i1";
+    public static final  String F2_NAME = "i2";
+    public static final  String F3_NAME = "i3";
+    public static final  String F4_NAME = "i4";
+    public static final  String F5_NAME = "i5";
+    public static final  String F6_NAME = "i6";
 
     public static final  String SUBSTATION_NAME = "Substation";
     public static final  String CABINET1_NAME = "Cabinet 1";

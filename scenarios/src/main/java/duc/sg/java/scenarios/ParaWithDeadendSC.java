@@ -9,11 +9,11 @@ import duc.sg.java.model.SmartGrid;
     subs-<                          >-c1-[f5]----(cbl3)---[f6]-c2
           |-[f3]----(cbl2)----[f4]-|
 */
-public class ParaWithDeadendSC extends Scenario {
-    public static final  String F1_NAME = "fuse1_subs";
-    public static final  String F2_NAME = "fuse1_cabinet_1";
-    public static final  String F3_NAME = "fuse2_subs";
-    public static final  String F4_NAME = "fuse2_cabinet_1";
+public final class ParaWithDeadendSC extends Scenario {
+    public static final  String F1_NAME = "i1";
+    public static final  String F2_NAME = "i2";
+    public static final  String F3_NAME = "i3";
+    public static final  String F4_NAME = "i4";
 
     public static final String SUBSTATION_NAME = "Substation";
     public static final String CABINET1_NAME = "Cabinet 1";

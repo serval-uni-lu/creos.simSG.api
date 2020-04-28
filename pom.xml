@@ -16,6 +16,7 @@
         <module>validator/umatrix</module>
         <module>utils</module>
         <module>preprocessor/powerflow</module>
+        <module>cycle/detector</module>
     </modules>
 
     <name>DucPropagationJava</name>

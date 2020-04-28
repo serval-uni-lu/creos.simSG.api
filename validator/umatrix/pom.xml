@@ -23,17 +23,24 @@
             <artifactId>utils</artifactId>
             <version>${project.version}</version>
         </dependency>
-
-
         <dependency>
             <groupId>duc.sg.java</groupId>
             <artifactId>loadapproximator</artifactId>
             <version>${project.version}</version>
         </dependency>
-
         <dependency>
             <groupId>duc.sg.java</groupId>
             <artifactId>scenarios</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>duc.sg.java</groupId>
+            <artifactId>preprocessor.powerflow</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>duc.sg.java</groupId>
+            <artifactId>detector.cycle</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

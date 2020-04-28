@@ -6,8 +6,8 @@ import duc.sg.java.model.*;
     subs-[f1]----(cbl1)----[f2]-cab
  */
 public final class SingleCableSC extends Scenario {
-    public static final String F1_NAME = "fuse_subs";
-    public static final String F2_NAME = "fuse_cabinet";
+    public static final String F1_NAME = "i1";
+    public static final String F2_NAME = "i2";
 
     public static final String SUBSTATION_NAME = "Substation";
     public static final String CABINET_NAME = "Cabinet";

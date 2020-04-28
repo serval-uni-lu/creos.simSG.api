@@ -10,12 +10,12 @@ subs-[f1]----(cbl1)----[f2]-cab1-<
                                   |-[f4]----(cbl3)----[f6]-cab3
 */
 public final class CabinetSC extends Scenario {
-    public static final String F1_NAME = "fuse_subs";
-    public static final String F2_NAME = "fuse1_cabinet_1";
-    public static final String F3_NAME = "fuse2_cabinet_1";
-    public static final String F4_NAME = "fuse3_cabinet_1";
-    public static final String F5_NAME = "fuse_cabinet2";
-    public static final String F6_NAME = "fuse_cabinet3";
+    public static final String F1_NAME = "i1";
+    public static final String F2_NAME = "i2";
+    public static final String F3_NAME = "i3";
+    public static final String F4_NAME = "i5";
+    public static final String F5_NAME = "i4";
+    public static final String F6_NAME = "i6";
 
 
     public static final String SUBSTATION_NAME = "Substation";

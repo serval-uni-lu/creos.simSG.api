@@ -14,6 +14,7 @@ public class Fuse {
     private Status status;
     private MultDblePossibilities uload;
     private Fuse[] getPowerFrom;
+    private Fuse[] givePowerTo;
 
 
     public Fuse(String name) {
@@ -22,7 +23,8 @@ public class Fuse {
 
     public Fuse(String name, State state) {
         this.name = name;
-        status = new Status(state, 1.);
+        this.status = new Status(state, 1.);
+        this.givePowerTo = new Fuse[0];
     }
 
 
@@ -135,6 +137,20 @@ public class Fuse {
 
     public void setPowerFrom(Fuse[] getPowerFrom) {
         this.getPowerFrom = getPowerFrom;
+        for(var f: this.getPowerFrom) {
+            f.addPowerDest(this);
+        }
+    }
+
+    public Fuse[] givePowerTo() {
+        return givePowerTo;
+    }
+
+    private void addPowerDest(Fuse dest) {
+        var newGPT = new Fuse[givePowerTo.length + 1];
+        System.arraycopy(givePowerTo, 0, newGPT, 0, givePowerTo.length);
+        givePowerTo = newGPT;
+        givePowerTo[givePowerTo.length - 1] = dest;
     }
 }
 

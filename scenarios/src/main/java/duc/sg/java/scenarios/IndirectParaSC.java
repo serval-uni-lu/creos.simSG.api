@@ -21,16 +21,16 @@ import duc.sg.java.model.SmartGrid;
 
  */
 public final class IndirectParaSC extends Scenario {
-    public static final String F1_NAME = "fuse1_subs";
-    public static final String F2_NAME = "fuse1_cab_2";
-    public static final String F3_NAME = "fuse2_subs";
-    public static final String F4_NAME = "fuse1_cab_1";
-    public static final String F5_NAME = "fuse2_cab_1";
-    public static final String F6_NAME = "fuse_cab_3";
-    public static final String F7_NAME = "fuse3_cab_1";
-    public static final String F8_NAME = "fuse2_cab_2";
-    public static final String F9_NAME = "fuse3_cab_2";
-    public static final String F10_NAME = "fuse_cab_4";
+    public static final String F1_NAME = "i1";
+    public static final String F2_NAME = "i2";
+    public static final String F3_NAME = "i3";
+    public static final String F4_NAME = "i4";
+    public static final String F5_NAME = "i5";
+    public static final String F6_NAME = "i6";
+    public static final String F7_NAME = "i7";
+    public static final String F8_NAME = "i8";
+    public static final String F9_NAME = "i9";
+    public static final String F10_NAME = "i10";
 
 
     public static final String SUBSTATION_NAME = "Substation";
