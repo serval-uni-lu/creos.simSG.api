@@ -3,28 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>duc.sg.java</groupId>
         <artifactId>parent</artifactId>
+        <groupId>duc.sg.java</groupId>
         <version>2020.04.0D-SNAPSHOT</version>
         <relativePath>../../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>importer.json</artifactId>
+    <artifactId>matrixbuilder.certain</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>com.github.java-json-tools</groupId>
-            <artifactId>json-schema-validator</artifactId>
-            <version>2.2.13</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.61</version>
-        </dependency>
-
         <dependency>
             <groupId>duc.sg.java</groupId>
             <artifactId>model</artifactId>
@@ -32,8 +20,15 @@
         </dependency>
         <dependency>
             <groupId>duc.sg.java</groupId>
+            <artifactId>cycle.current</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>duc.sg.java</groupId>
             <artifactId>scenarios</artifactId>
             <version>${project.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
