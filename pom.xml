@@ -8,15 +8,15 @@
     <version>2020.04.0D-SNAPSHOT</version>
     <modules>
         <module>model</module>
-        <module>importer/json</module>
+        <module>algorithms/importer/json</module>
         <module>server/ws</module>
         <module>loadapproximator</module>
         <module>scenarios</module>
         <module>uncertainty</module>
-        <module>validator/umatrix</module>
+        <module>algorithms/validator/umatrix</module>
         <module>utils</module>
-        <module>preprocessor/powerflow</module>
-        <module>cycle/detector</module>
+        <module>algorithms/powerflow</module>
+        <module>algorithms/cycle/detector</module>
     </modules>
 
     <name>DucPropagationJava</name>
