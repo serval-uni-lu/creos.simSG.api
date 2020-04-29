@@ -63,7 +63,7 @@ public class MatrixBuilder {
                         }
 
                         if(!fuseInCircles.contains(fuse)) {
-                            Fuse[] circle = new CycleDetection().getEndCircle(fuse);
+                            Fuse[] circle = CycleDetection.cycleFrom(substation, fuse);
                             if(circle.length != 0) {
                                 Collections.addAll(fuseInCircles, circle);
 
