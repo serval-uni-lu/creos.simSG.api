@@ -71,7 +71,7 @@ public class PossibilityMatrixBuilder1 {
         }
     }
 
-    private static State[] applyRules(State[] initState, Map<Fuse, Integer> idxColumns) {
+    private static State[] applyRules(Substation substation, State[] initState, Map<Fuse, Integer> idxColumns) {
         var res = new ArrayList<State>();
         int nbLines = (int) Math.pow(2, idxColumns.size());
 
@@ -127,7 +127,7 @@ public class PossibilityMatrixBuilder1 {
                 {
                     Fuse[] cycle;
                     if(!idxCycles.containsKey(currentFuse)) {
-                        cycle = new CycleDetection().getEndCircle(currentFuse);
+                        cycle = CycleDetection.cycleFrom(substation, currentFuse);
                         for (var fuseC: cycle) {
                             idxCycles.put(fuseC, cycle);
                         }
@@ -182,7 +182,7 @@ public class PossibilityMatrixBuilder1 {
     public static PossibilityMatrix build(Substation substation) {
         Map<Fuse, Integer> idxColumns = collectFuses(substation);
         State[] completeMatrix = buildMatrix(idxColumns);
-        State[] finalMatrix = applyRules(completeMatrix, idxColumns);
+        State[] finalMatrix = applyRules(substation, completeMatrix, idxColumns);
         return new PossibilityMatrix(finalMatrix, idxColumns);
     }
 

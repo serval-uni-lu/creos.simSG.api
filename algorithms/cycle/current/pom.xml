@@ -18,6 +18,16 @@
             <artifactId>model</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>duc.sg.java</groupId>
+            <artifactId>utils</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>duc.sg.java</groupId>
+            <artifactId>cycle.all</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 
