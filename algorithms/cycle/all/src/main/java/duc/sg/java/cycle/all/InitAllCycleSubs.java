@@ -16,7 +16,7 @@ public class InitAllCycleSubs {
 
         for(Fuse fuse: fuses) {
             if(!processed.contains(fuse)) {
-                Fuse[] cycle = new AllCycle().getEndCircle(fuse);
+                Fuse[] cycle = new AllCycle().circleFrom(fuse);
                 cycles.add(cycle);
                 Collections.addAll(processed, cycle);
             }

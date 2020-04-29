@@ -7,9 +7,9 @@ import java.util.*;
 
 public class AllCycle {
     private int lastIndex = 0;
-    private Deque<Fuse> circle;
-    private Map<Fuse, Integer> idxMap;
-    private Map<Fuse, Integer> lowLinkMap;
+    private final Deque<Fuse> circle;
+    private final Map<Fuse, Integer> idxMap;
+    private final Map<Fuse, Integer> lowLinkMap;
     private Entity beginningEntity;
 
 
@@ -19,7 +19,7 @@ public class AllCycle {
         lowLinkMap = new HashMap<>();
     }
 
-    public Fuse[] getEndCircle(Fuse start) {
+    public Fuse[] circleFrom(Fuse start) {
         Fuse oppStart = start.getOpposite();
         if(beginningEntity == null) {
             beginningEntity = start.getOwner();
@@ -35,16 +35,14 @@ public class AllCycle {
         lastIndex++;
         circle.push(oppStart);
 
-        if(oppStart.isClosed()) {
-            var owner = oppStart.getOwner();
-            if(!owner.isAlwaysDeadEnd()) {
-                for (var f : owner.getFuses()) {
-                    if (!idxMap.containsKey(f) && !owner.equals(beginningEntity)) {
-                        getEndCircle(f);
-                        lowLinkMap.put(start, Math.min(lowLinkMap.get(start), lowLinkMap.get(f)));
-                    } else if (circle.contains(f)) {
-                        lowLinkMap.put(start, Math.min(lowLinkMap.get(start), lowLinkMap.get(f)));
-                    }
+        var owner = oppStart.getOwner();
+        if(!owner.isAlwaysDeadEnd()) {
+            for (var f : owner.getFuses()) {
+                if (!idxMap.containsKey(f) && !owner.equals(beginningEntity)) {
+                    circleFrom(f);
+                    lowLinkMap.put(start, Math.min(lowLinkMap.get(start), lowLinkMap.get(f)));
+                } else if (circle.contains(f)) {
+                    lowLinkMap.put(start, Math.min(lowLinkMap.get(start), lowLinkMap.get(f)));
                 }
             }
         }
