@@ -34,7 +34,7 @@ public class AllCycleTests {
 
             String fuseStateStr = Arrays.toString(fuseState);
 
-            Fuse[] actualArr = new AllCycle().circleFrom(start);
+            Fuse[] actualArr = AllCycle.circleFrom(start);
             List<Fuse> actual = Arrays.asList(actualArr);
             assertEquals(expected.size(), actual.size(), "Error for: " + fuseStateStr);
 
