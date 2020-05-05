@@ -13,4 +13,8 @@ public class UncertainFuseStatesMatrix extends FuseStatesMatrix {
     public double getConfidence() {
         return confidence;
     }
+
+    public void setConfidence(double confidence) {
+        this.confidence = confidence;
+    }
 }

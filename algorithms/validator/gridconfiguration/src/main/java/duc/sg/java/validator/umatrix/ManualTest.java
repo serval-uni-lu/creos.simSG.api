@@ -37,22 +37,22 @@ public class ManualTest {
         Fuse[] fuses = sc.extractFuses();
 
         // Single cable
-//        fuseStateMap.put(get(fuses, SingleCableSC.F1_NAME), State.OPEN);
+//        fuseStateMap.put(get(fuses, SingleCableSC.F1_NAME), State.CLOSED);
 //        fuseStateMap.put(get(fuses, SingleCableSC.F2_NAME), State.OPEN);
 
         // Cabinet
 //        fuseStateMap.put(get(fuses, CabinetSC.F1_NAME), State.CLOSED);
 //        fuseStateMap.put(get(fuses, CabinetSC.F2_NAME), State.CLOSED);
 //        fuseStateMap.put(get(fuses, CabinetSC.F3_NAME), State.CLOSED);
-//        fuseStateMap.put(get(fuses, CabinetSC.F4_NAME), State.OPEN);
-//        fuseStateMap.put(get(fuses, CabinetSC.F5_NAME), State.CLOSED);
-//        fuseStateMap.put(get(fuses, CabinetSC.F6_NAME), State.CLOSED);
+//        fuseStateMap.put(get(fuses, CabinetSC.F4_NAME), State.CLOSED);
+//        fuseStateMap.put(get(fuses, CabinetSC.F5_NAME), State.OPEN);
+//        fuseStateMap.put(get(fuses, CabinetSC.F6_NAME), State.OPEN);
 
         // Para W Dead
-//        fuseStateMap.put(get(fuses, ParaWithDeadendSC.F1_NAME), State.CLOSED);
-//        fuseStateMap.put(get(fuses, ParaWithDeadendSC.F2_NAME), State.CLOSED);
-//        fuseStateMap.put(get(fuses, ParaWithDeadendSC.F3_NAME), State.CLOSED);
-//        fuseStateMap.put(get(fuses, ParaWithDeadendSC.F4_NAME), State.OPEN);
+        fuseStateMap.put(get(fuses, ParaWithDeadendSC.F1_NAME), State.CLOSED);
+        fuseStateMap.put(get(fuses, ParaWithDeadendSC.F2_NAME), State.OPEN);
+        fuseStateMap.put(get(fuses, ParaWithDeadendSC.F3_NAME), State.CLOSED);
+        fuseStateMap.put(get(fuses, ParaWithDeadendSC.F4_NAME), State.CLOSED);
 
 
 

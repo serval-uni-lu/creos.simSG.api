@@ -21,6 +21,7 @@
         <module>algorithms/loadapproximator/loadapproximator.certain</module>
         <module>algorithms/matrixbuilder/matrixbuilder.uncertain</module>
         <module>algorithms/loadapproximator/loadapproximator.uncertain.naive</module>
+        <module>algorithms/loadapproximator/loadapproximator.uncertain.bsrules</module>
     </modules>
 
     <name>DucPropagationJava</name>

@@ -1,5 +1,6 @@
 package duc.sg.java.matrix.uncertain;
 
+import duc.sg.java.matrix.certain.MatrixBuilder;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
 import duc.sg.java.utils.BaseTransform;
@@ -59,7 +60,7 @@ public class UncertainMatrixBuilder {
                     confidence *= uFuses.get(idxFuse).getStatus().confIsOpen();
                 }
             }
-            res[idxCase] = new UncertainFuseStatesMatrix(duc.sg.java.matrix.certain.MatrixBuilder.build(substation), confidence);
+            res[idxCase] = new UncertainFuseStatesMatrix(MatrixBuilder.build(substation), confidence);
         }
 
         return res;
