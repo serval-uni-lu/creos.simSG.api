@@ -30,17 +30,36 @@ public class MultDblePossibilities implements Iterable<PossibilityDouble> {
         compute(value, (PossibilityDouble current) -> UMath.or(value, current));
     }
 
+//    public void removeIf(double value, Predicate<PossibilityDouble> condition) {
+//        Integer idx = possIdx.get(value);
+//        if(idx != null && condition.test(possibilities.get(idx))) {
+//            possibilities.remove((int) idx);
+//            possIdx.remove(value);
+//        }
+//    }
+
+    public void compute(double value, UnaryOperator<PossibilityDouble> toCompute) {
+        compute(new PossibilityDouble(value, Confidence.MAX_PROBABILITY), toCompute);
+    }
+
     public void compute(PossibilityDouble value, UnaryOperator<PossibilityDouble> toCompute) {
         Integer idx = possIdx.get(value.getValue());
         PossibilityDouble newVal;
         if(idx == null) {
             newVal = toCompute.apply(null);
-            possIdx.put(newVal.getValue(), possibilities.size());
-            possibilities.add(newVal);
+            if(newVal != null) {
+                possIdx.put(newVal.getValue(), possibilities.size());
+                possibilities.add(newVal);
+            }
         } else {
             newVal = toCompute.apply(possibilities.get(idx));
-            possIdx.put(newVal.getValue(), idx);
-            possibilities.set(idx, newVal);
+            if(newVal == null) {
+                possibilities.remove((int) idx);
+                possIdx.remove(value.getValue());
+            } else {
+                possIdx.put(newVal.getValue(), idx);
+                possibilities.set(idx, newVal);
+            }
         }
     }
 

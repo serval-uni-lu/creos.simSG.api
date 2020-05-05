@@ -76,20 +76,23 @@ public class Fuse {
 
     public MultDblePossibilities getUncertainLoad() {
         if(uload == null) {
-            var dft = new MultDblePossibilities();
-            dft.addOrReplace(new PossibilityDouble(0, Confidence.MAX_PROBABILITY));
-            return dft;
+//            var dft = new MultDblePossibilities();
+//            dft.addOrReplace(new PossibilityDouble(0, Confidence.MAX_PROBABILITY));
+//            uload = dft;
+            uload = new MultDblePossibilities();
+            uload.add(new PossibilityDouble(0, Confidence.MAX_PROBABILITY));
         }
         return uload;
     }
 
     public Map<Category, Double> formattedULoad() {
-        if(uload == null) {
-            var dft = new MultDblePossibilities();
-            dft.addOrReplace(new PossibilityDouble(0, Confidence.MAX_PROBABILITY));
-            return dft.format();
-        }
-        return uload.format();
+//        if(uload == null) {
+////            var dft = new MultDblePossibilities();
+////            dft.addOrReplace(new PossibilityDouble(0, Confidence.MAX_PROBABILITY));
+////            return dft.format();
+//        }
+//        return uload.format();
+        return getUncertainLoad().format();
     }
 
     public void setLoad(MultDblePossibilities uload) {

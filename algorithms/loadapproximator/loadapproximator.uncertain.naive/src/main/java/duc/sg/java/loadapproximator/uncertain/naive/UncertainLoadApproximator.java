@@ -4,11 +4,13 @@ import duc.sg.java.matrix.uncertain.UncertainFuseStatesMatrix;
 import duc.sg.java.matrix.uncertain.UncertainMatrixBuilder;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
+import duc.sg.java.uncertainty.Confidence;
 import duc.sg.java.uncertainty.PossibilityDouble;
 import org.ejml.alg.dense.linsol.svd.SolvePseudoInverseSvd;
 import org.ejml.data.DenseMatrix64F;
 
 import java.util.HashSet;
+import java.util.function.UnaryOperator;
 
 public class UncertainLoadApproximator {
     private UncertainLoadApproximator() {}
@@ -43,6 +45,25 @@ public class UncertainLoadApproximator {
 
                 var newPoss = new PossibilityDouble(solData[i], usfm.getConfidence());
                 current.getUncertainLoad().add(newPoss);
+
+                current.getUncertainLoad().compute(0, new UnaryOperator<PossibilityDouble>() {
+                    @Override
+                    public PossibilityDouble apply(PossibilityDouble current) {
+                        if(current == null) {
+                            return null;
+                        }
+
+                        Confidence currConf = current.getConfidence();
+                        double newProb = currConf.getProbability() - usfm.getConfidence();
+
+                        if(newProb > 0) {
+                            return new PossibilityDouble(current.getValue(), new Confidence(newProb));
+                        }
+                        return null;
+                    }
+                });
+
+//                current.getUncertainLoad().removeIf(0, (PossibilityDouble poss) -> poss.getConfidence().getProbability() == Confidence.MIN_PROBABILITY);
             }
         }
 
