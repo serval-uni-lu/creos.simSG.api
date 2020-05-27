@@ -4,7 +4,7 @@ import duc.sg.java.matrix.certain.FuseStatesMatrix;
 import duc.sg.java.matrix.certain.MatrixBuilder;
 import duc.sg.java.model.Substation;
 import duc.sg.java.uncertainty.Confidence;
-import duc.sg.java.uncertainty.MultDblePossibilities;
+import duc.sg.java.uncertainty.MultDblPoss2;
 import duc.sg.java.uncertainty.PossibilityDouble;
 import org.ejml.alg.dense.linsol.svd.SolvePseudoInverseSvd;
 import org.ejml.data.DenseMatrix64F;
@@ -32,8 +32,10 @@ public class LoadApproximator {
 
         var solData = solution.data;
         for (int i = 0; i < solData.length; i++) {
-            var multPoss = new MultDblePossibilities();
-            multPoss.addOrReplace(new PossibilityDouble(solData[i], Confidence.MAX_PROBABILITY));
+//            var multPoss = new MultDblePossibilities();
+            var multPoss = new MultDblPoss2();
+//            multPoss.addOrReplace(new PossibilityDouble(solData[i], Confidence.MAX_PROBABILITY));
+            multPoss.addPossibility(new PossibilityDouble(solData[i], Confidence.MAX_PROBABILITY));
             matrix.getFuse(i).setLoad(multPoss);
         }
     }

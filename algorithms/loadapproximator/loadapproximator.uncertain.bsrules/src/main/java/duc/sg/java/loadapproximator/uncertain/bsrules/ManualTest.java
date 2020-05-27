@@ -1,6 +1,5 @@
 package duc.sg.java.loadapproximator.uncertain.bsrules;
 
-import duc.sg.java.loadapproximator.uncertain.naive.UncertainLoadApproximator;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Meter;
@@ -8,6 +7,7 @@ import duc.sg.java.scenarios.ParaTransformerSC;
 import duc.sg.java.scenarios.Scenario;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
+import duc.sg.java.uncertainty.MultDblPoss2;
 
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -89,9 +89,10 @@ public class ManualTest {
 
         System.out.println();
 
-        Stream.of(fuses[0], fuses[2], fuses[4])
+        Stream.of(fuses[0])
                 .map(Fuse::getCable)
                 .map(Cable::getUncertainLoad)
+                .map(MultDblPoss2::getPossibilities)
                 .forEach(System.out::println);
 
 

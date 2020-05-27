@@ -1,12 +1,9 @@
 package duc.sg.java.model;
 
-import duc.sg.java.uncertainty.MultDblePossibilities;
-import duc.sg.java.uncertainty.math.UMath;
+import duc.sg.java.uncertainty.MultDblPoss2;
+import duc.sg.java.uncertainty.PossibilityDouble;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Cable {
     private Fuse[] fuses;
@@ -64,14 +61,47 @@ public class Cable {
         return consumption;
     }
 
-    public MultDblePossibilities getUncertainLoad() {
-        if(fuses[0] != null && fuses[1] != null) {
-            return UMath.max(fuses[0].getUncertainLoad(), fuses[1].getUncertainLoad());
-        } else if(fuses[0] != null) {
+    public MultDblPoss2 getUncertainLoad() {
+//        if(fuses[0] != null && fuses[1] != null) {
+//            return UMath.max(fuses[0].getUncertainLoad(), fuses[1].getUncertainLoad());
+//        } else if(fuses[0] != null) {
+//            return fuses[0].getUncertainLoad();
+//        }
+//
+//        return fuses[1].getUncertainLoad();
+
+        if(fuses[0] == null) {
+            return fuses[1].getUncertainLoad();
+        }
+
+        if(fuses[1] == null) {
             return fuses[0].getUncertainLoad();
         }
 
-        return fuses[1].getUncertainLoad();
+        MultDblPoss2 res = new MultDblPoss2();
+//        for (PossibilityDouble f1Poss: fuses[0].getUncertainLoad()) {
+//            for (PossibilityDouble f2Poss: fuses[1].getUncertainLoad()) {
+//                res.addPossibility(new PossibilityDouble(
+//                        Math.max(f1Poss.getValue(), f2Poss.getValue()),
+//                        f1Poss.getConfidence().getProbability()
+//                ));
+//            }
+//        }
+        Iterator<PossibilityDouble> itF1Poss = fuses[0].getUncertainLoad().iterator();
+        Iterator<PossibilityDouble> itF2Poss = fuses[1].getUncertainLoad().iterator();
+
+        while (itF1Poss.hasNext()) {
+            PossibilityDouble f1Poss = itF1Poss.next();
+            PossibilityDouble f2Poss = itF2Poss.next();
+
+            res.addPossibility(new PossibilityDouble(
+                        Math.max(f1Poss.getValue(), f2Poss.getValue()),
+                        f1Poss.getConfidence().getProbability()
+            ));
+
+        }
+
+        return res;
     }
 
     @Override
