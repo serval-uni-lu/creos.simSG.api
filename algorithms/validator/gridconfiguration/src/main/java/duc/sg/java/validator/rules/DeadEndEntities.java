@@ -22,6 +22,7 @@ class DeadEndEntities extends AbsFuseLevelRule {
 
 
        return cable.getConsumption() == 0 ||
+               (!ownFsDE && !ownOppFsDE) ||
                (ownFsDE && fuseStateMap.get(opp) == State.CLOSED) ||
                (ownOppFsDE && fuseStateMap.get(fuse) == State.CLOSED);
 

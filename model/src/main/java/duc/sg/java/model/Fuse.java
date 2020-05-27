@@ -1,9 +1,6 @@
 package duc.sg.java.model;
 
-import duc.sg.java.uncertainty.Category;
-import duc.sg.java.uncertainty.Confidence;
-import duc.sg.java.uncertainty.MultDblePossibilities;
-import duc.sg.java.uncertainty.PossibilityDouble;
+import duc.sg.java.uncertainty.*;
 
 import java.util.Map;
 
@@ -12,7 +9,8 @@ public class Fuse {
     private Cable cable;
     private Entity owner;
     private Status status;
-    private MultDblePossibilities uload;
+//    private MultDblePossibilities uload;
+    private MultDblPoss2 uload;
     private Fuse[] getPowerFrom;
     private Fuse[] givePowerTo;
 
@@ -74,13 +72,15 @@ public class Fuse {
         return f;
     }
 
-    public MultDblePossibilities getUncertainLoad() {
+//    public MultDblePossibilities getUncertainLoad() {
+    public MultDblPoss2 getUncertainLoad() {
         if(uload == null) {
 //            var dft = new MultDblePossibilities();
 //            dft.addOrReplace(new PossibilityDouble(0, Confidence.MAX_PROBABILITY));
 //            uload = dft;
-            uload = new MultDblePossibilities();
-            uload.add(new PossibilityDouble(0, Confidence.MAX_PROBABILITY));
+//            uload = new MultDblePossibilities();
+            uload = new MultDblPoss2();
+//            uload.add(new PossibilityDouble(0, Confidence.MAX_PROBABILITY));
         }
         return uload;
     }
@@ -92,10 +92,12 @@ public class Fuse {
 ////            return dft.format();
 //        }
 //        return uload.format();
-        return getUncertainLoad().format();
+//        return getUncertainLoad().format();
+        return null;
     }
 
-    public void setLoad(MultDblePossibilities uload) {
+//    public void setLoad(MultDblePossibilities uload) {
+    public void setLoad(MultDblPoss2 uload) {
         this.uload = uload;
     }
 
