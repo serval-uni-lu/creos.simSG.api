@@ -1,5 +1,6 @@
 package duc.sg.java.loadapproximator.uncertain.bsrules;
 
+import duc.sg.java.cycle.all.InitAllCycleSubs;
 import duc.sg.java.matrix.certain.MatrixBuilder;
 import duc.sg.java.matrix.uncertain.UncertainFuseStatesMatrix;
 import duc.sg.java.model.Fuse;
@@ -7,8 +8,7 @@ import duc.sg.java.model.State;
 import duc.sg.java.model.Substation;
 import duc.sg.java.uncertainty.PossibilityDouble;
 import duc.sg.java.utils.BaseTransform;
-import duc.sg.java.validator.umatrix.IValidator;
-import duc.sg.java.validator.umatrix.Validator;
+import duc.sg.java.validator.rules.CircleRule;
 import org.ejml.alg.dense.linsol.svd.SolvePseudoInverseSvd;
 import org.ejml.data.DenseMatrix64F;
 
@@ -17,28 +17,11 @@ import java.util.*;
 public class UncertainLoadApproximator {
     private UncertainLoadApproximator() {}
 
-    private static List<Fuse> getUncertainFuses(Substation substation) {
+    private static List<Fuse> getUncertainFuses(Fuse[] fuses) {
         var uFuses = new ArrayList<Fuse>();
-        var waiting = new Stack<Fuse>();
-
-        var visited = new HashSet<Fuse>();
-        var added = new HashSet<Fuse>();
-
-        waiting.add(substation.getFuses().get(0));
-
-        while (!waiting.isEmpty()) {
-            var current = waiting.pop();
-            if(!visited.contains(current) && !current.getOwner().isDeadEnd() && current.getStatus().isUncertain()) {
-                uFuses.add(current);
-            }
-            visited.add(current);
-
-            var ownerOpp = current.getOpposite().getOwner();
-            for(var f: ownerOpp.getFuses()) {
-                if(!visited.contains(f) && !added.contains(f)) {
-                    waiting.add(f);
-                    added.add(f);
-                }
+        for (Fuse f: fuses) {
+            if(!f.getOwner().isDeadEnd() && f.getStatus().isUncertain()) {
+                uFuses.add(f);
             }
         }
 
@@ -46,10 +29,8 @@ public class UncertainLoadApproximator {
     }
 
 
-
-    private static Map<Fuse, State> boolarr2MapFuse(boolean[] fuseStates, List<Fuse> uFuses, Substation substation) {
-        Collection<Fuse> allFuses = substation.extractFuses();
-        var res = new HashMap<Fuse, State>(allFuses.size());
+    private static Map<Fuse, State> boolArr2MapFuseState(boolean[] fuseStates, List<Fuse> uFuses, Fuse[] allFuses) {
+        var res = new HashMap<Fuse, State>(allFuses.length);
 
         for(Fuse f: allFuses) {
             State state;
@@ -62,77 +43,93 @@ public class UncertainLoadApproximator {
             res.put(f, state);
         }
 
-
         return res;
+    }
+
+    public static ConfigurationMatrix getAllConfigurations(Substation substation) {
+        substation.updateAllFuses();
+        Collection<Fuse[]> allCycles = substation.getCycles();
+
+        var gridConf = new ConfigurationMatrix();
+
+        CircleRule circleRule = new CircleRule();
+
+        for(Fuse[] cycle: allCycles) {
+            List<Fuse> uFuses = getUncertainFuses(cycle);
+            int nbPossibilities = (int) Math.pow(2, uFuses.size());
+
+            var circleConf = new ConfigurationMatrix(uFuses.toArray(new Fuse[0]));
+            double confToAdd = 0;
 
 
+            for (int idxConf = 0; idxConf < nbPossibilities; idxConf++) {
+                boolean[] fuseStates = BaseTransform.toBinary(idxConf, uFuses.size());
+                Map<Fuse, State> fuseStateMap = boolArr2MapFuseState(fuseStates, uFuses, cycle);
 
+                double confidence = 1;
 
-//        var res = new HashMap<Fuse, State>(uFuses.size());
-//        var itFuse = uFuses.iterator();
-//        for (int i = 0; i < uFuses.size(); i++) {
-//            var stateF = fuseStates[i]? State.CLOSED : State.OPEN;
-//            res.put(itFuse.next(), stateF);
-//        }
-//
-//        return res;
+                for(Map.Entry<Fuse, State> fuseState: fuseStateMap.entrySet()) {
+                    if(fuseState.getValue() == State.CLOSED) {
+                        confidence *= fuseState.getKey().getStatus().confIsClosed();
+                    } else {
+                        confidence *= fuseState.getKey().getStatus().confIsOpen();
+                    }
+                }
+
+                if(circleRule.apply(cycle, fuseStateMap)) {
+                    circleConf.add(fuseStateMap, confidence);
+                } else {
+                    confToAdd += confidence;
+                }
+
+            }
+
+            if(confToAdd > 0) {
+                circleConf.addConfToMaxOpen(confToAdd);
+            }
+
+            gridConf.add(circleConf);
+            
+
+        }
+
+        return gridConf;
+
     }
 
     public static UncertainFuseStatesMatrix[] build(Substation substation) {
-        List<Fuse> uFuses = getUncertainFuses(substation);
-        int nbPossibilities = (int) Math.pow(2, uFuses.size());
+        ConfigurationMatrix gridConfigurations = getAllConfigurations(substation);
 
-        var res = new ArrayList<UncertainFuseStatesMatrix>(nbPossibilities);
-        IValidator validator = new Validator();
+        var fuseMatrices = new UncertainFuseStatesMatrix[gridConfigurations.nbConfigurations()];
 
-        int idxMaxClosedFuses = -1;
-        int maxClosedFuses = -1;
-        double confToAdd = 0;
-
-        for (int idxCase = 0; idxCase < nbPossibilities; idxCase++) {
-            boolean[] fuseStates = BaseTransform.toBinary(idxCase, uFuses.size());
-            Map<Fuse, State> fuseStateMap = boolarr2MapFuse(fuseStates, uFuses, substation);
-
-            double confidence = 1;
-            int nbFusesClosed = 0;
-
-            for (Fuse uf : uFuses) {
-                if(fuseStateMap.get(uf) == State.CLOSED) {
-                    uf.closeFuse();
-                    confidence *= uf.getStatus().confIsClosed();
-                    nbFusesClosed++;
+        int idx = 0;
+        for(Configuration configuration: gridConfigurations) {
+            for (Iterator<Pair<Fuse, State>> it = configuration.getFuseStates(); it.hasNext(); ) {
+                Pair<Fuse, State> fuseState = it.next();
+                if(fuseState.getSecond() == State.CLOSED) {
+                    fuseState.getFirst().closeFuse();
                 } else {
-                    uf.openFuse();
-                    confidence *= uf.getStatus().confIsOpen();
+                    fuseState.getFirst().openFuse();
                 }
             }
 
-            if(validator.isValid(substation, fuseStateMap)) {
-                res.add(new UncertainFuseStatesMatrix(MatrixBuilder.build(substation), confidence));
-                if (nbFusesClosed > maxClosedFuses) {
-                    maxClosedFuses = nbFusesClosed;
-                    idxMaxClosedFuses = res.size() - 1;
-                }
-            } else {
-                confToAdd += confidence;
-            }
+            fuseMatrices[idx] = new UncertainFuseStatesMatrix(
+                    MatrixBuilder.build(substation),
+                    configuration.getConfidence()
+            );
 
+            idx++;
         }
 
-        if(maxClosedFuses != -1) {
-            UncertainFuseStatesMatrix ufsm = res.get(idxMaxClosedFuses);
-            ufsm.setConfidence(ufsm.getConfidence() + confToAdd);
-        }
-
-        return res.toArray(new UncertainFuseStatesMatrix[0]);
+        return fuseMatrices;
     }
-
-
 
 
 
 
     public static void approximate(final Substation substation) {
+        InitAllCycleSubs.init(substation);
+
         UncertainFuseStatesMatrix[] matrices = build(substation);
         var visited = new HashSet<Fuse>();
 
@@ -164,28 +161,8 @@ public class UncertainLoadApproximator {
                 }
 
                 var newPoss = new PossibilityDouble(solData[i], usfm.getConfidence());
-//                current.getUncertainLoad().add(newPoss);
                 current.getUncertainLoad().addPossibility(newPoss);
                 fuses.remove(current);
-
-//                current.getUncertainLoad().compute(0, new UnaryOperator<PossibilityDouble>() {
-//                    @Override
-//                    public PossibilityDouble apply(PossibilityDouble current) {
-//                        if(current == null) {
-//                            return null;
-//                        }
-//
-//                        Confidence currConf = current.getConfidence();
-//                        double newProb = currConf.getProbability() - usfm.getConfidence();
-//
-//                        if(newProb > 0) {
-//                            return new PossibilityDouble(current.getValue(), new Confidence(newProb));
-//                        }
-//                        return null;
-//                    }
-//                });
-
-//                current.getUncertainLoad().removeIf(0, (PossibilityDouble poss) -> poss.getConfidence().getProbability() == Confidence.MIN_PROBABILITY);
             }
 
             for(var f: fuses) {

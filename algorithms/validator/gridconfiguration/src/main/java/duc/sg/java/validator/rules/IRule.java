@@ -8,4 +8,7 @@ import java.util.Map;
 
 public interface IRule {
     boolean apply(Substation substation, Map<Fuse, State> fuseStateMap);
+    default boolean apply(Fuse[] fuses, Map<Fuse, State> fuseStateMap){
+        return true;
+    }
 }

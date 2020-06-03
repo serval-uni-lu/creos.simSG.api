@@ -71,7 +71,7 @@ public class ManualTest {
 
 
 
-        IValidator validator = new Validator();
+        IValidator validator = new GridValidator();
         System.out.println(validator.isValid(sc.getSubstation(), fuseStateMap));
 
 

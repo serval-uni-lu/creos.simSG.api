@@ -1,13 +1,11 @@
 package duc.sg.java.loadapproximator.uncertain.bsrules;
 
-import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Meter;
 import duc.sg.java.scenarios.ParaTransformerSC;
 import duc.sg.java.scenarios.Scenario;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
-import duc.sg.java.uncertainty.MultDblPoss2;
 
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -77,7 +75,7 @@ public class ManualTest {
 //        }
 
 
-        UncertainLoadApproximator.approximate(sc.getSubstation());
+        duc.sg.java.loadapproximator.uncertain.bsrules.old.UncertainLoadApproximator.approximate(sc.getSubstation());
         Stream.of(fuses)
                 .map(new Function<Fuse, String>() {
                     @Override
@@ -89,31 +87,17 @@ public class ManualTest {
 
         System.out.println();
 
-        Stream.of(fuses[0])
-                .map(Fuse::getCable)
-                .map(Cable::getUncertainLoad)
-                .map(MultDblPoss2::getPossibilities)
+                duc.sg.java.loadapproximator.uncertain.bsrules.UncertainLoadApproximator.approximate(sc.getSubstation());
+        Stream.of(fuses)
+                .map(new Function<Fuse, String>() {
+                    @Override
+                    public String apply(Fuse fuse) {
+                        return fuse.getName() + " -> " + fuse.getUncertainLoad();
+                    }
+                })
                 .forEach(System.out::println);
 
-
-//        MultDblePossibilities mult1 = new MultDblePossibilities();
-//        mult1.add(new PossibilityDouble(45, 0.3588));
-//        System.out.println(mult1);
-//        mult1.add(new PossibilityDouble(20, 0.3312));
-//        System.out.println(mult1);
-//        mult1.add(new PossibilityDouble(0, 0.1612));
-//        System.out.println(mult1);
-//        mult1.add(new PossibilityDouble(0, 0.1488));
-//        System.out.println(mult1);
-
-
-//
-//        MultDblePossibilities mult2 = new MultDblePossibilities();
-//        mult2.add(new PossibilityDouble(-25, 0.5076));
-//        mult2.add(new PossibilityDouble(0, 0.3312));
-//        mult2.add(new PossibilityDouble(-25, 0.1612));
-//
-//        System.out.println(UMath.max(mult1, mult2));
+        System.out.println();
 
     }
 

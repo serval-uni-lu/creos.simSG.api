@@ -9,14 +9,14 @@ import duc.sg.java.validator.rules.Rules;
 
 import java.util.Map;
 
-public class Validator implements  IValidator {
+public class GridValidator implements  IValidator {
     @Override
     public boolean isValid(Substation substation, Map<Fuse, State> idxColumn) {
         substation.updateAllFuses();
         InitAllCycleSubs.init(substation);
 
 
-        IRule[] rules = Rules.getRules();
+        IRule[] rules = Rules.getAllRules();
 
         for(IRule rule: rules) {
             if(!rule.apply(substation, idxColumn)) {
@@ -25,5 +25,10 @@ public class Validator implements  IValidator {
         }
 
         return true;
+    }
+
+    @Override
+    public boolean isValid(Fuse[] setOfFuses, Map<Fuse, State> idxColumn) {
+        return false;
     }
 }

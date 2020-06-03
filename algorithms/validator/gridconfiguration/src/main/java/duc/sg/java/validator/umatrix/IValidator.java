@@ -8,4 +8,5 @@ import java.util.Map;
 
 public interface IValidator {
     boolean isValid(Substation substation, Map<Fuse, State> idxColumn);
+    boolean isValid(Fuse[] setOfFuses, Map<Fuse, State> idxColumn);
 }

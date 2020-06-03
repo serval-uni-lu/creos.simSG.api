@@ -1,8 +1,6 @@
 package duc.sg.java.model;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class SmartGrid {
     private Map<String, Substation> substations;
@@ -18,5 +16,9 @@ public class SmartGrid {
 
     public void addSubstations(Substation substation) {
         this.substations.put(substation.getName(), substation);
+    }
+
+    public Collection<Substation> getSubstations() {
+        return Collections.unmodifiableCollection(substations.values());
     }
 }

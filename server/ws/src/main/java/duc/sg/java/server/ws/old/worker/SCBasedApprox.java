@@ -11,7 +11,7 @@ import duc.sg.java.server.ws.old.messages.ActionRequest;
 import duc.sg.java.server.ws.old.messages.ActionResult;
 import duc.sg.java.server.ws.old.messages.Error;
 import duc.sg.java.server.ws.old.messages.Message;
-import duc.sg.java.uncertainty.MultDblePossibilities;
+import duc.sg.java.uncertainty.MultDblPoss2;
 import duc.sg.java.uncertainty.PossibilityDouble;
 
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class SCBasedApprox {
 
         var cableLoads = new ArrayList<Double>(cables.length);
         for (var cable : cables) {
-            MultDblePossibilities multPoss = cable.getUncertainLoad();
+            MultDblPoss2 multPoss = cable.getUncertainLoad();
             PossibilityDouble possibilityDouble = multPoss.iterator().next();
             cableLoads.add(possibilityDouble.getValue());
         }
@@ -62,7 +62,7 @@ public class SCBasedApprox {
 
         var fuseLoads = new ArrayList<Double>(fuses.length);
         for (var fuse : fuses) {
-            MultDblePossibilities multPoss = fuse.getUncertainLoad();
+            MultDblPoss2 multPoss = fuse.getUncertainLoad();
             PossibilityDouble possibilityDouble = multPoss.iterator().next();
             fuseLoads.add(possibilityDouble.getValue());
         }
