@@ -5,50 +5,44 @@ import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;
 import duc.sg.java.model.Substation;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Map;
 
+public class CircleRule implements IRule{
+    @Override
+    public boolean apply(Substation substation, Map<Fuse, State> fuseStateMap) {
+        return false;
+    }
 
-/*
-    In a circle with at least one cable with a measured consumption superior to zero, exactly 2 fuses are OPEN if and only if they both belong to a same entity, that can be a dead-end. Otherwise, at most 1 fuse of the circle is OPEN.
- */
-class CircleRule implements IRule {
-    private Fuse[] extractOPenFuses(Fuse[] circle, Map<Fuse, State> fuseStateMap) {
-        Fuse[] res = new Fuse[0];
+    private Fuse[] getOpenFuses(Fuse[] fuses, Map<Fuse, State> fuseStateMap) {
+        var res = new ArrayList<Fuse>(fuses.length);
 
-        for(Fuse c: circle) {
-            if(fuseStateMap.get(c) == State.OPEN) {
-                Fuse[] newRes = new Fuse[res.length + 1];
-                System.arraycopy(res, 0, newRes, 0, res.length);
-                res = newRes;
-                res[res.length - 1 ] = c;
+        for(Fuse f: fuses) {
+            if(fuseStateMap.get(f) == State.OPEN) {
+                res.add(f);
             }
         }
 
-        return res;
+        return res.toArray(new Fuse[0]);
     }
 
     @Override
-    public boolean apply(Substation substation, Map<Fuse, State> fuseStateMap) {
-        Collection<Fuse[]> circles = substation.getCycles();
+    public boolean apply(Fuse[] fuses, Map<Fuse, State> fuseStateMap) {
+        Fuse[] openFuses = getOpenFuses(fuses, fuseStateMap);
 
-        for(Fuse[] circle: circles) {
-            Fuse[] open = extractOPenFuses(circle, fuseStateMap);
+        if(openFuses.length <= 1) {
+            return true;
+        }
 
-            if(open.length > 2) {
+        if(openFuses.length == 2) {
+            Entity o1 = openFuses[0].getOwner();
+            Entity o2 = openFuses[1].getOwner();
+
+            if(!o1.equals(o2) || !o1.mightBeDeadEnd()) {
                 return false;
-            }
-
-            if(open.length == 2) {
-                Entity o1 = open[0].getOwner();
-                Entity o2 = open[1].getOwner();
-
-                if(!o1.equals(o2) || !o1.mightBeDeadEnd()) {
-                    return false;
-                }
             }
         }
 
-        return true;
+        return false;
     }
 }

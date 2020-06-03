@@ -4,13 +4,16 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.github.fge.jackson.JsonLoader;
 import duc.sg.java.model.*;
-import duc.sg.java.uncertainty.MultDblePossibilities;
+import duc.sg.java.uncertainty.MultDblPoss2;
 import duc.sg.java.uncertainty.PossibilityDouble;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Optional;
 
 public class JsonImporter {
     private JsonImporter() {}
@@ -215,13 +218,14 @@ public class JsonImporter {
 
             var loads = (ArrayNode) fuseNode.get(FUSE_LOAD);
             if(loads != null) {
-                final var uLoad = new MultDblePossibilities();
+                final var uLoad = new MultDblPoss2();
                 loads.forEach(loadNode -> {
                     var possibility = new PossibilityDouble(
                             loadNode.get(FUSE_LOAD_VAL).asDouble(),
                             loadNode.get(FUSE_LOAD_CONF).asDouble()
                     );
-                    uLoad.addOrReplace(possibility);
+                    uLoad.addPossibility(possibility);
+//                    uLoad.addOrReplace(possibility);
                 });
                 fuse.setLoad(uLoad);
             }
