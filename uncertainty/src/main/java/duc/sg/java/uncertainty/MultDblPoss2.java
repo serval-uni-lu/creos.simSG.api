@@ -1,5 +1,7 @@
 package duc.sg.java.uncertainty;
 
+import duc.sg.java.uncertainty.math.UMath;
+
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -18,10 +20,30 @@ public class MultDblPoss2 implements Iterable<PossibilityDouble> {
         return Collections.unmodifiableList(possibilities);
     }
 
+
+    public List<PossibilityDouble> format() {
+        var res = new ArrayList<PossibilityDouble>(possibilities.size());
+        var possSet = new HashMap<Double, Integer>(possibilities.size());
+
+        for(PossibilityDouble poss: possibilities) {
+            if(possSet.containsKey(poss.getValue())) {
+                int idx = possSet.get(poss.getValue());
+                PossibilityDouble current = res.get(idx);
+                res.set(idx, UMath.or(current, poss));
+            } else {
+                res.add(poss);
+                possSet.put(poss.getValue(), res.size() - 1);
+            }
+        }
+
+
+        return res;
+    }
+
     @Override
     public String toString() {
         return "MultDblPoss2(" +
-                "possibilities=" + Arrays.toString(possibilities.toArray()) +
+                "possibilities=" + Arrays.toString(format().toArray()) +
                 ')';
     }
 
