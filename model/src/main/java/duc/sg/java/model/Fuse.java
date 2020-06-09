@@ -1,7 +1,10 @@
 package duc.sg.java.model;
 
-import duc.sg.java.uncertainty.*;
+import duc.sg.java.uncertainty.Category;
+import duc.sg.java.uncertainty.MultDblPoss2;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Fuse {
@@ -70,6 +73,19 @@ public class Fuse {
         var f = cable.getFirstFuse();
         if(this == f) return cable.getSecondFuse();
         return f;
+    }
+
+    public List<Fuse> getNeighbors() {
+        var res = new ArrayList<Fuse>();
+
+        res.add(getOpposite());
+        for(var f: getOwner().getFuses()) {
+            if(!f.equals(this)) {
+                res.add(f);
+            }
+        }
+
+        return res;
     }
 
 //    public MultDblePossibilities getUncertainLoad() {

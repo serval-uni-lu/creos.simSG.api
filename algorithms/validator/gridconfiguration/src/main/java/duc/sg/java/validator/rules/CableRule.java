@@ -9,7 +9,7 @@ import java.util.Map;
 /*
     For all cables that have a measure consumption superior to zero, at least one of its fuses is closed
  */
-class CableRule extends AbsFuseLevelRule {
+public class CableRule extends AbsFuseLevelRule {
 
     @Override
     protected boolean p_apply(Fuse fuse, Map<Fuse, State> fuseStateMap) {

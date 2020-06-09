@@ -8,7 +8,7 @@ import java.util.*;
 public class InitAllCycleSubs {
     private InitAllCycleSubs() {}
 
-    public static void init(Substation substation) {
+    public static void init2(Substation substation) {
         List<Fuse[]> cycles = new ArrayList<>();
         var processed = new HashSet<Fuse>();
 

@@ -9,7 +9,7 @@ import java.util.Map;
 /*
     For all cables that have a measure consumption superior to zero, if one fuse belongs to a dead-end entity, then the other is CLOSED.
  */
-class DeadEndEntities extends AbsFuseLevelRule {
+public class DeadEndEntities extends AbsFuseLevelRule {
 
 
     @Override

@@ -38,8 +38,12 @@ public class CircleRule implements IRule{
             Entity o1 = openFuses[0].getOwner();
             Entity o2 = openFuses[1].getOwner();
 
-            if(!o1.equals(o2) || !o1.mightBeDeadEnd()) {
-                return false;
+//            if(o1.equals(o2) && o1.mightBeDeadEnd()) {
+//                return true;
+//            }
+
+            if(o1.equals(o2) && !(o1 instanceof Substation) && o1.getFuses().size() == 2) {
+                return true;
             }
         }
 

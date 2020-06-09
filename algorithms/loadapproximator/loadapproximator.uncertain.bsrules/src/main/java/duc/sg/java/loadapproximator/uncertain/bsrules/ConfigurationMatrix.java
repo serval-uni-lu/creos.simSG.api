@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Map;
 
 public class ConfigurationMatrix implements Iterable<Configuration>{
-    private State[] states;
-    private Fuse[] columns;
-    private List<Double> confidences;
-    private int idxLineMaxClosed = -1;
-    private int maxClosedFuses = -1;
+    protected State[] states;
+    protected Fuse[] columns;
+    protected List<Double> confidences;
+    protected int idxLineMaxClosed = -1;
+    protected int maxClosedFuses = -1;
 
     public ConfigurationMatrix() {
         this.confidences = new ArrayList<>();

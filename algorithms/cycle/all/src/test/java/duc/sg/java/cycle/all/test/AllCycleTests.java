@@ -79,7 +79,6 @@ public class AllCycleTests {
         cbl1.setFuses(f1, f2);
         cbl2.setFuses(f3, f4);
 
-
         Collection<Fuse> allFuses = subs1.extractFuses();
         genericTest(allFuses, f1, allFuses);
         genericTest(allFuses, f2, allFuses);
