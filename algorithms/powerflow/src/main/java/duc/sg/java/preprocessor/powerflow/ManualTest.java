@@ -15,13 +15,22 @@ public class ManualTest {
 //                .chooseScenario(ScenarioName.SINGLE_CABLE)
 //                .chooseScenario(ScenarioName.CABINET)
 //                .chooseScenario(ScenarioName.PARA_TRANSFORMER)
-                .chooseScenario(ScenarioName.PARA_CABINET)
+//                .chooseScenario(ScenarioName.PARA_CABINET)
 //                .chooseScenario(ScenarioName.INDIRECT_PARALLEL)
-//                .chooseScenario(ScenarioName.PARA_W_DEADEND)
+                .chooseScenario(ScenarioName.PARA_W_DEADEND)
                 .build();
 
-        Fuse[] toOPen = new PowerFLow().getFuseOnMandatoryPF(sc.getSubstation());
+        Fuse[] toOPen = new PowerFlow().getFuseOnMandatoryPF(sc.getSubstation());
+
+        Fuse[] toOPen2 = new PowerFlow2().getFuseOnMandatoryPF(sc.getSubstation());
+
         Stream.of(toOPen)
+                .map(Fuse::getName)
+                .forEach(System.out::println);
+
+        System.out.println();
+
+        Stream.of(toOPen2)
                 .map(Fuse::getName)
                 .forEach(System.out::println);
 

@@ -12,7 +12,7 @@ import java.util.Map;
 public class CableRule extends AbsFuseLevelRule {
 
     @Override
-    protected boolean p_apply(Fuse fuse, Map<Fuse, State> fuseStateMap) {
+    public boolean apply(Fuse fuse, Map<Fuse, State> fuseStateMap) {
         Cable cable = fuse.getCable();
 
         return cable.getConsumption() == 0 ||

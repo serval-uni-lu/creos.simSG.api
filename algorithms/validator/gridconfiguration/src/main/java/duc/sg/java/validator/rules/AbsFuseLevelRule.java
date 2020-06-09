@@ -13,7 +13,7 @@ abstract class AbsFuseLevelRule implements IRule {
         Collection<Fuse> fuses = substation.getAllFuses();
 
         for(Fuse fuse: fuses) {
-            if(!p_apply(fuse, fuseStateMap)) {
+            if(!apply(fuse, fuseStateMap)) {
                 return false;
             }
         }
@@ -23,6 +23,6 @@ abstract class AbsFuseLevelRule implements IRule {
     }
 
 
-    protected abstract boolean p_apply(Fuse fuse, Map<Fuse, State> fuseStateMap);
+    public abstract boolean apply(Fuse fuse, Map<Fuse, State> fuseStateMap);
 
 }

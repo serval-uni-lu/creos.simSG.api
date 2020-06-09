@@ -23,4 +23,11 @@ public final class Rules {
         return new SubstationRule();
     }
 
+    public static MandatoryPowerFLow getMandatoryPFRule() {
+        return new MandatoryPowerFLow();
+    }
+
+    public static CableRule getCableRule() {
+        return new CableRule();
+    }
 }
