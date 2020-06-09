@@ -35,6 +35,11 @@ public class Substation extends Entity {
         return false;
     }
 
+    @Override
+    public boolean isAlwaysDeadEnd() {
+        return false;
+    }
+
     private <T> void extract(Collection<T> collection, Collector<T> collector) {
         var waiting = new Stack<Fuse>();
         var inWaitingList = new HashSet<Fuse>(); //real optimization ??

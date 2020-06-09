@@ -48,6 +48,11 @@
             <artifactId>loadapproximator.uncertain.naive</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>duc.sg.java</groupId>
+            <artifactId>powerflow</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
 
 

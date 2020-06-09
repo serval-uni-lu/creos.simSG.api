@@ -13,7 +13,7 @@ public class DeadEndEntities extends AbsFuseLevelRule {
 
 
     @Override
-    protected boolean p_apply(Fuse fuse, Map<Fuse, State> fuseStateMap) {
+    public boolean apply(Fuse fuse, Map<Fuse, State> fuseStateMap) {
         Cable cable = fuse.getCable();
         Fuse opp = fuse.getOpposite();
 

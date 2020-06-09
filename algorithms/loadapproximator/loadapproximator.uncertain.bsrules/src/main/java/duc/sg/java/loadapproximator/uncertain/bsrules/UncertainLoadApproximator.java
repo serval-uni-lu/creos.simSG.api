@@ -47,8 +47,10 @@ public class UncertainLoadApproximator {
     }
 
     public static ConfigurationMatrix getAllConfigurations(Substation substation) {
-        InitAllCycleSubs2.init(substation);
+        UFuseDetector.detectAndModifyUFuses(substation);
 
+
+        InitAllCycleSubs2.init(substation);
         substation.updateAllFuses();
         Collection<Fuse[]> allCycles = substation.getCycles();
 
