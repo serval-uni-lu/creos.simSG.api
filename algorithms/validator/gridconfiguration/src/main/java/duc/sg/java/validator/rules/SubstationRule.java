@@ -10,7 +10,7 @@ import java.util.Map;
 /*
     For all substations, at least one fuse should be closed.
  */
-class SubstationRule implements IRule {
+public class SubstationRule implements IRule {
     @Override
     public boolean apply(Substation substation, Map<Fuse, State> fuseStateMap) {
         List<Fuse> subsFuses = substation.getFuses();

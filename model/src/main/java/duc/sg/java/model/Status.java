@@ -16,6 +16,10 @@ public class Status {
         this.confidence.setProbability(confidence);
     }
 
+    public State getState() {
+        return state;
+    }
+
     public void setConfIsClosed(double confidence) {
         double realConf = isClosed()? confidence : Bernoulli.getOpposite(confidence);
         this.confidence.setProbability(realConf);

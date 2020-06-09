@@ -25,11 +25,21 @@ public class CycleDetection {
             return new Fuse[0];
         }
 
-        for (Fuse fc: foundCycle) {
-            if(!fc.isClosed()) {
+        for (int i = 0; i < foundCycle.length; i++) {
+            Fuse fc = foundCycle[i];
+            if (!fc.isClosed()) {
                 return new Fuse[0];
             }
+
+            // put end of the circle in 1st position
+            if (!fc.equals(start) && fc.getOwner().equals(start.getOwner()) && i>0) {
+                foundCycle[i] = foundCycle[0];
+                foundCycle[0] = fc;
+            }
+
         }
+
+
 
         return foundCycle;
 

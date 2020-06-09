@@ -1,6 +1,6 @@
 package duc.sg.java.validator.umatrix;
 
-import duc.sg.java.cycle.all.InitAllCycleSubs;
+import duc.sg.java.cycle.all.InitAllCycleSubs2;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;
 import duc.sg.java.model.Substation;
@@ -13,7 +13,7 @@ public class GridValidator implements  IValidator {
     @Override
     public boolean isValid(Substation substation, Map<Fuse, State> idxColumn) {
         substation.updateAllFuses();
-        InitAllCycleSubs.init(substation);
+        InitAllCycleSubs2.init(substation);
 
 
         IRule[] rules = Rules.getAllRules();

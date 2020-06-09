@@ -18,4 +18,9 @@ public final class Rules {
         return new CircleRule();
     }
 
+
+    public static SubstationRule getSubstationRule() {
+        return new SubstationRule();
+    }
+
 }

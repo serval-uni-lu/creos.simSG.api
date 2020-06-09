@@ -1,6 +1,6 @@
 package duc.sg.java.loadapproximator.uncertain.bsrules;
 
-import duc.sg.java.cycle.all.InitAllCycleSubs;
+import duc.sg.java.cycle.all.InitAllCycleSubs2;
 import duc.sg.java.matrix.certain.MatrixBuilder;
 import duc.sg.java.matrix.uncertain.UncertainFuseStatesMatrix;
 import duc.sg.java.model.Fuse;
@@ -47,8 +47,14 @@ public class UncertainLoadApproximator {
     }
 
     public static ConfigurationMatrix getAllConfigurations(Substation substation) {
+        InitAllCycleSubs2.init(substation);
+
         substation.updateAllFuses();
         Collection<Fuse[]> allCycles = substation.getCycles();
+
+        if(allCycles.isEmpty()) {
+            return new EmptyConfigurationMatrix();
+        }
 
         var gridConf = new ConfigurationMatrix();
 
@@ -58,8 +64,14 @@ public class UncertainLoadApproximator {
             List<Fuse> uFuses = getUncertainFuses(cycle);
             int nbPossibilities = (int) Math.pow(2, uFuses.size());
 
+            if(nbPossibilities == 1) {
+                continue; //ignore this circle
+            }
+
             var circleConf = new ConfigurationMatrix(uFuses.toArray(new Fuse[0]));
             double confToAdd = 0;
+
+
 
 
             for (int idxConf = 0; idxConf < nbPossibilities; idxConf++) {
@@ -91,6 +103,10 @@ public class UncertainLoadApproximator {
             gridConf.add(circleConf);
             
 
+        }
+
+        if(gridConf.confidences.isEmpty()) {
+            return new EmptyConfigurationMatrix();
         }
 
         return gridConf;
@@ -128,8 +144,6 @@ public class UncertainLoadApproximator {
 
 
     public static void approximate(final Substation substation) {
-        InitAllCycleSubs.init(substation);
-
         UncertainFuseStatesMatrix[] matrices = build(substation);
         var visited = new HashSet<Fuse>();
 

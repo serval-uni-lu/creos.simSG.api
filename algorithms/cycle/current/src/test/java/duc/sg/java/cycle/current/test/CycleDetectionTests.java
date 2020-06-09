@@ -1,6 +1,8 @@
 package duc.sg.java.cycle.current.test;
 
-import duc.sg.java.cycle.all.InitAllCycleSubs;
+//import duc.sg.java.cycle.all.InitAllCycleSubs;
+
+import duc.sg.java.cycle.all.InitAllCycleSubs2;
 import duc.sg.java.cycle.current.CycleDetection;
 import duc.sg.java.model.Cabinet;
 import duc.sg.java.model.Cable;
@@ -91,7 +93,8 @@ public class CycleDetectionTests {
         cbl1.setFuses(f1, f2);
         cbl2.setFuses(f3, f4);
 
-        InitAllCycleSubs.init(subs1);
+//        InitAllCycleSubs.init(subs1);
+        InitAllCycleSubs2.init(subs1);
 
         Collection<Fuse> allFuses = subs1.extractFuses();
         genericTest(subs1, allFuses, f1, allFuses);
@@ -131,7 +134,7 @@ public class CycleDetectionTests {
         cbl2.setFuses(f3, f4);
         cbl3.setFuses(f5, f6);
 
-        InitAllCycleSubs.init(subs1);
+        InitAllCycleSubs2.init(subs1);
 
         Collection<Fuse> allFuses = subs1.extractFuses();
         List<Fuse> cycle = new ArrayList<>();
@@ -176,7 +179,7 @@ public class CycleDetectionTests {
         cbl2.setFuses(f3, f4);
         cbl3.setFuses(f5, f6);
 
-        InitAllCycleSubs.init(subs1);
+        InitAllCycleSubs2.init(subs1);
 
         Collection<Fuse> allFuses = subs1.extractFuses();
         List<Fuse> cycle = new ArrayList<>();
@@ -227,7 +230,7 @@ public class CycleDetectionTests {
         cbl3.setFuses(f5, f6);
         cbl4.setFuses(f7, f8);
 
-        InitAllCycleSubs.init(subs1);
+        InitAllCycleSubs2.init(subs1);
 
         Collection<Fuse> allFuses = subs1.extractFuses();
         List<Fuse> cycle = new ArrayList<>();
