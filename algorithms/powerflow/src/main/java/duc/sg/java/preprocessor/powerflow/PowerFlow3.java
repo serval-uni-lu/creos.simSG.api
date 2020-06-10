@@ -5,11 +5,11 @@ import duc.sg.java.model.Substation;
 
 import java.util.*;
 
-public class PowerFlow implements IPowerFlow {
+public class PowerFlow3 implements IPowerFlow {
     private Map<Fuse, Fuse[]> powerSrc;
     private Map<Fuse, Fuse[]> powerDest;
 
-    public PowerFlow() {
+    public PowerFlow3() {
         this.powerDest = new HashMap<>();
         this.powerSrc = new HashMap<>();
     }
