@@ -151,7 +151,7 @@ public class UncertainLoadApproximator {
 
         substation.updateAllFuses();
 
-        for (UncertainFuseStatesMatrix usfm : matrices) {
+         for (UncertainFuseStatesMatrix usfm : matrices) {
             var fuseStates = new DenseMatrix64F(usfm.getNbColumns(), usfm.getNbColumns(), true, usfm.getData());
 
             final var matConsumptions = new DenseMatrix64F(usfm.getNbColumns(), 1);

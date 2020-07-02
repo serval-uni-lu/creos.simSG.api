@@ -26,13 +26,16 @@ public class MultDblPoss2 implements Iterable<PossibilityDouble> {
         var possSet = new HashMap<Double, Integer>(possibilities.size());
 
         for(PossibilityDouble poss: possibilities) {
-            if(possSet.containsKey(poss.getValue())) {
-                int idx = possSet.get(poss.getValue());
+            double value = Math.round(poss.getValue()*100)/100.; //dirty workaround....
+            PossibilityDouble rounded = new PossibilityDouble(value, poss.getConfidence());
+
+            if(possSet.containsKey(value)) {
+                int idx = possSet.get(value);
                 PossibilityDouble current = res.get(idx);
-                res.set(idx, UMath.or(current, poss));
+                res.set(idx, UMath.or(current, rounded));
             } else {
-                res.add(poss);
-                possSet.put(poss.getValue(), res.size() - 1);
+                res.add(rounded);
+                possSet.put(value, res.size() - 1);
             }
         }
 

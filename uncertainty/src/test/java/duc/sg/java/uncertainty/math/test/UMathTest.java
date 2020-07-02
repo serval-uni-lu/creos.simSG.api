@@ -4,6 +4,7 @@ import duc.sg.java.uncertainty.Confidence;
 import duc.sg.java.uncertainty.MultDblePossibilities;
 import duc.sg.java.uncertainty.PossibilityDouble;
 import duc.sg.java.uncertainty.math.UMath;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UMathTest {
 
-
+    @Disabled
     @ParameterizedTest
     @MethodSource("duc.sg.java.uncertainty.math.test.UMathDataGenerator#generateConfAndData")
     public void testConfidenceAnd(Confidence confA, Confidence confB, double expected) {

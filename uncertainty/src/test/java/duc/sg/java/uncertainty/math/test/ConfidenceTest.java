@@ -1,18 +1,20 @@
 package duc.sg.java.uncertainty.math.test;
 
 import duc.sg.java.uncertainty.Confidence;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Disabled
 public class ConfidenceTest {
 
 
     @ParameterizedTest
     @MethodSource("duc.sg.java.uncertainty.math.test.ConfidenceDataGenerator#generateWrongProb")
-    public void testWringProb(double val) {
+    public void testWrongProb(double val) {
         var conf = new Confidence(1);
         assertThrows(IllegalArgumentException.class, () -> conf.setProbability(val));
     }

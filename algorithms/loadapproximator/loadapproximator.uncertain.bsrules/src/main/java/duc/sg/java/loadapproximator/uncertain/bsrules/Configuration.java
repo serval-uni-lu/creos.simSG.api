@@ -38,4 +38,36 @@ public class Configuration {
         };
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Configuration that = (Configuration) o;
+
+//        if(confidence != that.confidence) {
+//            return false;
+//        }
+
+        Iterator<Pair<Fuse, State>> thisFuseStateIt = this.getFuseStates();
+        while (thisFuseStateIt.hasNext()) {
+            Pair<Fuse, State> it = thisFuseStateIt.next();
+
+            Iterator<Pair<Fuse, State>> thatIt = that.getFuseStates();
+            boolean exists = false;
+            while (thatIt.hasNext()) {
+                Pair<Fuse, State> oIt = thatIt.next();
+                if(oIt.getFirst().equals(it.getFirst()) && oIt.getSecond().equals(it.getSecond())) {
+                    exists = true;
+                    break;
+                }
+            }
+            if(!exists) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }

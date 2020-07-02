@@ -4,10 +4,7 @@ import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ConfigurationMatrix implements Iterable<Configuration>{
     protected State[] states;
@@ -167,10 +164,51 @@ public class ConfigurationMatrix implements Iterable<Configuration>{
 
         }
 
-
-
-
        return string.toString();
+    }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ConfigurationMatrix that = (ConfigurationMatrix) o;
+
+        // Check equality of columns
+        var currentHashed = new HashSet<Fuse>();
+        Collections.addAll(currentHashed, columns);
+        for(Fuse oCol: that.columns) {
+            if(!currentHashed.contains(oCol)) {
+                return false;
+            }
+        }
+
+        // Check equality of confidence
+        if(confidences.size() != that.confidences.size()) {
+            return false;
+        }
+
+        for(Configuration conf: this) {
+            boolean exists = false;
+            for(Configuration confThat: that) {
+                if(confThat.equals(conf)) {
+                    exists = true;
+                    break;
+                }
+            }
+
+            if(!exists) {
+                return false;
+            }
+
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(maxClosedFuses);
     }
 }
