@@ -5,7 +5,7 @@
     <groupId>duc.sg.java</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <version>2020.04.0D-SNAPSHOT</version>
+    <version>2020.07.01</version>
     <modules>
         <module>model</module>
         <module>scenarios</module>
@@ -101,7 +101,7 @@
 
     <scm>
         <developerConnection>scm:git:git@bitbucket.org:sntcreos/ducpropagationjava.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>2020.07.01</tag>
     </scm>
 
 
