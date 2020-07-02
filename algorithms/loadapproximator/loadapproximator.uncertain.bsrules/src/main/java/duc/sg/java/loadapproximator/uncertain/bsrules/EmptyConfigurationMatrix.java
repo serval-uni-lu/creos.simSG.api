@@ -13,4 +13,11 @@ public class EmptyConfigurationMatrix extends ConfigurationMatrix {
         this.states = new State[0];
         this.columns = new Fuse[0];
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return true;
+    }
 }
