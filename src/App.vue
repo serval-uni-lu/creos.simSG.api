@@ -1,32 +1,51 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+    <section class="simsg">
+        <Header />
+       <NavigationBar />
+    </section>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+    import { Component, Vue } from 'vue-property-decorator';
+    import Header from "@/components/Header.vue";
+    import NavigationBar from "@/components/NavigationBar.vue";
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+    @Component({
+        components: {NavigationBar, Header}
+    })
+    export default class App extends Vue {
     }
-  }
-}
+</script>
+
+<style lang="scss" >
+    body, html {
+        margin: 0;
+        height: 100%;
+    }
+
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .simsg {
+        height: 100%;
+        font-family: 'Avenir', Helvetica, Arial, sans-serif;
+        color: #034164;
+
+        a {
+            text-decoration-line: none;
+            color: #2B92D1;
+        }
+    }
+
+    .simsg > header {
+        height: 10%;
+    }
+
+    .simsg > nav {
+        height: 5%;
+    }
+
 </style>
