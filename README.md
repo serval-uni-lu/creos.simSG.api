@@ -1,4 +1,4 @@
-# simsg-website
+# SimSG-Website
 
 ## Project setup
 ```
