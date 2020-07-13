@@ -10,18 +10,20 @@
         <module>model</module>
         <module>scenarios</module>
         <module>uncertainty</module>
-        <module>algorithms/validator/gridconfiguration</module>
+        <module>algorithms/validator/umatrix</module>
         <module>algorithms/importer/json</module>
         <module>algorithms/powerflow</module>
         <module>algorithms/cycle/all</module>
         <module>server/ws</module>
         <module>utils</module>
         <module>algorithms/cycle/current</module>
-        <module>algorithms/matrixbuilder/matrixbuilder.certain</module>
-        <module>algorithms/loadapproximator/loadapproximator.certain</module>
-        <module>algorithms/matrixbuilder/matrixbuilder.uncertain</module>
-        <module>algorithms/loadapproximator/loadapproximator.uncertain.naive</module>
-        <module>algorithms/loadapproximator/loadapproximator.uncertain.bsrules</module>
+        <module>algorithms/matrixbuilder/certain</module>
+        <module>algorithms/loadapproximator/certain</module>
+        <module>algorithms/matrixbuilder/uncertain</module>
+        <module>algorithms/loadapproximator/uncertain/naive</module>
+        <module>algorithms/loadapproximator/uncertain/bsrules</module>
+        <module>algorithms/loadapproximator/uncertain/multisubs/bsrules</module>
+        <module>algorithms/loadapproximator/uncertain/multisubs/naive</module>
     </modules>
 
     <name>DucPropagationJava</name>

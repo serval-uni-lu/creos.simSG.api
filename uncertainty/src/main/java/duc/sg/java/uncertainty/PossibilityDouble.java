@@ -1,6 +1,6 @@
 package duc.sg.java.uncertainty;
 
-public class PossibilityDouble {
+public class  PossibilityDouble {
     private double value;
     private Confidence confidence;
 
