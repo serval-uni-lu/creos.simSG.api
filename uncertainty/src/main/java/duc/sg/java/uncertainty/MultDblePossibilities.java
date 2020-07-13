@@ -7,8 +7,8 @@ import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 
 public class MultDblePossibilities implements Iterable<PossibilityDouble> {
-    private List<PossibilityDouble> possibilities;
-    private Map<Double, Integer> possIdx;
+    private final List<PossibilityDouble> possibilities;
+    private final Map<Double, Integer> possIdx;
 
     public MultDblePossibilities() {
         possibilities = new ArrayList<>();
