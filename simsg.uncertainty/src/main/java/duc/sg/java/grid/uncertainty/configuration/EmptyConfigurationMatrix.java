@@ -1,4 +1,4 @@
-package duc.sg.java.loadapproximator.uncertain.bsrules;
+package duc.sg.java.grid.uncertainty.configuration;
 
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;

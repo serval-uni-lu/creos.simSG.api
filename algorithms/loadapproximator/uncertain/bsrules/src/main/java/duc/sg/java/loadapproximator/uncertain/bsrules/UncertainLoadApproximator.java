@@ -1,6 +1,9 @@
 package duc.sg.java.loadapproximator.uncertain.bsrules;
 
 import duc.sg.java.cycle.all.InitAllCycleSubs2;
+import duc.sg.java.grid.uncertainty.configuration.Configuration;
+import duc.sg.java.grid.uncertainty.configuration.ConfigurationMatrix;
+import duc.sg.java.grid.uncertainty.configuration.EmptyConfigurationMatrix;
 import duc.sg.java.matrix.certain.MatrixBuilder;
 import duc.sg.java.matrix.uncertain.UncertainFuseStatesMatrix;
 import duc.sg.java.model.Fuse;
@@ -8,6 +11,7 @@ import duc.sg.java.model.State;
 import duc.sg.java.model.Substation;
 import duc.sg.java.uncertainty.PossibilityDouble;
 import duc.sg.java.utils.BaseTransform;
+import duc.sg.java.utils.Pair;
 import duc.sg.java.validator.rules.CircleRule;
 import org.ejml.alg.dense.linsol.svd.SolvePseudoInverseSvd;
 import org.ejml.data.DenseMatrix64F;
@@ -107,7 +111,7 @@ public class UncertainLoadApproximator {
 
         }
 
-        if(gridConf.confidences.isEmpty()) {
+        if(gridConf.getConfidences().isEmpty()) {
             return new EmptyConfigurationMatrix();
         }
 

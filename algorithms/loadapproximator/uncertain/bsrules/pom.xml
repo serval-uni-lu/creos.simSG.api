@@ -51,6 +51,11 @@
             <artifactId>powerflow</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>duc.sg.java</groupId>
+            <artifactId>simsg.uncertainty</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
 
 
