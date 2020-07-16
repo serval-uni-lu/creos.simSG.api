@@ -1,4 +1,4 @@
-package duc.sg.java.loadapproximator.uncertain.bsrules;
+package duc.sg.java.utils;
 
 public class Pair<F, S> {
     private F first;

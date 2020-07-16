@@ -2,6 +2,7 @@ package duc.sg.java.loadapproximator.uncertain.bsrules;
 
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;
+import duc.sg.java.grid.uncertainty.configuration.ConfigurationMatrix;
 
 import java.util.HashMap;
 

@@ -40,12 +40,14 @@ public class Substation extends Entity {
         return false;
     }
 
-    private <T> void extract(Collection<T> collection, Collector<T> collector) {
+    public <T> void extract(Collection<T> collection, Collector<T> collector) {
         var waiting = new Stack<Fuse>();
         var inWaitingList = new HashSet<Fuse>(); //real optimization ??
         var visited = new HashSet<Fuse>();
 
-        waiting.add(this.getFuses().get(0));
+        if(!this.getFuses().isEmpty()) {
+            waiting.add(this.getFuses().get(0));
+        }
 
         while (!waiting.isEmpty()) {
             var current = waiting.pop();
@@ -90,7 +92,7 @@ public class Substation extends Entity {
 
 
 
-    private interface Collector<T> {
+    public interface Collector<T> {
         void collect(Collection<T> collection, Fuse currentFuse);
     }
 }

@@ -1,4 +1,4 @@
-package duc.sg.java.loadapproximator.uncertain.bsrules;
+package duc.sg.java.grid.uncertainty.configuration;
 
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;
@@ -25,6 +25,9 @@ public class ConfigurationMatrix implements Iterable<Configuration>{
         this.confidences = new ArrayList<>();
     }
 
+    public List<Double> getConfidences() {
+        return confidences;
+    }
 
     @Override
     public Iterator<Configuration> iterator() {

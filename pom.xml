@@ -24,6 +24,7 @@
         <module>algorithms/loadapproximator/uncertain/bsrules</module>
         <module>algorithms/loadapproximator/uncertain/multisubs/bsrules</module>
         <module>algorithms/loadapproximator/uncertain/multisubs/naive</module>
+        <module>simsg.uncertainty</module>
     </modules>
 
     <name>DucPropagationJava</name>
