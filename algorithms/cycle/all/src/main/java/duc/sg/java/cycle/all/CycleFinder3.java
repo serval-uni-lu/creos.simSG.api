@@ -1,8 +1,12 @@
 package duc.sg.java.cycle.all;
 
 import duc.sg.java.model.Fuse;
+import duc.sg.java.model.Substation;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.PriorityQueue;
 
 public class CycleFinder3 {
     private static final int STD_DIST = 1;
@@ -43,6 +47,10 @@ public class CycleFinder3 {
 
             if(current.equals(end)) {
                 break;//we reach the destination
+            }
+
+            if(!current.equals(start) && (current.getOwner() instanceof Substation)) {
+                continue;
             }
 
             for(Fuse neighbor: current.getNeighbors()) {
