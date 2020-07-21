@@ -5,7 +5,8 @@ import java.util.*;
 
 public class Substation extends Entity {
     private Collection<Fuse> allFuses;
-    private Collection<Fuse[]> cycles;
+//    private Collection<Fuse[]> cycles;
+    private SmartGrid grid;
 
 
 
@@ -17,13 +18,13 @@ public class Substation extends Entity {
         return allFuses;
     }
 
-    public Collection<Fuse[]> getCycles() {
-        return cycles;
-    }
-
-    public void setCycles(Collection<Fuse[]> cycles) {
-        this.cycles = cycles;
-    }
+//    public Collection<Fuse[]> getCycles() {
+//        return cycles;
+//    }
+//
+//    public void setCycles(Collection<Fuse[]> cycles) {
+//        this.cycles = cycles;
+//    }
 
     @Override
     public boolean isDeadEnd() {
@@ -94,5 +95,13 @@ public class Substation extends Entity {
 
     public interface Collector<T> {
         void collect(Collection<T> collection, Fuse currentFuse);
+    }
+
+    void setGrid(SmartGrid grid) {
+        this.grid = grid;
+    }
+
+    public SmartGrid getGrid() {
+        return grid;
     }
 }

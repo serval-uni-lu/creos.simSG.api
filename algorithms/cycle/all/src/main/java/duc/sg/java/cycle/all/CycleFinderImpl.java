@@ -5,11 +5,12 @@ import duc.sg.java.model.Substation;
 
 import java.util.*;
 
-public class InitAllCycleSubs2 {
-    private InitAllCycleSubs2() {}
+class CycleFinderImpl implements CycleFinder {
+    CycleFinderImpl() {}
 
-    public static void init(Substation substation) {
-        List<Fuse[]> cycles = new ArrayList<>();
+    @Override
+    public void getAndSaveCycles(Substation substation) {
+        List<Cycle> cycles = new ArrayList<>();
         var processed = new HashSet<Fuse>();
 
         Collection<Fuse> fuses = substation.extractFuses();
@@ -24,10 +25,11 @@ public class InitAllCycleSubs2 {
                         Fuse f2 = entFuses.get(j);
 
                         if(!processed.contains(f1) && !processed.contains(f2)) {
-                            Fuse[] cycle = CycleFinder3.findCycle(f1, f2);
-                            if(cycle.length > 1) {
+                            Optional<Cycle> optCycle = DetectCycle.findCycle(f1, f2);
+                            if(optCycle.isPresent()) {
+                                Cycle cycle = optCycle.get();
                                 cycles.add(cycle);
-                                Collections.addAll(processed, cycle);
+                                Collections.addAll(processed, cycle.getFuses());
                             }
                         }
 
@@ -38,7 +40,9 @@ public class InitAllCycleSubs2 {
             }
         }
 
-        substation.setCycles(cycles);
+        substation.getGrid().save(CycleUtils.getKey(substation), cycles);
+
     }
+
 
 }

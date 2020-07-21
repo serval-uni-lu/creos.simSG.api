@@ -1,7 +1,7 @@
 package duc.sg.java.matrix.certain;
 
-import duc.sg.java.cycle.all.InitAllCycleSubs2;
-import duc.sg.java.cycle.current.CycleDetection;
+import duc.sg.java.cycle.all.CycleFinderImpl;
+import duc.sg.java.cycle.all.CycleUtils;
 import duc.sg.java.matrix.certain.utils.Matrix;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Entity;
@@ -15,7 +15,7 @@ public class MatrixBuilder {
 
     public static FuseStatesMatrix build(Substation substation) {
 //        InitAllCycleSubs.init2(substation);
-        InitAllCycleSubs2.init(substation);
+        CycleFinderImpl.init(substation);
 
         final var idxFuses = new HashMap<Fuse, Integer>();
         var idxLast = new int[]{-1};
@@ -67,7 +67,7 @@ public class MatrixBuilder {
                         }
 
                         if(!fuseInCircles.contains(fuse)) {
-                            Fuse[] circle = CycleDetection.cycleFrom(substation, fuse);
+                            Fuse[] circle = CycleUtils.cycleFrom(substation, fuse);
                             if(circle.length != 0) {
                                 Collections.addAll(fuseInCircles, circle);
 

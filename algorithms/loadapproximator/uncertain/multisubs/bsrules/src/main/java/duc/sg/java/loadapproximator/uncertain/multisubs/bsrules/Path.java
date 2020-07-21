@@ -1,6 +1,6 @@
 package duc.sg.java.loadapproximator.uncertain.multisubs.bsrules;
 
-import duc.sg.java.cycle.all.InitAllCycleSubs2;
+import duc.sg.java.cycle.all.CycleFinderImpl;
 import duc.sg.java.model.Cabinet;
 import duc.sg.java.model.Entity;
 import duc.sg.java.model.Fuse;
@@ -58,7 +58,7 @@ public class Path {
     public Collection<Fuse[]> getCircles() {
         var subStart = (Substation) startFuse.getOwner();
         if(subStart.getCycles() == null) {
-            InitAllCycleSubs2.init(subStart);
+            CycleFinderImpl.init(subStart);
         }
         return subStart.getCycles();
     }
