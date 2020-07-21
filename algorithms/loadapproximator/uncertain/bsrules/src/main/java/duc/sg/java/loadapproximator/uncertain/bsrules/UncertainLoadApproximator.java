@@ -1,6 +1,6 @@
 package duc.sg.java.loadapproximator.uncertain.bsrules;
 
-import duc.sg.java.cycle.all.InitAllCycleSubs2;
+import duc.sg.java.cycle.all.CycleFinderImpl;
 import duc.sg.java.grid.uncertainty.configuration.Configuration;
 import duc.sg.java.grid.uncertainty.configuration.ConfigurationMatrix;
 import duc.sg.java.grid.uncertainty.configuration.EmptyConfigurationMatrix;
@@ -54,7 +54,7 @@ public class UncertainLoadApproximator {
         UFuseDetector.detectAndModifyUFuses(substation);
 
 
-        InitAllCycleSubs2.init(substation);
+        CycleFinderImpl.init(substation);
         substation.updateAllFuses();
         Collection<Fuse[]> allCycles = substation.getCycles();
 

@@ -16,7 +16,6 @@
         <module>algorithms/cycle/all</module>
         <module>server/ws</module>
         <module>utils</module>
-        <module>algorithms/cycle/current</module>
         <module>algorithms/matrixbuilder/certain</module>
         <module>algorithms/loadapproximator/certain</module>
         <module>algorithms/matrixbuilder/uncertain</module>

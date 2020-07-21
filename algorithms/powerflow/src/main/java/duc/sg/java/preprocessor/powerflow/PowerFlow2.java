@@ -1,6 +1,6 @@
 package duc.sg.java.preprocessor.powerflow;
 
-import duc.sg.java.cycle.all.InitAllCycleSubs2;
+import duc.sg.java.cycle.all.CycleFinderImpl;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
 
@@ -9,7 +9,7 @@ import java.util.*;
 public class PowerFlow2 implements IPowerFlow {
     @Override
     public Fuse[] getFuseOnMandatoryPF(Substation substation) {
-        InitAllCycleSubs2.init(substation);
+        CycleFinderImpl.init(substation);
         if(substation.getAllFuses() == null) {
             substation.updateAllFuses();
         }

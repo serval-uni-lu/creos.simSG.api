@@ -1,15 +1,16 @@
 package duc.sg.java.loadapproximator.uncertain.multisubs.bsrules;
 
-import duc.sg.java.cycle.all.InitAllCycleSubs2;
+import duc.sg.java.cycle.all.CycleFinderImpl;
 import duc.sg.java.importer.json.JsonImporter;
 import duc.sg.java.importer.json.ValidationException;
-import duc.sg.java.model.*;
+import duc.sg.java.model.Fuse;
+import duc.sg.java.model.SmartGrid;
+import duc.sg.java.model.Substation;
 import duc.sg.java.utils.OArrays;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
-import java.util.stream.Stream;
 
 public class GetPaths {
     private GetPaths(){}
@@ -62,64 +63,6 @@ public class GetPaths {
 
     }
 
-//    private static Path getPath(Substation start, Fuse startFuse, Substation end) {
-//        final var distanceMap = new HashMap<Entity, Integer>();
-//        var toVisit = new PriorityQueue<Entity>((e1, e2) -> {
-//            int distE1 = distanceMap.getOrDefault(e1, Integer.MAX_VALUE);
-//            int distE2 = distanceMap.getOrDefault(e2, Integer.MAX_VALUE);
-//            return Integer.compare(distE1, distE2);
-//        });
-//
-//        var entityVisited = new HashSet<Entity>();
-//        var previousMap = new HashMap<Entity, Entity>();
-//
-//        distanceMap.put(start, 0);
-//        entityVisited.add(start);
-//
-//        navigate(distanceMap, toVisit, entityVisited, previousMap, start, startFuse.getOpposite().getOwner());
-//
-//
-//        while (!toVisit.isEmpty()) {
-//            Entity current = toVisit.poll();
-//            entityVisited.add(current);
-//
-//            if(current instanceof Substation) {
-//                continue;
-//            }
-//
-//            for(Fuse fuse: current.getFuses()) {
-//                Entity nextEntity = fuse.getOpposite().getOwner();
-//                navigate(distanceMap, toVisit, entityVisited, previousMap, current, nextEntity);
-//            }
-//        }
-//
-//        var shortestPath = new HashSet<Cabinet>();
-//
-//        if(previousMap.containsKey(end)) {
-//            Entity current = previousMap.get(end);
-//            while(previousMap.containsKey(current)) {
-//                shortestPath.add((Cabinet) current);
-//                addCircleMembers(current, start, shortestPath);
-//                current = previousMap.get(current);
-//            }
-//        }
-//
-//        return new Path(start, end, shortestPath);
-//    }
-
-    private static void addCircleMembers(Entity current, Substation start, HashSet<Cabinet> shortestPath) {
-        for(Fuse[] circle: start.getCycles()) {
-            Cabinet[] circleEnt = Stream.of(circle)
-                    .map(Fuse::getOwner)
-                    .distinct()
-                    .filter((Entity ent) -> ent instanceof Cabinet)
-                    .toArray(Cabinet[]::new);
-            if (OArrays.contains(circleEnt, current)) {
-                Collections.addAll(shortestPath, circleEnt);
-            }
-        }
-    }
-
     private static void addCircleMembersFuses(Substation start, Fuse current, HashSet<Fuse> shortestPath) {
         for(Fuse[] circle: start.getCycles()) {
             if(OArrays.contains(circle, current)) {
@@ -140,21 +83,9 @@ public class GetPaths {
         }
     }
 
-    private static void navigate(HashMap<Entity, Integer> distanceMap, PriorityQueue<Entity> toVisit, HashSet<Entity> entityVisited, HashMap<Entity, Entity> previousMap, Entity current, Entity nextEntity) {
-        if (!entityVisited.contains(nextEntity)) {
-            int newDistance = distanceMap.get(current) + 1;
-            if (newDistance < distanceMap.getOrDefault(nextEntity, Integer.MAX_VALUE)) {
-                toVisit.remove(nextEntity);
-                distanceMap.put(nextEntity, newDistance);
-                previousMap.put(nextEntity, current);
-                toVisit.add(nextEntity);
-            }
-        }
-    }
-
     public static Collection<Path> getPaths(Substation sub1, Substation sub2) {
         if(sub1.getCycles() == null) {
-            InitAllCycleSubs2.init(sub1);
+            CycleFinderImpl.init(sub1);
         }
 
         var res = new ArrayList<Path>();
@@ -214,17 +145,6 @@ public class GetPaths {
         Substation subs5 = grid.getSubstation("Substation 3").get();
 
         Collection<Path> paths = getPaths(subs4, subs5);
-//        paths.forEach((Path path) -> {
-//            String toShow = path.getAllEntities()
-//                    .stream()
-//                    .map(Entity::getName)
-//                    .reduce("", (String name1, String name2) -> {
-//                        if(name1.equals("")) return name2;
-//                        return name1 + ", " + name2;
-//                    });
-//            System.out.println(toShow);
-//
-//        });
         paths.forEach(System.out::println);
 
     }
