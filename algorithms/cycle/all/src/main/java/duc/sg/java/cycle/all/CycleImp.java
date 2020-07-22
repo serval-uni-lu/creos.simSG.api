@@ -1,9 +1,12 @@
 package duc.sg.java.cycle.all;
 
 import duc.sg.java.model.Fuse;
+import duc.sg.java.utils.StringAccumlator;
+
+import java.util.stream.Stream;
 
 class CycleImp implements Cycle {
-    final Fuse[] fuses;
+    Fuse[] fuses;
 
     public CycleImp(Fuse[] fuses) {
         this.fuses = fuses;
@@ -33,5 +36,16 @@ class CycleImp implements Cycle {
             }
         }
         return null; //should never be executed
+    }
+
+    @Override
+    public String toString() {
+        String fuseNames = Stream.of(fuses)
+                .map(Fuse::getName)
+                .reduce("", StringAccumlator.INSTANCE);
+
+        return "Cycle(" +
+                "fuses=" + fuseNames +
+                ')';
     }
 }
