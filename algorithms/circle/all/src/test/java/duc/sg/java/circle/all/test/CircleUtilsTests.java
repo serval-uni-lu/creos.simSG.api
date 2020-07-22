@@ -1,8 +1,8 @@
-package duc.sg.java.cycle.all.test;
+package duc.sg.java.circle.all.test;
 
-import duc.sg.java.cycle.all.Cycle;
-import duc.sg.java.cycle.all.CycleFinder;
-import duc.sg.java.cycle.all.CycleUtils;
+import duc.sg.java.circle.all.Circle;
+import duc.sg.java.circle.all.CircleFinder;
+import duc.sg.java.circle.all.CircleUtils;
 import duc.sg.java.model.*;
 import duc.sg.java.utils.BaseTransform;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,7 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CycleUtilsTests {
+public class CircleUtilsTests {
 
     private void genericTest(Substation substation, Collection<Fuse> allFuses, Fuse start, Collection<Fuse> expected) {
         int nbPossibilities = (int) Math.pow(2, allFuses.size());
@@ -38,14 +38,14 @@ public class CycleUtilsTests {
 
             String fuseStateStr = Arrays.toString(fuseState);
 
-            Optional<Cycle> actualArr = CycleUtils.cycleFrom(substation, start);
+            Optional<Circle> actualArr = CircleUtils.circleFrom(substation, start);
 
             if(expected.size() == 0) {
                 assertTrue(actualArr.isEmpty());
             } else {
                 assertTrue(actualArr.isPresent());
 
-                Cycle actArr = actualArr.get();
+                Circle actArr = actualArr.get();
 
                 List<Fuse> actual = Arrays.asList(actArr.getFuses());
 
@@ -53,7 +53,7 @@ public class CycleUtilsTests {
                     assertTrue(actArr.isValid());
                     assertEquals(expected.size(), actual.size(), "Error for: " + fuseStateStr);
                     for (Fuse f : expected) {
-                        String errorMsg = "Cycle doesn't contain " +
+                        String errorMsg = "circle doesn't contain " +
                                 f.getName() +
                                 ". Start: " +
                                 start.getName() +
@@ -104,7 +104,7 @@ public class CycleUtilsTests {
 
         SmartGrid grid = new SmartGrid();
         grid.addSubstations(subs1);
-        CycleFinder.getDefault().findAndSaveCycles(subs1);
+        CircleFinder.getDefault().findAndSaveCircles(subs1);
 
         Collection<Fuse> allFuses = subs1.extractFuses();
         genericTest(subs1, allFuses, f1, allFuses);
@@ -146,15 +146,15 @@ public class CycleUtilsTests {
 
         SmartGrid grid = new SmartGrid();
         grid.addSubstations(subs1);
-        CycleFinder.getDefault().findAndSaveCycles(subs1);
+        CircleFinder.getDefault().findAndSaveCircles(subs1);
 
         Collection<Fuse> allFuses = subs1.extractFuses();
-        List<Fuse> cycle = new ArrayList<>();
-        Collections.addAll(cycle, f1, f2, f3, f4);
-        genericTest(subs1, allFuses, f1, cycle);
-        genericTest(subs1, allFuses, f2, cycle);
-        genericTest(subs1, allFuses, f3, cycle);
-        genericTest(subs1, allFuses, f4, cycle);
+        List<Fuse> circle = new ArrayList<>();
+        Collections.addAll(circle, f1, f2, f3, f4);
+        genericTest(subs1, allFuses, f1, circle);
+        genericTest(subs1, allFuses, f2, circle);
+        genericTest(subs1, allFuses, f3, circle);
+        genericTest(subs1, allFuses, f4, circle);
         genericTest(subs1, allFuses, f5, new ArrayList<>());
         genericTest(subs1, allFuses, f6, new ArrayList<>());
     }
@@ -193,15 +193,15 @@ public class CycleUtilsTests {
 
         SmartGrid grid = new SmartGrid();
         grid.addSubstations(subs1);
-        CycleFinder.getDefault().findAndSaveCycles(subs1);
+        CircleFinder.getDefault().findAndSaveCircles(subs1);
 
         Collection<Fuse> allFuses = subs1.extractFuses();
-        List<Fuse> cycle = new ArrayList<>();
-        Collections.addAll(cycle, f1, f2, f3, f4);
-        genericTest(subs1, allFuses, f1, cycle);
-        genericTest(subs1, allFuses, f2, cycle);
-        genericTest(subs1, allFuses, f3, cycle);
-        genericTest(subs1, allFuses, f4, cycle);
+        List<Fuse> circle = new ArrayList<>();
+        Collections.addAll(circle, f1, f2, f3, f4);
+        genericTest(subs1, allFuses, f1, circle);
+        genericTest(subs1, allFuses, f2, circle);
+        genericTest(subs1, allFuses, f3, circle);
+        genericTest(subs1, allFuses, f4, circle);
         genericTest(subs1, allFuses, f5, new ArrayList<>());
         genericTest(subs1, allFuses, f6, new ArrayList<>());
 
@@ -246,15 +246,15 @@ public class CycleUtilsTests {
 
         SmartGrid grid = new SmartGrid();
         grid.addSubstations(subs1);
-        CycleFinder.getDefault().findAndSaveCycles(subs1);
+        CircleFinder.getDefault().findAndSaveCircles(subs1);
 
         Collection<Fuse> allFuses = subs1.extractFuses();
-        List<Fuse> cycle = new ArrayList<>();
-        Collections.addAll(cycle, f1, f2, f3, f4);
-        genericTest(subs1, allFuses, f1, cycle);
-        genericTest(subs1, allFuses, f2, cycle);
-        genericTest(subs1, allFuses, f3, cycle);
-        genericTest(subs1, allFuses, f4, cycle);
+        List<Fuse> circle = new ArrayList<>();
+        Collections.addAll(circle, f1, f2, f3, f4);
+        genericTest(subs1, allFuses, f1, circle);
+        genericTest(subs1, allFuses, f2, circle);
+        genericTest(subs1, allFuses, f3, circle);
+        genericTest(subs1, allFuses, f4, circle);
         genericTest(subs1, allFuses, f5, new ArrayList<>());
         genericTest(subs1, allFuses, f6, new ArrayList<>());
         genericTest(subs1, allFuses, f7, new ArrayList<>());
@@ -309,24 +309,24 @@ public class CycleUtilsTests {
 
         SmartGrid grid = new SmartGrid();
         grid.addSubstations(subs1);
-        CycleFinder.getDefault().findAndSaveCycles(subs1);
+        CircleFinder.getDefault().findAndSaveCircles(subs1);
 
-        List<Cycle> allCycles = CycleFinder.getDefault().getCycles(subs1);
-        assertEquals(2, allCycles.size());
+        List<Circle> allCircles = CircleFinder.getDefault().getCircles(subs1);
+        assertEquals(2, allCircles.size());
 
         var expectedFirst = new HashSet<Fuse>(4);
         Collections.addAll(expectedFirst, f3, f4, f5, f6);
-        assertSuccPara(allCycles.get(0), expectedFirst);
+        assertSuccPara(allCircles.get(0), expectedFirst);
 
         var expectedSecond = new HashSet<Fuse>(4);
         Collections.addAll(expectedSecond, f7, f8, f9, f10);
-        assertSuccPara(allCycles.get(1), expectedSecond);
+        assertSuccPara(allCircles.get(1), expectedSecond);
 
     }
 
-    private void assertSuccPara(Cycle cycle, Set<Fuse> expected) {
-        assertEquals(expected.size(), cycle.getFuses().length);
-        for (Fuse f: cycle.getFuses()) {
+    private void assertSuccPara(Circle circle, Set<Fuse> expected) {
+        assertEquals(expected.size(), circle.getFuses().length);
+        for (Fuse f: circle.getFuses()) {
             assertTrue(expected.contains(f));
         }
     }
@@ -382,24 +382,24 @@ public class CycleUtilsTests {
 
         SmartGrid grid = new SmartGrid();
         grid.addSubstations(subs1);
-        CycleFinder.getDefault().findAndSaveCycles(subs1);
+        CircleFinder.getDefault().findAndSaveCircles(subs1);
 
         Collection<Fuse> allFuses = subs1.extractFuses();
-        List<Fuse> cycle = new ArrayList<>();
-        Collections.addAll(cycle, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12);
+        List<Fuse> circle = new ArrayList<>();
+        Collections.addAll(circle, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12);
 
         genericTest(subs1, allFuses, f1, new ArrayList<>());
         genericTest(subs1, allFuses, f2, new ArrayList<>());
-        genericTest(subs1, allFuses, f3, cycle);
-        genericTest(subs1, allFuses, f4, cycle);
-        genericTest(subs1, allFuses, f5, cycle);
-        genericTest(subs1, allFuses, f6, cycle);
-        genericTest(subs1, allFuses, f7, cycle);
-        genericTest(subs1, allFuses, f8, cycle);
-        genericTest(subs1, allFuses, f9, cycle);
-        genericTest(subs1, allFuses, f10, cycle);
-        genericTest(subs1, allFuses, f11, cycle);
-        genericTest(subs1, allFuses, f12, cycle);
+        genericTest(subs1, allFuses, f3, circle);
+        genericTest(subs1, allFuses, f4, circle);
+        genericTest(subs1, allFuses, f5, circle);
+        genericTest(subs1, allFuses, f6, circle);
+        genericTest(subs1, allFuses, f7, circle);
+        genericTest(subs1, allFuses, f8, circle);
+        genericTest(subs1, allFuses, f9, circle);
+        genericTest(subs1, allFuses, f10, circle);
+        genericTest(subs1, allFuses, f11, circle);
+        genericTest(subs1, allFuses, f12, circle);
     }
 
 
@@ -411,7 +411,7 @@ public class CycleUtilsTests {
                                                                       |-[f11]----(cbl6)----[f12]--|
      */
     @Test
-    public void testInnerSimpleCycle() {
+    public void testInnerSimplecircle() {
         Substation subs1 = new Substation("subs1");
         Cabinet c1 = new Cabinet("c1");
         Cabinet c2 = new Cabinet("c2");
@@ -459,18 +459,18 @@ public class CycleUtilsTests {
 
         SmartGrid grid = new SmartGrid();
         grid.addSubstations(subs1);
-        CycleFinder.getDefault().findAndSaveCycles(subs1);
+        CircleFinder.getDefault().findAndSaveCircles(subs1);
 
-        List<Cycle> allCycles = CycleFinder.getDefault().getCycles(subs1);
+        List<Circle> allCircles = CircleFinder.getDefault().getCircles(subs1);
 
-        assertEquals(2, allCycles.size());
+        assertEquals(2, allCircles.size());
         var expectedFirst = new HashSet<Fuse>();
         Collections.addAll(expectedFirst, f9, f10, f11, f12);
-        assertSuccPara(allCycles.get(0), expectedFirst);
+        assertSuccPara(allCircles.get(0), expectedFirst);
 
         var expectedSecond = new HashSet<Fuse>();
         Collections.addAll(expectedSecond, f9, f10, f11, f12, f3, f4, f5, f6, f7, f8, f13, f14);
-        assertSuccPara(allCycles.get(1), expectedSecond);
+        assertSuccPara(allCircles.get(1), expectedSecond);
     }
 
     /*
@@ -481,7 +481,7 @@ public class CycleUtilsTests {
                                                                       |-[f13]----(cbl7)----[f14]-c5-[f15]----(cbl8)----[f16]-|
      */
     @Test
-    public void testInnerComplexCycle() {
+    public void testInnerComplexcircle() {
         Substation subs1 = new Substation("subs1");
         Cabinet c1 = new Cabinet("c1");
         Cabinet c2 = new Cabinet("c2");
@@ -541,18 +541,18 @@ public class CycleUtilsTests {
 
         SmartGrid grid = new SmartGrid();
         grid.addSubstations(subs1);
-        CycleFinder.getDefault().findAndSaveCycles(subs1);
+        CircleFinder.getDefault().findAndSaveCircles(subs1);
 
-        List<Cycle> allCycles = CycleFinder.getDefault().getCycles(subs1);
-        assertEquals(2, allCycles.size());
+        List<Circle> allCircles = CircleFinder.getDefault().getCircles(subs1);
+        assertEquals(2, allCircles.size());
 
         var expectedFirst = new HashSet<Fuse>();
         Collections.addAll(expectedFirst, f11, f12, f16, f15, f14, f13, f9, f10);
-        assertSuccPara(allCycles.get(0), expectedFirst);
+        assertSuccPara(allCircles.get(0), expectedFirst);
 
         var expectedSecond = new HashSet<Fuse>();
         Collections.addAll(expectedSecond, f18, f17, f12, f11, f10, f9, f8, f7, f3, f4, f5, f6, f16, f15, f14, f13);
-        assertSuccPara(allCycles.get(1), expectedSecond);
+        assertSuccPara(allCircles.get(1), expectedSecond);
     }
 
     /*
@@ -563,7 +563,7 @@ public class CycleUtilsTests {
                                                                       |-[f13]----(cbl7)----[f14]-c5-[f15]----(cbl8)----[f16]-|
      */
     @Test
-    public void testInnerComplex2Cycle() {
+    public void testInnerComplex2circle() {
         Substation subs1 = new Substation("subs1");
         Cabinet c1 = new Cabinet("c1");
         Cabinet c2 = new Cabinet("c2");
@@ -617,18 +617,18 @@ public class CycleUtilsTests {
 
         SmartGrid grid = new SmartGrid();
         grid.addSubstations(subs1);
-        CycleFinder.getDefault().findAndSaveCycles(subs1);
+        CircleFinder.getDefault().findAndSaveCircles(subs1);
 
-        List<Cycle> allCycles = CycleFinder.getDefault().getCycles(subs1);
-        assertEquals(2, allCycles.size());
+        List<Circle> allCircles = CircleFinder.getDefault().getCircles(subs1);
+        assertEquals(2, allCircles.size());
 
         var expectedFirst = new HashSet<Fuse>();
         Collections.addAll(expectedFirst, f16, f15, f14, f13, f9, f10);
-        assertSuccPara(allCycles.get(0), expectedFirst);
+        assertSuccPara(allCircles.get(0), expectedFirst);
 
         var expectedSecond = new HashSet<Fuse>();
         Collections.addAll(expectedSecond, f18, f17, f10, f9, f8, f7, f3, f4, f5, f6, f16, f15, f14, f13);
-        assertSuccPara(allCycles.get(1), expectedSecond);
+        assertSuccPara(allCircles.get(1), expectedSecond);
     }
 
 }

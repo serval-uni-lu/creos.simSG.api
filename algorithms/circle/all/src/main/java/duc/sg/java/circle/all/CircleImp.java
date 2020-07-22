@@ -1,14 +1,14 @@
-package duc.sg.java.cycle.all;
+package duc.sg.java.circle.all;
 
 import duc.sg.java.model.Fuse;
 import duc.sg.java.utils.StringAccumlator;
 
 import java.util.stream.Stream;
 
-class CycleImp implements Cycle {
+class CircleImp implements Circle {
     Fuse[] fuses;
 
-    public CycleImp(Fuse[] fuses) {
+    public CircleImp(Fuse[] fuses) {
         this.fuses = fuses;
     }
 
