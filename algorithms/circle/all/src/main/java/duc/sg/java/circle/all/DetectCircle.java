@@ -1,15 +1,15 @@
-package duc.sg.java.cycle.all;
+package duc.sg.java.circle.all;
 
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
 
 import java.util.*;
 
-class DetectCycle {
+class DetectCircle {
     private static final int STD_DIST = 1;
     private static final int SAME_OWNER_DIST = 10; //to avoid path to cross too often an entity
 
-    private DetectCycle(){}
+    private DetectCircle(){}
 
 
     private static int incNewDist(Fuse current, Fuse neighbour) {
@@ -21,8 +21,8 @@ class DetectCycle {
     }
 
     /**
-     * Retrieve the cycle, if it exists, between two fuses.
-     * The cycle, if it exists, is composed of all fuses that belong to the shortest path from the first fuse to the
+     * Retrieve the circle, if it exists, between two fuses.
+     * The circle, if it exists, is composed of all fuses that belong to the shortest path from the first fuse to the
      * second. We use the Dijkstra's algorithm.
      *
      * @param start
@@ -30,7 +30,7 @@ class DetectCycle {
      *
      * @return
      */
-    static Optional<Cycle> findCycle(Fuse start, Fuse end) {
+    static Optional<Circle> findCircle(Fuse start, Fuse end) {
         if(start == null || end == null || start.equals(end) || !start.getOwner().equals(end.getOwner())) {
             return Optional.empty();
         }
@@ -76,20 +76,20 @@ class DetectCycle {
         return buildCycle(start, end, previousMap);
     }
 
-    private static Optional<Cycle> buildCycle(Fuse start, Fuse end, HashMap<Fuse, Fuse> previousMap) {
-        var cycle = new ArrayList<Fuse>();
+    private static Optional<Circle> buildCycle(Fuse start, Fuse end, HashMap<Fuse, Fuse> previousMap) {
+        var circle = new ArrayList<Fuse>();
         Fuse current = end;
         while (previousMap.containsKey(current)) {
-            cycle.add(current);
+            circle.add(current);
             current = previousMap.get(current);
         }
-        cycle.add(start);
+        circle.add(start);
 
-        if(cycle.size() == 1) {
+        if(circle.size() == 1) {
             return Optional.empty();
         }
 
-        return Optional.of(new CycleImp(cycle.toArray(Fuse[]::new)));
+        return Optional.of(new CircleImp(circle.toArray(Fuse[]::new)));
     }
 
 

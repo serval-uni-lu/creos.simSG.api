@@ -1,6 +1,6 @@
 package duc.sg.java.validator.umatrix;
 
-import duc.sg.java.cycle.all.CycleUtils;
+import duc.sg.java.circle.all.CircleUtils;
 import duc.sg.java.model.Entity;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;
@@ -127,7 +127,7 @@ public class PossibilityMatrixBuilder1 {
                 {
                     Fuse[] cycle;
                     if(!idxCycles.containsKey(currentFuse)) {
-                        cycle = CycleUtils.cycleFrom(substation, currentFuse);
+                        cycle = CircleUtils.circleFrom(substation, currentFuse);
                         for (var fuseC: cycle) {
                             idxCycles.put(fuseC, cycle);
                         }

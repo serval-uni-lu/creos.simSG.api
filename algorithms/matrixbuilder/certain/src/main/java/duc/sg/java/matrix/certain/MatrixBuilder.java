@@ -1,7 +1,7 @@
 package duc.sg.java.matrix.certain;
 
 import duc.sg.java.cycle.all.CycleFinderImpl;
-import duc.sg.java.cycle.all.CycleUtils;
+import duc.sg.java.circle.all.CircleUtils;
 import duc.sg.java.matrix.certain.utils.Matrix;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Entity;
@@ -67,7 +67,7 @@ public class MatrixBuilder {
                         }
 
                         if(!fuseInCircles.contains(fuse)) {
-                            Fuse[] circle = CycleUtils.cycleFrom(substation, fuse);
+                            Fuse[] circle = CircleUtils.circleFrom(substation, fuse);
                             if(circle.length != 0) {
                                 Collections.addAll(fuseInCircles, circle);
 

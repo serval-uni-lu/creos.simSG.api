@@ -1,4 +1,4 @@
-package duc.sg.java.cycle.all;
+package duc.sg.java.circle.all;
 
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
@@ -6,11 +6,11 @@ import duc.sg.java.utils.OArrays;
 
 import java.util.*;
 
-class CycleFinderImpl implements CycleFinder {
-    CycleFinderImpl() {}
+class CircleFinderImpl implements CircleFinder {
+    CircleFinderImpl() {}
 
-    private Cycle addFusesToCircle(Cycle cycle, List<Fuse> toAdd) {
-        Fuse[] current = cycle.getFuses();
+    private Circle addFusesToCircle(Circle circle, List<Fuse> toAdd) {
+        Fuse[] current = circle.getFuses();
         Fuse[] newCycle = new Fuse[current.length + toAdd.size()];
 
         System.arraycopy(current, 0, newCycle, 0, current.length);
@@ -20,31 +20,31 @@ class CycleFinderImpl implements CycleFinder {
             i++;
         }
 
-        return new CycleImp(newCycle);
+        return new CircleImp(newCycle);
 
     }
 
 
-    private void handleInnerCircles(List<Cycle> cycles) {
-        for (int i = 0; i < cycles.size(); i++) {
-            for (int j = i + 1; j < cycles.size(); j++) {
-                Cycle cycle1 = cycles.get(i);
-                Cycle cycle2 = cycles.get(j);
+    private void handleInnerCircles(List<Circle> circles) {
+        for (int i = 0; i < circles.size(); i++) {
+            for (int j = i + 1; j < circles.size(); j++) {
+                Circle circle1 = circles.get(i);
+                Circle circle2 = circles.get(j);
 
                 var fusesInCommon = new HashSet<Fuse>();
                 var fusesDifferentC1 = new ArrayList<Fuse>();
                 var fusesDifferentC2 = new ArrayList<Fuse>();
 
-                for (Fuse fC1: cycle1.getFuses()) {
-                    if(OArrays.contains(cycle2.getFuses(), fC1)) {
+                for (Fuse fC1: circle1.getFuses()) {
+                    if(OArrays.contains(circle2.getFuses(), fC1)) {
                         fusesInCommon.add(fC1);
                     } else {
                         fusesDifferentC1.add(fC1);
                     }
                 }
 
-                for(Fuse fC2: cycle2.getFuses()) {
-                    if(OArrays.contains(cycle1.getFuses(), fC2)) {
+                for(Fuse fC2: circle2.getFuses()) {
+                    if(OArrays.contains(circle1.getFuses(), fC2)) {
                         fusesInCommon.add(fC2);
                     } else {
                         fusesDifferentC2.add(fC2);
@@ -52,14 +52,14 @@ class CycleFinderImpl implements CycleFinder {
                 }
 
                 if(!fusesInCommon.isEmpty()) {
-                    boolean c1Longest = cycle1.getFuses().length > cycle2.getFuses().length;
+                    boolean c1Longest = circle1.getFuses().length > circle2.getFuses().length;
 
                     if(c1Longest) {
-                        Cycle newCycle= addFusesToCircle(cycle1, fusesDifferentC2);
-                        cycles.set(i, newCycle);
+                        Circle newCircle = addFusesToCircle(circle1, fusesDifferentC2);
+                        circles.set(i, newCircle);
                     } else {
-                        Cycle newCycle = addFusesToCircle(cycle2, fusesDifferentC1);
-                        cycles.set(j, newCycle);
+                        Circle newCircle = addFusesToCircle(circle2, fusesDifferentC1);
+                        circles.set(j, newCircle);
                     }
 
                 }
@@ -71,8 +71,8 @@ class CycleFinderImpl implements CycleFinder {
     }
 
     @Override
-    public void findAndSaveCycles(Substation substation) {
-        List<Cycle> cycles = new ArrayList<>();
+    public void findAndSaveCircles(Substation substation) {
+        List<Circle> circles = new ArrayList<>();
         var processed = new HashSet<Fuse>();
 
         Collection<Fuse> fuses = substation.extractFuses();
@@ -87,11 +87,11 @@ class CycleFinderImpl implements CycleFinder {
                         Fuse f2 = entFuses.get(j);
 
                         if(!processed.contains(f1) && !processed.contains(f2)) {
-                            Optional<Cycle> optCycle = DetectCycle.findCycle(f1, f2);
+                            Optional<Circle> optCycle = DetectCircle.findCircle(f1, f2);
                             if(optCycle.isPresent()) {
-                                Cycle cycle = optCycle.get();
-                                cycles.add(cycle);
-                                Collections.addAll(processed, cycle.getFuses());
+                                Circle circle = optCycle.get();
+                                circles.add(circle);
+                                Collections.addAll(processed, circle.getFuses());
                             }
                         }
 
@@ -102,9 +102,9 @@ class CycleFinderImpl implements CycleFinder {
             }
         }
 
-        handleInnerCircles(cycles);
+        handleInnerCircles(circles);
 
-        substation.getGrid().save(CycleUtils.getKey(substation), cycles);
+        substation.getGrid().save(CircleUtils.getKey(substation), circles);
 
     }
 
