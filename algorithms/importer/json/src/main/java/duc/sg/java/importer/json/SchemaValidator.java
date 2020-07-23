@@ -5,10 +5,11 @@ import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.main.JsonSchema;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
+import duc.sg.java.importer.ImportationException;
 
 import java.io.*;
 
-public class SchemaValidator {
+class SchemaValidator {
     private SchemaValidator(){}
 
     private static File extractSchema(String schemaFilePath) throws IOException{
@@ -31,15 +32,15 @@ public class SchemaValidator {
         return tmpFile;
     }
 
-    public static boolean validate(JsonNode toCheck, String schemaFilePath) throws ValidationException {
+    static boolean isInvalid(JsonNode toCheck, String schemaFilePath) throws ImportationException {
         try {
             File schemaFile = extractSchema(schemaFilePath);
             JsonSchema schema = JsonSchemaFactory.byDefault().getJsonSchema(schemaFile.toURI().toString());
 
             ProcessingReport report = schema.validate(toCheck);
-            return report.isSuccess();
+            return !report.isSuccess();
         } catch (ProcessingException | IOException ex) {
-            throw new ValidationException(ex);
+            throw new ImportationException(ex);
         }
     }
 

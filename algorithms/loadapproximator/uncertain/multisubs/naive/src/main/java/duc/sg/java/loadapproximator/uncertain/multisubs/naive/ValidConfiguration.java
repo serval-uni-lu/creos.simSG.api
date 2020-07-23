@@ -1,7 +1,7 @@
 package duc.sg.java.loadapproximator.uncertain.multisubs.naive;
 
-import duc.sg.java.importer.json.JsonImporter;
-import duc.sg.java.importer.json.ValidationException;
+import duc.sg.java.importer.ImportationException;
+import duc.sg.java.importer.json.JsonGridImporter;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.SmartGrid;
 import duc.sg.java.model.State;
@@ -64,7 +64,7 @@ public class ValidConfiguration {
 
     }
 
-    public static void main(String[] args) throws ValidationException {
+    public static void main(String[] args) throws ImportationException {
         // Import from Json
         InputStream is = ExtractComponents.class
                 .getClassLoader()
@@ -75,7 +75,7 @@ public class ValidConfiguration {
         }
         var isReader = new InputStreamReader(is);
 
-        Optional<SmartGrid> optGrid = JsonImporter.from(isReader);
+        Optional<SmartGrid> optGrid = JsonGridImporter.from(isReader);
         if(optGrid.isEmpty()) {
             System.err.println("No grid to analyse.");
             return;
