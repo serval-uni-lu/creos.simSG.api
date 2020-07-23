@@ -1,6 +1,6 @@
 package duc.sg.java.validator.umatrix;
 
-import duc.sg.java.cycle.all.CycleFinderImpl;
+import duc.sg.java.circle.all.CircleFinder;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;
 import duc.sg.java.model.Substation;
@@ -12,9 +12,8 @@ import java.util.Map;
 public class GridValidator implements  IValidator {
     @Override
     public boolean isValid(Substation substation, Map<Fuse, State> idxColumn) {
+        CircleFinder.getDefault().findAndSave(substation);
         substation.updateAllFuses();
-        CycleFinderImpl.init(substation);
-
 
         IRule[] rules = Rules.getAllRules();
 

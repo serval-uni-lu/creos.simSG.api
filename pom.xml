@@ -25,6 +25,7 @@
         <module>algorithms/loadapproximator/uncertain/multisubs/naive</module>
         <module>simsg.uncertainty</module>
         <module>algorithms/importer/interface</module>
+        <module>algorithms/navigation/interface</module>
     </modules>
 
     <name>DucPropagationJava</name>

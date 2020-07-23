@@ -1,6 +1,7 @@
 package duc.sg.java.loadapproximator.uncertain.multisubs.bsrules;
 
-import duc.sg.java.cycle.all.CycleFinderImpl;
+import duc.sg.java.circle.all.Circle;
+import duc.sg.java.circle.all.CircleFinder;
 import duc.sg.java.importer.ImportationException;
 import duc.sg.java.importer.json.JsonGridImporter;
 import duc.sg.java.model.Fuse;
@@ -64,11 +65,13 @@ public class GetPaths {
     }
 
     private static void addCircleMembersFuses(Substation start, Fuse current, HashSet<Fuse> shortestPath) {
-        for(Fuse[] circle: start.getCycles()) {
-            if(OArrays.contains(circle, current)) {
-                Collections.addAll(shortestPath, circle);
-            }
-        }
+        CircleFinder.getDefault()
+                .getCircles(start)
+                .forEach((Circle c) -> {
+                    if(OArrays.contains(c.getFuses(), current)) {
+                        Collections.addAll(shortestPath, c.getFuses());
+                    }
+                });
     }
 
     private static void navigateFuse(HashMap<Fuse, Integer> distanceMap, PriorityQueue<Fuse> toVisit, HashSet<Fuse> visited, HashMap<Fuse, Fuse> previousMap, Fuse current, Fuse next) {
@@ -84,10 +87,6 @@ public class GetPaths {
     }
 
     public static Collection<Path> getPaths(Substation sub1, Substation sub2) {
-        if(sub1.getCycles() == null) {
-            CycleFinderImpl.init(sub1);
-        }
-
         var res = new ArrayList<Path>();
 
         for(Fuse f: sub1.getFuses()) {
@@ -133,7 +132,7 @@ public class GetPaths {
         }
         var isReader = new InputStreamReader(is);
 
-        Optional<SmartGrid> optGrid = JsonGridImporter.from(isReader);
+        Optional<SmartGrid> optGrid = JsonGridImporter.INSTANCE.from(isReader);
         if(optGrid.isEmpty()) {
             System.err.println("No grid to analyse.");
             return;

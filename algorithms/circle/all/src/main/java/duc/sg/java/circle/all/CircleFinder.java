@@ -12,15 +12,16 @@ public interface CircleFinder {
 
     /**
      * Detect all circle that are accessible from a substation and saved then in the shared memory.
+     * Overwrites the shared memory.
      *
      * @param substation
      */
-    void findAndSaveCircles(Substation substation);
+    void findAndSave(Substation substation);
 
     default List<Circle> getCircles(Substation substation) {
         Optional<Object> optCircles = substation.getGrid().retrieve(CircleUtils.getKey(substation));
         if(optCircles.isEmpty()) {
-            findAndSaveCircles(substation);
+            findAndSave(substation);
             optCircles = substation.getGrid().retrieve(CircleUtils.getKey(substation));
         }
 

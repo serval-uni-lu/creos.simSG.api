@@ -1,6 +1,7 @@
 package duc.sg.java.matrix.certain;
 
-import duc.sg.java.cycle.all.CycleFinderImpl;
+import duc.sg.java.circle.all.Circle;
+import duc.sg.java.circle.all.CircleFinder;
 import duc.sg.java.circle.all.CircleUtils;
 import duc.sg.java.matrix.certain.utils.Matrix;
 import duc.sg.java.model.Cable;
@@ -14,8 +15,7 @@ public class MatrixBuilder {
     private MatrixBuilder(){}
 
     public static FuseStatesMatrix build(Substation substation) {
-//        InitAllCycleSubs.init2(substation);
-        CycleFinderImpl.init(substation);
+        CircleFinder.getDefault().getCircles(substation);
 
         final var idxFuses = new HashMap<Fuse, Integer>();
         var idxLast = new int[]{-1};
@@ -67,11 +67,12 @@ public class MatrixBuilder {
                         }
 
                         if(!fuseInCircles.contains(fuse)) {
-                            Fuse[] circle = CircleUtils.circleFrom(substation, fuse);
-                            if(circle.length != 0) {
-                                Collections.addAll(fuseInCircles, circle);
+                            Optional<Circle> optCircle = CircleUtils.circleFrom(substation, fuse);
+                            if(optCircle.isPresent() && (optCircle.get().isValid())) {
+                                Circle circle = optCircle.get();
+                                Collections.addAll(fuseInCircles, circle.getFuses());
 
-                                Fuse fuseEnd = circle[0];
+                                Fuse fuseEnd = circle.getOtherEndPoint(fuse);
                                 paraCableFusesDone.add(fuse);
                                 paraCableFusesDone.add(fuseEnd);
                                 int idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);

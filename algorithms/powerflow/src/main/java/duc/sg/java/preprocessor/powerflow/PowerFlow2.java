@@ -1,37 +1,31 @@
 package duc.sg.java.preprocessor.powerflow;
 
-import duc.sg.java.cycle.all.CycleFinderImpl;
+import duc.sg.java.circle.all.Circle;
+import duc.sg.java.circle.all.CircleFinder;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 
 public class PowerFlow2 implements IPowerFlow {
     @Override
     public Fuse[] getFuseOnMandatoryPF(Substation substation) {
-        CycleFinderImpl.init(substation);
         if(substation.getAllFuses() == null) {
             substation.updateAllFuses();
         }
 
-
-        Collection<Fuse[]> circles = substation.getCycles();
+        List<Circle> circles = CircleFinder.getDefault().getCircles(substation);
         Collection<Fuse> allFuses = substation.getAllFuses();
 
-        var fusesOnCircles = new HashSet<Fuse>();
+        var fuseOnCircles = new HashSet<Fuse>();
+        circles.forEach((Circle c) -> Collections.addAll(fuseOnCircles, c.getFuses()));
 
-        for(Fuse[] circle: circles) {
-            Collections.addAll(fusesOnCircles, circle);
-        }
+        return allFuses.stream()
+                .filter((Fuse f) -> !fuseOnCircles.contains(f) && !f.getOwner().isAlwaysDeadEnd())
+                .toArray(Fuse[]::new);
 
-        List<Fuse> mpf = new ArrayList<>();
-        for(Fuse f: allFuses) {
-            if(!fusesOnCircles.contains(f) && !f.getOwner().isAlwaysDeadEnd()) {
-                mpf.add(f);
-            }
-        }
-
-
-        return mpf.toArray(new Fuse[0]);
     }
 }
