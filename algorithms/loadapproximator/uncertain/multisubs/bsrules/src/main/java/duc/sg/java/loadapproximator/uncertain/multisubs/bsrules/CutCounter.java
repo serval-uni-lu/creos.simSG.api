@@ -1,7 +1,7 @@
 package duc.sg.java.loadapproximator.uncertain.multisubs.bsrules;
 
-import duc.sg.java.importer.json.JsonImporter;
-import duc.sg.java.importer.json.ValidationException;
+import duc.sg.java.importer.ImportationException;
+import duc.sg.java.importer.json.JsonGridImporter;
 import duc.sg.java.model.SmartGrid;
 
 import java.io.InputStream;
@@ -51,7 +51,7 @@ public class CutCounter {
     }
 
 
-    public static void main(String[] args) throws ValidationException {
+    public static void main(String[] args) throws ImportationException {
         // Import from Json
         InputStream is = GetPaths.class
                 .getClassLoader()
@@ -62,7 +62,7 @@ public class CutCounter {
         }
         var isReader = new InputStreamReader(is);
 
-        Optional<SmartGrid> optGrid = JsonImporter.from(isReader);
+        Optional<SmartGrid> optGrid = JsonGridImporter.from(isReader);
         if(optGrid.isEmpty()) {
             System.err.println("No grid to analyse.");
             return;

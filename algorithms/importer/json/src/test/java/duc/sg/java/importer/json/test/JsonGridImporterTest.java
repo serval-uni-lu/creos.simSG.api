@@ -1,6 +1,6 @@
 package duc.sg.java.importer.json.test;
 
-import duc.sg.java.importer.json.JsonImporter;
+import duc.sg.java.importer.json.JsonGridImporter;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.SmartGrid;
@@ -18,20 +18,20 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class JsonImporterTest {
+public class JsonGridImporterTest {
 
     @ParameterizedTest
-    @MethodSource("duc.sg.java.importer.json.test.ScBasedJsonTest#getInvalidJsonFiles")
+    @MethodSource("duc.sg.java.importer.json.test.JsonSCImporterTest#getInvalidJsonFiles")
     public void testInvalidFile(File jsonFile) {
         assertDoesNotThrow(() -> {
-            Optional<SmartGrid> substation = JsonImporter.from(jsonFile);
+            Optional<SmartGrid> substation = JsonGridImporter.INSTANCE.from(jsonFile);
             assertTrue(substation.isEmpty());
         });
     }
 
     @Test
     public void testImportIndirectPara() {
-        final String jsonPath = JsonImporterTest.class
+        final String jsonPath = JsonGridImporterTest.class
                 .getClassLoader()
                 .getResource("validJson/sg/indirectPara.json")
                 .getPath();
@@ -39,7 +39,7 @@ public class JsonImporterTest {
 
         final var sgs = new SmartGrid[1];
         Assertions.assertDoesNotThrow(() -> {
-            Optional<SmartGrid> optionalSubstations = JsonImporter.from(file);
+            Optional<SmartGrid> optionalSubstations = JsonGridImporter.INSTANCE.from(file);
             assertTrue(optionalSubstations.isPresent());
             SmartGrid grid = optionalSubstations.get();
             sgs[0] = grid;

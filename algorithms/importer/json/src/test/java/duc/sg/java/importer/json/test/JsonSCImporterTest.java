@@ -1,6 +1,6 @@
 package duc.sg.java.importer.json.test;
 
-import duc.sg.java.importer.json.ScBasedJson;
+import duc.sg.java.importer.json.JsonSCImporter;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.scenarios.Scenario;
@@ -21,11 +21,11 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ScBasedJsonTest {
+public class JsonSCImporterTest {
 
 
     public static Arguments[] getInvalidJsonFiles() {
-        var rootFolder = ScBasedJsonTest.class
+        var rootFolder = JsonSCImporterTest.class
                 .getClassLoader()
                 .getResource("invalidJson")
                 .getPath();
@@ -70,13 +70,13 @@ public class ScBasedJsonTest {
     @MethodSource("getInvalidJsonFiles")
     public void testInvalidFile(File jsonFile) {
         assertDoesNotThrow(() -> {
-            Optional<Scenario> substation = ScBasedJson.from(jsonFile);
+            Optional<Scenario> substation = JsonSCImporter.INSTANCE.from(jsonFile);
             assertTrue(substation.isEmpty());
         });
     }
 
     private File getValidFile(String fileName) {
-        String jsonPath = ScBasedJsonTest.class
+        String jsonPath = JsonSCImporterTest.class
                 .getClassLoader()
                 .getResource("validJson/scBased/" + fileName)
                 .getPath();
@@ -87,7 +87,7 @@ public class ScBasedJsonTest {
         File jsonFIle = getValidFile(fileName);
         final Scenario[] scenario = new Scenario[1];
         assertDoesNotThrow(() -> {
-            Optional<Scenario> opt = ScBasedJson.from(jsonFIle);
+            Optional<Scenario> opt = JsonSCImporter.INSTANCE.from(jsonFIle);
             assertTrue(opt.isPresent());
             scenario[0] = opt.get();
         });
