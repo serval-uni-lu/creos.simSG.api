@@ -57,7 +57,7 @@ public class ExtractComponents {
         }
         var isReader = new InputStreamReader(is);
 
-        Optional<SmartGrid> optGrid = JsonGridImporter.from(isReader);
+        Optional<SmartGrid> optGrid = JsonGridImporter.INSTANCE.from(isReader);
         if(optGrid.isEmpty()) {
             System.err.println("No grid to analyse.");
             return;

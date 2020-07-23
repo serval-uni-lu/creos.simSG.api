@@ -104,7 +104,7 @@ public class CircleUtilsTests {
 
         SmartGrid grid = new SmartGrid();
         grid.addSubstations(subs1);
-        CircleFinder.getDefault().findAndSaveCircles(subs1);
+        CircleFinder.getDefault().findAndSave(subs1);
 
         Collection<Fuse> allFuses = subs1.extractFuses();
         genericTest(subs1, allFuses, f1, allFuses);
@@ -146,7 +146,7 @@ public class CircleUtilsTests {
 
         SmartGrid grid = new SmartGrid();
         grid.addSubstations(subs1);
-        CircleFinder.getDefault().findAndSaveCircles(subs1);
+        CircleFinder.getDefault().findAndSave(subs1);
 
         Collection<Fuse> allFuses = subs1.extractFuses();
         List<Fuse> circle = new ArrayList<>();
@@ -193,7 +193,7 @@ public class CircleUtilsTests {
 
         SmartGrid grid = new SmartGrid();
         grid.addSubstations(subs1);
-        CircleFinder.getDefault().findAndSaveCircles(subs1);
+        CircleFinder.getDefault().findAndSave(subs1);
 
         Collection<Fuse> allFuses = subs1.extractFuses();
         List<Fuse> circle = new ArrayList<>();
@@ -246,7 +246,7 @@ public class CircleUtilsTests {
 
         SmartGrid grid = new SmartGrid();
         grid.addSubstations(subs1);
-        CircleFinder.getDefault().findAndSaveCircles(subs1);
+        CircleFinder.getDefault().findAndSave(subs1);
 
         Collection<Fuse> allFuses = subs1.extractFuses();
         List<Fuse> circle = new ArrayList<>();
@@ -309,7 +309,7 @@ public class CircleUtilsTests {
 
         SmartGrid grid = new SmartGrid();
         grid.addSubstations(subs1);
-        CircleFinder.getDefault().findAndSaveCircles(subs1);
+        CircleFinder.getDefault().findAndSave(subs1);
 
         List<Circle> allCircles = CircleFinder.getDefault().getCircles(subs1);
         assertEquals(2, allCircles.size());
@@ -382,7 +382,7 @@ public class CircleUtilsTests {
 
         SmartGrid grid = new SmartGrid();
         grid.addSubstations(subs1);
-        CircleFinder.getDefault().findAndSaveCircles(subs1);
+        CircleFinder.getDefault().findAndSave(subs1);
 
         Collection<Fuse> allFuses = subs1.extractFuses();
         List<Fuse> circle = new ArrayList<>();
@@ -459,7 +459,7 @@ public class CircleUtilsTests {
 
         SmartGrid grid = new SmartGrid();
         grid.addSubstations(subs1);
-        CircleFinder.getDefault().findAndSaveCircles(subs1);
+        CircleFinder.getDefault().findAndSave(subs1);
 
         List<Circle> allCircles = CircleFinder.getDefault().getCircles(subs1);
 
@@ -541,7 +541,7 @@ public class CircleUtilsTests {
 
         SmartGrid grid = new SmartGrid();
         grid.addSubstations(subs1);
-        CircleFinder.getDefault().findAndSaveCircles(subs1);
+        CircleFinder.getDefault().findAndSave(subs1);
 
         List<Circle> allCircles = CircleFinder.getDefault().getCircles(subs1);
         assertEquals(2, allCircles.size());
@@ -617,7 +617,7 @@ public class CircleUtilsTests {
 
         SmartGrid grid = new SmartGrid();
         grid.addSubstations(subs1);
-        CircleFinder.getDefault().findAndSaveCircles(subs1);
+        CircleFinder.getDefault().findAndSave(subs1);
 
         List<Circle> allCircles = CircleFinder.getDefault().getCircles(subs1);
         assertEquals(2, allCircles.size());

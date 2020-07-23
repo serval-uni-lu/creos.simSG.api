@@ -1,10 +1,12 @@
 package duc.sg.java.validator.rules;
 
+import duc.sg.java.circle.all.Circle;
+import duc.sg.java.circle.all.CircleFinder;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;
 import duc.sg.java.model.Substation;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 
@@ -15,12 +17,12 @@ public class AllCirclesRule implements IRule {
 
     @Override
     public boolean apply(Substation substation, Map<Fuse, State> fuseStateMap) {
-        Collection<Fuse[]> circles = substation.getCycles();
+        List<Circle> circles = CircleFinder.getDefault().getCircles(substation);
 
         var rule = new CircleRule();
 
-        for(Fuse[] circle: circles) {
-            if (!rule.apply(circle, fuseStateMap)) {
+        for(Circle circle: circles) {
+            if (!rule.apply(circle.getFuses(), fuseStateMap)) {
                 return false;
             }
         }

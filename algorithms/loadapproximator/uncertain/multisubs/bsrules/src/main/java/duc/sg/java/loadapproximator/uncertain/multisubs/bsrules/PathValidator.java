@@ -1,5 +1,6 @@
 package duc.sg.java.loadapproximator.uncertain.multisubs.bsrules;
 
+import duc.sg.java.circle.all.Circle;
 import duc.sg.java.importer.ImportationException;
 import duc.sg.java.importer.json.JsonGridImporter;
 import duc.sg.java.model.Fuse;
@@ -29,9 +30,9 @@ public class PathValidator {
         return res;
     }
 
-    private static Optional<Fuse[]> getCircleWith(Collection<Fuse[]> circles, Fuse toSearch) {
-        for(Fuse[] circle: circles) {
-            if(OArrays.contains(circle, toSearch)) {
+    private static Optional<Circle> getCircleWith(List<Circle> circles, Fuse toSearch) {
+        for(Circle circle: circles) {
+            if(OArrays.contains(circle.getFuses(), toSearch)) {
                 return Optional.of(circle);
             }
         }
@@ -71,13 +72,13 @@ public class PathValidator {
             for(Fuse fuse: openFusesInPath) {
                 if(!visitedFuse.contains(fuse)) {
                     visitedFuse.add(fuse);
-                    Optional<Fuse[]> optCircle = getCircleWith(path.getCircles(), fuse);
+                    Optional<Circle> optCircle = getCircleWith(path.getCircles(), fuse);
                     if(optCircle.isEmpty()) {
                         actual++;
                     } else {
-                        Fuse[] circle = optCircle.get();
-                        Collections.addAll(visitedFuse, circle);
-                        int nbDistinctEntity = (int) Arrays.stream(circle)
+                        Circle circle = optCircle.get();
+                        Collections.addAll(visitedFuse, circle.getFuses());
+                        int nbDistinctEntity = (int) Arrays.stream(circle.getFuses())
                                 .filter(openFuses::contains)
                                 .map(Fuse::getOwner)
                                 .distinct()
@@ -111,13 +112,13 @@ public class PathValidator {
         for(Fuse fuse: openFusesInPath) {
             if(!visitedFuse.contains(fuse)) {
                 visitedFuse.add(fuse);
-                Optional<Fuse[]> optCircle = getCircleWith(path.getCircles(), fuse);
+                Optional<Circle> optCircle = getCircleWith(path.getCircles(), fuse);
                 if(optCircle.isEmpty()) {
                     actual++;
                 } else {
-                    Fuse[] circle = optCircle.get();
-                    Collections.addAll(visitedFuse, circle);
-                    int nbDistinctEntity = (int) Arrays.stream(circle)
+                    Circle circle = optCircle.get();
+                    Collections.addAll(visitedFuse, circle.getFuses());
+                    int nbDistinctEntity = (int) Arrays.stream(circle.getFuses())
                             .filter(openFuses::contains)
                             .map(Fuse::getOwner)
                             .distinct()
@@ -162,7 +163,7 @@ public class PathValidator {
         }
         var isReader = new InputStreamReader(is);
 
-        Optional<SmartGrid> optGrid = JsonGridImporter.from(isReader);
+        Optional<SmartGrid> optGrid = JsonGridImporter.INSTANCE.from(isReader);
         if(optGrid.isEmpty()) {
             System.err.println("No grid to analyse.");
             return;

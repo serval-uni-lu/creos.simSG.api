@@ -23,11 +23,6 @@
         </dependency>
         <dependency>
             <groupId>duc.sg.java</groupId>
-            <artifactId>cycle.current</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>duc.sg.java</groupId>
             <artifactId>scenarios</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -38,7 +33,7 @@
         </dependency>
         <dependency>
             <groupId>duc.sg.java</groupId>
-            <artifactId>cycle.all</artifactId>
+            <artifactId>circle.all</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

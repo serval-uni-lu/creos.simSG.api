@@ -9,6 +9,44 @@ import java.util.*;
 class CircleFinderImpl implements CircleFinder {
     CircleFinderImpl() {}
 
+    @Override
+    public void findAndSave(Substation substation) {
+        List<Circle> circles = new ArrayList<>();
+        var processed = new HashSet<Fuse>();
+
+        Collection<Fuse> fuses = substation.extractFuses();
+
+        for(Fuse fuse: fuses) {
+            if(!processed.contains(fuse)) {
+                List<Fuse> entFuses = fuse.getOwner().getFuses();
+
+                for (int i = 0; i < entFuses.size(); i++) {
+                    for (int j = i+1; j < entFuses.size(); j++) {
+                        Fuse f1 = entFuses.get(i);
+                        Fuse f2 = entFuses.get(j);
+
+                        if(!processed.contains(f1) && !processed.contains(f2)) {
+                            Optional<Circle> optCycle = DetectCircle.findCircle(f1, f2);
+                            if(optCycle.isPresent()) {
+                                Circle circle = optCycle.get();
+                                circles.add(circle);
+                                Collections.addAll(processed, circle.getFuses());
+                            }
+                        }
+
+
+                    }
+                }
+
+            }
+        }
+
+        handleInnerCircles(circles);
+
+        substation.getGrid().save(CircleUtils.getKey(substation), circles);
+
+    }
+
     private Circle addFusesToCircle(Circle circle, List<Fuse> toAdd) {
         Fuse[] current = circle.getFuses();
         Fuse[] newCycle = new Fuse[current.length + toAdd.size()];
@@ -70,43 +108,7 @@ class CircleFinderImpl implements CircleFinder {
         }
     }
 
-    @Override
-    public void findAndSaveCircles(Substation substation) {
-        List<Circle> circles = new ArrayList<>();
-        var processed = new HashSet<Fuse>();
 
-        Collection<Fuse> fuses = substation.extractFuses();
-
-        for(Fuse fuse: fuses) {
-            if(!processed.contains(fuse)) {
-                List<Fuse> entFuses = fuse.getOwner().getFuses();
-
-                for (int i = 0; i < entFuses.size(); i++) {
-                    for (int j = i+1; j < entFuses.size(); j++) {
-                        Fuse f1 = entFuses.get(i);
-                        Fuse f2 = entFuses.get(j);
-
-                        if(!processed.contains(f1) && !processed.contains(f2)) {
-                            Optional<Circle> optCycle = DetectCircle.findCircle(f1, f2);
-                            if(optCycle.isPresent()) {
-                                Circle circle = optCycle.get();
-                                circles.add(circle);
-                                Collections.addAll(processed, circle.getFuses());
-                            }
-                        }
-
-
-                    }
-                }
-
-            }
-        }
-
-        handleInnerCircles(circles);
-
-        substation.getGrid().save(CircleUtils.getKey(substation), circles);
-
-    }
 
 
 }

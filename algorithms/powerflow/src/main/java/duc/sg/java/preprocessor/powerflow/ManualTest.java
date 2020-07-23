@@ -13,11 +13,11 @@ public class ManualTest {
     public static void main(String[] args) {
         Scenario sc = new ScenarioBuilder()
 //                .chooseScenario(ScenarioName.SINGLE_CABLE)
-//                .chooseScenario(ScenarioName.CABINET)
+                .chooseScenario(ScenarioName.CABINET)
 //                .chooseScenario(ScenarioName.PARA_TRANSFORMER)
 //                .chooseScenario(ScenarioName.PARA_CABINET)
 //                .chooseScenario(ScenarioName.INDIRECT_PARALLEL)
-                .chooseScenario(ScenarioName.PARA_W_DEADEND)
+//                .chooseScenario(ScenarioName.PARA_W_DEADEND)
                 .build();
 
         Fuse[] toOPen = new PowerFlow().getFuseOnMandatoryPF(sc.getSubstation());

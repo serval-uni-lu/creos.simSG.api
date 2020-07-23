@@ -1,16 +1,14 @@
 package duc.sg.java.loadapproximator.uncertain.multisubs.bsrules;
 
-import duc.sg.java.cycle.all.CycleFinderImpl;
+import duc.sg.java.circle.all.Circle;
+import duc.sg.java.circle.all.CircleFinder;
 import duc.sg.java.model.Cabinet;
 import duc.sg.java.model.Entity;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
 import duc.sg.java.utils.StringAccumlator;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Path {
@@ -55,12 +53,9 @@ public class Path {
        return allFuses;
     }
 
-    public Collection<Fuse[]> getCircles() {
+    public List<Circle> getCircles() {
         var subStart = (Substation) startFuse.getOwner();
-        if(subStart.getCycles() == null) {
-            CycleFinderImpl.init(subStart);
-        }
-        return subStart.getCycles();
+        return CircleFinder.getDefault().getCircles(subStart);
     }
 
     @Override

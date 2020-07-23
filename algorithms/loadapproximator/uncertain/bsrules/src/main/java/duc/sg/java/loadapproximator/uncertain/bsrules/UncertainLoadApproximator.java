@@ -1,6 +1,7 @@
 package duc.sg.java.loadapproximator.uncertain.bsrules;
 
-import duc.sg.java.cycle.all.CycleFinderImpl;
+import duc.sg.java.circle.all.Circle;
+import duc.sg.java.circle.all.CircleFinder;
 import duc.sg.java.grid.uncertainty.configuration.Configuration;
 import duc.sg.java.grid.uncertainty.configuration.ConfigurationMatrix;
 import duc.sg.java.grid.uncertainty.configuration.EmptyConfigurationMatrix;
@@ -54,9 +55,8 @@ public class UncertainLoadApproximator {
         UFuseDetector.detectAndModifyUFuses(substation);
 
 
-        CycleFinderImpl.init(substation);
         substation.updateAllFuses();
-        Collection<Fuse[]> allCycles = substation.getCycles();
+        List<Circle> allCycles = CircleFinder.getDefault().getCircles(substation);
 
         if(allCycles.isEmpty()) {
             return new EmptyConfigurationMatrix();
@@ -66,8 +66,8 @@ public class UncertainLoadApproximator {
 
         CircleRule circleRule = new CircleRule();
 
-        for(Fuse[] cycle: allCycles) {
-            List<Fuse> uFuses = getUncertainFuses(cycle);
+        for(Circle circle: allCycles) {
+            List<Fuse> uFuses = getUncertainFuses(circle.getFuses());
             int nbPossibilities = (int) Math.pow(2, uFuses.size());
 
             if(nbPossibilities == 1) {
@@ -82,7 +82,7 @@ public class UncertainLoadApproximator {
 
             for (int idxConf = 0; idxConf < nbPossibilities; idxConf++) {
                 boolean[] fuseStates = BaseTransform.toBinary(idxConf, uFuses.size());
-                Map<Fuse, State> fuseStateMap = boolArr2MapFuseState(fuseStates, uFuses, cycle);
+                Map<Fuse, State> fuseStateMap = boolArr2MapFuseState(fuseStates, uFuses, circle.getFuses());
 
                 double confidence = 1;
 
@@ -94,7 +94,7 @@ public class UncertainLoadApproximator {
                     }
                 }
 
-                if(circleRule.apply(cycle, fuseStateMap)) {
+                if(circleRule.apply(circle.getFuses(), fuseStateMap)) {
                     circleConf.add(fuseStateMap, confidence);
                 } else {
                     confToAdd += confidence;

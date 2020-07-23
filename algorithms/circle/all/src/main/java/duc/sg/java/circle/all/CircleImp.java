@@ -29,9 +29,8 @@ class CircleImp implements Circle {
 
     @Override
     public Fuse getOtherEndPoint(Fuse start) {
-        for (int i = 0; i < fuses.length; i++) {
-            Fuse fc = fuses[i];
-            if (!fc.equals(start) && fc.getOwner().equals(start.getOwner()) && i>0) {
+        for (Fuse fc : fuses) {
+            if (!fc.equals(start) && fc.getOwner().equals(start.getOwner())) {
                 return fc;
             }
         }
