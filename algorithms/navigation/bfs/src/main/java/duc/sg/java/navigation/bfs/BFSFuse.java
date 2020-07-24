@@ -6,6 +6,7 @@ import duc.sg.java.navigation.Actionner;
 import duc.sg.java.navigation.Navigate;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class BFSFuse implements Navigate<Fuse> {
@@ -28,12 +29,18 @@ public class BFSFuse implements Navigate<Fuse> {
             actionner.act(current);
 
             var ownerOpp = current.getOpposite().getOwner();
+            var toAdd = new ArrayList<Fuse>(ownerOpp.getFuses().size());
             for(var f: ownerOpp.getFuses()) {
                 if(!visited.contains(f) && !inWaitingList.contains(f)) {
-                    waiting.add(f);
-                    inWaitingList.add(f);
+                    if(f.equals(current.getOpposite())) {
+                        toAdd.add(0, f);
+                    } else {
+                        toAdd.add(f);
+                    }
                 }
             }
+            waiting.addAll(toAdd);
+            inWaitingList.addAll(toAdd);
         }
 
     }

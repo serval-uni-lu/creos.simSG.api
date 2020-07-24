@@ -1,6 +1,7 @@
 package duc.sg.java.circle.all;
 
 import duc.sg.java.extracter.FuseExtracter;
+import duc.sg.java.model.Entity;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
 import duc.sg.java.utils.OArrays;
@@ -13,33 +14,45 @@ class CircleFinderImpl implements CircleFinder {
     @Override
     public void findAndSave(Substation substation) {
         List<Circle> circles = new ArrayList<>();
-        var processed = new HashSet<Fuse>();
+        var fuseInCircle = new HashSet<Fuse>();
 
         List<Fuse> fuses = FuseExtracter.INSTANCE.getExtracted(substation);
 
-        for(Fuse fuse: fuses) {
-            if(!processed.contains(fuse)) {
-                List<Fuse> entFuses = fuse.getOwner().getFuses();
+        int i=0;
+        while(i< fuses.size()) {
+            Fuse currentFuse = fuses.get(i);
+            Entity currentEnt = currentFuse.getOwner();
 
-                for (int i = 0; i < entFuses.size(); i++) {
-                    for (int j = i+1; j < entFuses.size(); j++) {
-                        Fuse f1 = entFuses.get(i);
-                        Fuse f2 = entFuses.get(j);
 
-                        if(!processed.contains(f1) && !processed.contains(f2)) {
-                            Optional<Circle> optCycle = DetectCircle.findCircle(f1, f2);
-                            if(optCycle.isPresent()) {
-                                Circle circle = optCycle.get();
-                                circles.add(circle);
-                                Collections.addAll(processed, circle.getFuses());
+            long nbUnprocFuses = currentEnt.getFuses()
+                    .stream()
+                    .filter((Fuse f) -> !fuseInCircle.contains(f))
+                    .count();
+
+
+            if(currentEnt.getFuses().size() >= 2 && nbUnprocFuses != 0) {
+                List<Fuse> entFuses = currentEnt.getFuses();
+                for (int idx1st = 0; idx1st < entFuses.size(); idx1st++) {
+                    if(currentEnt instanceof Substation || !entFuses.get(idx1st).equals(currentFuse)) {
+                        for (int idx2nd = idx1st + 1; idx2nd < entFuses.size(); idx2nd++) {
+                            if(currentEnt instanceof Substation || !entFuses.get(idx2nd).equals(currentFuse)) {
+                                Fuse first = entFuses.get(idx1st);
+                                Fuse second = entFuses.get(idx2nd);
+
+                                Optional<Circle> optCycle = DetectCircle.findCircle(first, second);
+                                if(optCycle.isPresent()) {
+                                    Circle circle = optCycle.get();
+                                    circles.add(circle);
+                                    Collections.addAll(fuseInCircle, circle.getFuses());
+                                }
+
                             }
                         }
-
-
                     }
                 }
-
             }
+
+            i += currentEnt.getFuses().size();
         }
 
         handleInnerCircles(circles);
