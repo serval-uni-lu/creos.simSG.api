@@ -6,6 +6,7 @@ import duc.sg.java.circle.all.CircleUtils;
 import duc.sg.java.extracter.FuseExtracter;
 import duc.sg.java.model.*;
 import duc.sg.java.utils.BaseTransform;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -464,14 +465,24 @@ public class CircleUtilsTests {
 
         List<Circle> allCircles = CircleFinder.getDefault().getCircles(subs1);
 
-        assertEquals(2, allCircles.size());
         var expectedFirst = new HashSet<Fuse>();
         Collections.addAll(expectedFirst, f9, f10, f11, f12);
-        assertSuccPara(allCircles.get(0), expectedFirst);
-
         var expectedSecond = new HashSet<Fuse>();
         Collections.addAll(expectedSecond, f9, f10, f11, f12, f3, f4, f5, f6, f7, f8, f13, f14);
-        assertSuccPara(allCircles.get(1), expectedSecond);
+
+        assertEquals(2, allCircles.size());
+
+        for (Circle actual: allCircles) {
+            if(actual.getFuses().length == expectedFirst.size()) {
+                assertSuccPara(actual, expectedFirst);
+            } else if(actual.getFuses().length == expectedSecond.size()) {
+                assertSuccPara(actual, expectedSecond);
+            } else {
+                Assertions.fail("Actual circle does not match any size of the expected ones. Actual: " +
+                        actual.getFuses().length + ". Expected: [" + expectedFirst.size() + ", " +
+                        expectedSecond.size() + "]");
+            }
+        }
     }
 
     /*
@@ -549,11 +560,20 @@ public class CircleUtilsTests {
 
         var expectedFirst = new HashSet<Fuse>();
         Collections.addAll(expectedFirst, f11, f12, f16, f15, f14, f13, f9, f10);
-        assertSuccPara(allCircles.get(0), expectedFirst);
-
         var expectedSecond = new HashSet<Fuse>();
         Collections.addAll(expectedSecond, f18, f17, f12, f11, f10, f9, f8, f7, f3, f4, f5, f6, f16, f15, f14, f13);
-        assertSuccPara(allCircles.get(1), expectedSecond);
+
+        for (Circle actual: allCircles) {
+            if(actual.getFuses().length == expectedFirst.size()) {
+                assertSuccPara(actual, expectedFirst);
+            } else if(actual.getFuses().length == expectedSecond.size()) {
+                assertSuccPara(actual, expectedSecond);
+            } else {
+                Assertions.fail("Actual circle does not match any size of the expected ones. Actual: " +
+                        actual.getFuses().length + ". Expected: [" + expectedFirst.size() + ", " +
+                        expectedSecond.size() + "]");
+            }
+        }
     }
 
     /*
@@ -625,11 +645,21 @@ public class CircleUtilsTests {
 
         var expectedFirst = new HashSet<Fuse>();
         Collections.addAll(expectedFirst, f16, f15, f14, f13, f9, f10);
-        assertSuccPara(allCircles.get(0), expectedFirst);
 
         var expectedSecond = new HashSet<Fuse>();
         Collections.addAll(expectedSecond, f18, f17, f10, f9, f8, f7, f3, f4, f5, f6, f16, f15, f14, f13);
-        assertSuccPara(allCircles.get(1), expectedSecond);
+
+        for (Circle actual: allCircles) {
+            if(actual.getFuses().length == expectedFirst.size()) {
+                assertSuccPara(actual, expectedFirst);
+            } else if(actual.getFuses().length == expectedSecond.size()) {
+                assertSuccPara(actual, expectedSecond);
+            } else {
+                Assertions.fail("Actual circle does not match any size of the expected ones. Actual: " +
+                        actual.getFuses().length + ". Expected: [" + expectedFirst.size() + ", " +
+                        expectedSecond.size() + "]");
+            }
+        }
     }
 
 }
