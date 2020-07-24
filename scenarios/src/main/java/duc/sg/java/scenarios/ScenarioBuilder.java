@@ -44,26 +44,26 @@ public final class ScenarioBuilder {
         }
 
         if(toWrap != null) {
-            switch (name) {
-                case SINGLE_CABLE: return new SingleCableSC(toWrap);
-                case CABINET: return new CabinetSC(toWrap);
-                case INDIRECT_PARALLEL: return new IndirectParaSC(toWrap);
-                case PARA_CABINET: return new ParaCabinetSC(toWrap);
-                case PARA_TRANSFORMER: return new ParaTransformerSC(toWrap);
-                case PARA_W_DEADEND: return new ParaWithDeadendSC(toWrap);
-                default: throw new BuilderException("Builder for " + name + "has not been implemented yet.");
-            }
+            return switch (name) {
+                case SINGLE_CABLE -> new SingleCableSC(toWrap);
+                case CABINET -> new CabinetSC(toWrap);
+                case INDIRECT_PARALLEL -> new IndirectParaSC(toWrap);
+                case PARA_CABINET -> new ParaCabinetSC(toWrap);
+                case PARA_TRANSFORMER -> new ParaTransformerSC(toWrap);
+                case PARA_W_DEADEND -> new ParaWithDeadendSC(toWrap);
+                default -> throw new BuilderException("Builder for " + name + "has not been implemented yet.");
+            };
         }
 
-        switch (name) {
-            case SINGLE_CABLE: return buildSingCable();
-            case CABINET: return buildCabinet();
-            case INDIRECT_PARALLEL: return buildIndirectPara();
-            case PARA_CABINET: return buildParaCabinet();
-            case PARA_TRANSFORMER: return buildParaTransformer();
-            case PARA_W_DEADEND: return buildParaWDe();
-            default: throw new BuilderException("Builder for " + name + "has not been implemented yet.");
-        }
+        return switch (name) {
+            case SINGLE_CABLE -> buildSingCable();
+            case CABINET -> buildCabinet();
+            case INDIRECT_PARALLEL -> buildIndirectPara();
+            case PARA_CABINET -> buildParaCabinet();
+            case PARA_TRANSFORMER -> buildParaTransformer();
+            case PARA_W_DEADEND -> buildParaWDe();
+            default -> throw new BuilderException("Builder for " + name + "has not been implemented yet.");
+        };
     }
 
     private void checkFuseStatusParam(int exceptedLength) {

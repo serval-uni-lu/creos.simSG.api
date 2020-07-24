@@ -26,6 +26,8 @@
         <module>simsg.uncertainty</module>
         <module>algorithms/importer/interface</module>
         <module>algorithms/navigation/interface</module>
+        <module>algorithms/navigation/bfs</module>
+        <module>algorithms/extracter</module>
     </modules>
 
     <name>DucPropagationJava</name>

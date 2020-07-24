@@ -6,6 +6,7 @@ import duc.sg.java.importer.json.JsonGridImporter;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.SmartGrid;
 import duc.sg.java.model.State;
+import duc.sg.java.navigation.bfs.BFSFuse;
 import duc.sg.java.utils.OArrays;
 
 import java.io.InputStream;
@@ -179,23 +180,21 @@ public class PathValidator {
 
 
         var configuration = new HashMap<Fuse, State>();
-        Collection<Fuse> allFuses = grid.getSubstation("Substation 4").get().extractFuses();
-        for (Fuse f: allFuses) {
+        BFSFuse.INSTANCE.navigate(grid.getSubstation("Substation 4").get(), (Fuse f) -> {
             if(fusesToOpen.contains(f.getName())) {
                 configuration.put(f, State.OPEN);
             } else {
                 configuration.put(f, State.CLOSED);
             }
-        }
+        });
 
-        Collection<Fuse> allFuses2 = grid.getSubstation("Substation 1").get().extractFuses();
-        for (Fuse f: allFuses2) {
+        BFSFuse.INSTANCE.navigate(grid.getSubstation("Substation 1").get(), (Fuse f) -> {
             if(fusesToOpen.contains(f.getName())) {
                 configuration.put(f, State.OPEN);
             } else {
                 configuration.put(f, State.CLOSED);
             }
-        }
+        });
 
         for(Map<Integer, List<Path>> bags: allBags) {
             if(!PathValidator.isValid(bags, configuration)) {

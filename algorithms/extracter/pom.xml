@@ -6,16 +6,21 @@
         <artifactId>parent</artifactId>
         <groupId>duc.sg.java</groupId>
         <version>2020.09.DD-SNAPSHOT</version>
-        <relativePath>../../../pom.xml</relativePath>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>navigation.interface</artifactId>
+    <artifactId>extracter</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>duc.sg.java</groupId>
             <artifactId>model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>duc.sg.java</groupId>
+            <artifactId>navigation.bfs</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

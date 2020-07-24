@@ -2,6 +2,7 @@ package duc.sg.java.loadapproximator.uncertain.bsrules;
 
 import duc.sg.java.circle.all.Circle;
 import duc.sg.java.circle.all.CircleFinder;
+import duc.sg.java.extracter.FuseExtracter;
 import duc.sg.java.grid.uncertainty.configuration.Configuration;
 import duc.sg.java.grid.uncertainty.configuration.ConfigurationMatrix;
 import duc.sg.java.grid.uncertainty.configuration.EmptyConfigurationMatrix;
@@ -53,9 +54,6 @@ public class UncertainLoadApproximator {
 
     public static ConfigurationMatrix getAllConfigurations(Substation substation) {
         UFuseDetector.detectAndModifyUFuses(substation);
-
-
-        substation.updateAllFuses();
         List<Circle> allCycles = CircleFinder.getDefault().getCircles(substation);
 
         if(allCycles.isEmpty()) {
@@ -153,8 +151,6 @@ public class UncertainLoadApproximator {
         UncertainFuseStatesMatrix[] matrices = build(substation);
         var visited = new HashSet<Fuse>();
 
-        substation.updateAllFuses();
-
          for (UncertainFuseStatesMatrix usfm : matrices) {
             var fuseStates = new DenseMatrix64F(usfm.getNbColumns(), usfm.getNbColumns(), true, usfm.getData());
 
@@ -172,7 +168,7 @@ public class UncertainLoadApproximator {
             solver.solve(matConsumptions, solution);
 
             var solData = solution.data;
-            var fuses = new HashSet<Fuse>(substation.getAllFuses());
+            var fuses = new HashSet<Fuse>(FuseExtracter.INSTANCE.getExtracted(substation));
             for (int i = 0; i < solData.length; i++) {
                 Fuse current = usfm.getFuse(i);
                 if (!visited.contains(current)) {

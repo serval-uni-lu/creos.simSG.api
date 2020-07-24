@@ -13,8 +13,8 @@ public final class CabinetSC extends Scenario {
     public static final String F1_NAME = "i1";
     public static final String F2_NAME = "i2";
     public static final String F3_NAME = "i3";
-    public static final String F4_NAME = "i5";
-    public static final String F5_NAME = "i4";
+    public static final String F4_NAME = "i4";
+    public static final String F5_NAME = "i5";
     public static final String F6_NAME = "i6";
 
 

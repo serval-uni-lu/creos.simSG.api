@@ -1,5 +1,6 @@
 package duc.sg.java.loadapproximator.uncertain.bsrules.old;
 
+import duc.sg.java.extracter.FuseExtracter;
 import duc.sg.java.matrix.certain.MatrixBuilder;
 import duc.sg.java.matrix.uncertain.UncertainFuseStatesMatrix;
 import duc.sg.java.model.Fuse;
@@ -48,7 +49,7 @@ public class UncertainLoadApproximator {
 
 
     private static Map<Fuse, State> boolarr2MapFuse(boolean[] fuseStates, List<Fuse> uFuses, Substation substation) {
-        Collection<Fuse> allFuses = substation.extractFuses();
+        Collection<Fuse> allFuses = FuseExtracter.INSTANCE.getExtracted(substation);
         var res = new HashMap<Fuse, State>(allFuses.size());
 
         for(Fuse f: allFuses) {
@@ -125,8 +126,6 @@ public class UncertainLoadApproximator {
         UncertainFuseStatesMatrix[] matrices = build(substation);
         var visited = new HashSet<Fuse>();
 
-        substation.updateAllFuses();
-
         for (UncertainFuseStatesMatrix usfm : matrices) {
             var fuseStates = new DenseMatrix64F(usfm.getNbColumns(), usfm.getNbColumns(), true, usfm.getData());
 
@@ -144,7 +143,7 @@ public class UncertainLoadApproximator {
             solver.solve(matConsumptions, solution);
 
             var solData = solution.data;
-            var fuses = new HashSet<Fuse>(substation.getAllFuses());
+            var fuses = new HashSet<Fuse>(FuseExtracter.INSTANCE.getExtracted(substation));
             for (int i = 0; i < solData.length; i++) {
                 Fuse current = usfm.getFuse(i);
                 if (!visited.contains(current)) {
@@ -153,28 +152,8 @@ public class UncertainLoadApproximator {
                 }
 
                 var newPoss = new PossibilityDouble(solData[i], usfm.getConfidence());
-//                current.getUncertainLoad().add(newPoss);
                 current.getUncertainLoad().addPossibility(newPoss);
                 fuses.remove(current);
-
-//                current.getUncertainLoad().compute(0, new UnaryOperator<PossibilityDouble>() {
-//                    @Override
-//                    public PossibilityDouble apply(PossibilityDouble current) {
-//                        if(current == null) {
-//                            return null;
-//                        }
-//
-//                        Confidence currConf = current.getConfidence();
-//                        double newProb = currConf.getProbability() - usfm.getConfidence();
-//
-//                        if(newProb > 0) {
-//                            return new PossibilityDouble(current.getValue(), new Confidence(newProb));
-//                        }
-//                        return null;
-//                    }
-//                });
-
-//                current.getUncertainLoad().removeIf(0, (PossibilityDouble poss) -> poss.getConfidence().getProbability() == Confidence.MIN_PROBABILITY);
             }
 
             for(var f: fuses) {
