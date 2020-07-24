@@ -3,6 +3,7 @@ package duc.sg.java.circle.all.test;
 import duc.sg.java.circle.all.Circle;
 import duc.sg.java.circle.all.CircleFinder;
 import duc.sg.java.circle.all.CircleUtils;
+import duc.sg.java.extracter.FuseExtracter;
 import duc.sg.java.model.*;
 import duc.sg.java.utils.BaseTransform;
 import org.junit.jupiter.api.Test;
@@ -106,7 +107,7 @@ public class CircleUtilsTests {
         grid.addSubstations(subs1);
         CircleFinder.getDefault().findAndSave(subs1);
 
-        Collection<Fuse> allFuses = subs1.extractFuses();
+        List<Fuse> allFuses = FuseExtracter.INSTANCE.getExtracted(subs1);
         genericTest(subs1, allFuses, f1, allFuses);
         genericTest(subs1, allFuses, f2, allFuses);
         genericTest(subs1, allFuses, f3, allFuses);
@@ -148,7 +149,7 @@ public class CircleUtilsTests {
         grid.addSubstations(subs1);
         CircleFinder.getDefault().findAndSave(subs1);
 
-        Collection<Fuse> allFuses = subs1.extractFuses();
+        List<Fuse> allFuses = FuseExtracter.INSTANCE.getExtracted(subs1);
         List<Fuse> circle = new ArrayList<>();
         Collections.addAll(circle, f1, f2, f3, f4);
         genericTest(subs1, allFuses, f1, circle);
@@ -195,7 +196,7 @@ public class CircleUtilsTests {
         grid.addSubstations(subs1);
         CircleFinder.getDefault().findAndSave(subs1);
 
-        Collection<Fuse> allFuses = subs1.extractFuses();
+        List<Fuse> allFuses = FuseExtracter.INSTANCE.getExtracted(subs1);
         List<Fuse> circle = new ArrayList<>();
         Collections.addAll(circle, f1, f2, f3, f4);
         genericTest(subs1, allFuses, f1, circle);
@@ -248,7 +249,7 @@ public class CircleUtilsTests {
         grid.addSubstations(subs1);
         CircleFinder.getDefault().findAndSave(subs1);
 
-        Collection<Fuse> allFuses = subs1.extractFuses();
+        List<Fuse> allFuses = FuseExtracter.INSTANCE.getExtracted(subs1);
         List<Fuse> circle = new ArrayList<>();
         Collections.addAll(circle, f1, f2, f3, f4);
         genericTest(subs1, allFuses, f1, circle);
@@ -384,7 +385,7 @@ public class CircleUtilsTests {
         grid.addSubstations(subs1);
         CircleFinder.getDefault().findAndSave(subs1);
 
-        Collection<Fuse> allFuses = subs1.extractFuses();
+        List<Fuse> allFuses = FuseExtracter.INSTANCE.getExtracted(subs1);
         List<Fuse> circle = new ArrayList<>();
         Collections.addAll(circle, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12);
 

@@ -10,12 +10,17 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>navigation.interface</artifactId>
+    <artifactId>navigation.bfs</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>duc.sg.java</groupId>
             <artifactId>model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>duc.sg.java</groupId>
+            <artifactId>navigation.interface</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

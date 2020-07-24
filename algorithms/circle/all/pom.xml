@@ -21,6 +21,11 @@
             <artifactId>utils</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>duc.sg.java</groupId>
+            <artifactId>extracter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 

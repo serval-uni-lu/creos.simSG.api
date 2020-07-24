@@ -33,6 +33,11 @@
             <artifactId>utils</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>duc.sg.java</groupId>
+            <artifactId>navigation.bfs</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 

@@ -13,8 +13,6 @@ public class GridValidator implements  IValidator {
     @Override
     public boolean isValid(Substation substation, Map<Fuse, State> idxColumn) {
         CircleFinder.getDefault().findAndSave(substation);
-        substation.updateAllFuses();
-
         IRule[] rules = Rules.getAllRules();
 
         for(IRule rule: rules) {

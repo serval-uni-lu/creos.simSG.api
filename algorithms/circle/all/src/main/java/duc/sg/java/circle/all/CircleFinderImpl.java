@@ -1,5 +1,6 @@
 package duc.sg.java.circle.all;
 
+import duc.sg.java.extracter.FuseExtracter;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
 import duc.sg.java.utils.OArrays;
@@ -14,7 +15,7 @@ class CircleFinderImpl implements CircleFinder {
         List<Circle> circles = new ArrayList<>();
         var processed = new HashSet<Fuse>();
 
-        Collection<Fuse> fuses = substation.extractFuses();
+        List<Fuse> fuses = FuseExtracter.INSTANCE.getExtracted(substation);
 
         for(Fuse fuse: fuses) {
             if(!processed.contains(fuse)) {
@@ -42,9 +43,7 @@ class CircleFinderImpl implements CircleFinder {
         }
 
         handleInnerCircles(circles);
-
         substation.getGrid().save(CircleUtils.getKey(substation), circles);
-
     }
 
     private Circle addFusesToCircle(Circle circle, List<Fuse> toAdd) {
