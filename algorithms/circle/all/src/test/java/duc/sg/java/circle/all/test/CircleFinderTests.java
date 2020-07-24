@@ -13,7 +13,7 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CircleUtilsTests {
+public class CircleFinderTests {
 
     private void genericTest(Substation substation, Collection<Fuse> allFuses, Fuse start, Collection<Fuse> expected) {
         int nbPossibilities = (int) Math.pow(2, allFuses.size());
