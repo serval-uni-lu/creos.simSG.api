@@ -1,9 +1,12 @@
-package duc.sg.java.circle.all;
+package duc.sg.java.circlefinder;
 
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Optional;
+import java.util.PriorityQueue;
 
 class DetectCircle {
     private static final int STD_DIST = 1;

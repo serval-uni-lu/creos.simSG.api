@@ -1,6 +1,6 @@
 package duc.sg.java.loadapproximator.uncertain.multisubs.bsrules;
 
-import duc.sg.java.circle.all.Circle;
+import duc.sg.java.circlefinder.Circle;
 import duc.sg.java.importer.ImportationException;
 import duc.sg.java.importer.json.JsonGridImporter;
 import duc.sg.java.model.Fuse;

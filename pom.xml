@@ -13,7 +13,6 @@
         <module>algorithms/validator/umatrix</module>
         <module>algorithms/importer/json</module>
         <module>algorithms/powerflow</module>
-        <module>algorithms/circle/all</module>
         <module>server/ws</module>
         <module>utils</module>
         <module>algorithms/matrixbuilder/certain</module>
@@ -28,6 +27,7 @@
         <module>algorithms/navigation/interface</module>
         <module>algorithms/navigation/bfs</module>
         <module>algorithms/extracter</module>
+        <module>algorithms/circlefinder</module>
     </modules>
 
     <name>DucPropagationJava</name>

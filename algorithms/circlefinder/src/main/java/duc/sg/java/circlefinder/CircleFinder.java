@@ -1,4 +1,4 @@
-package duc.sg.java.circle.all;
+package duc.sg.java.circlefinder;
 
 import duc.sg.java.model.Substation;
 
@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface CircleFinder {
     static CircleFinder getDefault() {
-        return new CircleFinderImpl();
+        return CircleFinderImpl.INSTANCE;
     }
 
     /**

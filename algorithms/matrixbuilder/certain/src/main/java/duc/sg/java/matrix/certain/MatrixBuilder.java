@@ -1,8 +1,8 @@
 package duc.sg.java.matrix.certain;
 
-import duc.sg.java.circle.all.Circle;
-import duc.sg.java.circle.all.CircleFinder;
-import duc.sg.java.circle.all.CircleUtils;
+import duc.sg.java.circlefinder.Circle;
+import duc.sg.java.circlefinder.CircleFinder;
+import duc.sg.java.circlefinder.CircleUtils;
 import duc.sg.java.matrix.certain.utils.Matrix;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Entity;

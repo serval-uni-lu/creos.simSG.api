@@ -1,7 +1,7 @@
 package duc.sg.java.preprocessor.powerflow;
 
-import duc.sg.java.circle.all.Circle;
-import duc.sg.java.circle.all.CircleFinder;
+import duc.sg.java.circlefinder.Circle;
+import duc.sg.java.circlefinder.CircleFinder;
 import duc.sg.java.extracter.FuseExtracter;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
