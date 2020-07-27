@@ -1,15 +1,16 @@
 package duc.sg.java.loadapproximator.uncertain.bsrules.old;
 
 import duc.sg.java.extracter.FuseExtracter;
-import duc.sg.java.matrix.certain.MatrixBuilder;
+import duc.sg.java.matrix.certain.CertainFuseStateMatrix;
+import duc.sg.java.matrix.certain.CertainMatrixBuilder;
 import duc.sg.java.matrix.uncertain.UncertainFuseStatesMatrix;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;
 import duc.sg.java.model.Substation;
 import duc.sg.java.uncertainty.PossibilityDouble;
 import duc.sg.java.utils.BaseTransform;
-import duc.sg.java.validator.umatrix.IValidator;
 import duc.sg.java.validator.umatrix.GridValidator;
+import duc.sg.java.validator.umatrix.IValidator;
 import org.ejml.alg.dense.linsol.svd.SolvePseudoInverseSvd;
 import org.ejml.data.DenseMatrix64F;
 
@@ -98,7 +99,8 @@ public class UncertainLoadApproximator {
             }
 
             if(validator.isValid(substation, fuseStateMap)) {
-                res.add(new UncertainFuseStatesMatrix(MatrixBuilder.build(substation), confidence));
+                CertainFuseStateMatrix matrix = (CertainFuseStateMatrix) CertainMatrixBuilder.INSTANCE.build(substation)[0];
+                res.add(new UncertainFuseStatesMatrix(matrix, confidence));
                 if (nbFusesClosed > maxClosedFuses) {
                     maxClosedFuses = nbFusesClosed;
                     idxMaxClosedFuses = res.size() - 1;

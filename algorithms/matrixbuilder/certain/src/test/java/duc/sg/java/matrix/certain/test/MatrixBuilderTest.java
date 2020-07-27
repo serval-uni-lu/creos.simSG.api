@@ -1,7 +1,7 @@
 package duc.sg.java.matrix.certain.test;
 
-import duc.sg.java.matrix.certain.FuseStatesMatrix;
-import duc.sg.java.matrix.certain.MatrixBuilder;
+import duc.sg.java.matrix.FuseStateMatrix;
+import duc.sg.java.matrix.certain.CertainMatrixBuilder;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
 import org.junit.jupiter.api.Assertions;
@@ -54,7 +54,7 @@ public abstract class MatrixBuilderTest {
 
     protected void genericTest(double[] expected, String... toOpen) {
         openFuses(toOpen);
-        FuseStatesMatrix matrix = MatrixBuilder.build(substation);
+        FuseStateMatrix matrix = CertainMatrixBuilder.INSTANCE.build(substation)[0];
         Assertions.assertArrayEquals(expected,  matrix.getData());
     }
 }

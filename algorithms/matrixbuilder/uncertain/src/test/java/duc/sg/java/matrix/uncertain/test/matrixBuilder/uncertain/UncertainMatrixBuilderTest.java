@@ -1,6 +1,6 @@
 package duc.sg.java.matrix.uncertain.test.matrixBuilder.uncertain;
 
-import duc.sg.java.matrix.certain.FuseStatesMatrix;
+import duc.sg.java.matrix.certain.CertainFuseStateMatrix;
 import duc.sg.java.matrix.uncertain.UncertainMatrixBuilder;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
@@ -65,7 +65,7 @@ public abstract class UncertainMatrixBuilderTest {
             fusesMap.get(to).openFuse();
         }
 
-        FuseStatesMatrix[] matrices = UncertainMatrixBuilder.build(substation);
+        CertainFuseStateMatrix[] matrices = UncertainMatrixBuilder.build(substation);
 
 
         var expectedSize = 0;

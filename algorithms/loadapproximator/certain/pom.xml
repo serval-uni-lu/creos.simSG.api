@@ -13,6 +13,11 @@
     <dependencies>
         <dependency>
             <groupId>duc.sg.java</groupId>
+            <artifactId>loadapproximator.interface</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>duc.sg.java</groupId>
             <artifactId>matrixbuilder.certain</artifactId>
             <version>${project.version}</version>
         </dependency>

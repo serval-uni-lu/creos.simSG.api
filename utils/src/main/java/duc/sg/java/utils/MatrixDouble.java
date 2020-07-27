@@ -1,24 +1,32 @@
-package duc.sg.java.matrix.certain.utils;
+package duc.sg.java.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-public class Matrix {
+public class MatrixDouble {
     private double[] data;
 
     private int numRows, numCols;
 
-    public Matrix() {
+    public MatrixDouble() {
         data = new double[0];
     }
 
-    public Matrix(int numRows, int numCols) {
+    public MatrixDouble(int numRows, int numCols) {
         this.numCols = numCols;
         this.numRows = numRows;
         data = new double[numRows*numCols];
     }
 
     public void set(int row, int col, double value) {
+        if(row >= getNumRows()) {
+            addLines(row - getNumRows() + 1);
+        }
+
+        if(col >= getNumCols()) {
+            addColumns(col - getNumCols() + 1);
+        }
+
         data[ row * numCols + col ] = value;
     }
 

@@ -6,7 +6,8 @@ import duc.sg.java.extracter.FuseExtracter;
 import duc.sg.java.grid.uncertainty.configuration.Configuration;
 import duc.sg.java.grid.uncertainty.configuration.ConfigurationMatrix;
 import duc.sg.java.grid.uncertainty.configuration.EmptyConfigurationMatrix;
-import duc.sg.java.matrix.certain.MatrixBuilder;
+import duc.sg.java.matrix.certain.CertainFuseStateMatrix;
+import duc.sg.java.matrix.certain.CertainMatrixBuilder;
 import duc.sg.java.matrix.uncertain.UncertainFuseStatesMatrix;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;
@@ -134,7 +135,7 @@ public class UncertainLoadApproximator {
             }
 
             fuseMatrices[idx] = new UncertainFuseStatesMatrix(
-                    MatrixBuilder.build(substation),
+                    (CertainFuseStateMatrix) CertainMatrixBuilder.INSTANCE.build(substation)[0],
                     configuration.getConfidence()
             );
 

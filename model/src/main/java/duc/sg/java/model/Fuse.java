@@ -12,7 +12,6 @@ public class Fuse {
     private Cable cable;
     private Entity owner;
     private Status status;
-//    private MultDblePossibilities uload;
     private MultDblPoss2 uload;
     private Fuse[] getPowerFrom;
     private Fuse[] givePowerTo;
