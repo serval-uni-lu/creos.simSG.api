@@ -1,20 +1,21 @@
 package duc.sg.java.matrix.certain;
 
 
+import duc.sg.java.matrix.FuseStateMatrix;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
 
 import java.util.Map;
 
-public class FuseStatesMatrix {
+public class CertainFuseStateMatrix implements FuseStateMatrix {
 
-    public double[] data;
-    public int nbColumns;
-    public Fuse[] reverse;
-    public Cable[] mapRowCable;
+    protected double[] data;
+    protected int nbColumns;
+    protected Fuse[] reverse;
+    protected Cable[] mapRowCable;
 
 
-    public FuseStatesMatrix(double[] data, int nbColumns, Map<Fuse, Integer> indexFuses, Cable[] mapRowCable) {
+    CertainFuseStateMatrix(double[] data, int nbColumns, Map<Fuse, Integer> indexFuses, Cable[] mapRowCable) {
         this.data = data;
         this.nbColumns = nbColumns;
         this.mapRowCable = mapRowCable;
@@ -26,11 +27,11 @@ public class FuseStatesMatrix {
 
     }
 
-    protected FuseStatesMatrix(double[] data, int nbColumns, Fuse[] reverse, Cable[] mapRowCabl) {
-        this.data = data;
-        this.nbColumns = nbColumns;
-        this.reverse = reverse;
-        this.mapRowCable = mapRowCabl;
+    protected CertainFuseStateMatrix(CertainFuseStateMatrix fuseStatesMatrix) {
+        this.data = fuseStatesMatrix.data;
+        this.nbColumns = fuseStatesMatrix.nbColumns;
+        this.reverse = fuseStatesMatrix.reverse;
+        this.mapRowCable = fuseStatesMatrix.mapRowCable;
     }
 
     public double[] getData() {

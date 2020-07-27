@@ -29,7 +29,7 @@ public class JsonSCImporter extends JsonImporter<Scenario> {
 
     @Override
     protected Optional<Scenario> extract(JsonNode toImport) throws ImportationException {
-        if(JsonScValidator.validate(toImport)) {
+        if(JsonSCValidator.validate(toImport)) {
             ScenarioName name;
             int nbFuses;
             switch(toImport.get(SC_ID_KEY).asInt()) {

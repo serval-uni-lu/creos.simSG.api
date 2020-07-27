@@ -7,8 +7,8 @@ import duc.sg.java.scenarios.ScenarioName;
 
 import java.util.Iterator;
 
-class JsonScValidator {
-    private JsonScValidator(){}
+class JsonSCValidator {
+    private JsonSCValidator(){}
 
     static boolean validate(JsonNode toCheck) throws ImportationException {
         if(SchemaValidator.isInvalid(toCheck,"scenario-schema.json")) {

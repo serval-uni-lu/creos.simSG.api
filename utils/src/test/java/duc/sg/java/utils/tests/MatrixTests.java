@@ -1,6 +1,6 @@
-package duc.sg.java.matrix.certain.test.utils;
+package duc.sg.java.utils.tests;
 
-import duc.sg.java.matrix.certain.utils.Matrix;
+import duc.sg.java.utils.MatrixDouble;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +9,7 @@ public class MatrixTests {
 
     @Test
     public void test() {
-        var matrix = new Matrix(2,3);
+        var matrix = new MatrixDouble(2,3);
         Assertions.assertArrayEquals(new double[]{0,0,0,0,0,0}, matrix.getData());
 
         matrix.set(0,0, 1);
@@ -41,7 +41,7 @@ public class MatrixTests {
 
     @Test
     public void testAddManyColumns() {
-        var matrix = new Matrix(2,3);
+        var matrix = new MatrixDouble(2,3);
         matrix.set(0,0, 1);
         matrix.set(0,1, 2);
         matrix.set(0,2, 3);
@@ -60,7 +60,7 @@ public class MatrixTests {
 
     @Test
     public void testAddManyLines() {
-        var matrix = new Matrix(2,3);
+        var matrix = new MatrixDouble(2,3);
         matrix.set(0,0, 1);
         matrix.set(0,1, 2);
         matrix.set(0,2, 3);

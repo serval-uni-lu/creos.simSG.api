@@ -1,7 +1,7 @@
 package duc.sg.java.loadapproximator.loadapproximation;
 
-import duc.sg.java.matrix.certain.FuseStatesMatrix;
-import duc.sg.java.matrix.certain.MatrixBuilder;
+import duc.sg.java.matrix.FuseStateMatrix;
+import duc.sg.java.matrix.certain.CertainMatrixBuilder;
 import duc.sg.java.model.Substation;
 import duc.sg.java.uncertainty.Confidence;
 import duc.sg.java.uncertainty.MultDblPoss2;
@@ -13,7 +13,7 @@ public class LoadApproximator {
     private LoadApproximator(){}
 
     public static void approximate(final Substation substation) {
-        FuseStatesMatrix matrix = MatrixBuilder.build(substation);
+        FuseStateMatrix matrix = CertainMatrixBuilder.INSTANCE.build(substation)[0];
 
         var fuseStates = new DenseMatrix64F(matrix.getNbColumns(), matrix.getNbColumns(), true, matrix.getData());
 
@@ -32,9 +32,7 @@ public class LoadApproximator {
 
         var solData = solution.data;
         for (int i = 0; i < solData.length; i++) {
-//            var multPoss = new MultDblePossibilities();
             var multPoss = new MultDblPoss2();
-//            multPoss.addOrReplace(new PossibilityDouble(solData[i], Confidence.MAX_PROBABILITY));
             multPoss.addPossibility(new PossibilityDouble(solData[i], Confidence.MAX_PROBABILITY));
             matrix.getFuse(i).setLoad(multPoss);
         }
