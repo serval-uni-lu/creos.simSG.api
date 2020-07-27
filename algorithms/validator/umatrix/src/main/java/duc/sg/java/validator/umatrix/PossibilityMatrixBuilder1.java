@@ -1,7 +1,7 @@
 package duc.sg.java.validator.umatrix;
 
-import duc.sg.java.circle.all.Circle;
-import duc.sg.java.circle.all.CircleUtils;
+import duc.sg.java.circlefinder.Circle;
+import duc.sg.java.circlefinder.CircleUtils;
 import duc.sg.java.model.Entity;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;

@@ -1,4 +1,4 @@
-package duc.sg.java.circle.all;
+package duc.sg.java.circlefinder;
 
 import duc.sg.java.model.Fuse;
 

@@ -1,8 +1,8 @@
-package duc.sg.java.circle.all.test;
+package duc.sg.java.circlefinder.test;
 
-import duc.sg.java.circle.all.Circle;
-import duc.sg.java.circle.all.CircleFinder;
-import duc.sg.java.circle.all.CircleUtils;
+import duc.sg.java.circlefinder.Circle;
+import duc.sg.java.circlefinder.CircleFinder;
+import duc.sg.java.circlefinder.CircleUtils;
 import duc.sg.java.extracter.FuseExtracter;
 import duc.sg.java.model.*;
 import duc.sg.java.utils.BaseTransform;

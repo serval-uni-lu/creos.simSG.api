@@ -1,7 +1,7 @@
 package duc.sg.java.loadapproximator.uncertain.multisubs.bsrules;
 
-import duc.sg.java.circle.all.Circle;
-import duc.sg.java.circle.all.CircleFinder;
+import duc.sg.java.circlefinder.Circle;
+import duc.sg.java.circlefinder.CircleFinder;
 import duc.sg.java.model.Cabinet;
 import duc.sg.java.model.Entity;
 import duc.sg.java.model.Fuse;

@@ -1,4 +1,4 @@
-package duc.sg.java.circle.all;
+package duc.sg.java.circlefinder;
 
 import duc.sg.java.extracter.FuseExtracter;
 import duc.sg.java.model.Entity;
@@ -9,7 +9,9 @@ import duc.sg.java.utils.OArrays;
 import java.util.*;
 
 class CircleFinderImpl implements CircleFinder {
-    CircleFinderImpl() {}
+    static final CircleFinder INSTANCE = new CircleFinderImpl();
+
+    private CircleFinderImpl() {}
 
     @Override
     public void findAndSave(Substation substation) {

@@ -1,7 +1,7 @@
 package duc.sg.java.validator.rules;
 
-import duc.sg.java.circle.all.Circle;
-import duc.sg.java.circle.all.CircleFinder;
+import duc.sg.java.circlefinder.Circle;
+import duc.sg.java.circlefinder.CircleFinder;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;
 import duc.sg.java.model.Substation;
