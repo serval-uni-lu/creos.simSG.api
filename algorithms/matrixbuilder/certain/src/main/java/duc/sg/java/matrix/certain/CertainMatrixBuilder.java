@@ -6,6 +6,9 @@ import duc.sg.java.circlefinder.CircleUtils;
 import duc.sg.java.matrix.FuseStateMatrix;
 import duc.sg.java.matrix.MatrixBuilder;
 import duc.sg.java.model.*;
+import duc.sg.java.navigation.Actionner;
+import duc.sg.java.navigation.bfs.BFSEntity;
+import duc.sg.java.navigation.bfs.Condition;
 import duc.sg.java.utils.MatrixDouble;
 
 import java.util.*;
@@ -15,9 +18,8 @@ public class CertainMatrixBuilder implements MatrixBuilder {
 
     private CertainMatrixBuilder(){}
 
-
     @Override
-    public FuseStateMatrix[] build(Substation substation, Map<Fuse, State> configuration) {
+    public FuseStateMatrix[] build(Substation substation, Configuration configuration) {
         CircleFinder.getDefault().findAndSave(substation);
 
         final var idxFuses = new HashMap<Fuse, Integer>();
@@ -27,85 +29,90 @@ public class CertainMatrixBuilder implements MatrixBuilder {
         final var cabinetEq = new MatrixDouble();
         final var circleEq = new MatrixDouble();
 
-        var waitingList = new ArrayDeque<Entity>();
-        var entityVisited = new HashSet<Entity>();
         var fuseInCircles = new HashSet<Fuse>();
         var paraCableFusesDone = new HashSet<>();
 
         var mapLineFuse = new ArrayList<Cable>();
 
-        waitingList.add(substation);
+        Actionner<Entity> actionner = (Entity currEntity, Set<Entity> visited) -> {
+            final List<Fuse> fuses = configuration.getClosedFuses(currEntity);
 
-        while(!waitingList.isEmpty()) {
-            var currEntity = waitingList.remove();
-            var notYetVisited = entityVisited.add(currEntity);
 
-            if(notYetVisited) {
-                final List<Fuse> fuses = currEntity.getClosedFuses();
+            if (!(currEntity instanceof Substation) && fuses.size() > 1) {
+                cabinetEq.addLine();
+            }
+
+            for (Fuse fuse : fuses) {
+                if (!idxFuses.containsKey(fuse)) {
+                    addCableEq(configuration, idxFuses, idxLast, cableEq, mapLineFuse, fuse);
+                }
 
                 if (!(currEntity instanceof Substation) && fuses.size() > 1) {
-                    cabinetEq.addLine();
+                    int idxFuse = Utils.getOrCreateIdx(fuse, idxFuses, idxLast);
+                    cabinetEq.set( cabinetEq.getNumRows() - 1, idxFuse, 1);
                 }
 
-                for (Fuse fuse : fuses) {
-                    if (!idxFuses.containsKey(fuse)) {
-                        Fuse oppFuse = fuse.getOpposite();
-                        cableEq.addLine();
-                        mapLineFuse.add(fuse.getCable());
-                        int idxFuse = Utils.getOrCreateIdx(fuse, idxFuses, idxLast);
-                        cableEq.set(cableEq.getNumRows() - 1, idxFuse, 1);
 
-                        if (oppFuse.isClosed() && !oppFuse.getOwner().isDeadEnd()) {
-                            int idxOpp = Utils.getOrCreateIdx(oppFuse, idxFuses, idxLast);
-                            cableEq.set( cableEq.getNumRows() - 1, idxOpp, 1);
-                            if (!entityVisited.contains(oppFuse.getOwner())) {
-                                waitingList.add(oppFuse.getOwner());
-                            }
-                        }
+
+                if(!fuseInCircles.contains(fuse)) {
+                    Optional<Circle> optCircle = CircleUtils.circleFrom(substation, fuse);
+                    if(optCircle.isPresent() && (optCircle.get().isEffective(configuration))) {
+                        Circle circle = optCircle.get();
+                        Collections.addAll(fuseInCircles, circle.getFuses());
+
+                        Fuse fuseEnd = circle.getOtherEndPoint(fuse);
+                        addCircleEq(idxFuses, idxLast, circleEq, paraCableFusesDone, fuse, fuseEnd);
+                    }
+                } else if(!visited.contains(fuse.getOpposite().getOwner()) && !paraCableFusesDone.contains(fuse)) {
+                    Optional<Fuse> oppFuse = Utils.getOtherFusePara(fuse, fuses);
+                    if(oppFuse.isPresent()) {
+                        Fuse fuseEnd = oppFuse.get();
+                        addCircleEq(idxFuses, idxLast, circleEq, paraCableFusesDone, fuse, fuseEnd);
                     }
 
-                    if (!(currEntity instanceof Substation) && fuses.size() > 1) {
-                        int idxFuse = Utils.getOrCreateIdx(fuse, idxFuses, idxLast);
-                        cabinetEq.set( cabinetEq.getNumRows() - 1, idxFuse, 1);
-                    }
-
-                    if(!fuseInCircles.contains(fuse)) {
-                        Optional<Circle> optCircle = CircleUtils.circleFrom(substation, fuse);
-                        if(optCircle.isPresent() && (optCircle.get().isValid())) {
-                            Circle circle = optCircle.get();
-                            Collections.addAll(fuseInCircles, circle.getFuses());
-
-                            Fuse fuseEnd = circle.getOtherEndPoint(fuse);
-                            paraCableFusesDone.add(fuse);
-                            paraCableFusesDone.add(fuseEnd);
-                            int idxFuse = Utils.getOrCreateIdx(fuse, idxFuses, idxLast);
-                            int idxFuseEnd = Utils.getOrCreateIdx(fuseEnd, idxFuses, idxLast);
-
-                            circleEq.addLine();
-                            circleEq.set(circleEq.getNumRows() - 1, idxFuse, 1);
-                            circleEq.set(circleEq.getNumRows() - 1, idxFuseEnd, -1);
-                        }
-                    } else if(!entityVisited.contains(fuse.getOpposite().getOwner()) &&
-                            !paraCableFusesDone.contains(fuse)) {
-                        Optional<Fuse> oppFuse = Utils.getOtherFusePara(fuse, fuses);
-                        if(oppFuse.isPresent()) {
-                            Fuse fuseEnd = oppFuse.get();
-                            paraCableFusesDone.add(fuse);
-                            paraCableFusesDone.add(fuseEnd);
-
-                            int idxFuse = Utils.getOrCreateIdx(fuse, idxFuses, idxLast);
-                            int idxFuseEnd = Utils.getOrCreateIdx(fuseEnd, idxFuses, idxLast);
-
-                            circleEq.addLine();
-                            circleEq.set( circleEq.getNumRows() - 1, idxFuse, 1);
-                            circleEq.set( circleEq.getNumRows() - 1, idxFuseEnd, -1);
-                        }
-
-                    }
                 }
             }
-        }
+        };
 
+        Condition<Fuse, Entity> condition = (Fuse currFuse, Set<Entity> visited) -> {
+            Fuse oppFuse = currFuse.getOpposite();
+            Entity oppEntity = oppFuse.getOwner();
+            return configuration.isClosed(currFuse) &&
+                    configuration.isClosed(oppFuse) &&
+                    !configuration.isDeadEnd(oppEntity) &&
+                    !visited.contains(oppEntity);
+        };
+
+        BFSEntity.INSTANCE.navigate(substation, actionner, condition);
+
+        return buildMatrix(idxFuses, cableEq, cabinetEq, circleEq, mapLineFuse);
+    }
+
+    private void addCircleEq(HashMap<Fuse, Integer> idxFuses, int[] idxLast, MatrixDouble circleEq, HashSet<Object> paraCableFusesDone, Fuse fuse, Fuse fuseEnd) {
+        paraCableFusesDone.add(fuse);
+        paraCableFusesDone.add(fuseEnd);
+        int idxFuse = Utils.getOrCreateIdx(fuse, idxFuses, idxLast);
+        int idxFuseEnd = Utils.getOrCreateIdx(fuseEnd, idxFuses, idxLast);
+
+        circleEq.addLine();
+        circleEq.set(circleEq.getNumRows() - 1, idxFuse, 1);
+        circleEq.set(circleEq.getNumRows() - 1, idxFuseEnd, -1);
+    }
+
+    private void addCableEq(Configuration configuration, HashMap<Fuse, Integer> idxFuses, int[] idxLast, MatrixDouble cableEq, ArrayList<Cable> mapLineFuse, Fuse fuse) {
+        Fuse oppFuse = fuse.getOpposite();
+        cableEq.addLine();
+        mapLineFuse.add(fuse.getCable());
+        int idxFuse = Utils.getOrCreateIdx(fuse, idxFuses, idxLast);
+        cableEq.set(cableEq.getNumRows() - 1, idxFuse, 1);
+
+        if (configuration.isClosed(oppFuse) && !configuration.isDeadEnd(oppFuse.getOwner())) {
+            int idxOpp = Utils.getOrCreateIdx(oppFuse, idxFuses, idxLast);
+            cableEq.set( cableEq.getNumRows() - 1, idxOpp, 1);
+        }
+    }
+
+    private static FuseStateMatrix[] buildMatrix(HashMap<Fuse, Integer> idxFuses, MatrixDouble cableEq, MatrixDouble cabinetEq, MatrixDouble circleEq, ArrayList<Cable> mapLineFuse) {
         if(circleEq.getNumCols() < cableEq.getNumCols()) {
             circleEq.addColumns(cableEq.getNumCols() - circleEq.getNumCols());
         }
@@ -120,4 +127,6 @@ public class CertainMatrixBuilder implements MatrixBuilder {
 
         return new FuseStateMatrix[]{res};
     }
+
+
 }

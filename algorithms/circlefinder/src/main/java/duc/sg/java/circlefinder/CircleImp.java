@@ -1,5 +1,6 @@
 package duc.sg.java.circlefinder;
 
+import duc.sg.java.model.Configuration;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.utils.StringAccumlator;
 
@@ -18,9 +19,19 @@ class CircleImp implements Circle {
     }
 
     @Override
-    public boolean isValid() {
+    public boolean isEffective() {
         for(Fuse fuse: fuses) {
             if(!fuse.isClosed()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean isEffective(Configuration configuration) {
+        for (Fuse fuse: getFuses()) {
+            if(!configuration.isClosed(fuse)) {
                 return false;
             }
         }

@@ -16,7 +16,7 @@ public class BFSEntity implements Navigate<Entity> {
 
     public void navigate(Substation substation, Actionner<Entity> actionner) {
         if(substation.getFuses().isEmpty()) {
-            actionner.act(substation);
+            actionner.act(substation, new HashSet<>());
             return;
         }
 
@@ -29,7 +29,7 @@ public class BFSEntity implements Navigate<Entity> {
         while (!waiting.isEmpty()) {
             Entity current = waiting.poll();
             visited.add(current);
-            actionner.act(current);
+            actionner.act(current, visited);
 
            for(Fuse fuse: current.getFuses()) {
                Entity neighbor = fuse.getOpposite().getOwner();
@@ -41,6 +41,34 @@ public class BFSEntity implements Navigate<Entity> {
 
         }
 
+    }
+
+    public void navigate(Substation substation, Actionner<Entity> actionner, Condition<Fuse, Entity> condition) {
+        if(substation.getFuses().isEmpty()) {
+            actionner.act(substation, new HashSet<>());
+            return;
+        }
+
+        var waiting = new ArrayDeque<Entity>();
+        var inWaitingList = new HashSet<Entity>();
+        var visited = new HashSet<Entity>();
+
+        waiting.add(substation);
+
+        while (!waiting.isEmpty()) {
+            Entity current = waiting.poll();
+            visited.add(current);
+            actionner.act(current, visited);
+
+            for(Fuse fuse: current.getFuses()) {
+                Entity neighbor = fuse.getOpposite().getOwner();
+                if(!visited.contains(neighbor) && !inWaitingList.contains(neighbor) && condition.evaluate(fuse, visited)) {
+                    waiting.add(neighbor);
+                    inWaitingList.add(neighbor);
+                }
+            }
+
+        }
     }
 
 }

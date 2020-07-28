@@ -54,6 +54,7 @@ public abstract class MatrixBuilderTest {
 
     protected void genericTest(double[] expected, String... toOpen) {
         openFuses(toOpen);
+//        FuseStateMatrix matrix = ((CertainMatrixBuilder)CertainMatrixBuilder.INSTANCE).buildOld(substation, null)[0];
         FuseStateMatrix matrix = CertainMatrixBuilder.INSTANCE.build(substation)[0];
         Assertions.assertArrayEquals(expected,  matrix.getData());
     }

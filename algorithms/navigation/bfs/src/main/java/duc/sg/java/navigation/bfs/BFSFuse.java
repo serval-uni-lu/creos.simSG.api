@@ -26,7 +26,7 @@ public class BFSFuse implements Navigate<Fuse> {
         while (!waiting.isEmpty()) {
             var current = waiting.poll();
             visited.add(current);
-            actionner.act(current);
+            actionner.act(current, visited);
 
             var ownerOpp = current.getOpposite().getOwner();
             var toAdd = new ArrayList<Fuse>(ownerOpp.getFuses().size());

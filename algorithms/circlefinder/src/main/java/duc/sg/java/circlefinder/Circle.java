@@ -1,5 +1,6 @@
 package duc.sg.java.circlefinder;
 
+import duc.sg.java.model.Configuration;
 import duc.sg.java.model.Fuse;
 
 public interface Circle {
@@ -10,7 +11,8 @@ public interface Circle {
      *
      * @return true if the circle is effective
      */
-    boolean isValid();
+    boolean isEffective();
+    boolean isEffective(Configuration configuration);
 
     Fuse getOtherEndPoint(Fuse start);
 }
