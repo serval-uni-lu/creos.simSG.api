@@ -99,7 +99,7 @@ public class UncertainLoadApproximator {
             }
 
             if(validator.isValid(substation, fuseStateMap)) {
-                CertainFuseStateMatrix matrix = (CertainFuseStateMatrix) CertainMatrixBuilder.INSTANCE.build(substation)[0];
+                CertainFuseStateMatrix matrix = (CertainFuseStateMatrix) new CertainMatrixBuilder().build(substation)[0];
                 res.add(new UncertainFuseStatesMatrix(matrix, confidence));
                 if (nbFusesClosed > maxClosedFuses) {
                     maxClosedFuses = nbFusesClosed;

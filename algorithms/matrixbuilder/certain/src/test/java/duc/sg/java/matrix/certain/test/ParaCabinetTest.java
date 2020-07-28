@@ -60,13 +60,12 @@ public class ParaCabinetTest extends MatrixBuilderTest {
     public void sc1_allClosed(String[] toOpen) {
         double[] expected = new double[] {
                 1,1,0,0,0,0,0,
+                0,1,1,0,1,0,0,
                 0,0,1,1,0,0,0,
+                0,0,1,0,-1,0,0,
+                0,0,0,1,0,1,1,
                 0,0,0,0,1,1,0,
                 0,0,0,0,0,0,1,
-                0,1,1,0,1,0,0,
-                0,0,0,1,0,1,1,
-                0,0,1,0,-1,0,0
-
         };
         genericTest(expected, toOpen);
     }
@@ -94,9 +93,9 @@ public class ParaCabinetTest extends MatrixBuilderTest {
     public void sc5_f4f6Open(String[] toOpen) {
         double[] expected = new double[] {
                 1,1,0,0,
+                0,1,1,1,
                 0,0,1,0,
                 0,0,0,1,
-                0,1,1,1,
         };
         genericTest(expected, TestHelper.merge(toOpen, F4_NAME, F6_NAME));
     }
@@ -106,11 +105,11 @@ public class ParaCabinetTest extends MatrixBuilderTest {
     public void sc6_f7Open(String[] toOpen) {
         double[] expected = new double[] {
                 1,1,0,0,0,0,
-                0,0,1,1,0,0,
-                0,0,0,0,1,1,
                 0,1,1,0,1,0,
+                0,0,1,1,0,0,
+                0,0,1,0,-1,0,
                 0,0,0,1,0,1,
-                0,0,1,0,-1,0
+                0,0,0,0,1,1,
         };
         genericTest(expected, TestHelper.merge(toOpen, F7_NAME));
     }
@@ -120,11 +119,11 @@ public class ParaCabinetTest extends MatrixBuilderTest {
     public void sc7_f6Open(String[] toOpen) {
         double[] expected = new double[] {
                 1,1,0,0,0,0,
+                0,1,1,0,1,0,
                 0,0,1,1,0,0,
                 0,0,0,0,1,0,
-                0,0,0,0,0,1,
-                0,1,1,0,1,0,
                 0,0,0,1,0,1,
+                0,0,0,0,0,1,
         };
         genericTest(expected, TestHelper.merge(toOpen, F6_NAME));
     }
@@ -134,9 +133,9 @@ public class ParaCabinetTest extends MatrixBuilderTest {
     public void sc8_f6f7Open(String[] toOpen) {
         double[] expected = new double[] {
                 1,1,0,0,
+                0,1,1,1,
                 0,0,1,0,
                 0,0,0,1,
-                0,1,1,1
         };
         genericTest(expected, TestHelper.merge(toOpen, F7_NAME, F6_NAME));
     }
@@ -146,11 +145,11 @@ public class ParaCabinetTest extends MatrixBuilderTest {
     public void sc9_f5Open(String[] toOpen){
         double[] expected = new double[] {
                 1,1,0,0,0,0,
+                0,1,1,0,0,0,
                 0,0,1,1,0,0,
+                0,0,0,1,1,1,
                 0,0,0,0,1,0,
                 0,0,0,0,0,1,
-                0,1,1,0,0,0,
-                0,0,0,1,1,1
         };
         genericTest(expected, TestHelper.merge(toOpen, F5_NAME));
     }
@@ -160,10 +159,10 @@ public class ParaCabinetTest extends MatrixBuilderTest {
     public void sc10_f5f7Open(String[] toOpen){
         double[] expected = new double[] {
                 1,1,0,0,0,
-                0,0,1,1,0,
-                0,0,0,0,1,
                 0,1,1,0,0,
+                0,0,1,1,0,
                 0,0,0,1,1,
+                0,0,0,0,1,
         };
         genericTest(expected, TestHelper.merge(toOpen, F5_NAME, F7_NAME));
     }
@@ -173,10 +172,10 @@ public class ParaCabinetTest extends MatrixBuilderTest {
     public void sc11_f5f6Open(String[] toOpen) {
         var expected = new double[] {
                 1,1,0,0,0,
-                0,0,1,1,0,
-                0,0,0,0,1,
                 0,1,1,0,0,
-                0,0,0,1,1
+                0,0,1,1,0,
+                0,0,0,1,1,
+                0,0,0,0,1,
         };
         genericTest(expected, TestHelper.merge(toOpen, F5_NAME, F6_NAME));
     }
@@ -186,8 +185,8 @@ public class ParaCabinetTest extends MatrixBuilderTest {
     public void sc12_f5f6f7Open(String[] toOpen) {
         var expected = new double[] {
                 1,1,0,
-                0,0,1,
                 0,1,1,
+                0,0,1,
         };
         genericTest(expected, TestHelper.merge(toOpen, F5_NAME, F6_NAME, F7_NAME));
     }
@@ -197,11 +196,11 @@ public class ParaCabinetTest extends MatrixBuilderTest {
     public void sc13_f4Open(String[] toOpen) {
         var expected = new double[] {
                 1,1,0,0,0,0,
+                0,1,1,1,0,0,
                 0,0,1,0,0,0,
                 0,0,0,1,1,0,
+                0,0,0,0,1,1,
                 0,0,0,0,0,1,
-                0,1,1,1,0,0,
-                0,0,0,0,1,1
         };
         genericTest(expected, TestHelper.merge(toOpen, F4_NAME));
     }
@@ -211,8 +210,8 @@ public class ParaCabinetTest extends MatrixBuilderTest {
     public void sc14_f4f5Open(String[] toOpen) {
         var expected = new double[] {
                 1,1,0,
-                0,0,1,
                 0,1,1,
+                0,0,1,
         };
         genericTest(expected, TestHelper.merge(toOpen, F4_NAME, F5_NAME));
     }
@@ -222,8 +221,8 @@ public class ParaCabinetTest extends MatrixBuilderTest {
     public void sc15_f3f6Open(String[] toOpen) {
         var expected = new double[] {
                 1,1,0,
-                0,0,1,
                 0,1,1,
+                0,0,1,
         };
         genericTest(expected, TestHelper.merge(toOpen, F3_NAME, F6_NAME));
     }
@@ -233,10 +232,10 @@ public class ParaCabinetTest extends MatrixBuilderTest {
     public void sc16_f3f7Open(String[] toOpen) {
         var expected = new double[] {
                 1,1,0,0,0,
-                0,0,1,1,0,
-                0,0,0,0,1,
                 0,1,1,0,0,
+                0,0,1,1,0,
                 0,0,0,1,1,
+                0,0,0,0,1,
         };
         genericTest(expected, TestHelper.merge(toOpen, F3_NAME, F7_NAME));
     }
@@ -246,11 +245,11 @@ public class ParaCabinetTest extends MatrixBuilderTest {
     public void sc17_f3Open(String[] toOpen) {
         var expected = new double[] {
                 1,1,0,0,0,0,
+                0,1,1,0,0,0,
                 0,0,1,1,0,0,
+                0,0,0,1,1,1,
                 0,0,0,0,1,0,
                 0,0,0,0,0,1,
-                0,1,1,0,0,0,
-                0,0,0,1,1,1
         };
         genericTest(expected, TestHelper.merge(toOpen, F3_NAME));
     }
@@ -260,10 +259,10 @@ public class ParaCabinetTest extends MatrixBuilderTest {
     public void sc18_f3f4Open(String[] toOpen) {
         var expected = new double[] {
                 1,1,0,0,0,
-                0,0,1,1,0,
-                0,0,0,0,1,
                 0,1,1,0,0,
-                0,0,0,1,1
+                0,0,1,1,0,
+                0,0,0,1,1,
+                0,0,0,0,1,
         };
         genericTest(expected, TestHelper.merge(toOpen, F3_NAME, F4_NAME));
     }
@@ -273,8 +272,8 @@ public class ParaCabinetTest extends MatrixBuilderTest {
     public void sc19_f3f4f7Open(String[] toOpen) {
         var expected = new double[] {
                 1,1,0,
-                0,0,1,
                 0,1,1,
+                0,0,1,
         };
         genericTest(expected, TestHelper.merge(toOpen, F3_NAME, F4_NAME, F7_NAME));
     }

@@ -13,7 +13,7 @@ public class LoadApproximator {
     private LoadApproximator(){}
 
     public static void approximate(final Substation substation) {
-        FuseStateMatrix matrix = CertainMatrixBuilder.INSTANCE.build(substation)[0];
+        FuseStateMatrix matrix = new CertainMatrixBuilder().build(substation)[0];
 
         var fuseStates = new DenseMatrix64F(matrix.getNbColumns(), matrix.getNbColumns(), true, matrix.getData());
 

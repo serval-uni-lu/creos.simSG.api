@@ -61,7 +61,7 @@ public class UncertainMatrixBuilder {
                     confidence *= uFuses.get(idxFuse).getStatus().confIsOpen();
                 }
             }
-            CertainFuseStateMatrix matrix = (CertainFuseStateMatrix) CertainMatrixBuilder.INSTANCE.build(substation)[0];
+            CertainFuseStateMatrix matrix = (CertainFuseStateMatrix) new CertainMatrixBuilder().build(substation)[0];
             res[idxCase] = new UncertainFuseStatesMatrix(matrix, confidence);
         }
 

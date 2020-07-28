@@ -180,7 +180,7 @@ public class PathValidator {
 
 
         var configuration = new HashMap<Fuse, State>();
-        BFSFuse.INSTANCE.navigate(grid.getSubstation("Substation 4").get(), (Fuse f) -> {
+        BFSFuse.INSTANCE.navigate(grid.getSubstation("Substation 4").get(), (Fuse f, Set<Fuse> visited) -> {
             if(fusesToOpen.contains(f.getName())) {
                 configuration.put(f, State.OPEN);
             } else {
@@ -188,7 +188,7 @@ public class PathValidator {
             }
         });
 
-        BFSFuse.INSTANCE.navigate(grid.getSubstation("Substation 1").get(), (Fuse f) -> {
+        BFSFuse.INSTANCE.navigate(grid.getSubstation("Substation 1").get(), (Fuse f, Set<Fuse> visited) -> {
             if(fusesToOpen.contains(f.getName())) {
                 configuration.put(f, State.OPEN);
             } else {

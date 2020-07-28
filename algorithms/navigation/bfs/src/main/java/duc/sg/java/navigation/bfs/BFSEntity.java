@@ -43,7 +43,7 @@ public class BFSEntity implements Navigate<Entity> {
 
     }
 
-    public void navigate(Substation substation, Actionner<Entity> actionner, Condition<Fuse, Entity> condition) {
+    public void navigate(Substation substation, Actionner<Entity> actionner, Condition<Fuse> condition) {
         if(substation.getFuses().isEmpty()) {
             actionner.act(substation, new HashSet<>());
             return;
@@ -62,7 +62,7 @@ public class BFSEntity implements Navigate<Entity> {
 
             for(Fuse fuse: current.getFuses()) {
                 Entity neighbor = fuse.getOpposite().getOwner();
-                if(!visited.contains(neighbor) && !inWaitingList.contains(neighbor) && condition.evaluate(fuse, visited)) {
+                if(!visited.contains(neighbor) && !inWaitingList.contains(neighbor) && condition.evaluate(fuse)) {
                     waiting.add(neighbor);
                     inWaitingList.add(neighbor);
                 }
