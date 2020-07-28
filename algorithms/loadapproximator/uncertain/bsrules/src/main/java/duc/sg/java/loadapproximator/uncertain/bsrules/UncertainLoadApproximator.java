@@ -135,7 +135,7 @@ public class UncertainLoadApproximator {
             }
 
             fuseMatrices[idx] = new UncertainFuseStatesMatrix(
-                    (CertainFuseStateMatrix) CertainMatrixBuilder.INSTANCE.build(substation)[0],
+                    (CertainFuseStateMatrix) new CertainMatrixBuilder().build(substation)[0],
                     configuration.getConfidence()
             );
 

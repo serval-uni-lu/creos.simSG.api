@@ -27,7 +27,7 @@ public class ExtractComponents {
                 final var component = new HashSet<Substation>();
                 component.add(current);
 
-                BFSEntity.INSTANCE.navigate(current, (Entity entity) -> {
+                BFSEntity.INSTANCE.navigate(current, (Entity entity, Set<Entity> visited) -> {
                     if(entity instanceof Substation) {
                         var casted = (Substation) entity;
                         component.add(casted);

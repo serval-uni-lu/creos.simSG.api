@@ -52,10 +52,10 @@ public class ParaTransformerTest extends MatrixBuilderTest {
     public void sc1_testOpenCloseDE(String[] toOpen) {
         var expected = new double[]{
                 1, 1, 0, 0, 0,
+                1, 0, -1, 0, 0,
+                0, 1, 0, 1, 1,
                 0, 0, 1, 1, 0,
                 0, 0, 0, 0, 1,
-                0, 1, 0, 1, 1,
-                1, 0, -1, 0, 0,
         };
         genericTest(expected, toOpen);
     }
@@ -77,8 +77,8 @@ public class ParaTransformerTest extends MatrixBuilderTest {
         var expected = new double[]{
                 1, 1, 0, 0,
                 0, 0, 1, 0,
+                0, 1, 0, 1,
                 0, 0, 0, 1,
-                0, 1, 0, 1
         };
         genericTest(expected, TestHelper.merge(toOpen, F4_NAME));
     }
@@ -88,9 +88,9 @@ public class ParaTransformerTest extends MatrixBuilderTest {
     public void sc4_testF3Open(String[] toOpen) {
         var expected = new double[]{
                 1, 1, 0, 0,
+                0, 1, 1, 1,
                 0, 0, 1, 0,
                 0, 0, 0, 1,
-                0, 1, 1, 1,
         };
 
         genericTest(expected, TestHelper.merge(toOpen, F3_NAME));
@@ -101,8 +101,8 @@ public class ParaTransformerTest extends MatrixBuilderTest {
     public void sc5_testF3F5Open(String[] toOpen) {
         var expected = new double[]{
                 1, 1, 0,
-                0, 0, 1,
                 0, 1, 1,
+                0, 0, 1,
         };
 
         genericTest(expected, TestHelper.merge(toOpen, F3_NAME, F5_NAME));
@@ -121,8 +121,8 @@ public class ParaTransformerTest extends MatrixBuilderTest {
         var expected = new double[]{
                 1, 0, 0, 0,
                 0, 1, 1, 0,
-                0, 0, 0, 1,
                 0, 0, 1, 1,
+                0, 0, 0, 1,
         };
         genericTest(expected, TestHelper.merge(toOpen, F2_NAME));
     }
@@ -159,9 +159,9 @@ public class ParaTransformerTest extends MatrixBuilderTest {
     public void sc11_testF1Open(String[] toOpen) {
         var expected = new double[]{
                 1, 1, 0, 0,
+                0, 1, 1, 1,
                 0, 0, 1, 0,
                 0, 0, 0, 1,
-                0, 1, 1, 1,
         };
 
         genericTest(expected, TestHelper.merge(toOpen, F1_NAME));
@@ -172,8 +172,8 @@ public class ParaTransformerTest extends MatrixBuilderTest {
     public void sc12_testF1F5Open(String[] toOpen) {
         var expected = new double[]{
                 1, 1, 0,
-                0, 0, 1,
                 0, 1, 1,
+                0, 0, 1,
         };
 
         genericTest(expected, TestHelper.merge(toOpen, F1_NAME, F5_NAME));
@@ -198,8 +198,8 @@ public class ParaTransformerTest extends MatrixBuilderTest {
     public void sc15_testF1F2Open(String[] toOpen) {
         var expected = new double[]{
                 1, 1, 0,
-                0, 0, 1,
                 0, 1, 1,
+                0, 0, 1,
         };
 
         genericTest(expected, TestHelper.merge(toOpen, F1_NAME, F2_NAME));
@@ -218,9 +218,9 @@ public class ParaTransformerTest extends MatrixBuilderTest {
     public void sc17_testF5Open(String[] toOpen) {
         var expected = new double[]{
                 1, 1, 0, 0,
-                0, 0, 1, 1,
+                1, 0, -1, 0,
                 0, 1, 0, 1,
-                1, 0, -1, 0
+                0, 0, 1, 1,
         };
         genericTest(expected, TestHelper.merge(toOpen, F5_NAME));
     }

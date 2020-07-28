@@ -27,13 +27,13 @@ public class IndirectParaTest extends MatrixBuilderTest {
     public void sc1_allClosed(String[] toOpen) {
         var expected = new double[] {
                 1,1,0,0,0,0,0,0,
+                1,0,-1,0,0,0,0,0,
+                0,1,0,1,0,1,0,0,
                 0,0,0,1,1,0,0,0,
                 0,0,0,0,0,1,0,0,
+                0,0,0,0,1,0,1,1,
                 0,0,1,0,0,0,1,0,
                 0,0,0,0,0,0,0,1,
-                0,1,0,1,0,1,0,0,
-                0,0,0,0,1,0,1,1,
-                1,0,-1,0,0,0,0,0,
         };
         genericTest(expected, toOpen);
     }

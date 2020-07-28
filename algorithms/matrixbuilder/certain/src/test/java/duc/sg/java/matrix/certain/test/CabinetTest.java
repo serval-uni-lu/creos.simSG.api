@@ -41,9 +41,9 @@ public class  CabinetTest extends MatrixBuilderTest {
     public void sc1_testAllClosed(String[] toOpen) {
         var expected = new double[] {
                 1,1,0,0,
+                0,1,1,1,
                 0,0,1,0,
                 0,0,0,1,
-                0,1,1,1,
         };
         genericTest(expected, toOpen);
     }
@@ -53,8 +53,8 @@ public class  CabinetTest extends MatrixBuilderTest {
     public void sc2_testF4Open(String[] toOpen) {
         var expected = new double[] {
                 1,1,0,
-                0,0,1,
                 0,1,1,
+                0,0,1,
         };
         genericTest(expected, TestHelper.merge(toOpen, F4_NAME));
     }
@@ -64,8 +64,8 @@ public class  CabinetTest extends MatrixBuilderTest {
     public void sc3_testF3Open(String[] toOpen) {
         var expected = new double[] {
                 1,1,0,
-                0,0,1,
                 0,1,1,
+                0,0,1,
         };
         genericTest(expected, TestHelper.merge(toOpen, F3_NAME));
     }

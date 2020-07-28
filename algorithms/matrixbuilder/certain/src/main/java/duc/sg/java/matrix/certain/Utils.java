@@ -2,8 +2,8 @@ package duc.sg.java.matrix.certain;
 
 import duc.sg.java.model.Fuse;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 class Utils {
@@ -25,7 +25,7 @@ class Utils {
         return Optional.empty();
     }
 
-    static int getOrCreateIdx(Fuse fuse, HashMap<Fuse, Integer> map, int[] last) {
+    static int getOrCreateIdx(Fuse fuse, Map<Fuse, Integer> map, int[] last) {
         map.computeIfAbsent(fuse, keyFuse -> ++last[0]);
         return map.get(fuse);
     }

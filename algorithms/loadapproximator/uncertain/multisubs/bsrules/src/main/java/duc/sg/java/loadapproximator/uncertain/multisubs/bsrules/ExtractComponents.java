@@ -5,10 +5,7 @@ import duc.sg.java.model.SmartGrid;
 import duc.sg.java.model.Substation;
 import duc.sg.java.navigation.bfs.BFSEntity;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class ExtractComponents {
     private ExtractComponents(){}
@@ -26,7 +23,7 @@ public class ExtractComponents {
                 final var component = new HashSet<Substation>();
                 component.add(current);
 
-                BFSEntity.INSTANCE.navigate(current, (Entity entity) -> {
+                BFSEntity.INSTANCE.navigate(current, (Entity entity, Set<Entity> visited) -> {
                     if(entity instanceof Substation) {
                         var casted = (Substation) entity;
                         component.add(casted);
