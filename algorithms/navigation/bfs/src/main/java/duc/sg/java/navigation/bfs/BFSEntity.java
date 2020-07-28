@@ -4,6 +4,7 @@ import duc.sg.java.model.Entity;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
 import duc.sg.java.navigation.Actionner;
+import duc.sg.java.navigation.Condition;
 import duc.sg.java.navigation.Navigate;
 
 import java.util.ArrayDeque;
@@ -14,9 +15,10 @@ public class BFSEntity implements Navigate<Entity> {
 
     private BFSEntity(){}
 
-    public void navigate(Substation substation, Actionner<Entity> actionner) {
+    @Override
+    public void navigate(Substation substation, Actionner<Entity> actionner, Condition condition) {
         if(substation.getFuses().isEmpty()) {
-            actionner.act(substation, new HashSet<>());
+            actionner.act(substation);
             return;
         }
 
@@ -29,36 +31,7 @@ public class BFSEntity implements Navigate<Entity> {
         while (!waiting.isEmpty()) {
             Entity current = waiting.poll();
             visited.add(current);
-            actionner.act(current, visited);
-
-           for(Fuse fuse: current.getFuses()) {
-               Entity neighbor = fuse.getOpposite().getOwner();
-               if(!visited.contains(neighbor) && !inWaitingList.contains(neighbor)) {
-                   waiting.add(neighbor);
-                   inWaitingList.add(neighbor);
-               }
-           }
-
-        }
-
-    }
-
-    public void navigate(Substation substation, Actionner<Entity> actionner, Condition<Fuse> condition) {
-        if(substation.getFuses().isEmpty()) {
-            actionner.act(substation, new HashSet<>());
-            return;
-        }
-
-        var waiting = new ArrayDeque<Entity>();
-        var inWaitingList = new HashSet<Entity>();
-        var visited = new HashSet<Entity>();
-
-        waiting.add(substation);
-
-        while (!waiting.isEmpty()) {
-            Entity current = waiting.poll();
-            visited.add(current);
-            actionner.act(current, visited);
+            actionner.act(current);
 
             for(Fuse fuse: current.getFuses()) {
                 Entity neighbor = fuse.getOpposite().getOwner();

@@ -3,6 +3,7 @@ package duc.sg.java.navigation.bfs;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
 import duc.sg.java.navigation.Actionner;
+import duc.sg.java.navigation.Condition;
 import duc.sg.java.navigation.Navigate;
 
 import java.util.ArrayDeque;
@@ -14,7 +15,8 @@ public class BFSFuse implements Navigate<Fuse> {
 
     private BFSFuse(){}
 
-    public void navigate(Substation substation, Actionner<Fuse> actionner) {
+    @Override
+    public void navigate(Substation substation, Actionner<Fuse> actionner, Condition condition) {
         if(substation.getFuses().isEmpty()) {
             return;
         }
@@ -26,7 +28,7 @@ public class BFSFuse implements Navigate<Fuse> {
         while (!waiting.isEmpty()) {
             var current = waiting.poll();
             visited.add(current);
-            actionner.act(current, visited);
+            actionner.act(current);
 
             var ownerOpp = current.getOpposite().getOwner();
             var toAdd = new ArrayList<Fuse>(ownerOpp.getFuses().size());
@@ -42,7 +44,5 @@ public class BFSFuse implements Navigate<Fuse> {
             waiting.addAll(toAdd);
             inWaitingList.addAll(toAdd);
         }
-
     }
-
 }
