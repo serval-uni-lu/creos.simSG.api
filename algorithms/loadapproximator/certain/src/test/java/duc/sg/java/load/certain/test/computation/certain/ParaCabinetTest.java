@@ -1,6 +1,6 @@
-package duc.sg.java.matrix.certain.test.computation.certain;
+package duc.sg.java.load.certain.test.computation.certain;
 
-import duc.sg.java.matrix.certain.test.TestHelper;
+import duc.sg.java.load.certain.test.TestHelper;
 import duc.sg.java.scenarios.ParaCabinetSC;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;

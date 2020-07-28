@@ -1,17 +1,14 @@
-package duc.sg.java.matrix.certain.test;
+package duc.sg.java.load.certain.test;
 
-import duc.sg.java.matrix.FuseStateMatrix;
-import duc.sg.java.matrix.certain.CertainMatrixBuilder;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class MatrixBuilderTest {
+public abstract class LoadTest {
     protected Substation substation;
     protected Map<String, Fuse> fusesMap;
 
@@ -50,12 +47,5 @@ public abstract class MatrixBuilderTest {
         for (var fName: toOpen) {
             fusesMap.get(fName).openFuse();
         }
-    }
-
-    protected void genericTest(double[] expected, String... toOpen) {
-        openFuses(toOpen);
-//        FuseStateMatrix matrix = CertainMatrixBuilder.INSTANCE.build(substation)[0];
-        FuseStateMatrix matrix = new CertainMatrixBuilder().build(substation)[0];
-        Assertions.assertArrayEquals(expected,  matrix.getData());
     }
 }

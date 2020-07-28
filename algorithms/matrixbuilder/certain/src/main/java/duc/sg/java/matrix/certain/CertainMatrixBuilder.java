@@ -20,6 +20,11 @@ public class CertainMatrixBuilder implements MatrixBuilder {
     private Set<Circle> processedCircle;
     private List<Cable> mapLineFuse;
 
+    private int getOrCreateIdx(Fuse fuse, Map<Fuse, Integer> map, int[] last) {
+        map.computeIfAbsent(fuse, keyFuse -> ++last[0]);
+        return map.get(fuse);
+    }
+
     private void init() {
         idxFuses = new HashMap<>();
         idxLast = new int[]{-1};
@@ -77,7 +82,7 @@ public class CertainMatrixBuilder implements MatrixBuilder {
 
     private void cabinetEq(Entity currEntity, List<Fuse> fuses, int rowCabEq, Fuse fuse) {
         if (!(currEntity instanceof Substation) && fuses.size() > 1) {
-            int idxFuse = Utils.getOrCreateIdx(fuse, idxFuses, idxLast);
+            int idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
             equations.set( rowCabEq, idxFuse, 1);
         }
     }
@@ -89,8 +94,8 @@ public class CertainMatrixBuilder implements MatrixBuilder {
     }
 
     private void addCircleEq(Fuse fuse, Fuse fuseEnd) {
-        int idxFuse = Utils.getOrCreateIdx(fuse, idxFuses, idxLast);
-        int idxFuseEnd = Utils.getOrCreateIdx(fuseEnd, idxFuses, idxLast);
+        int idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
+        int idxFuseEnd = getOrCreateIdx(fuseEnd, idxFuses, idxLast);
 
         equations.addLine();
         equations.set(equations.getNumRows() - 1, idxFuse, 1);
@@ -101,11 +106,11 @@ public class CertainMatrixBuilder implements MatrixBuilder {
         Fuse oppFuse = fuse.getOpposite();
         equations.addLine();
         mapLineFuse.add(fuse.getCable());
-        int idxFuse = Utils.getOrCreateIdx(fuse, idxFuses, idxLast);
+        int idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
         equations.set(equations.getNumRows() - 1, idxFuse, 1);
 
         if (configuration.isClosed(oppFuse) && !configuration.isDeadEnd(oppFuse.getOwner())) {
-            int idxOpp = Utils.getOrCreateIdx(oppFuse, idxFuses, idxLast);
+            int idxOpp = getOrCreateIdx(oppFuse, idxFuses, idxLast);
             equations.set( equations.getNumRows() - 1, idxOpp, 1);
         }
     }

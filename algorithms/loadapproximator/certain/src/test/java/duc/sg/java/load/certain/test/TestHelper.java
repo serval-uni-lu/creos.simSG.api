@@ -1,4 +1,4 @@
-package duc.sg.java.matrix.certain.test;
+package duc.sg.java.load.certain.test;
 
 import org.junit.jupiter.params.provider.Arguments;
 

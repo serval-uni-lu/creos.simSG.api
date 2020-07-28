@@ -1,4 +1,4 @@
-package duc.sg.java.matrix.certain.test;
+package duc.sg.java.matrix.certain;
 
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
@@ -29,21 +29,16 @@ public class SingleCableTest extends MatrixBuilderTest {
 
     @Test
     public void testScenario1_f1Open() {
-        fusesMap.get(SingleCableSC.F1_NAME).openFuse();
-        genericTest(new double[]{0});
+        genericTest(new double[]{0}, SingleCableSC.F1_NAME);
     }
 
     @Test
     public void testScenario1_f2Open() {
-        fusesMap.get(SingleCableSC.F2_NAME).openFuse();
-        genericTest(new double[]{1});
+        genericTest(new double[]{1}, SingleCableSC.F2_NAME);
     }
 
     @Test
     public void testScenario1_allOpen() {
-        fusesMap.get(SingleCableSC.F1_NAME).openFuse();
-        fusesMap.get(SingleCableSC.F2_NAME).openFuse();
-
-        genericTest(new double[]{0});
+        genericTest(new double[]{0}, SingleCableSC.F1_NAME, SingleCableSC.F2_NAME);
     }
 }
