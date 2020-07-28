@@ -1,6 +1,5 @@
 package duc.sg.java.matrix.certain;
 
-import duc.sg.java.scenarios.ParaTransformerSC;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,9 +16,7 @@ public class ParaTransformerTest extends MatrixBuilderTest {
         substation = new ScenarioBuilder()
                 .chooseScenario(ScenarioName.PARA_TRANSFORMER)
                 .build()
-                .getGrid()
-                .getSubstation(ParaTransformerSC.SUBSTATION_NAME)
-                .get();
+                .getSubstation();
     }
 
     private static Arguments[] openCloseF6() {
