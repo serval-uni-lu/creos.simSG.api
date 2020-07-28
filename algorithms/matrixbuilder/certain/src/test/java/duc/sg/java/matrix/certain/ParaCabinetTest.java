@@ -1,4 +1,4 @@
-package duc.sg.java.matrix.certain.test;
+package duc.sg.java.matrix.certain;
 
 import duc.sg.java.scenarios.ParaCabinetSC;
 import duc.sg.java.scenarios.ScenarioBuilder;

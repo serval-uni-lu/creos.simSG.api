@@ -1,7 +1,7 @@
-package duc.sg.java.matrix.certain.test.computation.certain;
+package duc.sg.java.load.certain.test.computation.certain;
 
 import duc.sg.java.loadapproximator.loadapproximation.LoadApproximator;
-import duc.sg.java.matrix.certain.test.LoadTest;
+import duc.sg.java.load.certain.test.LoadTest;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Meter;
