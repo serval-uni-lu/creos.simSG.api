@@ -6,7 +6,7 @@ import duc.sg.java.model.SmartGrid;
 
 /*
           |-[f1]----(cbl1)----[f2]-|
-    subs-<                          >-c1-[f5]----(cbl3)---[f6]-c2
+    subs-<                          >-c1
           |-[f3]----(cbl2)----[f4]-|
 */
 public final class ParaWithDeadendSC extends Scenario {

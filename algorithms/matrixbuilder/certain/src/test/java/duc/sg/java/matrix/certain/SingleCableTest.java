@@ -16,9 +16,7 @@ public class SingleCableTest extends MatrixBuilderTest {
         substation = new ScenarioBuilder()
                 .chooseScenario(ScenarioName.SINGLE_CABLE)
                 .build()
-                .getGrid()
-                .getSubstation(SingleCableSC.SUBSTATION_NAME)
-                .get();
+                .getSubstation();
     }
 
 

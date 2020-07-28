@@ -13,9 +13,7 @@ public class IndirectParaTest extends MatrixBuilderTest {
         substation = new ScenarioBuilder()
                 .chooseScenario(ScenarioName.INDIRECT_PARALLEL)
                 .build()
-                .getGrid()
-                .getSubstation(IndirectParaSC.SUBSTATION_NAME)
-                .get();
+                .getSubstation();
     }
 
     private static Arguments[] openCloseF6F10() {

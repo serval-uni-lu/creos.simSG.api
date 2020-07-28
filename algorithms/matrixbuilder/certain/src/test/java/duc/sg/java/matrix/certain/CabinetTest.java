@@ -1,6 +1,5 @@
 package duc.sg.java.matrix.certain;
 
-import duc.sg.java.scenarios.CabinetSC;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,9 +16,7 @@ public class  CabinetTest extends MatrixBuilderTest {
         substation = new ScenarioBuilder()
                 .chooseScenario(ScenarioName.CABINET)
                 .build()
-                .getGrid()
-                .getSubstation(CabinetSC.SUBSTATION_NAME)
-                .get();
+                .getSubstation();
     }
 
     private static Arguments[] openCloseF5F6() {
