@@ -7,8 +7,8 @@ import duc.sg.java.matrix.FuseStateMatrix;
 import duc.sg.java.matrix.MatrixBuilder;
 import duc.sg.java.model.*;
 import duc.sg.java.navigation.Actionner;
+import duc.sg.java.navigation.Condition;
 import duc.sg.java.navigation.bfs.BFSEntity;
-import duc.sg.java.navigation.bfs.Condition;
 import duc.sg.java.utils.MatrixDouble;
 
 import java.util.*;
@@ -17,16 +17,14 @@ public class CertainMatrixBuilder implements MatrixBuilder {
     private Map<Fuse, Integer> idxFuses;
     private int[] idxLast;
     private MatrixDouble equations;
-    private Set<Fuse> fuseInCircles;
-    private Set<Fuse> paraCableFusesDone;
+    private Set<Circle> processedCircle;
     private List<Cable> mapLineFuse;
 
     private void init() {
         idxFuses = new HashMap<>();
         idxLast = new int[]{-1};
         equations = new MatrixDouble();
-        fuseInCircles = new HashSet<>();
-        paraCableFusesDone = new HashSet<>();
+        processedCircle = new HashSet<>();
         mapLineFuse = new ArrayList<>();
     }
 
@@ -34,24 +32,24 @@ public class CertainMatrixBuilder implements MatrixBuilder {
     public FuseStateMatrix[] build(Substation substation, Configuration configuration) {
         init();
 
-        CircleFinder.getDefault().findAndSave(substation);
+        CircleFinder.getDefault().getCircles(substation);
 
-        Actionner<Entity> actionner = (Entity currEntity, Set<Entity> visited) -> {
-            final List<Fuse> fuses = configuration.getClosedFuses(currEntity);
+        Actionner<Entity> actionner = (Entity currEntity) -> {
+            final List<Fuse> closedFuses = configuration.getClosedFuses(currEntity);
 
-            if (!(currEntity instanceof Substation) && fuses.size() > 1) {
+            if (!(currEntity instanceof Substation) && closedFuses.size() > 1) {
                 equations.addLine();
             }
             int rowCabEq = equations.getNumRows() - 1;
 
-            for (Fuse fuse : fuses) {
+            for (Fuse fuse : closedFuses) {
                 cableEq(configuration, fuse);
-                cabinetEq(currEntity, fuses, rowCabEq, fuse);
-                circleEq(substation, configuration, visited, fuses, fuse);
+                cabinetEq(currEntity, closedFuses, rowCabEq, fuse);
+                circleEq(substation, configuration, fuse);
             }
         };
 
-        Condition<Fuse> condition = (Fuse currFuse) -> {
+        Condition condition = (Fuse currFuse) -> {
             Fuse oppFuse = currFuse.getOpposite();
             Entity oppEntity = oppFuse.getOwner();
             return configuration.isClosed(currFuse) &&
@@ -66,23 +64,14 @@ public class CertainMatrixBuilder implements MatrixBuilder {
         return new FuseStateMatrix[]{res};
     }
 
-    private void circleEq(Substation substation, Configuration configuration, Set<Entity> visited, List<Fuse> fuses, Fuse fuse) {
-        if(!fuseInCircles.contains(fuse)) {
-            Optional<Circle> optCircle = CircleUtils.circleFrom(substation, fuse);
-            if(optCircle.isPresent() && (optCircle.get().isEffective(configuration))) {
-                Circle circle = optCircle.get();
-                Collections.addAll(fuseInCircles, circle.getFuses());
+    private void circleEq(Substation substation, Configuration configuration, Fuse fuse) {
+        Optional<Circle> optCircle = CircleUtils.circleFrom(substation, fuse);
+        if(optCircle.isPresent() && (optCircle.get().isEffective(configuration)) && !processedCircle.contains(optCircle.get())) {
+            Circle circle = optCircle.get();
+            processedCircle.add(circle);
 
-                Fuse fuseEnd = circle.getOtherEndPoint(fuse);
-                addCircleEq(fuse, fuseEnd);
-            }
-        } else if(!visited.contains(fuse.getOpposite().getOwner()) && !paraCableFusesDone.contains(fuse)) {
-            Optional<Fuse> oppFuse = Utils.getOtherFusePara(fuse, fuses);
-            if(oppFuse.isPresent()) {
-                Fuse fuseEnd = oppFuse.get();
-                addCircleEq(fuse, fuseEnd);
-            }
-
+            Fuse fuseEnd = circle.getOtherEndPoint(fuse);
+            addCircleEq(fuse, fuseEnd);
         }
     }
 
@@ -100,8 +89,6 @@ public class CertainMatrixBuilder implements MatrixBuilder {
     }
 
     private void addCircleEq(Fuse fuse, Fuse fuseEnd) {
-        paraCableFusesDone.add(fuse);
-        paraCableFusesDone.add(fuseEnd);
         int idxFuse = Utils.getOrCreateIdx(fuse, idxFuses, idxLast);
         int idxFuseEnd = Utils.getOrCreateIdx(fuseEnd, idxFuses, idxLast);
 
