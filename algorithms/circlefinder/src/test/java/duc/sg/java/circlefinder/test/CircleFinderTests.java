@@ -52,7 +52,7 @@ public class CircleFinderTests {
                 List<Fuse> actual = Arrays.asList(actArr.getFuses());
 
                 if(allClosed) {
-                    assertTrue(actArr.isValid());
+                    assertTrue(actArr.isEffective());
                     assertEquals(expected.size(), actual.size(), "Error for: " + fuseStateStr);
                     for (Fuse f : expected) {
                         String errorMsg = "circle doesn't contain " +
@@ -66,7 +66,7 @@ public class CircleFinderTests {
                         assertTrue(actual.contains(f), errorMsg);
                     }
                 } else {
-                    assertFalse(actArr.isValid());
+                    assertFalse(actArr.isEffective());
                 }
 
             }

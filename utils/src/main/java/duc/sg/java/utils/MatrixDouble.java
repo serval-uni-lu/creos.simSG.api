@@ -6,7 +6,8 @@ import java.io.PrintStream;
 public class MatrixDouble {
     private double[] data;
 
-    private int numRows, numCols;
+    private int numRows;
+    private int numCols;
 
     public MatrixDouble() {
         data = new double[0];

@@ -1,5 +1,8 @@
 package duc.sg.java.navigation.bfs;
 
-public interface Condition<T> {
-    boolean evaluate(T element);
+import java.util.Set;
+
+@FunctionalInterface
+public interface Condition<CT, ST> {
+    boolean evaluate(CT element, Set<ST> visited);
 }

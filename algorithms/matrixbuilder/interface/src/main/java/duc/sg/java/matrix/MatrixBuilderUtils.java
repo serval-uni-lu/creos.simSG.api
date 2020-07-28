@@ -1,6 +1,7 @@
 package duc.sg.java.matrix;
 
 import duc.sg.java.extracter.FuseExtracter;
+import duc.sg.java.model.Configuration;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;
 import duc.sg.java.model.Substation;
@@ -18,12 +19,12 @@ public class MatrixBuilderUtils {
      * @param substation
      * @return
      */
-    static Map<Fuse, State> extractEffectiveConfiguration(Substation substation) {
+    static Configuration extractEffectiveConfiguration(Substation substation) {
         List<Fuse> allFuses = FuseExtracter.INSTANCE.getExtracted(substation);
         Map<Fuse, State> configuration = new HashMap<>();
         for(Fuse f: allFuses) {
             configuration.put(f, f.getStatus().getState());
         }
-        return configuration;
+        return new Configuration(configuration);
     }
 }

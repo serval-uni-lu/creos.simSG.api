@@ -7,6 +7,7 @@ import duc.sg.java.navigation.bfs.BFSFuse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class FuseExtracter implements Extracter<Fuse> {
     private FuseExtracter(){}
@@ -16,7 +17,7 @@ public class FuseExtracter implements Extracter<Fuse> {
     @Override
     public void extractAndSave(Substation substation) {
         List<Fuse> allFuses = new ArrayList<>();
-        BFSFuse.INSTANCE.navigate(substation, allFuses::add);
+        BFSFuse.INSTANCE.navigate(substation, (Fuse fuse, Set<Fuse> visited) -> allFuses.add(fuse));
         substation.getGrid().save(ExtracterUtils.getKey(Fuse.class, substation), allFuses);
     }
 
