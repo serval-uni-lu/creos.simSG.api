@@ -18,6 +18,7 @@ public class Confidence {
 
     public void setProbability(double probability) {
         checkProb(probability);
+        //TODO check for that...
 //        if(Math.abs(probability - MIN_PROBABILITY) <= PRECISION) probability = MIN_PROBABILITY;
 //        else if(Math.abs(probability - MAX_PROBABILITY) <= PRECISION) probability = MAX_PROBABILITY;
         this.probability = probability;

@@ -2,7 +2,7 @@ package duc.sg.java.matrix.uncertain;
 
 import duc.sg.java.extracter.EffectiveConfigurationExtracter;
 import duc.sg.java.extracter.UFuseExtracter;
-import duc.sg.java.matrix.certain.CertainFuseStateMatrix;
+import duc.sg.java.matrix.certain.EquationMatrixImp;
 import duc.sg.java.matrix.certain.CertainMatrixBuilder;
 import duc.sg.java.model.Configuration;
 import duc.sg.java.model.Fuse;
@@ -16,11 +16,11 @@ import java.util.List;
 public class UMatrixBuilder {
     private UMatrixBuilder(){}
 
-    public static List<UStatesMatrix> build(Substation substation) {
+    public static List<UEquationMatrix> build(Substation substation) {
         List<Fuse> uFuses = UFuseExtracter.INSTANCE.getExtracted(substation);
         var nbPossibilities = Math.pow(2, uFuses.size());
 
-        var res = new ArrayList<UStatesMatrix>((int) nbPossibilities);
+        var res = new ArrayList<UEquationMatrix>((int) nbPossibilities);
         for (int idxCase = 0; idxCase < nbPossibilities; idxCase++) {
             boolean[] fuseStates = BaseTransform.toBinary(idxCase, uFuses.size());
             double confidence = 1;
@@ -39,8 +39,8 @@ public class UMatrixBuilder {
                 }
             }
 
-            CertainFuseStateMatrix matrix = (CertainFuseStateMatrix) new CertainMatrixBuilder().build(substation, configuration)[0];
-            res.add(new UStatesMatrix(matrix, confidence));
+            EquationMatrixImp matrix = (EquationMatrixImp) new CertainMatrixBuilder().build(substation, configuration)[0];
+            res.add(new UEquationMatrix(matrix, confidence));
         }
 
         return res;

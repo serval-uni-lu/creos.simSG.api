@@ -1,9 +1,9 @@
 package duc.sg.java.loadapproximator.uncertain.bsrules.old;
 
 import duc.sg.java.extracter.FuseExtracter;
-import duc.sg.java.matrix.certain.CertainFuseStateMatrix;
+import duc.sg.java.matrix.certain.EquationMatrixImp;
 import duc.sg.java.matrix.certain.CertainMatrixBuilder;
-import duc.sg.java.matrix.uncertain.UStatesMatrix;
+import duc.sg.java.matrix.uncertain.UEquationMatrix;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;
 import duc.sg.java.model.Substation;
@@ -69,11 +69,11 @@ public class UncertainLoadApproximator {
 
     }
 
-    public static UStatesMatrix[] build(Substation substation) {
+    public static UEquationMatrix[] build(Substation substation) {
         List<Fuse> uFuses = getUncertainFuses(substation);
         int nbPossibilities = (int) Math.pow(2, uFuses.size());
 
-        var res = new ArrayList<UStatesMatrix>(nbPossibilities);
+        var res = new ArrayList<UEquationMatrix>(nbPossibilities);
         IValidator validator = new GridValidator();
 
         int idxMaxClosedFuses = -1;
@@ -99,8 +99,8 @@ public class UncertainLoadApproximator {
             }
 
             if(validator.isValid(substation, fuseStateMap)) {
-                CertainFuseStateMatrix matrix = (CertainFuseStateMatrix) new CertainMatrixBuilder().build(substation)[0];
-                res.add(new UStatesMatrix(matrix, confidence));
+                EquationMatrixImp matrix = (EquationMatrixImp) new CertainMatrixBuilder().build(substation)[0];
+                res.add(new UEquationMatrix(matrix, confidence));
                 if (nbFusesClosed > maxClosedFuses) {
                     maxClosedFuses = nbFusesClosed;
                     idxMaxClosedFuses = res.size() - 1;
@@ -112,11 +112,11 @@ public class UncertainLoadApproximator {
         }
 
         if(maxClosedFuses != -1) {
-            UStatesMatrix ufsm = res.get(idxMaxClosedFuses);
+            UEquationMatrix ufsm = res.get(idxMaxClosedFuses);
             ufsm.setConfidence(ufsm.getConfidence() + confToAdd);
         }
 
-        return res.toArray(new UStatesMatrix[0]);
+        return res.toArray(new UEquationMatrix[0]);
     }
 
 
@@ -125,18 +125,13 @@ public class UncertainLoadApproximator {
 
 
     public static void approximate(final Substation substation) {
-        UStatesMatrix[] matrices = build(substation);
+        UEquationMatrix[] matrices = build(substation);
         var visited = new HashSet<Fuse>();
 
-        for (UStatesMatrix usfm : matrices) {
-            var fuseStates = new DenseMatrix64F(usfm.getNbColumns(), usfm.getNbColumns(), true, usfm.getData());
+        for (UEquationMatrix usfm : matrices) {
+            var fuseStates = new DenseMatrix64F(usfm.getNbColumns(), usfm.getNbColumns(), true, usfm.getValues());
 
-            final var matConsumptions = new DenseMatrix64F(usfm.getNbColumns(), 1);
-            var cblesOrder = usfm.getCables();
-            for (int i = 0; i < cblesOrder.length; i++) {
-                matConsumptions.set(i, 0, cblesOrder[i].getConsumption());
-            }
-
+            final var matConsumptions = new DenseMatrix64F(usfm.getNbColumns(), 1, true, usfm.getEqResults());
 
             DenseMatrix64F solution = new DenseMatrix64F(matConsumptions.numRows, matConsumptions.numCols);
             SolvePseudoInverseSvd solver = new SolvePseudoInverseSvd();
@@ -147,7 +142,7 @@ public class UncertainLoadApproximator {
             var solData = solution.data;
             var fuses = new HashSet<Fuse>(FuseExtracter.INSTANCE.getExtracted(substation));
             for (int i = 0; i < solData.length; i++) {
-                Fuse current = usfm.getFuse(i);
+                Fuse current = usfm.getColumn(i);
                 if (!visited.contains(current)) {
                     current.resetULoad();
                     visited.add(current);
