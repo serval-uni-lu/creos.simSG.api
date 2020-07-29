@@ -2,7 +2,7 @@ package duc.sg.java.loadapproximator.uncertain.naive;
 
 import duc.sg.java.extracter.FuseExtracter;
 import duc.sg.java.matrix.uncertain.UMatrixBuilder;
-import duc.sg.java.matrix.uncertain.UStatesMatrix;
+import duc.sg.java.matrix.uncertain.UEquationMatrix;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
 import duc.sg.java.uncertainty.PossibilityDouble;
@@ -16,18 +16,13 @@ public class UncertainLoadApproximator {
     private UncertainLoadApproximator() {}
 
     public static void approximate(final Substation substation) {
-        List<UStatesMatrix> matrices = UMatrixBuilder.build(substation);
+        List<UEquationMatrix> matrices = UMatrixBuilder.build(substation);
         var visited = new HashSet<Fuse>();
 
-        for (UStatesMatrix usfm : matrices) {
-            var fuseStates = new DenseMatrix64F(usfm.getNbColumns(), usfm.getNbColumns(), true, usfm.getData());
+        for (UEquationMatrix usfm : matrices) {
+            var fuseStates = new DenseMatrix64F(usfm.getNbColumns(), usfm.getNbColumns(), true, usfm.getValues());
 
-            final var matConsumptions = new DenseMatrix64F(usfm.getNbColumns(), 1);
-            var cblesOrder = usfm.getCables();
-            for (int i = 0; i < cblesOrder.length; i++) {
-                matConsumptions.set(i, 0, cblesOrder[i].getConsumption());
-            }
-
+            final var matConsumptions = new DenseMatrix64F(usfm.getNbColumns(), 1, true, usfm.getEqResults());
 
             DenseMatrix64F solution = new DenseMatrix64F(matConsumptions.numRows, matConsumptions.numCols);
             SolvePseudoInverseSvd solver = new SolvePseudoInverseSvd();
@@ -38,7 +33,7 @@ public class UncertainLoadApproximator {
             var solData = solution.data;
             var fuses = new HashSet<Fuse>(FuseExtracter.INSTANCE.getExtracted(substation));
             for (int i = 0; i < solData.length; i++) {
-                Fuse current = usfm.getFuse(i);
+                Fuse current = usfm.getColumn(i);
                 if (!visited.contains(current)) {
                     current.resetULoad();
                     visited.add(current);

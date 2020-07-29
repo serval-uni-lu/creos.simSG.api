@@ -1,11 +1,11 @@
 package duc.sg.java.matrix.uncertain;
 
-import duc.sg.java.matrix.certain.CertainFuseStateMatrix;
+import duc.sg.java.matrix.certain.EquationMatrixImp;
 
-public class UStatesMatrix extends CertainFuseStateMatrix {
+public class UEquationMatrix extends EquationMatrixImp {
     private double confidence;
 
-    public UStatesMatrix(CertainFuseStateMatrix fuseStatesMatrix, double confidence) {
+    public UEquationMatrix(EquationMatrixImp fuseStatesMatrix, double confidence) {
         super(fuseStatesMatrix);
         this.confidence = confidence;
     }

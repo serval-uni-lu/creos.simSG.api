@@ -1,7 +1,7 @@
 package duc.sg.java.matrix.certain;
 
 import duc.sg.java.extracter.FuseExtracter;
-import duc.sg.java.matrix.FuseStateMatrix;
+import duc.sg.java.matrix.EquationMatrix;
 import duc.sg.java.model.Configuration;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;
@@ -58,12 +58,12 @@ public abstract class MatrixBuilderTest {
         CertainMatrixBuilder builder = new CertainMatrixBuilder();
 
         Configuration configuration = generateConfiguration(toOpen);
-        FuseStateMatrix matrix = builder.build(substation, configuration)[0];
-        Assertions.assertArrayEquals(expected,  matrix.getData());
+        EquationMatrix matrix = builder.build(substation, configuration)[0];
+        Assertions.assertArrayEquals(expected,  matrix.getValues());
 
 
         openFuses(toOpen);
         matrix = new CertainMatrixBuilder().build(substation)[0];
-        Assertions.assertArrayEquals(expected,  matrix.getData());
+        Assertions.assertArrayEquals(expected,  matrix.getValues());
     }
 }

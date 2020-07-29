@@ -5,8 +5,8 @@ import duc.sg.java.model.Substation;
 
 public interface MatrixBuilder {
 
-    FuseStateMatrix[] build(Substation substation, Configuration configuration);
-    default FuseStateMatrix[] build(Substation substation) {
+    EquationMatrix[] build(Substation substation, Configuration configuration);
+    default EquationMatrix[] build(Substation substation) {
         return build(substation, MatrixBuilderUtils.extractEffectiveConfiguration(substation));
     }
 }

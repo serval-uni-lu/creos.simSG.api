@@ -3,7 +3,7 @@ package duc.sg.java.loadapproximator.certain;
 import duc.sg.java.extracter.CableExtracter;
 import duc.sg.java.extracter.FuseExtracter;
 import duc.sg.java.loadapproximator.LoadApproximator;
-import duc.sg.java.matrix.FuseStateMatrix;
+import duc.sg.java.matrix.EquationMatrix;
 import duc.sg.java.matrix.certain.CertainMatrixBuilder;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Configuration;
@@ -24,18 +24,10 @@ public class CertainApproximator implements LoadApproximator<Double> {
 
     @Override
     public void approximateAndSave(Substation substation, Configuration configuration) {
-        FuseStateMatrix matrix = new CertainMatrixBuilder().build(substation)[0];
+        EquationMatrix matrix = new CertainMatrixBuilder().build(substation)[0];
 
-        var fuseStates = new DenseMatrix64F(matrix.getNbColumns(), matrix.getNbColumns(), true, matrix.getData());
-
-        final var matConsumptions = new DenseMatrix64F(matrix.getNbColumns(), 1);
-        Cable[] cblesOrder = matrix.getCables();
-        for (int i = 0; i < cblesOrder.length; i++) {
-            if (cblesOrder[i] != null) {
-                matConsumptions.set(i,0, cblesOrder[i].getConsumption());
-            }
-        }
-
+        var fuseStates = new DenseMatrix64F(matrix.getNbColumns(), matrix.getNbColumns(), true, matrix.getValues());
+        final var matConsumptions = new DenseMatrix64F(matrix.getNbColumns(), 1, true, matrix.getEqResults());
 
         DenseMatrix64F solution = new DenseMatrix64F(matConsumptions.numRows, matConsumptions.numCols);
         SolvePseudoInverseSvd solver = new SolvePseudoInverseSvd();
@@ -48,11 +40,11 @@ public class CertainApproximator implements LoadApproximator<Double> {
         FuseExtracter.INSTANCE
                 .getExtracted(substation)
                 .forEach((Fuse f) -> {
-                    Integer idx = matrix.getFuseIdx(f);
+                    Integer idx = matrix.getColumnIdx(f);
                     if(solData.length == 0 || idx == null) {
                         res.put(f,0.);
                     } else {
-                        res.put(f, solData[matrix.getFuseIdx(f)]);
+                        res.put(f, solData[matrix.getColumnIdx(f)]);
                     }
                 });
 

@@ -3,12 +3,13 @@ package duc.sg.java.matrix.certain;
 import duc.sg.java.circlefinder.Circle;
 import duc.sg.java.circlefinder.CircleFinder;
 import duc.sg.java.circlefinder.CircleUtils;
-import duc.sg.java.matrix.FuseStateMatrix;
+import duc.sg.java.matrix.EquationMatrix;
 import duc.sg.java.matrix.MatrixBuilder;
 import duc.sg.java.model.*;
 import duc.sg.java.navigation.Actionner;
 import duc.sg.java.navigation.Condition;
 import duc.sg.java.navigation.bfs.BFSEntity;
+import duc.sg.java.utils.ListConverter;
 import duc.sg.java.utils.MatrixDouble;
 
 import java.util.*;
@@ -18,7 +19,7 @@ public class CertainMatrixBuilder implements MatrixBuilder {
     private int[] idxLast;
     private MatrixDouble equations;
     private Set<Circle> processedCircle;
-    private List<Cable> mapLineFuse;
+    private List<Double> eqResults;
 
     private int getOrCreateIdx(Fuse fuse, Map<Fuse, Integer> map, int[] last) {
         map.computeIfAbsent(fuse, keyFuse -> ++last[0]);
@@ -30,11 +31,11 @@ public class CertainMatrixBuilder implements MatrixBuilder {
         idxLast = new int[]{-1};
         equations = new MatrixDouble();
         processedCircle = new HashSet<>();
-        mapLineFuse = new ArrayList<>();
+        eqResults = new ArrayList<>();
     }
 
     @Override
-    public FuseStateMatrix[] build(Substation substation, Configuration configuration) {
+    public EquationMatrix[] build(Substation substation, Configuration configuration) {
         init();
 
         CircleFinder.getDefault().getCircles(substation);
@@ -44,7 +45,7 @@ public class CertainMatrixBuilder implements MatrixBuilder {
 
             if (!(currEntity instanceof Substation) && closedFuses.size() > 1) {
                 equations.addLine();
-                mapLineFuse.add(null);
+                eqResults.add(0.);
             }
             int rowCabEq = equations.getNumRows() - 1;
 
@@ -66,8 +67,8 @@ public class CertainMatrixBuilder implements MatrixBuilder {
         BFSEntity.INSTANCE.navigate(substation, actionner, condition);
 
         var resData = (equations.getData().length == 0)? new double[]{0} : equations.getData();
-        FuseStateMatrix res = new CertainFuseStateMatrix(resData, equations.getNumCols(), idxFuses, mapLineFuse.toArray(new Cable[0]));
-        return new FuseStateMatrix[]{res};
+        EquationMatrix res = new EquationMatrixImp(resData, idxFuses, ListConverter.convert(eqResults));
+        return new EquationMatrix[]{res};
     }
 
     private void circleEq(Substation substation, Configuration configuration, Fuse fuse) {
@@ -99,7 +100,7 @@ public class CertainMatrixBuilder implements MatrixBuilder {
         int idxFuseEnd = getOrCreateIdx(fuseEnd, idxFuses, idxLast);
 
         equations.addLine();
-        mapLineFuse.add(null);
+        eqResults.add(0.);
         equations.set(equations.getNumRows() - 1, idxFuse, 1);
         equations.set(equations.getNumRows() - 1, idxFuseEnd, -1);
     }
@@ -107,7 +108,7 @@ public class CertainMatrixBuilder implements MatrixBuilder {
     private void addCableEq(Configuration configuration, Fuse fuse) {
         Fuse oppFuse = fuse.getOpposite();
         equations.addLine();
-        mapLineFuse.add(fuse.getCable());
+        eqResults.add(fuse.getCable().getConsumption());
         int idxFuse = getOrCreateIdx(fuse, idxFuses, idxLast);
         equations.set(equations.getNumRows() - 1, idxFuse, 1);
 
