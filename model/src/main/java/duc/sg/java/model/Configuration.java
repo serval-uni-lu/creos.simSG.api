@@ -22,6 +22,10 @@ public class Configuration {
                 .collect(Collectors.toList());
     }
 
+    public void set(Fuse fuse, State newState) {
+        configuration.put(fuse, newState);
+    }
+
     public boolean isDeadEnd(Entity entity) {
         return getClosedFuses(entity).size() <= 1;
     }
