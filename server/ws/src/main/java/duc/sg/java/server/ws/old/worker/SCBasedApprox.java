@@ -1,6 +1,5 @@
 package duc.sg.java.server.ws.old.worker;
 
-import duc.sg.java.loadapproximator.loadapproximation.LoadApproximator;
 import duc.sg.java.loadapproximator.uncertain.naive.UncertainLoadApproximator;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
@@ -47,7 +46,8 @@ public class SCBasedApprox {
                 .chooseScenario(scenarioName)
                 .build();
 
-        LoadApproximator.approximate(scenario.getSubstation());
+        //TODO: FIX HERE...
+//        LoadApproximator.approximate(scenario.getSubstation());
 
         Fuse[] fuses = scenario.extractFuses();
         Cable[] cables = scenario.extractCables();

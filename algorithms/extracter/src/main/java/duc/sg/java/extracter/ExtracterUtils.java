@@ -9,11 +9,11 @@ class ExtracterUtils {
     static String KEY_UFUSE_BASE = "Extracter_Uncertain_";
     static String KEY_CONF_BASE = "Extracter_Configuration_";
 
-    static String getKeyFuse(Class<?> extractedClassElmt, Substation substation) {
+    static String getKeyCertain(Class<?> extractedClassElmt, Substation substation) {
         return KEY_FUSE_BASE + extractedClassElmt.getSimpleName() + substation.getName();
     }
 
-    static String getKeyUFuse(Class<?> extractedClassElmt, Substation substation) {
+    static String getKeyUncertain(Class<?> extractedClassElmt, Substation substation) {
         return KEY_UFUSE_BASE + extractedClassElmt.getSimpleName() + substation.getName();
     }
 

@@ -17,9 +17,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
         substation = new ScenarioBuilder()
                 .chooseScenario(ScenarioName.PARA_CABINET)
                 .build()
-                .getGrid()
-                .getSubstation(ParaCabinetSC.SUBSTATION_NAME)
-                .get();
+                .getSubstation();
     }
 
     @Override
