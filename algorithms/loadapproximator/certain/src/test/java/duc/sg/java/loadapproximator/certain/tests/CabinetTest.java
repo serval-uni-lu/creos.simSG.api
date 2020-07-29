@@ -1,6 +1,6 @@
-package duc.sg.java.load.certain.test.computation.certain;
+package duc.sg.java.loadapproximator.certain.tests;
 
-import duc.sg.java.load.certain.test.TestHelper;
+import duc.sg.java.model.Substation;
 import duc.sg.java.scenarios.CabinetSC;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
@@ -14,8 +14,8 @@ import static duc.sg.java.scenarios.CabinetSC.*;
 public class CabinetTest extends LoadApproximatorTest {
 
     @Override
-    protected void createSubstation() {
-        substation = new ScenarioBuilder()
+    protected Substation createSubstation() {
+        return new ScenarioBuilder()
                 .chooseScenario(ScenarioName.CABINET)
                 .build()
                 .getGrid()

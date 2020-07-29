@@ -1,4 +1,4 @@
-package duc.sg.java.loadapproximator.loadapproximation;
+package duc.sg.java.loadapproximator.certain;
 
 import duc.sg.java.model.Substation;
 

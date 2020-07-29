@@ -1,18 +1,46 @@
-package duc.sg.java.load.certain.test.computation.certain;
+package duc.sg.java.loadapproximator.certain.tests;
 
-import duc.sg.java.load.certain.test.LoadTest;
-import duc.sg.java.loadapproximator.loadapproximation.CertainApproximator;
+import duc.sg.java.extracter.FuseExtracter;
+import duc.sg.java.loadapproximator.certain.CertainApproximator;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Meter;
+import duc.sg.java.model.Substation;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public abstract class LoadApproximatorTest extends LoadTest {
+public abstract class LoadApproximatorTest {
     protected static final double DELTA = 0.001;
+    protected Substation substation;
+    protected Map<String, Fuse> fusesMap;
+
+
+    @BeforeEach
+    public void init() {
+        substation = createSubstation();
+        initFuseMap();
+    }
+
+    protected abstract Substation createSubstation();
+
+    protected void initFuseMap() {
+        fusesMap = new HashMap<>();
+
+        FuseExtracter.INSTANCE
+                .getExtracted(substation)
+                .forEach((Fuse f) -> fusesMap.put(f.getName(), f));
+    }
+
+    protected void openFuses(String[] toOpen) {
+        for (var fName: toOpen) {
+            fusesMap.get(fName).openFuse();
+        }
+    }
 
 
     protected void initConsumptions(Double[] values, String... startingFuseName) {
@@ -27,18 +55,13 @@ public abstract class LoadApproximatorTest extends LoadTest {
     protected void genericTest(String[] toOpen, Double[] consumptions, double[] expectedCables, double[] expectedFuses) {
         var fuseCables = getFuseCables();
         var fuses = getFuses();
-        openFuses(toOpen);
         initConsumptions(consumptions, fuseCables);
-//        LoadApproximator.approximate(substation);
 
+        openFuses(toOpen);
         Map<Cable, Double> cableLoads = CertainApproximator.INSTANCE.getCableLoads(substation);
         for (int i = 0; i < fuseCables.length; i++) {
             Cable cable = fusesMap.get(fuseCables[i]).getCable();
             Assertions.assertEquals(expectedCables[i], cableLoads.get(cable), DELTA, "Error for cable " + (i+1));
-
-////            MultDblePossibilities cableULoad = cable.getUncertainLoad();
-////            PossibilityDouble cableLoad = cableULoad.iterator().next();
-////            assertEquals(expectedCables[i], cableLoad.getValue(), DELTA, "Error for cable " + (i+1));
         }
 
         Map<Fuse, Double> fuseLoads = CertainApproximator.INSTANCE.getFuseLoads(substation);
