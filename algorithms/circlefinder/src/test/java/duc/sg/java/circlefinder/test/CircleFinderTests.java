@@ -40,14 +40,14 @@ public class CircleFinderTests {
 
             String fuseStateStr = Arrays.toString(fuseState);
 
-            Optional<Circle> actualArr = CircleUtils.circleFrom(substation, start);
+            List<Circle> actualArr = CircleUtils.circlesWith(substation, start);
 
-            if(expected.size() == 0) {
+            if(expected.isEmpty()) {
                 assertTrue(actualArr.isEmpty());
             } else {
-                assertTrue(actualArr.isPresent());
+                assertFalse(actualArr.isEmpty());
 
-                Circle actArr = actualArr.get();
+                Circle actArr = actualArr.get(0);
 
                 List<Fuse> actual = Arrays.asList(actArr.getFuses());
 

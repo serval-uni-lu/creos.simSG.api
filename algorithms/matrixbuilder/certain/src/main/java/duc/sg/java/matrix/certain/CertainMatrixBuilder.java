@@ -70,14 +70,14 @@ public class CertainMatrixBuilder implements MatrixBuilder {
     }
 
     private void circleEq(Substation substation, Configuration configuration, Fuse fuse) {
-        Optional<Circle> optCircle = CircleUtils.circleFrom(substation, fuse);
-        if(optCircle.isPresent() && (optCircle.get().isEffective(configuration)) && !processedCircle.contains(optCircle.get())) {
-            Circle circle = optCircle.get();
-            processedCircle.add(circle);
-
-            Fuse fuseEnd = circle.getOtherEndPoint(fuse);
-            addCircleEq(fuse, fuseEnd);
-        }
+        List<Circle> circles = CircleUtils.circlesWith(substation, fuse);
+        circles.forEach((Circle circle) -> {
+            if(circle.isEffective(configuration) && !processedCircle.contains(circle)) {
+                processedCircle.add(circle);
+                Fuse end = circle.getOtherEndPoint(fuse);
+                addCircleEq(fuse, end);
+            }
+        });
     }
 
     private void cabinetEq(Entity currEntity, List<Fuse> fuses, int rowCabEq, Fuse fuse) {

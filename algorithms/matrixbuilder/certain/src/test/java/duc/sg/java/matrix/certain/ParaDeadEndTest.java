@@ -1,9 +1,13 @@
 package duc.sg.java.matrix.certain;
 
-import duc.sg.java.scenarios.ParaWithDeadendSC;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import static duc.sg.java.scenarios.ParaWithDeadendSC.*;
 
 public class ParaDeadEndTest extends MatrixBuilderTest {
 
@@ -35,7 +39,7 @@ public class ParaDeadEndTest extends MatrixBuilderTest {
                 0,0,1,
 
         };
-        genericTest(expected, ParaWithDeadendSC.F1_NAME);
+        genericTest(expected, F1_NAME);
     }
 
     @Test
@@ -46,7 +50,7 @@ public class ParaDeadEndTest extends MatrixBuilderTest {
                 0,0,1,
 
         };
-        genericTest(expected, ParaWithDeadendSC.F3_NAME);
+        genericTest(expected, F3_NAME);
     }
 
     @Test
@@ -55,24 +59,78 @@ public class ParaDeadEndTest extends MatrixBuilderTest {
                 1,0,
                 0,1,
         };
-        genericTest(expected, ParaWithDeadendSC.F4_NAME);
+        genericTest(expected, F4_NAME);
     }
 
     @Test
-    public void sc4_f2Open() {
+    public void sc5_f2Open() {
         var expected = new double[] {
                 1,0,
                 0,1,
         };
-        genericTest(expected, ParaWithDeadendSC.F2_NAME);
+        genericTest(expected, F2_NAME);
     }
 
-    @Test
-    public void sc4_f1f2Open() {
+    private static Arguments[] openCloseF4() {
+        return TestHelper.generateAllPossibilities(F4_NAME);
+    }
+
+    @ParameterizedTest
+    @MethodSource("openCloseF4")
+    public void sc6_f1f2Open(String[] toOpen) {
         var expected = new double[] {
                 1
         };
-        genericTest(expected, ParaWithDeadendSC.F1_NAME, ParaWithDeadendSC.F2_NAME);
+        genericTest(expected, TestHelper.merge(toOpen, F1_NAME, F2_NAME));
     }
+
+    private static Arguments[] openCloseF2F4() {
+        return TestHelper.generateAllPossibilities(F2_NAME, F4_NAME);
+    }
+
+    @ParameterizedTest
+    @MethodSource("openCloseF2F4")
+    public void sc7_f1f3Open(String[] toOpen) {
+        var expected = new double[] {
+                0
+        };
+        genericTest(expected, TestHelper.merge(toOpen, F1_NAME, F3_NAME));
+    }
+
+    @Test
+    public void sc8_f1f4Open() {
+        var expected = new double[] {
+                1
+        };
+        genericTest(expected, F1_NAME, F4_NAME);
+    }
+
+    @ParameterizedTest
+    @MethodSource("openCloseF4")
+    public void sc9_f2f3Open(String[] toOpen) {
+        var expected = new double[] {
+                1
+        };
+        genericTest(expected, TestHelper.merge(toOpen, F2_NAME, F3_NAME));
+    }
+
+    @Test
+    public void sc10_f2f4Open() {
+        var expected = new double[] {
+                1,0,
+                0,1
+        };
+        genericTest(expected, F2_NAME, F4_NAME);
+    }
+
+    @Test
+    public void sc11_f3f4Open() {
+        var expected = new double[] {
+                1,
+        };
+        genericTest(expected, F3_NAME, F4_NAME);
+    }
+
+
 
 }
