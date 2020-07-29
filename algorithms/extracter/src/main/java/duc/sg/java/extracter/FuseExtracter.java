@@ -16,13 +16,14 @@ public class FuseExtracter implements Extracter<Fuse> {
     @Override
     public void extractAndSave(Substation substation) {
         List<Fuse> allFuses = new ArrayList<>();
-        BFSFuse.INSTANCE.navigate(substation, (Fuse fuse) -> allFuses.add(fuse));
-        substation.getGrid().save(ExtracterUtils.getKey(Fuse.class, substation), allFuses);
+        BFSFuse.INSTANCE.navigate(substation, allFuses::add);
+        substation.getGrid()
+                .save(ExtracterUtils.getKeyFuse(Fuse.class, substation), allFuses);
     }
 
     @Override
     public List<Fuse> getExtracted(Substation substation) {
-        String key = ExtracterUtils.getKey(Fuse.class, substation);
+        String key = ExtracterUtils.getKeyFuse(Fuse.class, substation);
         Optional<Object> optFuses = substation.getGrid().retrieve(key);
         if(optFuses.isEmpty()) {
             extractAndSave(substation);

@@ -8,7 +8,7 @@ import duc.sg.java.grid.uncertainty.configuration.ConfigurationMatrix;
 import duc.sg.java.grid.uncertainty.configuration.EmptyConfigurationMatrix;
 import duc.sg.java.matrix.certain.CertainFuseStateMatrix;
 import duc.sg.java.matrix.certain.CertainMatrixBuilder;
-import duc.sg.java.matrix.uncertain.UncertainFuseStatesMatrix;
+import duc.sg.java.matrix.uncertain.UStatesMatrix;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;
 import duc.sg.java.model.Substation;
@@ -118,10 +118,10 @@ public class UncertainLoadApproximator {
 
     }
 
-    public static UncertainFuseStatesMatrix[] build(Substation substation) {
+    public static UStatesMatrix[] build(Substation substation) {
         ConfigurationMatrix gridConfigurations = getAllConfigurations(substation);
 
-        var fuseMatrices = new UncertainFuseStatesMatrix[gridConfigurations.nbConfigurations()];
+        var fuseMatrices = new UStatesMatrix[gridConfigurations.nbConfigurations()];
 
         int idx = 0;
         for(Configuration configuration: gridConfigurations) {
@@ -134,7 +134,7 @@ public class UncertainLoadApproximator {
                 }
             }
 
-            fuseMatrices[idx] = new UncertainFuseStatesMatrix(
+            fuseMatrices[idx] = new UStatesMatrix(
                     (CertainFuseStateMatrix) new CertainMatrixBuilder().build(substation)[0],
                     configuration.getConfidence()
             );
@@ -149,10 +149,10 @@ public class UncertainLoadApproximator {
 
 
     public static void approximate(final Substation substation) {
-        UncertainFuseStatesMatrix[] matrices = build(substation);
+        UStatesMatrix[] matrices = build(substation);
         var visited = new HashSet<Fuse>();
 
-         for (UncertainFuseStatesMatrix usfm : matrices) {
+         for (UStatesMatrix usfm : matrices) {
             var fuseStates = new DenseMatrix64F(usfm.getNbColumns(), usfm.getNbColumns(), true, usfm.getData());
 
             final var matConsumptions = new DenseMatrix64F(usfm.getNbColumns(), 1);

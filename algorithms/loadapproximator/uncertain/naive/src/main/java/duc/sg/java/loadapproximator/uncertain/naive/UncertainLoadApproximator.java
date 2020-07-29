@@ -1,8 +1,8 @@
 package duc.sg.java.loadapproximator.uncertain.naive;
 
 import duc.sg.java.extracter.FuseExtracter;
-import duc.sg.java.matrix.uncertain.UncertainFuseStatesMatrix;
-import duc.sg.java.matrix.uncertain.UncertainMatrixBuilder;
+import duc.sg.java.matrix.uncertain.UStatesMatrix;
+import duc.sg.java.matrix.uncertain.UMatrixBuilder;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
 import duc.sg.java.uncertainty.PossibilityDouble;
@@ -15,10 +15,10 @@ public class UncertainLoadApproximator {
     private UncertainLoadApproximator() {}
 
     public static void approximate(final Substation substation) {
-        UncertainFuseStatesMatrix[] matrices = UncertainMatrixBuilder.build(substation);
+        UStatesMatrix[] matrices = UMatrixBuilder.build(substation);
         var visited = new HashSet<Fuse>();
 
-        for (UncertainFuseStatesMatrix usfm : matrices) {
+        for (UStatesMatrix usfm : matrices) {
             var fuseStates = new DenseMatrix64F(usfm.getNbColumns(), usfm.getNbColumns(), true, usfm.getData());
 
             final var matConsumptions = new DenseMatrix64F(usfm.getNbColumns(), 1);
