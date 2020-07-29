@@ -128,7 +128,7 @@ public class PossibilityMatrixBuilder1 {
                 {
                     Fuse[] cycle;
                     if(!idxCycles.containsKey(currentFuse)) {
-                        Circle circle = CircleUtils.circleFrom(substation, currentFuse).get();
+                        Circle circle = CircleUtils.circlesWith(substation, currentFuse).get(0);
                         cycle = circle.getFuses();
 
                         for (var fuseC: circle.getFuses()) {

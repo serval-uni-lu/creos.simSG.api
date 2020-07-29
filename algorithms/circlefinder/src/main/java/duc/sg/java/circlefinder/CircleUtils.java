@@ -4,8 +4,10 @@ import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
 import duc.sg.java.utils.OArrays;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CircleUtils {
     private CircleUtils(){}
@@ -21,25 +23,21 @@ public class CircleUtils {
         return KEY_BASE + substation.getName();
     }
 
-    public static Optional<Circle> findCycleWith(Collection<Circle> circles, Fuse with) {
-        for (Circle circle : circles) {
-            if (OArrays.contains(circle.getFuses(), with)) {
-                return Optional.of(circle);
-            }
-        }
-        return Optional.empty();
+    public static List<Circle> findCyclesWith(List<Circle> circles, Fuse with) {
+        return circles.stream()
+                .filter((Circle circle) -> OArrays.contains(circle.getFuses(), with))
+                .collect(Collectors.toList());
     }
 
 
-    public static Optional<Circle> circleFrom(Substation substation, Fuse start) {
+    public static List<Circle> circlesWith(Substation substation, Fuse fuse) {
         Optional<Object> optCycle = substation.getGrid()
                 .retrieve(CircleUtils.getKey(substation));
 
         if(optCycle.isEmpty()) {
-            return Optional.empty();
+            return new ArrayList<>(0);
         }
 
-        Collection<Circle> circles = (Collection<Circle>) optCycle.get();
-        return findCycleWith(circles, start);
+        return findCyclesWith((List<Circle>) optCycle.get(), fuse);
     }
 }
