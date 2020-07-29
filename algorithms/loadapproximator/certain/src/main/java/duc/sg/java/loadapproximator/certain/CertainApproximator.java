@@ -1,4 +1,4 @@
-package duc.sg.java.loadapproximator.loadapproximation;
+package duc.sg.java.loadapproximator.certain;
 
 import duc.sg.java.extracter.CableExtracter;
 import duc.sg.java.extracter.FuseExtracter;
@@ -47,10 +47,15 @@ public class CertainApproximator implements LoadApproximator<Double> {
         var res = new HashMap<Fuse, Double>();
         FuseExtracter.INSTANCE
                 .getExtracted(substation)
-                .forEach((Fuse f) -> res.put(f, 0.));
-        for (int i = 0; i < solData.length; i++) {
-            res.put(matrix.getFuse(i), solData[i]);
-        }
+                .forEach((Fuse f) -> {
+                    Integer idx = matrix.getFuseIdx(f);
+                    if(solData.length == 0 || idx == null) {
+                        res.put(f,0.);
+                    } else {
+                        res.put(f, solData[matrix.getFuseIdx(f)]);
+                    }
+                });
+
         substation.getGrid()
                 .save(KeyComputer.getKey(substation), res);
     }

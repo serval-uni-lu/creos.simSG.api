@@ -1,7 +1,6 @@
-package duc.sg.java.load.certain.test.computation.certain;
+package duc.sg.java.loadapproximator.certain.tests;
 
-import duc.sg.java.load.certain.test.TestHelper;
-import duc.sg.java.scenarios.IndirectParaSC;
+import duc.sg.java.model.Substation;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,13 +12,11 @@ import static duc.sg.java.scenarios.IndirectParaSC.*;
 
 public class IndirectParaTest extends LoadApproximatorTest {
     @Override
-    protected void createSubstation() {
-        substation = new ScenarioBuilder()
+    protected Substation createSubstation() {
+        return new ScenarioBuilder()
                 .chooseScenario(ScenarioName.INDIRECT_PARALLEL)
                 .build()
-                .getGrid()
-                .getSubstation(IndirectParaSC.SUBSTATION_NAME)
-                .get();
+                .getSubstation();
     }
 
     @Override

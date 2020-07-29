@@ -1,4 +1,4 @@
-package duc.sg.java.load.certain.test;
+package duc.sg.java.loadapproximator.certain.tests;
 
 import org.junit.jupiter.params.provider.Arguments;
 
@@ -6,45 +6,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class TestHelper {
-
-
     static final int NB_TESTS = 5;
     private static final double MAX_LOAD = 100.;
     private static final Random RANDOM = new Random(12345);
-
-    public static Arguments[] allUncertainAndOpenPossibilities(String... names) {
-        int nbPossibilities = (int) Math.pow(3, names.length);
-        var args = new Arguments[nbPossibilities];
-
-
-        for (int iPoss = 0; iPoss < nbPossibilities; iPoss++) {
-            var uFusesNames = new ArrayList<String>();
-            var uFusesOpen = new ArrayList<String>();
-
-            int[] possibilities = toBase3(iPoss, names.length);
-
-            for (int idxPoss = 0; idxPoss < possibilities.length; idxPoss++) {
-                if(possibilities[idxPoss] == 0) {
-                    uFusesNames.add(names[idxPoss]);
-                } else if(possibilities[idxPoss] == 1) {
-                    uFusesOpen.add(names[idxPoss]);
-                }
-            }
-
-            args[iPoss] = Arguments.of(
-                    uFusesNames.toArray(new String[0]),
-                    uFusesOpen.toArray(new String[0])
-            );
-
-        }
-
-        return args;
-    }
-
-
-    public static Arguments[] generateAllPossibilities(String... names) {
-        return generateAllPossibilitiesWithValues(0, names);
-    }
 
     public static Arguments[] generateAllPossibilitiesWithValues(int nbCable, String... names) {
         int nbSituations =  (int) Math.pow(2, names.length);
@@ -91,24 +55,6 @@ public class TestHelper {
             res[size - 1 -i] = (1 << i & data) != 0;
         }
         return res;
-    }
-
-    public static int[] toBase3(int data, int size) {
-        int tmp;
-        var res = new ArrayList<Integer>();
-        while (data > 0) {
-            tmp = (data / 3);
-            res.add(data - 3*tmp);
-            data = tmp;
-        }
-
-        var resArr = new int[size];
-        var end = Math.min(res.size(), size);
-        for (int i = 0; i < end; i++) {
-            resArr[resArr.length - i - 1] = res.get(i);
-        }
-
-        return resArr;
     }
 
     public static String[] merge(String[] firsts, String... seconds) {

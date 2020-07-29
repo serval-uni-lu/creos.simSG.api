@@ -1,6 +1,6 @@
-package duc.sg.java.load.certain.test.computation.certain;
+package duc.sg.java.loadapproximator.certain.tests;
 
-import duc.sg.java.load.certain.test.TestHelper;
+import duc.sg.java.model.Substation;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,8 +18,8 @@ public class SingleCableTest extends LoadApproximatorTest{
     }
 
     @Override
-    protected void createSubstation() {
-        substation = new ScenarioBuilder()
+    protected Substation createSubstation() {
+        return new ScenarioBuilder()
                 .chooseScenario(ScenarioName.SINGLE_CABLE)
                 .build()
                 .getSubstation();
