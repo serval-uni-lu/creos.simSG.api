@@ -18,12 +18,12 @@ public class FuseExtracter implements Extracter<Fuse> {
         List<Fuse> allFuses = new ArrayList<>();
         BFSFuse.INSTANCE.navigate(substation, allFuses::add);
         substation.getGrid()
-                .save(ExtracterUtils.getKeyFuse(Fuse.class, substation), allFuses);
+                .save(ExtracterUtils.getKeyCertain(Fuse.class, substation), allFuses);
     }
 
     @Override
     public List<Fuse> getExtracted(Substation substation) {
-        String key = ExtracterUtils.getKeyFuse(Fuse.class, substation);
+        String key = ExtracterUtils.getKeyCertain(Fuse.class, substation);
         Optional<Object> optFuses = substation.getGrid().retrieve(key);
         if(optFuses.isEmpty()) {
             extractAndSave(substation);

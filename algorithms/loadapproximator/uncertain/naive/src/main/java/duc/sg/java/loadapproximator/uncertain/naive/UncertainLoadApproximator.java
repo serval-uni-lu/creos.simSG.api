@@ -1,8 +1,8 @@
 package duc.sg.java.loadapproximator.uncertain.naive;
 
 import duc.sg.java.extracter.FuseExtracter;
-import duc.sg.java.matrix.uncertain.UStatesMatrix;
 import duc.sg.java.matrix.uncertain.UMatrixBuilder;
+import duc.sg.java.matrix.uncertain.UStatesMatrix;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
 import duc.sg.java.uncertainty.PossibilityDouble;
@@ -10,12 +10,13 @@ import org.ejml.alg.dense.linsol.svd.SolvePseudoInverseSvd;
 import org.ejml.data.DenseMatrix64F;
 
 import java.util.HashSet;
+import java.util.List;
 
 public class UncertainLoadApproximator {
     private UncertainLoadApproximator() {}
 
     public static void approximate(final Substation substation) {
-        UStatesMatrix[] matrices = UMatrixBuilder.build(substation);
+        List<UStatesMatrix> matrices = UMatrixBuilder.build(substation);
         var visited = new HashSet<Fuse>();
 
         for (UStatesMatrix usfm : matrices) {

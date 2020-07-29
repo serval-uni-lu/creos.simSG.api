@@ -1,149 +1,98 @@
 package duc.sg.java.load.certain.test.computation.certain;
 
-import duc.sg.java.loadapproximator.loadapproximation.LoadApproximator;
 import duc.sg.java.load.certain.test.TestHelper;
-import duc.sg.java.model.Cable;
-import duc.sg.java.model.Fuse;
-import duc.sg.java.model.Meter;
-import duc.sg.java.model.Substation;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
-import duc.sg.java.scenarios.SingleCableSC;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class SingleCableTest {
-    private Substation substation;
-    private Fuse fuse_subs, fuse_cabinet;
-    private Cable cable;
-    private Meter m1, m2, m3;
+import static duc.sg.java.scenarios.SingleCableSC.F1_NAME;
+import static duc.sg.java.scenarios.SingleCableSC.F2_NAME;
+
+public class SingleCableTest extends LoadApproximatorTest{
 
 
     private static Arguments[] threeValues() {
         return TestHelper.generateRandomDoubles(3);
     }
 
-
-    @BeforeEach
-    public void init() {
+    @Override
+    protected void createSubstation() {
         substation = new ScenarioBuilder()
                 .chooseScenario(ScenarioName.SINGLE_CABLE)
                 .build()
-                .getGrid()
-                .getSubstation(SingleCableSC.SUBSTATION_NAME)
-                .get();
-        fuse_subs = substation.getFuses().get(0);
-        fuse_cabinet = fuse_subs.getOpposite();
+                .getSubstation();
+    }
 
-        m1 = new Meter("m1");
-        m2 = new Meter("m2");
-        m3 = new Meter("m3");
+    @Override
+    protected String[] getFuses() {
+        return new String[]{F1_NAME, F2_NAME};
+    }
 
-        cable = fuse_subs.getCable();
-        cable.addMeters(m1, m2, m3);
+    @Override
+    protected String[] getFuseCables() {
+        return new String[]{F1_NAME};
     }
 
     @ParameterizedTest
     @MethodSource("threeValues")
     public void testAllClosed(double m1Cons, double m2Cons, double m3Cons) {
-        m1.setConsumption(m1Cons);
-        m2.setConsumption(m2Cons);
-        m3.setConsumption(m3Cons);
+        var consumptions = new Double[]{m1Cons + m2Cons + m3Cons};
 
-        LoadApproximator.approximate(substation);
+        var expectedCableLoad = new double[] {consumptions[0]};
+        var expectedFuseLoad = new double[]{
+                consumptions[0],
+                0.
+        };
 
-
-//        MultDblePossibilities cableULoad = cable.getUncertainLoad();
-//        PossibilityDouble cableLoad = cableULoad.iterator().next();
-
-//        MultDblePossibilities fuseLoad = fuse_subs.getUncertainLoad();
-//        PossibilityDouble fuseSubsLoad = fuseLoad.iterator().next();
-//
-//        MultDblePossibilities fuseCabULoad = fuse_cabinet.getUncertainLoad();
-//        PossibilityDouble fuseCabLoad = fuseCabULoad.iterator().next();
-//
-//        Assertions.assertEquals(m1Cons + m2Cons + m3Cons, fuseSubsLoad.getValue(), 0.001);
-//        Assertions.assertEquals(m1Cons + m2Cons + m3Cons, cableLoad.getValue(), 0.001);
-//        Assertions.assertEquals(0, fuseCabLoad.getValue(), 0.001);
+        genericTest(new String[]{}, consumptions, expectedCableLoad, expectedFuseLoad);
     }
 
     @ParameterizedTest
     @MethodSource("threeValues")
     public void testFSubsOpen(double m1Cons, double m2Cons, double m3Cons) {
-        m1.setConsumption(m1Cons);
-        m2.setConsumption(m2Cons);
-        m3.setConsumption(m3Cons);
+        var consumptions = new Double[]{m1Cons + m2Cons + m3Cons};
+        var openFuses = new String[]{F1_NAME};
 
+        var expectedCableLoad = new double[] {0};
+        var expectedFuseLoad = new double[]{
+                0,
+                0.
+        };
 
-        fuse_subs.openFuse();
-
-        LoadApproximator.approximate(substation);
-
-//        MultDblePossibilities cableULoad = cable.getUncertainLoad();
-//        PossibilityDouble cableLoad = cableULoad.iterator().next();
-
-//        MultDblePossibilities fuseLoad = fuse_subs.getUncertainLoad();
-//        PossibilityDouble fuseSubsLoad = fuseLoad.iterator().next();
-//
-//        MultDblePossibilities fuseCabULoad = fuse_cabinet.getUncertainLoad();
-//        PossibilityDouble fuseCabLoad = fuseCabULoad.iterator().next();
-//
-//        Assertions.assertEquals(0, cableLoad.getValue(), 0.001);
-//        Assertions.assertEquals(0, fuseSubsLoad.getValue(), 0.001);
-//        Assertions.assertEquals(0, fuseCabLoad.getValue(), 0.001);
+        genericTest(openFuses, consumptions, expectedCableLoad, expectedFuseLoad);
     }
 
     @ParameterizedTest
     @MethodSource("threeValues")
     public void testFCabOpen(double m1Cons, double m2Cons, double m3Cons) {
-        fuse_cabinet.openFuse();
+        var consumptions = new Double[]{m1Cons + m2Cons + m3Cons};
+        var openFuses = new String[]{F2_NAME};
 
-        m1.setConsumption(m1Cons);
-        m2.setConsumption(m2Cons);
-        m3.setConsumption(m3Cons);
+        var expectedCableLoad = new double[] {consumptions[0]};
+        var expectedFuseLoad = new double[]{
+                consumptions[0],
+                0.
+        };
 
-        LoadApproximator.approximate(substation);
-
-//        MultDblePossibilities cableULoad = cable.getUncertainLoad();
-//        PossibilityDouble cableLoad = cableULoad.iterator().next();
-
-//        MultDblePossibilities fuseLoad = fuse_subs.getUncertainLoad();
-//        PossibilityDouble fuseSubsLoad = fuseLoad.iterator().next();
-//
-//        MultDblePossibilities fuseCabULoad = fuse_cabinet.getUncertainLoad();
-//        PossibilityDouble fuseCabLoad = fuseCabULoad.iterator().next();
-//
-//        Assertions.assertEquals(m1Cons + m2Cons + m3Cons, cableLoad.getValue(), 0.001);
-//        Assertions.assertEquals(m1Cons + m2Cons + m3Cons, fuseSubsLoad.getValue(), 0.001);
-//        Assertions.assertEquals(0, fuseCabLoad.getValue(), 0.001);
+        genericTest(openFuses, consumptions, expectedCableLoad, expectedFuseLoad);
     }
 
 
     @ParameterizedTest
     @MethodSource("threeValues")
     public void testAllOpen(double m1Cons, double m2Cons, double m3Cons) {
-        m1.setConsumption(m1Cons);
-        m2.setConsumption(m2Cons);
-        m3.setConsumption(m3Cons);
+        var consumptions = new Double[]{m1Cons + m2Cons + m3Cons};
+        var openFuses = new String[]{F1_NAME, F2_NAME};
 
-        fuse_subs.openFuse();
-        fuse_cabinet.openFuse();
+        var expectedCableLoad = new double[] {0};
+        var expectedFuseLoad = new double[]{
+                0,
+                0.
+        };
 
-        LoadApproximator.approximate(substation);
-
-//        MultDblePossibilities cableULoad = cable.getUncertainLoad();
-//        PossibilityDouble cableLoad = cableULoad.iterator().next();
-
-//        MultDblePossibilities fuseLoad = fuse_subs.getUncertainLoad();
-//        PossibilityDouble fuseSubsLoad = fuseLoad.iterator().next();
-//
-//        MultDblePossibilities fuseCabULoad = fuse_cabinet.getUncertainLoad();
-//        PossibilityDouble fuseCabLoad = fuseCabULoad.iterator().next();
-//
-//        Assertions.assertEquals(0, cableLoad.getValue(), 0.001);
-//        Assertions.assertEquals(0, fuseSubsLoad.getValue(), 0.001);
-//        Assertions.assertEquals(0, fuseCabLoad.getValue(), 0.001);
+        genericTest(openFuses, consumptions, expectedCableLoad, expectedFuseLoad);
     }
+
 }

@@ -20,7 +20,7 @@ public class UFuseExtracter implements Extracter<Fuse> {
                 .filter((Fuse f) -> f.getStatus().isUncertain())
                 .collect(Collectors.toList());
         substation.getGrid()
-            .save(ExtracterUtils.getKeyUFuse(Fuse.class, substation), uFuses);
+            .save(ExtracterUtils.getKeyUncertain(Fuse.class, substation), uFuses);
     }
 
     @Override

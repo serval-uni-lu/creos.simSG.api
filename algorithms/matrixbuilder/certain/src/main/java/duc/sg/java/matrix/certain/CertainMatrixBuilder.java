@@ -44,6 +44,7 @@ public class CertainMatrixBuilder implements MatrixBuilder {
 
             if (!(currEntity instanceof Substation) && closedFuses.size() > 1) {
                 equations.addLine();
+                mapLineFuse.add(null);
             }
             int rowCabEq = equations.getNumRows() - 1;
 
@@ -98,6 +99,7 @@ public class CertainMatrixBuilder implements MatrixBuilder {
         int idxFuseEnd = getOrCreateIdx(fuseEnd, idxFuses, idxLast);
 
         equations.addLine();
+        mapLineFuse.add(null);
         equations.set(equations.getNumRows() - 1, idxFuse, 1);
         equations.set(equations.getNumRows() - 1, idxFuseEnd, -1);
     }

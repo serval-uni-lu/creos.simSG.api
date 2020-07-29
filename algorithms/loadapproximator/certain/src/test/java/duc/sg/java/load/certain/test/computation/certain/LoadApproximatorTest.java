@@ -1,10 +1,15 @@
 package duc.sg.java.load.certain.test.computation.certain;
 
-import duc.sg.java.loadapproximator.loadapproximation.LoadApproximator;
 import duc.sg.java.load.certain.test.LoadTest;
+import duc.sg.java.loadapproximator.loadapproximation.CertainApproximator;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Meter;
+import org.junit.jupiter.api.Assertions;
+
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public abstract class LoadApproximatorTest extends LoadTest {
     protected static final double DELTA = 0.001;
@@ -24,20 +29,22 @@ public abstract class LoadApproximatorTest extends LoadTest {
         var fuses = getFuses();
         openFuses(toOpen);
         initConsumptions(consumptions, fuseCables);
-        LoadApproximator.approximate(substation);
+//        LoadApproximator.approximate(substation);
 
+        Map<Cable, Double> cableLoads = CertainApproximator.INSTANCE.getCableLoads(substation);
         for (int i = 0; i < fuseCables.length; i++) {
             Cable cable = fusesMap.get(fuseCables[i]).getCable();
-//            MultDblePossibilities cableULoad = cable.getUncertainLoad();
-//            PossibilityDouble cableLoad = cableULoad.iterator().next();
-//            assertEquals(expectedCables[i], cableLoad.getValue(), DELTA, "Error for cable " + (i+1));
+            Assertions.assertEquals(expectedCables[i], cableLoads.get(cable), DELTA, "Error for cable " + (i+1));
+
+////            MultDblePossibilities cableULoad = cable.getUncertainLoad();
+////            PossibilityDouble cableLoad = cableULoad.iterator().next();
+////            assertEquals(expectedCables[i], cableLoad.getValue(), DELTA, "Error for cable " + (i+1));
         }
 
+        Map<Fuse, Double> fuseLoads = CertainApproximator.INSTANCE.getFuseLoads(substation);
         for (int i = 0; i < fuses.length; i++) {
             Fuse fuse = fusesMap.get(fuses[i]);
-//            MultDblePossibilities fuseULoad = fuse.getUncertainLoad();
-//            PossibilityDouble fuseLoad = fuseULoad.iterator().next();
-//            assertEquals(expectedFuses[i], fuseLoad.getValue(), DELTA, "Error for fuse " + (i+1));
+            assertEquals(expectedFuses[i], fuseLoads.get(fuse), DELTA, "Error for fuse " + (i + 1));
         }
     }
 
