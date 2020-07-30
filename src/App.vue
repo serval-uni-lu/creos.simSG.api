@@ -1,11 +1,9 @@
-<template>
-    <section class="simsg">
-        <Header />
-        <NavigationBar />
-        <section>
-            <router-view />
-        </section>
-    </section>
+<template lang="pug">
+    section.simsg
+        Header
+        NavigationBar
+        section
+            router-view
 </template>
 
 <script lang="ts">
