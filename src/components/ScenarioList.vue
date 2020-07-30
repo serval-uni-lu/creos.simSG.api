@@ -1,5 +1,5 @@
 <template lang="pug">
-    li <router-link :to="fullUrl">{{title}}</router-link>
+    li #[router-link(:to="fullUrl") {{title}}]
 </template>
 
 <script lang="ts">
@@ -15,9 +15,3 @@
         }
     }
 </script>
-
-<style lang="scss" scoped>
-    li {
-        background: lightgray;
-    }
-</style>

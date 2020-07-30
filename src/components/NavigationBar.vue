@@ -1,12 +1,12 @@
 <template lang="pug">
     nav#main-nav
         ul.nav-ul.separator
-            li.nav-li  <router-link to="/" class="home">Home</router-link>
-            li.nav-li  <router-link to="/scenario">Scenarios</router-link>
+            li.nav-li  #[router-link.home(to="/") Home]
+            li.nav-li  #[router-link(to="/scenario") Scenarios]
                 ol.stop
-                    <ScenarioList v-for="sc in scenarios" v-bind:key="sc.id" v-bind:title="sc.shortTile" v-bind:url="sc.url"/>
-            li.nav-li  <router-link to="/scenario-builder">Scenario Builder</router-link>
-            li.nav-li  <router-link to="/lux-sg">Luxembourg Smart Grid</router-link>
+                    ScenarioList(v-for="sc in scenarios" v-bind:key="sc.id" v-bind:title="sc.shortTitle" v-bind:url="sc.url")
+            li.nav-li  #[router-link(to="/scenario-builder") Scenario Builder]
+            li.nav-li  #[router-link(to="/lux-sg") Luxembourg Smart Grid]
 </template>
 
 <script lang="ts">

@@ -3,31 +3,31 @@
     "id": 1,
     "url": "sc1-sglCable",
     "title": "Scenario 1: Single cable",
-    "shortTile": "Single cable"
+    "shortTitle": "Single cable"
   },
   {
     "id": 2,
     "url": "sc2-cabinet",
     "title": "Scenario 2: Cabinet",
-    "shortTile": "Cabinet"
+    "shortTitle": "Cabinet"
   },
   {
     "id": 3,
     "url": "sc3-para-transfo",
     "title": "Scenario 3: Parallel cables at the substation",
-    "shortTile": "Parallel@Substation"
+    "shortTitle": "Parallel@Substation"
   },
   {
     "id": 4,
     "url": "sc4-para-cabinet",
     "title": "Scenario 4: Parallel cables at a cabinet",
-    "shortTile": "Parallel@Cabinet"
+    "shortTitle": "Parallel@Cabinet"
   },
   {
     "id": 5,
     "url": "sc5-indirect-para",
     "title": "Scenario 5: Indirect parallel cables at the substation",
-    "shortTile": "Indirect parallel"
+    "shortTitle": "Indirect parallel"
   }
 
 ]
