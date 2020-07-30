@@ -7,7 +7,7 @@
     import {Component, Vue} from "vue-property-decorator";
 
     @Component
-    export default class SCBuilder extends Vue {
+    export default class Scenarios extends Vue {
     }
 </script>
 
