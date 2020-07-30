@@ -47,7 +47,7 @@ const routes: Array<RouteConfig> = [
     name: 'lux-sg',
     // component: LuxembourgSG
   }
-]
+];
 
 const router = new VueRouter({
   mode: 'history',

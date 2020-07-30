@@ -18,7 +18,6 @@
 <style lang="scss" scoped>
     $logo-height: 90px;
     $position: right;
-    $text-color: #034164;
 
     #page-header {
         background-color: lightgray;
@@ -28,9 +27,7 @@
 
         h1 {
             margin: 0;
-            text-align: center;
             font-size: 3em;
-            color: $text-color;
         }
     }
 

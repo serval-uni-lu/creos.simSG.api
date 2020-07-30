@@ -1,7 +1,10 @@
 <template>
     <section class="simsg">
         <Header />
-       <NavigationBar />
+        <NavigationBar />
+        <section>
+            <router-view />
+        </section>
     </section>
 </template>
 
@@ -17,7 +20,7 @@
     }
 </script>
 
-<style lang="scss" >
+<style lang="scss">
     body, html {
         margin: 0;
         height: 100%;
@@ -33,19 +36,34 @@
         height: 100%;
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         color: #034164;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
         a {
             text-decoration-line: none;
             color: #2B92D1;
         }
+
+        a.router-link-exact-active, a.router-link-active:not(.home) {
+            color: #6F2683;;
+            font-weight: bold;
+        }
     }
 
     .simsg > header {
-        height: 10%;
+        height: 80px;
+        width: 100%;
     }
 
     .simsg > nav {
-        height: 5%;
+        height: 40px;
+        width: 100%;
+    }
+
+    .simsg > section {
+        flex: 1;
+        width: 100%;
     }
 
 </style>
