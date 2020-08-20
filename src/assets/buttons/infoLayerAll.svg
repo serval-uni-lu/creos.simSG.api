@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns:xl="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" viewBox="871 749 32 32" width="32" height="32">
+  <defs>
+    <font-face font-family="Roboto" font-size="10" panose-1="2 0 0 0 0 0 0 0 0 0" units-per-em="1000" underline-position="-73.24219" underline-thickness="48.828125" slope="0" x-height="528.3203" cap-height="710.9375" ascent="927.7344" descent="-244.14062" font-weight="700">
+      <font-face-src>
+        <font-face-name name="Roboto-Bold"/>
+      </font-face-src>
+    </font-face>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.17.3\n2020-08-20 10:03:43 +0000</metadata>
+  <g id="LayerAll" fill="none" stroke="none" stroke-opacity="1" stroke-dasharray="none" fill-opacity="1">
+    <title>LayerAll</title>
+    <g id="LayerAll_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_18">
+        <path d="M 876.5426 768.2 L 873.7513 769.9196 C 873.4853 770.0834 873.2613 770.3074 873.0975 770.5734 C 872.5181 771.5138 872.8109 772.7459 873.7513 773.3252 L 885.1539 780.3496 C 885.7971 780.7458 886.6087 780.7458 887.2519 780.3496 L 898.6545 773.3252 L 898.6545 773.3252 C 898.9205 773.1613 899.1445 772.9374 899.3084 772.6714 C 899.8877 771.7309 899.595 770.4989 898.6545 769.9196 L 896.6474 768.6831 L 888.0361 773.98795 C 887.3929 774.3842 886.5813 774.3842 885.9381 773.98795 Z" fill="white"/>
+      </g>
+      <g id="Graphic_22">
+        <path d="M 887.297 754.9712 C 886.838 754.9023 886.3604 754.994 885.951 755.2462 L 874.5484 762.2706 C 874.2824 762.4345 874.0584 762.6584 873.8946 762.92445 C 873.3152 763.8649 873.6079 765.0969 874.5484 765.6763 L 885.951 772.7007 C 886.5942 773.0969 887.4058 773.0969 888.049 772.7007 L 899.4516 765.6763 L 899.4516 765.6763 C 899.7176 765.5124 899.9416 765.2885 900.1054 765.0224 C 900.4046 764.5368 900.4712 763.9734 900.3362 763.4623 C 897.1316 766.1009 892.3853 765.9223 889.3894 762.9264 C 887.2348 760.7718 886.5374 757.7119 887.297 754.9712 Z" fill="white"/>
+      </g>
+      <g id="Graphic_19">
+        <text transform="translate(888.6316 751.6579)" fill="white">
+          <tspan font-family="Roboto" font-size="10" font-weight="700" fill="white" x=".51068497" y="9">All</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>

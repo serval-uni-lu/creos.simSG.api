@@ -1,7 +1,7 @@
 <template lang="pug">
     div
         .toolbar
-            button.infoLayer(title="Add a layer with all information" type="button" class="btn btn-secondary")
+            img.cblFuseLayer(src="@/assets/buttons/infoLayerAll.svg" title="Add a layer with all information" class="btn btn-secondary")
             img.cblFuseLayer(src="@/assets/buttons/infoLayerCable.svg" title="Add a layer with cables information" class="btn btn-secondary")
             img.cblFuseLayer(src="@/assets/buttons/infoLayerFuse.svg" title="Add a layer with fuses information" class="btn btn-secondary")
 </template>
@@ -44,8 +44,9 @@
     .cblFuseLayer {
         margin-left: 3px;
         margin-right: 3px;
-        width:  41.1px;
-        height: 37.9333px;
+        width:  40px;
+        height: 40px;
+        padding: 3px;
     }
 
 </style>
