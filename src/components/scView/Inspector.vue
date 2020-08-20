@@ -1,6 +1,6 @@
 <template lang="pug">
     div
-        p.title Actions
+        p.title Inspector
 </template>
 
 <script lang="ts">

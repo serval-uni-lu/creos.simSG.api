@@ -1,12 +1,11 @@
 <template lang="pug">
-    div
+    section
         h2 {{title}}
 
-        section#container
+        div#viewer
             Action#action
-            div
-                p #[strong TBD]
-            Inspector
+            SCViewer#scviewer
+            Inspector#inspector
 
 
 </template>
@@ -16,6 +15,7 @@
     import scenarios from "@/assets/scenarios/scenarios.json"
     import Action from "@/components/scView/Action.vue";
     import Inspector from "@/components/scView/Inspector.vue";
+    import SCViewer from "@/components/scView/SCViewer.vue";
 
     const SCProps = Vue.extend({
         props: {
@@ -24,7 +24,7 @@
     });
 
     @Component({
-        components: {Action, Inspector}
+        components: {SCViewer, Action, Inspector}
     })
     export default class SCView extends SCProps {
         get title(): string {
@@ -41,15 +41,27 @@
 </script>
 
 <style lang="scss" scoped>
-    div {
+    section {
         text-align: center;
+        display: flex;
+        flex-direction: column;
     }
 
-    #container {
+    #viewer {
+        flex: 1;
         display: flex;
+        flex-direction: row;
     }
-     #action {
-         width: 20%;
-         flex: 1;
-     }
+
+    #action {
+        width: 20%;
+    }
+
+    #scviewer {
+        width: 60%;
+    }
+
+    #inspector {
+        width: 20%;
+    }
 </style>

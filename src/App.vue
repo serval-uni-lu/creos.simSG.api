@@ -2,8 +2,7 @@
     section.simsg
         Header
         NavigationBar
-        section
-            router-view
+        router-view
 </template>
 
 <script lang="ts">
