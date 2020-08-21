@@ -1,7 +1,7 @@
 <template lang="pug">
     div
         ToolBar
-        div(v-on:mousedown="startDrag($event)", v-on:mousemove="drag($event)", v-on:mouseup="stopDrag()", v-on:mouseleave="stopDrag()")
+        #sccanvas(v-on:mousedown="startDrag($event)", v-on:mousemove="drag($event)", v-on:mouseup="stopDrag()", v-on:mouseleave="stopDrag()")
             SingleCable(v-if="name === 'sc1-sglCable'")
             h3(v-else) Oups... Component not yet implemented for {{name}}
 </template>
@@ -36,7 +36,6 @@
                     y: (evt.clientY - CTM.f) / CTM.d
                 };
             } else {
-                console.log("oups...");
                 return {x: 0, y: 0}
             }
 
@@ -61,14 +60,13 @@
                 }
             }
             //should never happen
-            console.log("it happens...")
             return {x: 0, y: 0};
         }
 
         public startDrag(evt: MouseEvent): void {
-            let src= evt.target as SVGElement | HTMLElement | null | undefined;
-            while (!src?.classList.contains("infoBox") && src?.id !== "vue") {
-                src = src?.parentElement;
+            let src = evt.target as SVGElement;
+            while(!(src.classList.contains("infoBox")) && src.id !== "sccanvas") {
+                src = src.parentNode as SVGElement;
             }
 
             if(src.classList.contains("infoBox")) {
@@ -81,7 +79,6 @@
 
                 this.offsetDrag = mousePosition;
             }
-
         }
 
         public toSvgTrans(position: Point): string {
