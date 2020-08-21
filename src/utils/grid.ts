@@ -74,6 +74,7 @@ export class Fuse {
 
 export class Cable {
     public uLoads: Array<ULoad> = Array<ULoad>();
+    public consumption = 0.;
 }
 
 class ULoad {

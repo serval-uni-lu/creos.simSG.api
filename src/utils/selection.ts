@@ -1,6 +1,7 @@
 export enum ElmtType {
     NULL,
-    Fuse
+    Fuse,
+    Meter
 }
 
 export class Selection {
