@@ -1,15 +1,35 @@
 <template lang="pug">
     .toolbar
-        img.cblFuseLayer(src="@/assets/buttons/infoLayerAll.svg" title="Add a layer with all information" class="btn btn-secondary")
-        img.cblFuseLayer(src="@/assets/buttons/infoLayerCable.svg" title="Add a layer with cables information" class="btn btn-secondary")
-        img.cblFuseLayer(src="@/assets/buttons/infoLayerFuse.svg" title="Add a layer with fuses information" class="btn btn-secondary")
+        img.cblFuseLayer(src="@/assets/buttons/infoLayerAll.svg" title="Add a layer with all information" class="btn btn-secondary" v-bind:class="{active: allVisible}" v-on:click="showOrHideAll()")
+        img.cblFuseLayer(src="@/assets/buttons/infoLayerCable.svg" title="Add a layer with cables information" class="btn btn-secondary" v-bind:class="{active: cableLayerVisible}" v-on:click="showOrHideCableLayer()")
+        img.cblFuseLayer(src="@/assets/buttons/infoLayerFuse.svg" title="Add a layer with fuses information" class="btn btn-secondary" v-bind:class="{active: fuseLayerVisible}" v-on:click="showOrHideFuseLayer()")
 </template>
 
 <script lang="ts">
     import {Vue, Component} from "vue-property-decorator";
+    import {namespace} from "vuex-class";
+
+    const toolbarState = namespace('ToolBarState');
 
     @Component
     export default class ToolBar extends Vue{
+        @toolbarState.State
+        public fuseLayerVisible!: boolean;
+
+        @toolbarState.State
+        public cableLayerVisible!: boolean;
+
+        @toolbarState.State
+        public allVisible!: boolean;
+
+        @toolbarState.Mutation
+        public showOrHideFuseLayer!: () => void;
+
+        @toolbarState.Mutation
+        public showOrHideCableLayer!: () => void;
+
+        @toolbarState.Mutation
+        public showOrHideAll!: () => void;
     }
 </script>
 

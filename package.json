@@ -37,12 +37,14 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "geckodriver": "^1.19.1",
-    "pug": "^3.0.0",
+    "pug": "2.0.4",
     "pug-plain-loader": "^1.0.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
     "ts-loader": "^8.0.0",
     "typescript": "^3.9.6",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "vuex-class": "^0.3.2",
+    "vuex-module-decorators": "^0.17.0"
   }
 }

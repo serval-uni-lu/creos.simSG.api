@@ -1,0 +1,14 @@
+@import "global-var.scss";
+
+.infoBox {
+  cursor: move;
+  user-select: none;
+
+  rect {
+    stroke: $color-selection,
+  }
+
+  tspan {
+    fill: $color-selection
+  }
+}
