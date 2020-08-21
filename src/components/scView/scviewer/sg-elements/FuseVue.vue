@@ -1,8 +1,7 @@
 <template>
 <!--    <g class="fuse" v-bind:class="{fClosed: fuses[id].isClosed, selected: isSelected}" v-on:click="showInspector($event, id)">-->
-    <g class="fuse">
-<!--        <title>Status: {{status}}; Load: {{load}}</title>-->
-        <title>Status: ; Load: ;</title>
+    <g class="fuse" v-bind:class="{fClosed: isClosed}" v-on:click="eventHandler($event)">
+        <title>Status: {{status}}; Load: {{uLoads()}}</title>
         <rect :x="xRect" :y="yRect" width="10" height="10" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
         <text :transform="translate">
             <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" x="0" y="11">Fuse {{id + 1}}</tspan>
@@ -12,9 +11,13 @@
 
 <script lang="ts">
     import {Component, Vue, Prop} from "vue-property-decorator";
+    import {Fuse} from "@/utils/grid";
+    import {namespace} from "vuex-class";
+
+    const gridState = namespace('GridSCState');
 
     @Component
-    export default class Fuse extends Vue {
+    export default class FuseVue extends Vue {
         @Prop() id!: number;
         @Prop() xRect!: number;
         @Prop() yRect!: number;
@@ -30,6 +33,12 @@
         @Prop({default: 0}) shiftTextX!: number;
         @Prop({default:0}) shiftTextY!: number;
 
+        @gridState.State
+        public allFuses!: Array<Fuse>;
+
+        @gridState.Mutation
+        public switchFuse!: (id: number) => void;
+
 
         get translate(): string {
             let x = this.xRect;
@@ -44,6 +53,42 @@
                 y = this.yRect + 12;
             }
             return "translate(" +  (x + this.shiftTextX) + " " + (y + this.shiftTextY) + ")";
+        }
+
+        get isClosed(): boolean {
+            return this.fuse.isClosed();
+        }
+
+        get fuse(): Fuse {
+            return this.allFuses[this.id];
+        }
+
+        get status(): string {
+            return this.fuse.status.state;
+        }
+
+        public uLoads(): string {
+            const uloads = this.fuse.uloads;
+            if(uloads.length === 0) {
+                return "TBD";
+            }
+
+            let result = "{";
+            for(let ul=0; ul<uloads.length; ul++) {
+                result += "(" + uloads[ul].prettyLoad() + " [" + uloads[ul].prettyConf() + "%]";
+                if(ul !== uloads.length - 1) {
+                    result += ", ";
+                }
+            }
+            result += "}";
+
+            return result;
+        }
+
+        public eventHandler(event: MouseEvent): void {
+            // if(event.altKey) {
+                this.switchFuse(this.id);
+            // }
         }
 
     }
@@ -72,7 +117,6 @@
     }
 
     g.fuse.selected {
-
         rect {
             fill: white;
             stroke: $color-selection;

@@ -28,8 +28,8 @@
             <g id="DeadEnds">
                 <circle cx="694" cy="384" r="7.00001118531325" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white"/>
             </g>
-            <Fuse :id=0 :xRect=689 :yRect=244.79135 />
-            <Fuse :id=1 :xRect=689 :yRect=360.3567 />
+            <FuseVue :id=0 :xRect=689 :yRect=244.79135 />
+            <FuseVue :id=1 :xRect=689 :yRect=360.3567 />
             <InfoLayerSimpleCable :id=0 :line1=line1 :line2=line2 :circle=circle />
             <InfoLayerFuse :id=0 :location="infoFuse1" />
             <InfoLayerFuse :id=1 :location="infoFuse2" />
@@ -39,16 +39,19 @@
 
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
-    import Fuse from "@/components/scView/scviewer/sg-elements/Fuse.vue";
+    import FuseVue from "@/components/scView/scviewer/sg-elements/FuseVue.vue";
     import SimpleCable from "@/components/scView/scviewer/sg-elements/SimpleCable.vue";
     import {Line, Circle, Point} from "@/utils/SvgTypes"
     import HiddenSimpleCable from "@/components/scView/scviewer/sg-elements/HiddenSimpleCable.vue";
     import Meter from "@/components/scView/scviewer/sg-elements/Meter.vue";
     import InfoLayerSimpleCable from "@/components/scView/scviewer/infoLayer/InfoLayerSimpleCable.vue";
     import InfoLayerFuse from "@/components/scView/scviewer/infoLayer/InfoLayerFuse.vue";
+    import {namespace} from "vuex-class";
+
+    const gridState = namespace('GridSCState');
 
     @Component({
-        components: {InfoLayerFuse, InfoLayerSimpleCable, Meter, HiddenSimpleCable, Fuse, SimpleCable}
+        components: {InfoLayerFuse, InfoLayerSimpleCable, Meter, HiddenSimpleCable, FuseVue, SimpleCable}
     })
     export default class SingleCable extends Vue{
         private line1: Line = {x1: 694, y1: 377, x2:694, y2: 242.04};
@@ -59,6 +62,14 @@
 
         private infoFuse1: Point = {x: 689, y: 244.79135};
         private infoFuse2: Point = {x: 689, y: 360.3567};
+
+        @gridState.Mutation
+        public init!: (nbFuses: number) => void;
+
+        public created() {
+            this.init(2);
+        }
+
     }
 </script>
 
