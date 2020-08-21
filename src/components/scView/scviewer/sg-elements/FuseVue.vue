@@ -1,6 +1,5 @@
 <template>
-<!--    <g class="fuse" v-bind:class="{fClosed: fuses[id].isClosed, selected: isSelected}" v-on:click="showInspector($event, id)">-->
-    <g class="fuse" v-bind:class="{fClosed: isClosed}" v-on:click="eventHandler($event)">
+    <g class="fuse" v-bind:class="{fClosed: isClosed, selected: isSelected}" v-on:click="eventHandler($event)">
         <title>Status: {{status}}; Load: {{uLoads()}}</title>
         <rect :x="xRect" :y="yRect" width="10" height="10" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
         <text :transform="translate">
@@ -10,11 +9,13 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue, Prop} from "vue-property-decorator";
+    import {Component, Prop, Vue} from "vue-property-decorator";
     import {Fuse} from "@/utils/grid";
     import {namespace} from "vuex-class";
+    import {ElmtType, Selection} from "@/utils/selection";
 
     const gridState = namespace('GridSCState');
+    const inspState = namespace('InspectorState');
 
     @Component
     export default class FuseVue extends Vue {
@@ -33,11 +34,23 @@
         @Prop({default: 0}) shiftTextX!: number;
         @Prop({default:0}) shiftTextY!: number;
 
+        public selection: Selection = new Selection(this.id, ElmtType.Fuse)
+
         @gridState.State
         public allFuses!: Array<Fuse>;
 
         @gridState.Mutation
         public switchFuse!: (id: number) => void;
+
+        @inspState.Mutation
+        public select!: (elmt: Selection) => void;
+
+        @inspState.State
+        public  selectedElement!: Selection;
+
+        get isSelected(): boolean {
+            return this.selection.equals(this.selectedElement);
+        }
 
 
         get translate(): string {
@@ -86,9 +99,11 @@
         }
 
         public eventHandler(event: MouseEvent): void {
-            // if(event.altKey) {
+            if(event.altKey) {
                 this.switchFuse(this.id);
-            // }
+            } else {
+                this.select(this.selection);
+            }
         }
 
     }

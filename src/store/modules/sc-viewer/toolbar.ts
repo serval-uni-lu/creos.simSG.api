@@ -1,6 +1,6 @@
 import { VuexModule, Module, Mutation } from "vuex-module-decorators";
 
-@Module({namespaced: true, name: ""})
+@Module({namespaced: true})
 class ToolBarState extends VuexModule {
     public fuseLayerVisible = false;
     public cableLayerVisible = false;
