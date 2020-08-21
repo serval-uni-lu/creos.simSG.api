@@ -1,7 +1,6 @@
 <template>
-<!--    <g class="cable" v-bind:class="{selected: isSelected}" v-on:click="showInspector();">-->
-    <g class="cable">
-<!--        <title>Load: {{load()}}</title>-->
+    <g class="cable" v-bind:class="{selected: isSelected}" v-on:click="eventHandler()">
+        <title>Load: {{uLoads()}}</title>
         <title>Load: </title>
         <line :x1=line1.x1 :y1=line1.y1 :x2=line1.x2 :y2=line1.y2 stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
         <line :x1=line2.x1 :y1=line2.y1 :x2=line2.x2 :y2=line2.y2 stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
@@ -12,7 +11,13 @@
 
 <script lang="ts">
     import {Component, Prop, Vue} from "vue-property-decorator";
-    import {Line, Circle} from "@/utils/SvgTypes"
+    import {Circle, Line} from "@/utils/SvgTypes"
+    import {namespace} from "vuex-class";
+    import {Selection, ElmtType} from "@/utils/selection";
+    import {Cable} from "@/utils/grid";
+
+    const inspState = namespace('InspectorState');
+    const gridState = namespace('GridSCState');
 
     @Component
     export default class SimpleCable extends Vue{
@@ -20,6 +25,43 @@
         @Prop() line1!: Line;
         @Prop() line2!: Line;
         @Prop() circle!: Circle;
+
+        @inspState.Mutation
+        public select!: (elmt: Selection) => void;
+
+        @inspState.State
+        public  selectedElement!: Selection;
+
+        @gridState.State
+        public allCables!: Array<Cable>;
+
+        public selection: Selection = new Selection(this.id, ElmtType.Cable);
+
+        get isSelected(): boolean {
+            return this.selection.equals(this.selectedElement);
+        }
+
+        public eventHandler(): void {
+            this.select(this.selection);
+        }
+
+        public uLoads(): string {
+            const uloads = this.allCables[this.id].uLoads;
+            if(uloads.length == 0) {
+                return "TBD";
+            }
+
+            let result = "{";
+            for(let ul=0; ul<uloads.length; ul++) {
+                result += "(" + uloads[ul].prettyLoad() + " [" + uloads[ul].prettyConf() + "%]";
+                if(ul !== uloads.length - 1) {
+                    result += ", ";
+                }
+            }
+            result += "}";
+
+            return result;
+        }
     }
 </script>
 

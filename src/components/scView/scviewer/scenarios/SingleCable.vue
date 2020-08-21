@@ -30,7 +30,7 @@
             </g>
             <FuseVue :id=0 :xRect=689 :yRect=244.79135 />
             <FuseVue :id=1 :xRect=689 :yRect=360.3567 />
-            <InfoLayerSimpleCable :id=0 :line1=line1 :line2=line2 :circle=circle />
+            <InfoLayerSimpleCable :id=0 :line1=line1 :circle=circle />
             <InfoLayerFuse :id=0 :location="infoFuse1" />
             <InfoLayerFuse :id=1 :location="infoFuse2" />
         </g>

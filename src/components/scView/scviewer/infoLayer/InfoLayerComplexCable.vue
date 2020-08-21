@@ -9,8 +9,8 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue, Prop} from "vue-property-decorator";
-    import {Line, Circle} from "@/utils/SvgTypes";
+    import {Component, Prop, Vue} from "vue-property-decorator";
+    import {CirclesComplexLine} from "@/utils/SvgTypes";
     import {namespace} from "vuex-class";
     import {Cable} from "@/utils/grid";
 
@@ -18,10 +18,9 @@
     const gridSCState = namespace('GridSCState');
 
     @Component
-    export default class InfoLayerSimpleCable extends Vue {
+    export default class InfoLayerComplexCable extends Vue {
         @Prop() id!: number;
-        @Prop() line1!: Line;
-        @Prop() circle!: Circle;
+        @Prop() circle!: CirclesComplexLine;
 
         @toolbarState.State
         public cableLayerVisible!: boolean;
@@ -29,16 +28,12 @@
         @gridSCState.State
         public allCables!: Array<Cable>;
 
-        get cable(): Cable {
-            return this.allCables[this.id];
-        }
-
         get xLoadInfo(): number {
-            return this.line1.x1 - 37.5;
+            return this.circle.onLineX - 25;
         }
 
         get yLoadInfo(): number {
-            return this.circle.y - this.heightLayer()/2;
+            return this.circle.y - 22.5;
         }
 
         get gPosition(): string {
@@ -46,7 +41,11 @@
         }
 
         get showCableLayer(): string {
-            return this.cableLayerVisible ? "visible" : "hidden";
+            return this.cableLayerVisible? "visible" : "hidden";
+        }
+
+        get cable(): Cable {
+            return this.allCables[this.id];
         }
 
         public uLoads(): Array<object> {
@@ -71,7 +70,6 @@
         public heightLayer(): number {
             return 15 + this.uLoads().length * 10;
         }
-
 
     }
 </script>

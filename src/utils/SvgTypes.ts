@@ -14,3 +14,9 @@ export interface Point {
     x: number;
     y: number;
 }
+
+export interface CirclesComplexLine {
+    y: number,
+    onLineX: number,
+    endX: number
+}
