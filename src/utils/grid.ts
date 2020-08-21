@@ -72,6 +72,10 @@ export class Fuse {
 
 }
 
+export class Cable {
+    public uLoads: Array<ULoad> = Array<ULoad>();
+}
+
 class ULoad {
     public load: number;
     public confidence: ConfidenceLevel;
