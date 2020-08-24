@@ -13,12 +13,12 @@
             </font-face>
         </defs>
         <g fill="none" stroke-dasharray="none" stroke="none" stroke-opacity="1" fill-opacity="1">
-            <ComplexCable :id=2 :path=cbl2_path :line=cbl2_line :isHidden=true />
-            <ComplexCable :id=1 :path=cbl1_path :line=cbl1_line :isHidden=true />
-            <SimpleCable :id=0 :line1=c1_line1 :line2=c1_line2 :isHidden=true />
-            <ComplexCable :id=2 :path=cbl2_path :line=cbl2_line :circle=cbl2_circle  />
-            <ComplexCable :id=1 :path=cbl1_path :line=cbl1_line :circle=cbl1_circle  />
-            <SimpleCable :id=0 :line1=c1_line1 :line2=c1_line2 :circle=c1_circle />
+                <CableVue :id=2 :info=c2_info :isSimple=false :isHidden=true />
+                <CableVue :id=1 :info=c1_info :isSimple=false :isHidden=true />
+                <CableVue :id=0 :info=c0_info :isSimple=true :isHidden=true />
+                <CableVue :id=2 :info=c2_info :isSimple=false />
+                <CableVue :id=1 :info=c1_info :isSimple=false />
+                <CableVue :id=0 :info=c0_info :isSimple=true />
             <g id="DE">
                 <circle cx="316.7441" cy="385" r="7.00001118531326" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white" stroke="black"/>
                 <circle cx="217.82796" cy="385" r="7.00001118531327" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white"/>
@@ -52,9 +52,9 @@
             <InfoLayerFuse :id=3 :location="locFuse3" />
             <InfoLayerFuse :id=4 :location="locFuse4" />
             <InfoLayerFuse :id=5 :location="locFuse5" />
-            <InfoLayerComplexCable :id=2 :circle=cbl2_circle  />
-            <InfoLayerComplexCable :id=1 :circle=cbl1_circle  />
-            <InfoLayerSimpleCable :id=0 :line1=c1_line1 :circle=c1_circle />
+            <InfoLayerComplexCable :id=2 :circle=c2_info.circle  />
+            <InfoLayerComplexCable :id=1 :circle=c1_info.circle  />
+            <InfoLayerSimpleCable :id=0 :line1=c0_info.line1 :circle=c0_info.circle />
         </g>
     </svg>
 </template>
@@ -64,17 +64,16 @@
     import {namespace} from "vuex-class";
     import FuseVue from "@/components/scView/scviewer/sg-elements/FuseVue.vue";
     import InfoLayerFuse from "@/components/scView/scviewer/infoLayer/InfoLayerFuse.vue";
-    import {Circle, Line, Point, CirclesComplexLine} from "@/utils/SvgTypes";
+    import {Point, SimpleCableInfo, ComplexCableInfo} from "@/utils/SvgTypes";
     import Meter from "@/components/scView/scviewer/sg-elements/Meter.vue";
-    import SimpleCable from "@/components/scView/scviewer/sg-elements/SimpleCable.vue";
+    import CableVue from "@/components/scView/scviewer/sg-elements/CableVue.vue";
     import InfoLayerSimpleCable from "@/components/scView/scviewer/infoLayer/InfoLayerSimpleCable.vue";
-    import ComplexCable from "@/components/scView/scviewer/sg-elements/ComplexCable.vue";
     import InfoLayerComplexCable from "@/components/scView/scviewer/infoLayer/InfoLayerComplexCable.vue";
 
     const gridState = namespace('GridSCState');
     @Component({
         components: {
-            InfoLayerComplexCable, ComplexCable, InfoLayerSimpleCable, SimpleCable, Meter, InfoLayerFuse, FuseVue}
+            InfoLayerComplexCable, InfoLayerSimpleCable, CableVue, Meter, InfoLayerFuse, FuseVue}
     })
     export default class Cabinet extends Vue {
         private locFuse0: Point = {x: 268.7441, y: 139.77368};
@@ -88,17 +87,24 @@
         private locMeter1: Point = {x:149, y: 341.3};
         private locMeter2: Point = {x:345.8, y: 341.7};
 
-        private c1_line1: Line = {x1: 273.74, y1: 273.42, x2:273.74, y2: 137};
-        private c1_line2: Line = {x1: 268.74, y1: 182.5, x2:199, y2: 182.5};
-        private c1_circle: Circle = {x: 192, y: 182.5};
 
-        private cbl1_path= "M 273.7441 273.4163 L 248.8201 273.4163 L 248.8201 311 L 217.67497 311 L 217.81348 378";
-        private cbl1_line: Line = {x1: 212.71, y1:330.134, x2:130.4, y2:331};
-        private cbl1_circle: CirclesComplexLine= {onLineX: 217.71, endX: 123.4, y: 331};
+        private c0_info: SimpleCableInfo = {
+            line1: {x1: 273.74, y1: 273.42, x2:273.74, y2: 137},
+            line2: {x1: 268.74, y1: 182.5, x2:199, y2: 182.5},
+            circle: {x: 192, y: 182.5}
+        };
 
-        private cbl2_path = "M 273.7441 273.4163 L 298.6681 273.4163 L 298.6726 311 L 317.2561 311 L 316.79254 378.00016";
-        private cbl2_line: Line = {x1: 322.12, y1:331.06, x2:397.8, y2:331};
-        private cbl2_circle: CirclesComplexLine = {onLineX: 317.1173, endX: 404.8, y: 331};
+        private c1_info: ComplexCableInfo = {
+            path: "M 273.7441 273.4163 L 248.8201 273.4163 L 248.8201 311 L 217.67497 311 L 217.81348 378",
+            circle: {onLineX: 217.71, endX: 123.4, y: 331},
+            line: {x1: 212.71, y1:330.134, x2:130.4, y2:331}
+        };
+
+        private c2_info: ComplexCableInfo = {
+            path: "M 273.7441 273.4163 L 298.6681 273.4163 L 298.6726 311 L 317.2561 311 L 316.79254 378.00016",
+            circle: {onLineX: 317.1173, endX: 404.8, y: 331},
+            line:{x1: 322.12, y1:331.06, x2:397.8, y2:331}
+        };
 
 
         @gridState.Mutation

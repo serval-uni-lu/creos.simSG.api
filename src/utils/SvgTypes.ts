@@ -20,3 +20,18 @@ export interface CirclesComplexLine {
     onLineX: number,
     endX: number
 }
+
+
+export interface CableInfo {}
+
+export interface SimpleCableInfo extends CableInfo {
+    line1: Line;
+    line2: Line;
+    circle: Circle;
+}
+
+export interface ComplexCableInfo extends CableInfo{
+    path: String;
+    circle: CirclesComplexLine;
+    line: Line;
+}
