@@ -12,6 +12,7 @@
     import {namespace} from "vuex-class";
     import {ElmtType, Selection} from "@/utils/selection";
     import {Cable} from "@/utils/grid";
+    import {uLoadsStr} from "@/utils/cableVueUtils";
 
     const inspState = namespace('InspectorState');
     const gridState = namespace('GridSCState');
@@ -42,21 +43,7 @@
         }
 
         public uLoads(): string {
-            const uloads = this.allCables[this.id].uLoads;
-            if(uloads.length == 0) {
-                return "TBD";
-            }
-
-            let result = "{";
-            for(let ul=0; ul<uloads.length; ul++) {
-                result += "(" + uloads[ul].prettyLoad() + " [" + uloads[ul].prettyConf() + "%]";
-                if(ul !== uloads.length - 1) {
-                    result += ", ";
-                }
-            }
-            result += "}";
-
-            return result;
+            return uLoadsStr(this.allCables[this.id]);
         }
 
     }
