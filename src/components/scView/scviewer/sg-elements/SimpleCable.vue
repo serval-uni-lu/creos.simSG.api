@@ -1,7 +1,6 @@
 <template>
     <g class="cable" v-bind:class="{selected: isSelected}" v-on:click="eventHandler()">
         <title>Load: {{uLoads()}}</title>
-        <title>Load: </title>
         <line :x1=line1.x1 :y1=line1.y1 :x2=line1.x2 :y2=line1.y2 stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
         <line :x1=line2.x1 :y1=line2.y1 :x2=line2.x2 :y2=line2.y2 stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
         <circle :cx=line1.x1 :cy=circle.y r="5"/>

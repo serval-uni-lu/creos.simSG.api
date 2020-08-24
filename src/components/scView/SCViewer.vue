@@ -3,22 +3,28 @@
         ToolBar
         #sccanvas(v-on:mousedown="startDrag($event)", v-on:mousemove="drag($event)", v-on:mouseup="stopDrag()", v-on:mouseleave="stopDrag()")
             SingleCable(v-if="name === 'sc1-sglCable'")
-            Cabinet(v-if="name === 'sc2-cabinet'")
+            Cabinet(v-else-if="name === 'sc2-cabinet'")
             h3(v-else) Oups... Component not yet implemented for {{name}}
 </template>
 
 <script lang="ts">
-    import {Component,Vue, Prop} from "vue-property-decorator";
+    import {Component, Vue, Prop, Watch} from "vue-property-decorator";
     import ToolBar from "@/components/scView/scviewer/ToolBar.vue";
     import SingleCable from "@/components/scView/scviewer/scenarios/SingleCable.vue";
     import Cabinet from "@/components/scView/scviewer/scenarios/Cabinet.vue";
     import {Point} from "@/utils/SvgTypes";
+    import {namespace} from "vuex-class";
+
+    const inspectorState = namespace('InspectorState');
 
     @Component({
         components: {Cabinet, SingleCable, ToolBar}
     })
     export default class SCViewer extends Vue {
         @Prop() name!: string;
+
+        @inspectorState.Mutation
+        public reset!: () => void;
 
         public elmtDragged!: SVGElement | null;
         public offsetDrag!: Point;
@@ -103,6 +109,11 @@
 
         public stopDrag(): void {
             this.elmtDragged = null;
+        }
+
+        @Watch('$route')
+        onRouteChanged() {
+            this.reset();
         }
     }
 </script>

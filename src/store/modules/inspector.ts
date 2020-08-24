@@ -6,8 +6,13 @@ class InspectorState extends VuexModule {
     public selectedElement: Selection = NullSelection;
 
     @Mutation
-    public select(elmt: Selection): void {
+    public select(elmt: Selection) {
         this.selectedElement = elmt;
+    }
+
+    @Mutation
+    public reset() {
+        this.selectedElement = NullSelection;
     }
 
 }
