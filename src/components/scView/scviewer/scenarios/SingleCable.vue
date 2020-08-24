@@ -13,7 +13,7 @@
             </font-face>
         </defs>
         <g id="SC1-SingleCable" fill="none" stroke-dasharray="none" stroke="none" stroke-opacity="1" fill-opacity="1">
-            <HiddenSimpleCable :id=0 :line1=line1 :line2=line2 />
+            <SimpleCable :id=0 :line1=line1 :line2=line2 :circle=circle :isHidden="true"/>
             <SimpleCable :id=0 :line1=line1 :line2=line2 :circle=circle />
             <g id="Substation">
                 <rect x="644" y="194.4" width="99.99999" height="47.644" fill="white"/>
@@ -42,7 +42,6 @@
     import FuseVue from "@/components/scView/scviewer/sg-elements/FuseVue.vue";
     import SimpleCable from "@/components/scView/scviewer/sg-elements/SimpleCable.vue";
     import {Line, Circle, Point} from "@/utils/SvgTypes"
-    import HiddenSimpleCable from "@/components/scView/scviewer/sg-elements/HiddenSimpleCable.vue";
     import Meter from "@/components/scView/scviewer/sg-elements/Meter.vue";
     import InfoLayerSimpleCable from "@/components/scView/scviewer/infoLayer/InfoLayerSimpleCable.vue";
     import InfoLayerFuse from "@/components/scView/scviewer/infoLayer/InfoLayerFuse.vue";
@@ -51,7 +50,7 @@
     const gridState = namespace('GridSCState');
 
     @Component({
-        components: {InfoLayerFuse, InfoLayerSimpleCable, Meter, HiddenSimpleCable, FuseVue, SimpleCable}
+        components: {InfoLayerFuse, InfoLayerSimpleCable, Meter, FuseVue, SimpleCable}
     })
     export default class SingleCable extends Vue{
         private line1: Line = {x1: 694, y1: 377, x2:694, y2: 242.04};

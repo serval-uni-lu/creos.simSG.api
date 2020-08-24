@@ -13,9 +13,9 @@
             </font-face>
         </defs>
         <g fill="none" stroke-dasharray="none" stroke="none" stroke-opacity="1" fill-opacity="1">
-            <HiddenComplexCable :id=2 :path=cbl2_path :line=cbl2_line />
-            <HiddenComplexCable :id=1 :path=cbl1_path :line=cbl1_line />
-            <HiddenSimpleCable :id=0 :line1=c1_line1 :line2=c1_line2 />
+            <ComplexCable :id=2 :path=cbl2_path :line=cbl2_line :isHidden=true />
+            <ComplexCable :id=1 :path=cbl1_path :line=cbl1_line :isHidden=true />
+            <SimpleCable :id=0 :line1=c1_line1 :line2=c1_line2 :isHidden=true />
             <ComplexCable :id=2 :path=cbl2_path :line=cbl2_line :circle=cbl2_circle  />
             <ComplexCable :id=1 :path=cbl1_path :line=cbl1_line :circle=cbl1_circle  />
             <SimpleCable :id=0 :line1=c1_line1 :line2=c1_line2 :circle=c1_circle />
@@ -67,18 +67,14 @@
     import {Circle, Line, Point, CirclesComplexLine} from "@/utils/SvgTypes";
     import Meter from "@/components/scView/scviewer/sg-elements/Meter.vue";
     import SimpleCable from "@/components/scView/scviewer/sg-elements/SimpleCable.vue";
-    import HiddenSimpleCable from "@/components/scView/scviewer/sg-elements/HiddenSimpleCable.vue";
     import InfoLayerSimpleCable from "@/components/scView/scviewer/infoLayer/InfoLayerSimpleCable.vue";
     import ComplexCable from "@/components/scView/scviewer/sg-elements/ComplexCable.vue";
-    import HiddenComplexCable from "@/components/scView/scviewer/sg-elements/HiddenComplexCable.vue";
     import InfoLayerComplexCable from "@/components/scView/scviewer/infoLayer/InfoLayerComplexCable.vue";
 
     const gridState = namespace('GridSCState');
     @Component({
         components: {
-            InfoLayerComplexCable,
-            HiddenComplexCable,
-            ComplexCable, InfoLayerSimpleCable, HiddenSimpleCable, SimpleCable, Meter, InfoLayerFuse, FuseVue}
+            InfoLayerComplexCable, ComplexCable, InfoLayerSimpleCable, SimpleCable, Meter, InfoLayerFuse, FuseVue}
     })
     export default class Cabinet extends Vue {
         private locFuse0: Point = {x: 268.7441, y: 139.77368};

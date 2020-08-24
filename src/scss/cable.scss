@@ -1,9 +1,15 @@
 @import "@/scss/global-var.scss";
 
+.cable {
+  stroke-width: 1;
+}
+
 .cableHidden {
   stroke: white;
   stroke-width: 10;
 }
+
+
 g.cable:not(selected) {
   stroke: $color-schema;
 

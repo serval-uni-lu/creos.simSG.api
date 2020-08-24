@@ -1,10 +1,10 @@
 <template>
-    <g class="cable" v-bind:class="{selected: isSelected}" v-on:click="eventHandler()">
+    <g v-bind:class="[{selected: isSelected}, getClass]" v-on:click="eventHandler()">
         <title>Load: {{uLoads()}}</title>
-        <path :d=path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <circle :cx=circle.endX :cy=circle.y r="7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <circle :cx=circle.onLineX :cy=circle.y r="5"/>
-        <line :x1=line.x1 :y1=line.y1 :x2=line.x2 :y2=line.y2 stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <path :d=path stroke-linecap="round" stroke-linejoin="round"/>
+        <circle :cx=circle.endX :cy=circle.y r="7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" v-if="!isHidden"/>
+        <circle :cx=circle.onLineX :cy=circle.y r="5" v-if="!isHidden"/>
+        <line :x1=line.x1 :y1=line.y1 :x2=line.x2 :y2=line.y2 stroke-linecap="round" stroke-linejoin="round"/>
     </g>
 </template>
 
@@ -25,6 +25,7 @@
         @Prop() path!: string;
         @Prop() circle!: CirclesComplexLine;
         @Prop() line!: Line;
+        @Prop({default(){return false}}) isHidden!: boolean;
 
         @inspState.Mutation
         public select!: (elmt: Selection) => void;
@@ -39,6 +40,10 @@
 
         get isSelected(): boolean {
             return this.selection.equals(this.selectedElement);
+        }
+
+        get getClass(): string {
+            return this.isHidden? "cableHidden" : "cable";
         }
 
         public eventHandler(): void {
