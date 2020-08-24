@@ -13,6 +13,7 @@
     import {Fuse} from "@/utils/grid";
     import {namespace} from "vuex-class";
     import {ElmtType, Selection} from "@/utils/selection";
+    import {prettyStr} from "@/utils/uLoadsUtils";
 
     const gridState = namespace('GridSCState');
     const inspState = namespace('InspectorState');
@@ -81,21 +82,7 @@
         }
 
         public uLoads(): string {
-            const uloads = this.fuse.uloads;
-            if(uloads.length === 0) {
-                return "TBD";
-            }
-
-            let result = "{";
-            for(let ul=0; ul<uloads.length; ul++) {
-                result += "(" + uloads[ul].prettyLoad() + " [" + uloads[ul].prettyConf() + "%]";
-                if(ul !== uloads.length - 1) {
-                    result += ", ";
-                }
-            }
-            result += "}";
-
-            return result;
+            return prettyStr(this.fuse.uloads);
         }
 
         public eventHandler(event: MouseEvent): void {

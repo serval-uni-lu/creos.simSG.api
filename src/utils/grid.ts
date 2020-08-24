@@ -77,7 +77,7 @@ export class Cable {
     public consumption = 0.;
 }
 
-class ULoad {
+export class ULoad {
     public load: number;
     public confidence: ConfidenceLevel;
 

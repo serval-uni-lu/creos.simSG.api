@@ -12,7 +12,7 @@
     import {namespace} from "vuex-class";
     import {ElmtType, Selection} from "@/utils/selection";
     import {Cable} from "@/utils/grid";
-    import {uLoadsStr} from "@/utils/cableVueUtils";
+    import {prettyStr} from "@/utils/uLoadsUtils";
 
     const inspState = namespace('InspectorState');
     const gridState = namespace('GridSCState');
@@ -43,7 +43,7 @@
         }
 
         public uLoads(): string {
-            return uLoadsStr(this.allCables[this.id]);
+            return prettyStr(this.allCables[this.id].uLoads);
         }
 
     }
