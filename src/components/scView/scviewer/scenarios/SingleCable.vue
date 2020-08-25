@@ -13,8 +13,8 @@
             </font-face>
         </defs>
         <g id="SC1-SingleCable" fill="none" stroke-dasharray="none" stroke="none" stroke-opacity="1" fill-opacity="1">
-            <CableVue :id=0 :line1=line1 :line2=line2 :circle=circle :isHidden="true"/>
-            <CableVue :id=0 :line1=line1 :line2=line2 :circle=circle />
+            <CableVue :id=0 :info=cbl_info :isHidden=true :isSimple=true />
+            <CableVue :id=0 :info=cbl_info :isSimple=true />
             <g id="Substation">
                 <rect x="644" y="194.4" width="99.99999" height="47.644" fill="white"/>
                 <rect x="644" y="194.4" width="99.99999" height="47.644" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
@@ -30,7 +30,7 @@
             </g>
             <FuseVue :id=0 :xRect=689 :yRect=244.79135 />
             <FuseVue :id=1 :xRect=689 :yRect=360.3567 />
-            <InfoLayerSimpleCable :id=0 :line1=line1 :circle=circle />
+            <InfoLayerCable :cableId=0 :x=cbl_info.line1.x1 :y=cbl_info.circle.y />
             <InfoLayerFuse :id=0 :location="infoFuse1" />
             <InfoLayerFuse :id=1 :location="infoFuse2" />
         </g>
@@ -41,21 +41,25 @@
     import {Component, Vue} from "vue-property-decorator";
     import FuseVue from "@/components/scView/scviewer/sg-elements/FuseVue.vue";
     import CableVue from "@/components/scView/scviewer/sg-elements/CableVue.vue";
-    import {Line, Circle, Point} from "@/utils/SvgTypes"
+    import {Point, SimpleCableInfo} from "@/utils/SvgTypes"
     import Meter from "@/components/scView/scviewer/sg-elements/Meter.vue";
-    import InfoLayerSimpleCable from "@/components/scView/scviewer/infoLayer/InfoLayerSimpleCable.vue";
+    import InfoLayerCable from "@/components/scView/scviewer/infoLayer/InfoLayerCable.vue";
     import InfoLayerFuse from "@/components/scView/scviewer/infoLayer/InfoLayerFuse.vue";
     import {namespace} from "vuex-class";
 
     const gridState = namespace('GridSCState');
 
     @Component({
-        components: {InfoLayerFuse, InfoLayerSimpleCable, Meter, FuseVue, CableVue}
+        components: {InfoLayerFuse, InfoLayerCable, Meter, FuseVue, CableVue}
     })
     export default class SingleCable extends Vue{
-        private line1: Line = {x1: 694, y1: 377, x2:694, y2: 242.04};
-        private line2: Line = {x1: 694, y1: 292, x2:601.5, y2: 292};
-        private circle: Circle = {x: 594.5, y: 292};
+
+
+        private cbl_info: SimpleCableInfo = {
+            line1: {x1: 694, y1: 377, x2:694, y2: 242.04},
+            line2: {x1: 694, y1: 292, x2:601.5, y2: 292},
+            circle: {x: 594.5, y: 292}
+        };
 
         private meterLoc: Point = {x: 612, y: 303};
 

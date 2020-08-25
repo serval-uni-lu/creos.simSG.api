@@ -52,9 +52,10 @@
             <InfoLayerFuse :id=3 :location="locFuse3" />
             <InfoLayerFuse :id=4 :location="locFuse4" />
             <InfoLayerFuse :id=5 :location="locFuse5" />
-            <InfoLayerComplexCable :id=2 :circle=c2_info.circle  />
-            <InfoLayerComplexCable :id=1 :circle=c1_info.circle  />
-            <InfoLayerSimpleCable :id=0 :line1=c0_info.line1 :circle=c0_info.circle />
+
+            <InfoLayerCable :cableId=0 :x=c0_info.line1.x1 :y=c0_info.circle.y />
+            <InfoLayerCable :cableId=1 :x=c1_info.circle.onLineX :y=c1_info.circle.y />
+            <InfoLayerCable :cableId=2 :x=c2_info.circle.onLineX :y=c2_info.circle.y />
         </g>
     </svg>
 </template>
@@ -67,13 +68,12 @@
     import {Point, SimpleCableInfo, ComplexCableInfo} from "@/utils/SvgTypes";
     import Meter from "@/components/scView/scviewer/sg-elements/Meter.vue";
     import CableVue from "@/components/scView/scviewer/sg-elements/CableVue.vue";
-    import InfoLayerSimpleCable from "@/components/scView/scviewer/infoLayer/InfoLayerSimpleCable.vue";
-    import InfoLayerComplexCable from "@/components/scView/scviewer/infoLayer/InfoLayerComplexCable.vue";
+    import InfoLayerCable from "@/components/scView/scviewer/infoLayer/InfoLayerCable.vue";
 
     const gridState = namespace('GridSCState');
     @Component({
         components: {
-            InfoLayerComplexCable, InfoLayerSimpleCable, CableVue, Meter, InfoLayerFuse, FuseVue}
+            InfoLayerCable, CableVue, Meter, InfoLayerFuse, FuseVue}
     })
     export default class Cabinet extends Vue {
         private locFuse0: Point = {x: 268.7441, y: 139.77368};
