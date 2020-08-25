@@ -52,7 +52,6 @@
             <InfoLayerFuse :id=3 :location="locFuse3" />
             <InfoLayerFuse :id=4 :location="locFuse4" />
             <InfoLayerFuse :id=5 :location="locFuse5" />
-
             <InfoLayerCable :cableId=0 :x=c0_info.line1.x1 :y=c0_info.circle.y />
             <InfoLayerCable :cableId=1 :x=c1_info.circle.onLineX :y=c1_info.circle.y />
             <InfoLayerCable :cableId=2 :x=c2_info.circle.onLineX :y=c2_info.circle.y />

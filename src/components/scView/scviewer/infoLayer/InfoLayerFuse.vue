@@ -1,10 +1,10 @@
 <template>
-    <g :transform=gPosition :visibility=showFuseLayer class="infoBox">
-        <rect x="0" y="0" rx="8" ry="8" width="100" :height="heightLayer()" fill="white"  stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <g :transform=transform :visibility=visibility class="infoBox">
+        <rect x="0" y="0" rx="8" ry="8" :width=width :height="height" fill="white"  stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
         <text transform="translate(5 5)" fill="black">
-            <tspan font-family="Helvetica Neue" font-size="8" font-weight="700" x="26" y="5">Fuse {{id + 1}}</tspan>
-            <tspan font-family="Helvetica Neue" font-size="8" font-weight="400" x="0" y="15">Status: {{status}} [{{confLevel}}%]</tspan>
-            <tspan font-family="Helvetica Neue" font-size="8" font-weight="400" x="0" y="25">Load:</tspan>
+            <tspan font-family="Helvetica Neue" font-size="8" font-weight="700" x="26" :y=getYText(0)>Fuse {{id + 1}}</tspan>
+            <tspan font-family="Helvetica Neue" font-size="8" font-weight="400" x="0" :y=getYText(1)>Status: {{status}} [{{confLevel}}%]</tspan>
+            <tspan font-family="Helvetica Neue" font-size="8" font-weight="400" x="0" :y=getYText(2)>Load:</tspan>
             <tspan v-for="ul in uLoads()" :key="ul.id" font-family="Helvetica Neue" font-size="8" font-weight="400" x="0" :y="ul.y">- {{ul.value}} A [{{ul.confidence}}%]</tspan>
         </text>
     </g>
@@ -15,6 +15,7 @@
     import {Point} from "@/utils/SvgTypes";
     import {namespace} from "vuex-class";
     import {Fuse} from "@/utils/grid";
+    import {getYText, layerHeight, ULoadInfo, uLoadsData} from "@/utils/infoLayerUtils";
 
 
     const toolbarState = namespace('ToolBarState');
@@ -25,19 +26,29 @@
         @Prop() id!: number;
         @Prop() location!: Point;
 
+        public readonly  width = 100;
+        public static readonly nbTextLineInTemplate = 3;
+
         @toolbarState.State
         public fuseLayerVisible!: boolean;
 
         @gridState.State
         public allFuses!: Array<Fuse>;
 
-        get gPosition(): string {
-            return "translate(" + (this.location.x - 37.5) + " " + (this.location.y - this.heightLayer()/2) + ")";
-        }
-
-        get showFuseLayer(): string {
+        get visibility(): string {
             return (this.fuseLayerVisible)? "visible": "hidden";
         }
+
+        get transform(): string {
+            const realX = this.location.x - (this.width/2);
+            const realY = this.location.y - (this.height/2);
+            return "translate(" + realX + " " + realY + ")";
+        }
+
+        get height(): number {
+            return layerHeight(InfoLayerFuse.nbTextLineInTemplate, this.fuse.uloads.length);
+        }
+
 
         get fuse(): Fuse {
             return this.allFuses[this.id];
@@ -51,28 +62,16 @@
             return this.fuse.status.prettyConf;
         }
 
-        public uLoads(): Array<object> {
-            const uloads = this.fuse.uloads;
-            if(uloads.length === 0) {
-                return [{id:0, value: "TBD", confidence: "TBD", y: 35}];
-            }
-
-            const result = [];
-            for(let ul=0; ul<uloads.length; ul++) {
-                result.push({
-                    id: ul,
-                    value: uloads[ul].prettyLoad(),
-                    confidence: uloads[ul].prettyConf(),
-                    y: 25 + 10*(ul+1)
-                })
-            }
-
-            return result;
+        public getYText(posElmt: number): number {
+            return getYText(InfoLayerFuse.nbTextLineInTemplate, posElmt);
         }
 
-        public heightLayer(): number {
-            return 15 + (this.uLoads().length + 2) * 10;
+        public uLoads(): Array<ULoadInfo> {
+            const uLoads = this.fuse.uloads;
+            return uLoadsData(uLoads, InfoLayerFuse.nbTextLineInTemplate);
         }
+
+
 
     }
 </script>
