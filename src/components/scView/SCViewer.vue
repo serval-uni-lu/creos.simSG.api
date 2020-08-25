@@ -5,6 +5,7 @@
             SingleCable(v-if="name === 'sc1-sglCable'")
             Cabinet(v-else-if="name === 'sc2-cabinet'")
             ParaSubs(v-else-if="name === 'sc3-para-transfo'")
+            ParaCabinet(v-else-if="name === 'sc4-para-cabinet'")
             h3(v-else) Oups... Component not yet implemented for {{name}}
 </template>
 
@@ -16,11 +17,12 @@
     import {Point} from "@/utils/SvgTypes";
     import {namespace} from "vuex-class";
     import ParaSubs from "@/components/scView/scviewer/scenarios/ParaSubs.vue";
+    import ParaCabinet from "@/components/scView/scviewer/scenarios/ParaCabinet.vue";
 
     const inspectorState = namespace('InspectorState');
 
     @Component({
-        components: {ParaSubs, Cabinet, SingleCable, ToolBar}
+        components: {ParaCabinet, ParaSubs, Cabinet, SingleCable, ToolBar}
     })
     export default class SCViewer extends Vue {
         @Prop() name!: string;
