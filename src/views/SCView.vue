@@ -13,9 +13,9 @@
 <script lang="ts">
     import {Component,Vue, Prop} from "vue-property-decorator";
     import scenarios from "@/assets/scenarios/scenarios.json"
-    import Action from "@/components/scView/Action.vue";
-    import Inspector from "@/components/scView/Inspector.vue";
     import SCViewer from "@/components/scView/SCViewer.vue";
+    import Action from "@/components/Action.vue";
+    import Inspector from "@/components/inspector/Inspector.vue";
 
     @Component({
         components: {SCViewer, Action, Inspector}

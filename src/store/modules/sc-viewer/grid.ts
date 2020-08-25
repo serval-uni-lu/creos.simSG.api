@@ -10,6 +10,9 @@ class GridSCState extends VuexModule {
 
     @Mutation
     public init(nbFuses: number): void {
+        this.allFuses = Array<Fuse>();
+        this.allCables = Array<Cable>();
+
         for (let i=0; i<nbFuses; i++) {
             this.allFuses.push(new Fuse(State.CLOSED, MAX_CONF));
             if(i%2===0) {

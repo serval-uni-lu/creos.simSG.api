@@ -18,6 +18,8 @@
 </script>
 
 <style lang="scss">
+    @import "@/scss/global-var.scss";
+
     body, html {
         margin: 0;
         height: 100%;
@@ -32,18 +34,18 @@
     .simsg {
         height: 100%;
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
-        color: #034164;
+        color: $text-color;
         display: flex;
         flex-direction: column;
         align-items: center;
 
         a {
             text-decoration-line: none;
-            color: #2B92D1;
+            color: $link-color;
         }
 
         a.router-link-exact-active, a.router-link-active:not(.home) {
-            color: #6F2683;;
+            color: $color-selection;
             font-weight: bold;
         }
     }

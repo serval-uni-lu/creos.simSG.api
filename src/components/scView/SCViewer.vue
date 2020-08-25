@@ -118,7 +118,7 @@
         }
 
         @Watch('$route')
-        onRouteChanged() {
+        public onRouteChanged() {
             this.reset();
         }
     }
@@ -126,7 +126,7 @@
 
 <style lang="scss">
     svg {
-        width: 80%; //todo: to be fixed... https://css-tricks.com/scale-svg/
+        width: 60%; //todo: to be fixed... https://css-tricks.com/scale-svg/
     }
 
 </style>

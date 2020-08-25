@@ -13,7 +13,8 @@
     import {Component, Vue, Prop} from "vue-property-decorator";
     import {namespace} from "vuex-class";
     import {Cable} from "@/utils/grid";
-    import {getYText, layerHeight, ULoadInfo, uLoadsData} from "@/utils/infoLayerUtils";
+    import {getYText, layerHeight, uLoadsDataWithY} from "@/utils/infoLayerUtils";
+    import {ULoadInfo} from "@/utils/uLoadsUtils";
 
     const toolbarState = namespace('ToolBarState');
     const gridSCState = namespace('GridSCState');
@@ -54,7 +55,7 @@
 
         public uLoads(): Array<ULoadInfo> {
             const cable: Cable = this.allCables[this.cableId];
-            return uLoadsData(cable.uLoads, InfoCableLayer.nbTextLineInTemplate);
+            return uLoadsDataWithY(cable.uLoads, InfoCableLayer.nbTextLineInTemplate);
         }
 
 

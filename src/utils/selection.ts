@@ -1,8 +1,8 @@
 export enum ElmtType {
     NULL,
-    Fuse,
-    Meter,
-    Cable
+    Fuse= "Fuse",
+    Meter= "Meter",
+    Cable= "Cable"
 }
 
 export class Selection {

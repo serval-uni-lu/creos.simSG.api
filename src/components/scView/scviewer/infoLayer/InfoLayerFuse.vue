@@ -15,7 +15,8 @@
     import {Point} from "@/utils/SvgTypes";
     import {namespace} from "vuex-class";
     import {Fuse} from "@/utils/grid";
-    import {getYText, layerHeight, ULoadInfo, uLoadsData} from "@/utils/infoLayerUtils";
+    import {getYText, layerHeight, uLoadsDataWithY} from "@/utils/infoLayerUtils";
+    import {ULoadInfo} from "@/utils/uLoadsUtils";
 
 
     const toolbarState = namespace('ToolBarState');
@@ -68,7 +69,7 @@
 
         public uLoads(): Array<ULoadInfo> {
             const uLoads = this.fuse.uloads;
-            return uLoadsData(uLoads, InfoLayerFuse.nbTextLineInTemplate);
+            return uLoadsDataWithY(uLoads, InfoLayerFuse.nbTextLineInTemplate);
         }
 
 
