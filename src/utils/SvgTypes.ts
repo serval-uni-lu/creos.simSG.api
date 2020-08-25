@@ -16,13 +16,15 @@ export interface Point {
 }
 
 export interface CirclesComplexLine {
-    y: number,
-    onLineX: number,
-    endX: number
+    y: number;
+    onLineX: number;
+    endX: number;
 }
 
 
-export interface CableInfo {}
+export interface CableInfo {
+    type: CableType;
+}
 
 export interface SimpleCableInfo extends CableInfo {
     line1: Line;
@@ -31,7 +33,24 @@ export interface SimpleCableInfo extends CableInfo {
 }
 
 export interface ComplexCableInfo extends CableInfo{
-    path: String;
+    path: string;
     circle: CirclesComplexLine;
     line: Line;
+}
+
+export interface HorizontalLine {
+    x1: number;
+    x2: number;
+    y: number;
+}
+
+export interface OneLineCableInfo  extends CableInfo {
+    line: HorizontalLine;
+    circleX: number;
+}
+
+export enum CableType {
+    Simple,
+    Complex,
+    OneLine
 }

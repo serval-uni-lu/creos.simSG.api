@@ -1,3 +1,6 @@
+import {CableType} from "@/utils/SvgTypes";
+import {CableType} from "@/utils/SvgTypes";
+import {CableType} from "@/utils/SvgTypes";
 <template>
     <svg viewBox="777 437 258 284" >
         <defs>
@@ -71,7 +74,7 @@
     import InfoLayerFuse from "../infoLayer/InfoLayerFuse.vue";
     import FuseVue from "../sg-elements/FuseVue.vue";
     import {namespace} from "vuex-class";
-    import {ComplexCableInfo, Point, SimpleCableInfo} from "@/utils/SvgTypes";
+    import {CableType, ComplexCableInfo, Point, SimpleCableInfo} from "@/utils/SvgTypes";
 
     const gridState = namespace('GridSCState');
 
@@ -96,19 +99,22 @@
         private c0_info: ComplexCableInfo = {
             path: "M 891.5825 485.6004 L 891.5825 598.5197 L 911.7323 598.5197",
             line: {x1: 891.58, y1: 532, x2: 792, y2: 531.53},
-            circle: {y: 531.53, onLineX: 891.58, endX: 785}
+            circle: {y: 531.53, onLineX: 891.58, endX: 785},
+            type: CableType.Complex
         };
 
         private c1_info: ComplexCableInfo = {
             path: "M 931.8821 485.6004 L 931.8821 598.5197 L 911.7323 598.5197",
             line: {x1: 1020.5, y1: 531.5, x2: 932, y2: 531.5},
-            circle: {y: 531.87, onLineX: 931.88, endX: 1027.5}
+            circle: {y: 531.87, onLineX: 931.88, endX: 1027.5},
+            type: CableType.Complex
         };
 
         private c2_info: SimpleCableInfo = {
             line1: {x1: 911.73, y1: 706.5, x2: 911.73, y2: 598.52},
             line2: {x1: 1001.12, y1: 660.51, x2: 912.62, y2: 660.51},
-            circle: {x: 1008.12, y: 660.87}
+            circle: {x: 1008.12, y: 660.87},
+            type: CableType.Simple
         };
 
         public created() {

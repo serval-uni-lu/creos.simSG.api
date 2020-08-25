@@ -1,3 +1,7 @@
+import {CableType} from "@/utils/SvgTypes";
+import {CableType} from "@/utils/SvgTypes";
+import {CableType} from "@/utils/SvgTypes";
+import {CableType} from "@/utils/SvgTypes";
 <template>
     <svg viewBox="750 437 333 401">
         <defs>
@@ -74,7 +78,7 @@
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
     import {namespace} from "vuex-class";
-    import {ComplexCableInfo, Point, SimpleCableInfo} from "@/utils/SvgTypes";
+    import {CableType, ComplexCableInfo, Point, SimpleCableInfo} from "@/utils/SvgTypes";
     import CableVue from "@/components/scView/scviewer/sg-elements/CableVue.vue";
     import FuseVue from "@/components/scView/scviewer/sg-elements/FuseVue.vue";
     import Meter from "@/components/scView/scviewer/sg-elements/Meter.vue";
@@ -106,25 +110,29 @@
         private cbl1: SimpleCableInfo = {
             line1: {x1: 912.45, y1: 598.52, x2: 911.86, y2: 485.60},
             line2: {x1: 915.79, y1: 530, x2: 809.85, y2: 529.85},
-            circle: {x: 802.68, y: 529.84}
+            circle: {x: 802.68, y: 529.84},
+            type: CableType.Simple
         };
 
         private cbl2: ComplexCableInfo = {
             line: {x1: 884.16, y1: 661.9, x2: 765, y2: 662.44},
             path: "M 912.446 598.5197 L 889.3459 598.5197 L 888.9699 727.439 L 913.446 727.439",
-            circle: {onLineX: 889.16, endX: 758, y: 661.88}
+            circle: {onLineX: 889.16, endX: 758, y: 661.88},
+            type: CableType.Complex
         };
 
         private cbl3: ComplexCableInfo = {
             line: {x1: 1068.5, y1: 659.16, x2: 941.98, y2: 659.16},
             path: "M 912.446 598.5197 L 936.9761 598.5197 L 936.9761 727.439 L 912.5 727.439",
-            circle: {onLineX: 936.98, endX: 1075.5, y: 659.16}
+            circle: {onLineX: 936.98, endX: 1075.5, y: 659.16},
+            type: CableType.Complex,
         };
 
         private cbl4: SimpleCableInfo = {
             line1: {x1: 913.45, y1: 727.44, x2: 914.24, y2: 822.68},
             line2: {x1: 919.3, y1: 781.59, x2: 1011.73, y2: 781.59},
-            circle: {x: 1018.7323, y: 781.59}
+            circle: {x: 1018.7323, y: 781.59},
+            type: CableType.Simple
         };
 
 

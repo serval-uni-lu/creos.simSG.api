@@ -1,3 +1,4 @@
+import {CableType} from "@/utils/SvgTypes";
 <template>
     <svg viewBox="587 193 222 199">
         <defs>
@@ -41,7 +42,7 @@
     import {Component, Vue} from "vue-property-decorator";
     import FuseVue from "@/components/scView/scviewer/sg-elements/FuseVue.vue";
     import CableVue from "@/components/scView/scviewer/sg-elements/CableVue.vue";
-    import {Point, SimpleCableInfo} from "@/utils/SvgTypes"
+    import {CableType, Point, SimpleCableInfo} from "@/utils/SvgTypes"
     import Meter from "@/components/scView/scviewer/sg-elements/Meter.vue";
     import InfoLayerCable from "@/components/scView/scviewer/infoLayer/InfoLayerCable.vue";
     import InfoLayerFuse from "@/components/scView/scviewer/infoLayer/InfoLayerFuse.vue";
@@ -58,7 +59,8 @@
         private cbl_info: SimpleCableInfo = {
             line1: {x1: 694, y1: 377, x2:694, y2: 242.04},
             line2: {x1: 694, y1: 292, x2:601.5, y2: 292},
-            circle: {x: 594.5, y: 292}
+            circle: {x: 594.5, y: 292},
+            type: CableType.Simple
         };
 
         private meterLoc: Point = {x: 612, y: 303};

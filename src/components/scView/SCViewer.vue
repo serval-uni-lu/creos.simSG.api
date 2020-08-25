@@ -6,6 +6,7 @@
             Cabinet(v-else-if="name === 'sc2-cabinet'")
             ParaSubs(v-else-if="name === 'sc3-para-transfo'")
             ParaCabinet(v-else-if="name === 'sc4-para-cabinet'")
+            IndirectPara(v-else-if="name === 'sc5-indirect-para'")
             h3(v-else) Oups... Component not yet implemented for {{name}}
 </template>
 
@@ -18,11 +19,12 @@
     import {namespace} from "vuex-class";
     import ParaSubs from "@/components/scView/scviewer/scenarios/ParaSubs.vue";
     import ParaCabinet from "@/components/scView/scviewer/scenarios/ParaCabinet.vue";
+    import IndirectPara from "@/components/scView/scviewer/scenarios/IndirectPara.vue";
 
     const inspectorState = namespace('InspectorState');
 
     @Component({
-        components: {ParaCabinet, ParaSubs, Cabinet, SingleCable, ToolBar}
+        components: {IndirectPara, ParaCabinet, ParaSubs, Cabinet, SingleCable, ToolBar}
     })
     export default class SCViewer extends Vue {
         @Prop() name!: string;

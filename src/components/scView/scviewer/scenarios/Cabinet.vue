@@ -1,3 +1,6 @@
+import {CableType} from "@/utils/SvgTypes";
+import {CableType} from "@/utils/SvgTypes";
+import {CableType} from "@/utils/SvgTypes";
 <template>
     <svg viewBox="115 88 298 305">
         <defs>
@@ -64,7 +67,7 @@
     import {namespace} from "vuex-class";
     import FuseVue from "@/components/scView/scviewer/sg-elements/FuseVue.vue";
     import InfoLayerFuse from "@/components/scView/scviewer/infoLayer/InfoLayerFuse.vue";
-    import {Point, SimpleCableInfo, ComplexCableInfo} from "@/utils/SvgTypes";
+    import {CableType, ComplexCableInfo, Point, SimpleCableInfo} from "@/utils/SvgTypes";
     import Meter from "@/components/scView/scviewer/sg-elements/Meter.vue";
     import CableVue from "@/components/scView/scviewer/sg-elements/CableVue.vue";
     import InfoLayerCable from "@/components/scView/scviewer/infoLayer/InfoLayerCable.vue";
@@ -89,19 +92,22 @@
         private c0_info: SimpleCableInfo = {
             line1: {x1: 273.74, y1: 273.42, x2:273.74, y2: 137},
             line2: {x1: 268.74, y1: 182.5, x2:199, y2: 182.5},
-            circle: {x: 192, y: 182.5}
+            circle: {x: 192, y: 182.5},
+            type: CableType.Simple
         };
 
         private c1_info: ComplexCableInfo = {
             path: "M 273.7441 273.4163 L 248.8201 273.4163 L 248.8201 311 L 217.67497 311 L 217.81348 378",
             circle: {onLineX: 217.71, endX: 123.4, y: 331},
-            line: {x1: 212.71, y1:330.134, x2:130.4, y2:331}
+            line: {x1: 212.71, y1:330.134, x2:130.4, y2:331},
+            type: CableType.Complex
         };
 
         private c2_info: ComplexCableInfo = {
             path: "M 273.7441 273.4163 L 298.6681 273.4163 L 298.6726 311 L 317.2561 311 L 316.79254 378.00016",
             circle: {onLineX: 317.1173, endX: 404.8, y: 331},
-            line:{x1: 322.12, y1:331.06, x2:397.8, y2:331}
+            line:{x1: 322.12, y1:331.06, x2:397.8, y2:331},
+            type: CableType.Complex
         };
 
 
