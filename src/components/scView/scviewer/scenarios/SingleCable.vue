@@ -28,11 +28,11 @@
             <g id="DeadEnds">
                 <circle cx="694" cy="384" r="7.00001118531325" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white"/>
             </g>
-            <FuseVue :id=0 :xRect=689 :yRect=244.79135 />
-            <FuseVue :id=1 :xRect=689 :yRect=360.3567 />
+            <FuseVue :id=0 :location=infoFuse1 />
+            <FuseVue :id=1 :location=infoFuse2 />
             <InfoLayerCable :cableId=0 :x=cbl_info.line1.x1 :y=cbl_info.circle.y />
-            <InfoLayerFuse :id=0 :location="infoFuse1" />
-            <InfoLayerFuse :id=1 :location="infoFuse2" />
+            <InfoLayerFuse :id=0 :location=infoFuse1 />
+            <InfoLayerFuse :id=1 :location=infoFuse2 />
         </g>
     </svg>
 </template>

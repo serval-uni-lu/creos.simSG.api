@@ -1,7 +1,7 @@
 <template>
     <g class="fuse" v-bind:class="{fClosed: isClosed, selected: isSelected}" v-on:click="eventHandler($event)">
         <title>Status: {{status}}; Load: {{uLoads()}}</title>
-        <rect :x="xRect" :y="yRect" width="10" height="10" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <rect :x=location.x :y=location.y width="10" height="10" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
         <text :transform="translate">
             <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" x="0" y="11">Fuse {{id + 1}}</tspan>
         </text>
@@ -14,6 +14,7 @@
     import {namespace} from "vuex-class";
     import {ElmtType, Selection} from "@/utils/selection";
     import {prettyStr} from "@/utils/uLoadsUtils";
+    import {Point} from "@/utils/SvgTypes";
 
     const gridState = namespace('GridSCState');
     const inspState = namespace('InspectorState');
@@ -21,8 +22,7 @@
     @Component
     export default class FuseVue extends Vue {
         @Prop() id!: number;
-        @Prop() xRect!: number;
-        @Prop() yRect!: number;
+        @Prop() location!: Point;
 
         @Prop({
             default: "right",
@@ -55,16 +55,16 @@
 
 
         get translate(): string {
-            let x = this.xRect;
-            let y = this.yRect - 2;
+            let x = this.location.x;
+            let y = this.location.y - 2;
             if(this.displayLeft === "left") {
-                x = this.xRect - 38;
+                x = this.location.x - 38;
             } else if(this.displayLeft === "right"){
-                x = this.xRect + 11;
+                x = this.location.x + 11;
             } else if(this.displayLeft === "top") {
-                y = this.yRect - 14;
+                y = this.location.y - 14;
             } else {
-                y = this.yRect + 12;
+                y = this.location.y + 12;
             }
             return "translate(" +  (x + this.shiftTextX) + " " + (y + this.shiftTextY) + ")";
         }

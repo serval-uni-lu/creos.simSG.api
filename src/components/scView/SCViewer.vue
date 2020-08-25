@@ -4,6 +4,7 @@
         #sccanvas(v-on:mousedown="startDrag($event)", v-on:mousemove="drag($event)", v-on:mouseup="stopDrag()", v-on:mouseleave="stopDrag()")
             SingleCable(v-if="name === 'sc1-sglCable'")
             Cabinet(v-else-if="name === 'sc2-cabinet'")
+            ParaSubs(v-else-if="name === 'sc3-para-transfo'")
             h3(v-else) Oups... Component not yet implemented for {{name}}
 </template>
 
@@ -14,11 +15,12 @@
     import Cabinet from "@/components/scView/scviewer/scenarios/Cabinet.vue";
     import {Point} from "@/utils/SvgTypes";
     import {namespace} from "vuex-class";
+    import ParaSubs from "@/components/scView/scviewer/scenarios/ParaSubs.vue";
 
     const inspectorState = namespace('InspectorState');
 
     @Component({
-        components: {Cabinet, SingleCable, ToolBar}
+        components: {ParaSubs, Cabinet, SingleCable, ToolBar}
     })
     export default class SCViewer extends Vue {
         @Prop() name!: string;

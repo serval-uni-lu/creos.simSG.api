@@ -1,4 +1,3 @@
-import {ElmtType} from "@/utils/selection";
 <template>
     <g v-on:click="eventHandler()" v-bind:class="{selected: isSelected}">
         <rect :x="location.x" :y="location.y" width="37" height="27.04319" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white"/>

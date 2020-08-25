@@ -23,9 +23,9 @@
                 <circle cx="316.7441" cy="385" r="7.00001118531326" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white" stroke="black"/>
                 <circle cx="217.82796" cy="385" r="7.00001118531327" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill="white"/>
             </g>
-            <Meter :id=0 :location="locMeter0" />
-            <Meter :id=1 :location="locMeter1" />
-            <Meter :id=2 :location="locMeter2" />
+            <Meter :id=0 :location=locMeter0 />
+            <Meter :id=1 :location=locMeter1 />
+            <Meter :id=2 :location=locMeter2 />
             <g id="Cabinet">
                 <rect x="238.2441" y="257.4163" width="71" height="32" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
                 <text transform="translate(309.2441 266.2483)" fill="black">
@@ -40,18 +40,18 @@
                     <tspan font-family="Helvetica Neue" font-size="12" font-style="italic" font-weight="400" fill="black" x="1.4260004" y="11">Substation</tspan>
                 </text>
             </g>
-            <FuseVue :id=0 :xRect=268.7441 :yRect=139.77368 />
-            <FuseVue :id=1 :xRect=268.7441 :yRect=241.65787 />
-            <FuseVue :id=2 :xRect=243.8201 :yRect=293.38053 :displayLeft="'left'" />
-            <FuseVue :id=3 :xRect=293.67107 :yRect=293.2013 />
-            <FuseVue :id=4 :xRect=212.78744 :yRect=360.4025 />
-            <FuseVue :id=5 :xRect=311.8802 :yRect=360.3309 :displayLeft="'left'"/>
-            <InfoLayerFuse :id=0 :location="locFuse0" />
-            <InfoLayerFuse :id=1 :location="locFuse1" />
-            <InfoLayerFuse :id=2 :location="locFuse2" />
-            <InfoLayerFuse :id=3 :location="locFuse3" />
-            <InfoLayerFuse :id=4 :location="locFuse4" />
-            <InfoLayerFuse :id=5 :location="locFuse5" />
+            <FuseVue :id=0 :location=locFuse0 />
+            <FuseVue :id=1 :location=locFuse1 />
+            <FuseVue :id=2 :location=locFuse2 :displayLeft="'left'" />
+            <FuseVue :id=3 :location=locFuse3 />
+            <FuseVue :id=4 :location=locFuse4 />
+            <FuseVue :id=5 :location=locFuse5 :displayLeft="'left'"/>
+            <InfoLayerFuse :id=0 :location=locFuse0 />
+            <InfoLayerFuse :id=1 :location=locFuse1 />
+            <InfoLayerFuse :id=2 :location=locFuse2 />
+            <InfoLayerFuse :id=3 :location=locFuse3 />
+            <InfoLayerFuse :id=4 :location=locFuse4 />
+            <InfoLayerFuse :id=5 :location=locFuse5 />
             <InfoLayerCable :cableId=0 :x=c0_info.line1.x1 :y=c0_info.circle.y />
             <InfoLayerCable :cableId=1 :x=c1_info.circle.onLineX :y=c1_info.circle.y />
             <InfoLayerCable :cableId=2 :x=c2_info.circle.onLineX :y=c2_info.circle.y />
@@ -71,8 +71,7 @@
 
     const gridState = namespace('GridSCState');
     @Component({
-        components: {
-            InfoLayerCable, CableVue, Meter, InfoLayerFuse, FuseVue}
+        components: {InfoLayerCable, CableVue, Meter, InfoLayerFuse, FuseVue}
     })
     export default class Cabinet extends Vue {
         private locFuse0: Point = {x: 268.7441, y: 139.77368};
