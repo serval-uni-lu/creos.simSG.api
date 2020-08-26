@@ -1,8 +1,12 @@
+import {ElmtType} from "@/utils/selection";
+import {ElmtType} from "@/utils/selection";
 <template lang="pug">
     div
         h2 {{selectedElement.type}} - {{selectedElement.id + 1}}
         .form
             FuseInsp(v-if="isFuse")
+            MeterInsp(v-else-if="isMeter")
+            CableInsp(v-else-if="isCable")
 
 
 </template>
@@ -13,12 +17,14 @@
     import {ElmtType, Selection} from "@/utils/selection";
     import FuseInsp from "@/components/inspector/FuseInsp.vue";
     import {Fuse} from "@/utils/grid";
+    import MeterInsp from "@/components/inspector/MeterInsp.vue";
+    import CableInsp from "@/components/inspector/CableInsp.vue";
 
     const inspectorState = namespace('InspectorState');
     const gridState8 = namespace('GridSCState');
 
     @Component({
-        components: {FuseInsp}
+        components: {CableInsp, MeterInsp, FuseInsp}
     })
     export default class Inspector extends Vue{
 
@@ -32,8 +38,12 @@
             return this.selectedElement.type === ElmtType.Fuse;
         }
 
-        get fuse(): Fuse {
-            return this.allFuses[0];
+        get isMeter(): boolean {
+            return this.selectedElement.type === ElmtType.Meter;
+        }
+
+        get isCable(): boolean {
+            return this.selectedElement.type === ElmtType.Cable;
         }
 
     }

@@ -25,17 +25,13 @@ export interface ULoadInfo {
     y?: number;
 }
 
-export function uLoadsData(uloads: Array<ULoad>, nbLineInTemplate?: number | undefined): Array<ULoadInfo> {
+export function uLoadsData(uloads: Array<ULoad>): Array<ULoadInfo> {
     if (uloads.length === 0) {
         const res: ULoadInfo = {
             id: 0,
             value: "TBD",
             confidence: "TBD"
         };
-
-        if (nbLineInTemplate !== undefined) {
-            res.y = getYText(nbLineInTemplate, nbLineInTemplate);
-        }
 
         return [res];
     }
@@ -47,10 +43,6 @@ export function uLoadsData(uloads: Array<ULoad>, nbLineInTemplate?: number | und
             value: uloads[ul].prettyLoad(),
             confidence: uloads[ul].prettyConf()
         };
-
-        if (nbLineInTemplate !== undefined) {
-            toAdd.y = getYText(nbLineInTemplate, nbLineInTemplate + ul);
-        }
 
         result.push(toAdd);
     }
