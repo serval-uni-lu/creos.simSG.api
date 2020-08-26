@@ -1,4 +1,3 @@
-import {State} from "@/utils/grid";
 <template lang="pug">
     div(style="text-align: left")
         div
