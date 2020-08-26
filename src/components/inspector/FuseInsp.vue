@@ -94,6 +94,11 @@ import {State} from "@/utils/grid";
 <style scoped lang="scss">
     @import "@/scss/global-var.scss";
 
+    .range,
+    .number {
+        background-color: transparent;
+    }
+
     .collapseAct {
         width: 100%;
     }
@@ -140,7 +145,7 @@ import {State} from "@/utils/grid";
             background-color: $link-color;
         }
         .range[type="range"]::-moz-range-track {
-            background-color: lightgray;
+            background-color: grey;
         }
 
         .number {
@@ -183,7 +188,8 @@ import {State} from "@/utils/grid";
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: #ccc;
+        background-color: blue;
+        opacity: 10%;
         -webkit-transition: .4s;
         transition: .4s;
     }
@@ -202,6 +208,7 @@ import {State} from "@/utils/grid";
 
     input:checked + .slider {
         background-color: $link-color;
+        opacity: 100%;
     }
 
     input:focus + .slider {

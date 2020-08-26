@@ -7,6 +7,9 @@ import {ElmtType} from "@/utils/selection";
             FuseInsp(v-if="isFuse")
             MeterInsp(v-else-if="isMeter")
             CableInsp(v-else-if="isCable")
+        .closingButton(v-on:click="reset()")
+            svg
+                use(xlink:href="#close-button")
 
 
 </template>
@@ -30,6 +33,9 @@ import {ElmtType} from "@/utils/selection";
 
         @inspectorState.State
         public selectedElement!: Selection;
+
+        @inspectorState.Mutation
+        public reset!: () => void;
 
         @gridState8.State
         public allFuses!: Array<Fuse>;
@@ -56,5 +62,23 @@ import {ElmtType} from "@/utils/selection";
         font-size: $inspector-font-size;
         text-align: left;
         padding-left: 10px;
+    }
+
+    .closingButton {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+
+        svg {
+            width: 20px;
+            height: 20px;
+            stroke: black;
+            stroke-width: 2;
+
+            &:hover {
+                stroke: lightcoral;
+            }
+
+        }
     }
 </style>

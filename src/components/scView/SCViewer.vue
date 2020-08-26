@@ -126,7 +126,7 @@
 
 <style lang="scss">
     svg {
-        width: 60%; //todo: to be fixed... https://css-tricks.com/scale-svg/
+        width: 50%; //todo: to be fixed... https://css-tricks.com/scale-svg/
     }
 
 </style>

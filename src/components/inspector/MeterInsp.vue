@@ -40,5 +40,6 @@
     input {
         width: 30%;
         margin-left: 20px;
+        background-color: transparent;
     }
 </style>

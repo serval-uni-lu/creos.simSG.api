@@ -5,7 +5,7 @@
         div#viewer
             Action#action
             SCViewer(v-bind:name="name")#scviewer
-            Inspector#inspector
+            Inspector#inspector(v-if="inspVisible")
 
 
 </template>
@@ -16,12 +16,23 @@
     import SCViewer from "@/components/scView/SCViewer.vue";
     import Action from "@/components/Action.vue";
     import Inspector from "@/components/inspector/Inspector.vue";
+    import {namespace} from "vuex-class";
+    import {NullSelection, Selection} from "@/utils/selection";
+
+    const inspectorState = namespace('InspectorState');
 
     @Component({
         components: {SCViewer, Action, Inspector}
     })
     export default class SCView extends Vue {
         @Prop() name!: string;
+
+        @inspectorState.State
+        public selectedElement!: Selection;
+
+        get inspVisible(): boolean {
+            return !this.selectedElement.equals(NullSelection);
+        }
 
         get title(): string {
             for(const sc of scenarios) {
@@ -58,6 +69,11 @@
     }
 
     #inspector {
-        width: 20%;
+        width: 19%;
+        box-shadow: 10px 10px 16px darkgray;
+        background-color: lightgrey;
+        margin-bottom: 10px;
+        margin-right: 1%;
+        position: relative;
     }
 </style>
