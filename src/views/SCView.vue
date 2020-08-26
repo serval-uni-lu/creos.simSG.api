@@ -48,6 +48,12 @@
 </script>
 
 <style lang="scss" scoped>
+    $size-side-elmt: 19%;
+    $margin: 1%;
+    $remaining: calc(100% - ($margin + $size-side-elmt) * 2);
+    $margin-bottom: 10px;
+    $color: lightgrey;
+
     section {
         text-align: center;
         display: flex;
@@ -60,8 +66,12 @@
         flex-direction: row;
     }
 
+
     #action {
-        width: 20%;
+        width: $size-side-elmt;
+        margin-left: $margin;
+        margin-bottom: $margin-bottom;
+        background-color: $color;
     }
 
     #scviewer {
@@ -69,11 +79,11 @@
     }
 
     #inspector {
-        width: 19%;
+        width: $size-side-elmt;
         box-shadow: 10px 10px 16px darkgray;
-        background-color: lightgrey;
-        margin-bottom: 10px;
-        margin-right: 1%;
+        background-color: $color;
+        margin-bottom: $margin-bottom;
+        margin-right: $margin;
         position: relative;
     }
 </style>
