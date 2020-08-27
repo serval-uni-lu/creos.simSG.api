@@ -75,7 +75,7 @@
     }
 
     #scviewer {
-        width: 60%;
+        width: $remaining;
     }
 
     #inspector {

@@ -14,9 +14,10 @@ Vue.use(LoadApprox);
 Vue.use(ULoadApprox);
 
 new Vue({
+  el: '#app',
   router,
   store,
   render: h => h(App)
-}).$mount('#app');
+});
 
 
