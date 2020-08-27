@@ -31,6 +31,7 @@
     $actuator-list-size: 1em;
 
     select {
+        margin-bottom: 20px;
         padding: 5px 35px 5px 5px;
         font-size: $actuator-list-size;
         border: 1px solid #ccc;
