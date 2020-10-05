@@ -14,7 +14,16 @@
           "name": {"type":  "string"},
           "fuses": {
             "type": "array",
-            "items": {"type":  "number"}
+            "items": {"type":  "string"}
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "lat": {"type":  "number"},
+              "long": {"type":  "number"}
+            },
+            "additionalProperties": false,
+            "required": ["lat", "long"]
           }
         },
         "additionalProperties": false,
@@ -26,7 +35,7 @@
       "items": {
         "type": "object",
         "properties": {
-          "id": {"type": "number"},
+          "id": {"type": "string"},
           "name": {"type": "string"},
           "state": {
             "type": "object",
@@ -73,11 +82,11 @@
       "items": {
         "type": "object",
         "properties": {
-          "id": {"type": "number"},
+          "id": {"type": "string"},
           "fuses": {
             "type": "array",
             "items": {
-              "type": "number"
+              "type": "string"
             },
             "maxItems": 2,
             "minItems": 2,
@@ -89,10 +98,19 @@
               "type": "object",
               "properties": {
                 "name": {"type": "string"},
-                "consumption": {"type": "number"}
+                "consumption": {"type": "number"},
+                "location": {
+                  "type": "object",
+                  "properties": {
+                    "lat": {"type":  "number"},
+                    "long": {"type":  "number"}
+                  },
+                  "additionalProperties": false,
+                  "required": ["lat", "long"]
+                }
               },
               "additionalProperties": false,
-              "required": ["name", "consumption"]
+              "required": ["name"]
             }
           }
         },
