@@ -1,8 +1,8 @@
-package duc.sg.java.server.ws;
+package old.duc.sg.java.server.ws;
 
-import duc.sg.java.server.ws.message.Message;
-import duc.sg.java.server.ws.message.MessageBuilder;
-import duc.sg.java.server.ws.worker.MessageProcessor;
+import old.duc.sg.java.server.ws.message.Message;
+import old.duc.sg.java.server.ws.message.MessageBuilder;
+import old.duc.sg.java.server.ws.worker.MessageProcessor;
 import io.undertow.websockets.WebSocketConnectionCallback;
 import io.undertow.websockets.core.*;
 import io.undertow.websockets.spi.WebSocketHttpExchange;

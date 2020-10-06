@@ -1,6 +1,6 @@
-package duc.sg.java.server.ws.worker;
+package old.duc.sg.java.server.ws.worker;
 
-import duc.sg.java.server.ws.message.Message;
+import old.duc.sg.java.server.ws.message.Message;
 
 public class MessageProcessor {
     private MessageProcessor() {}

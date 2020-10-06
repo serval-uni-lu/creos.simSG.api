@@ -1,4 +1,4 @@
-package duc.sg.java.server.ws.message;
+package old.duc.sg.java.server.ws.message;
 
 public class Error implements Message{
     private String reason;

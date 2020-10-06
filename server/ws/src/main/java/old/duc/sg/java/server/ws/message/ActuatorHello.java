@@ -1,7 +1,7 @@
-package duc.sg.java.server.ws.message;
+package old.duc.sg.java.server.ws.message;
 
-import duc.sg.java.server.ws.ContractLoader;
-import duc.sg.java.server.ws.JsonLoaderException;
+import old.duc.sg.java.server.ws.ContractLoader;
+import old.duc.sg.java.server.ws.JsonLoaderException;
 
 public class ActuatorHello implements Message {
     String message;

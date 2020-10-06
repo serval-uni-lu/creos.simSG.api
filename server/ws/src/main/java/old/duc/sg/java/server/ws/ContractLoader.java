@@ -1,4 +1,4 @@
-package duc.sg.java.server.ws;
+package old.duc.sg.java.server.ws;
 
 import java.io.BufferedReader;
 import java.io.IOException;

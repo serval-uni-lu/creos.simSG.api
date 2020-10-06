@@ -57,7 +57,7 @@ class JsonGirdValidator {
         for(JsonNode fuse: fuses) {
             // Check that sum(fuse.loads.confidence) = 1 for each fuse
             var loads = fuse.get(JsonGridImporter.FUSE_LOAD);
-            if(loads != null) {
+            if(loads != null && loads.size() > 0) {
                 double sum = 0;
                 for (JsonNode load : loads) {
                     sum += load.get(JsonGridImporter.FUSE_LOAD_CONF).asDouble();
