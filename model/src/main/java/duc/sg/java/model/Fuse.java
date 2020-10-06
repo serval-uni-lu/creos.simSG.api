@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Fuse {
+    private String id;
     private String name;
     private Cable cable;
     private Entity owner;
@@ -18,15 +19,23 @@ public class Fuse {
 
 
     public Fuse(String name) {
-        this(name, State.CLOSED);
+        this(name, name, State.CLOSED);
     }
 
-    public Fuse(String name, State state) {
+    public Fuse(String id, String name) {
+        this(id, name, State.CLOSED);
+    }
+
+    public Fuse(String id, String name, State state) {
         this.name = name;
+        this.id = id;
         this.status = new Status(state, 1.);
         this.givePowerTo = new Fuse[0];
     }
 
+    public String getId() {
+        return id;
+    }
 
     public Cable getCable() {
         return cable;

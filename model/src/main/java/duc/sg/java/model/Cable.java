@@ -6,12 +6,22 @@ import duc.sg.java.uncertainty.PossibilityDouble;
 import java.util.*;
 
 public class Cable {
+    private String id;
     private Fuse[] fuses;
     private List<Meter> meters;
 
-    public Cable() {
+    public Cable(String id) {
+        this.id = id;
         fuses = new Fuse[2];
         meters = new ArrayList<>();
+    }
+
+    public Cable() {
+        this("NaN");
+    }
+
+    public String getId() {
+        return id;
     }
 
     private void setFuse(int idx, Fuse f) {

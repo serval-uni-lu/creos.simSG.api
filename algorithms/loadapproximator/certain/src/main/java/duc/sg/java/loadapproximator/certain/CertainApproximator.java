@@ -23,7 +23,7 @@ public class CertainApproximator implements LoadApproximator<Double> {
     private CertainApproximator(){}
 
     @Override
-    public void approximateAndSave(Substation substation, Configuration configuration) {
+    public Map<Fuse, Double> approximate(Substation substation, Configuration configuration) {
         EquationMatrix matrix = new CertainMatrixBuilder().build(substation)[0];
 
         var fuseStates = new DenseMatrix64F(matrix.getNbColumns(), matrix.getNbColumns(), true, matrix.getValues());
@@ -47,16 +47,20 @@ public class CertainApproximator implements LoadApproximator<Double> {
                         res.put(f, solData[matrix.getColumnIdx(f)]);
                     }
                 });
-
-        substation.getGrid()
-                .save(KeyComputer.getKey(substation), res);
+        return res;
     }
 
     @Override
-    public Map<Fuse, Double> getFuseLoads(Substation substation, Configuration configuration) {
+    public void approximateAndSave(Substation substation, Configuration configuration) {
+        substation.getGrid()
+                .save(KeyComputer.getKey(substation), approximate(substation, configuration));
+    }
+
+    @Override
+    public Map<Fuse, Double> getFuseLoads(Substation substation, Configuration configuration, boolean forceRecompute) {
         String key = KeyComputer.getKey(substation);
         Optional<Object> optFuseLoads = substation.getGrid().retrieve(key);
-        if(optFuseLoads.isEmpty()) {
+        if(forceRecompute || optFuseLoads.isEmpty()) {
             approximateAndSave(substation, configuration);
             optFuseLoads = substation.getGrid().retrieve(key);
         }
@@ -65,8 +69,8 @@ public class CertainApproximator implements LoadApproximator<Double> {
     }
 
     @Override
-    public Map<Cable, Double> getCableLoads(Substation substation, Configuration configuration) {
-        Map<Fuse, Double> fuseLoads = getFuseLoads(substation, configuration);
+    public Map<Cable, Double> getCableLoads(Substation substation, Configuration configuration, boolean forceRecompute) {
+        Map<Fuse, Double> fuseLoads = getFuseLoads(substation, configuration, forceRecompute);
         List<Cable> allCables = CableExtracter.INSTANCE.getExtracted(substation);
 
         var cableLoad = new HashMap<Cable, Double>(allCables.size());

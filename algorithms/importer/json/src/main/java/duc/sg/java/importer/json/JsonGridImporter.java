@@ -84,7 +84,7 @@ public class JsonGridImporter extends JsonImporter<SmartGrid> {
         var fuseArrayNode = (ArrayNode) toImport.get(FUSES);
         final var fuses = new HashMap<Integer, Fuse>(fuseArrayNode.size());
         fuseArrayNode.forEach(fuseNode -> {
-            var fuse = new Fuse(fuseNode.get(FUSE_NAME).asText());
+            var fuse = new Fuse(fuseNode.get(FUSE_ID).asText(), fuseNode.get(FUSE_NAME).asText());
             fuses.put(fuseNode.get(FUSE_ID).asInt(), fuse);
 
             var stateNode = fuseNode.get(FUSE_STATE);
@@ -118,7 +118,7 @@ public class JsonGridImporter extends JsonImporter<SmartGrid> {
     private void extractCables(JsonNode toImport, HashMap<Integer, Fuse> fuses) {
         var cableArrayNode = (ArrayNode) toImport.get(CABLES);
         cableArrayNode.forEach(cableNode -> {
-            final var cable = new Cable();
+            final var cable = new Cable(cableNode.get(CABLE_ID).asText());
 
             var metersNodes = (ArrayNode) cableNode.get(CABLE_METERS);
             if(metersNodes != null) {

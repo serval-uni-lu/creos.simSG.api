@@ -79,8 +79,8 @@ public final class ScenarioBuilder {
     }
 
     private void createCable(String f1Name, String f2Name, State f1State, State f2State, Entity ownerf1, Entity ownerf2, double consumption) {
-        var f1 = new Fuse(f1Name, f1State);
-        var f2 = new Fuse(f2Name, f2State);
+        var f1 = new Fuse(f1Name, f1Name, f1State);
+        var f2 = new Fuse(f2Name, f2Name, f2State);
         var cable = new Cable();
         cable.setFuses(f1, f2);
 

@@ -1,16 +1,39 @@
 package duc.sg.java.server.message;
 
-import com.alibaba.fastjson.JSONObject;
-
 public class LoadApproximationAnswer extends Message {
-    private final JSONObject grid;
+    private final Load[] fuseLoads;
+    private final Load[] cableLoads;
 
-    LoadApproximationAnswer(JSONObject grid) {
+    LoadApproximationAnswer(Load[] fuseLoads, Load[] cableLoads) {
         super(MessageType.LOAD_APPROX_ANSWER);
-        this.grid = grid;
+        this.fuseLoads = fuseLoads;
+        this.cableLoads = cableLoads;
     }
 
-    public JSONObject getGrid() {
-        return grid;
+    public Load[] getFuseLoads() {
+        return fuseLoads;
     }
+
+    public Load[] getCableLoads() {
+        return cableLoads;
+    }
+
+    public static class Load {
+        final String id;
+        final double value;
+
+        public Load(String id, double value) {
+            this.id = id;
+            this.value = value;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public double getValue() {
+            return value;
+        }
+    }
+
 }

@@ -10,15 +10,25 @@ import duc.sg.java.model.*;
 
 import java.util.HashMap;
 
-public class JsonExporter<L> implements Exporter<JSONObject, L>{
+public class JsonExporter<L> implements Exporter<JSONObject>{
     @Override
     public JSONObject export(SmartGrid grid) {
+        return exportWithLoads(grid, null);
+    }
+
+    @Override
+    public JSONObject exportWithLoads(SmartGrid grid, LoadApproximator<Double> approximator) {
         final var res = new JSONObject();
 
         final var fuses = new JSONArray();
         final var mapFuses = new HashMap<Fuse, Integer>();
         var index = new int[]{0};
         grid.getSubstations().forEach((Substation substation) -> {
+            final var fuseLoads = new HashMap<Fuse, Double>();
+            if(approximator != null) {
+                fuseLoads.putAll(approximator.getFuseLoads(substation, true));
+            }
+
             FuseExtracter.INSTANCE
                     .getExtracted(substation)
                     .forEach((Fuse fuse) -> {
@@ -33,6 +43,17 @@ public class JsonExporter<L> implements Exporter<JSONObject, L>{
                         stateMap.put("confidence", fuse.getStatus().confIsClosed());
                         fuseMap.put("state", new JSONObject(stateMap));
 
+                        if(fuseLoads.size() != 0) {
+                            final var loads = new JSONArray();
+
+                            final var loadMap = new HashMap<String, Object>();
+                            loadMap.put("value", fuseLoads.get(fuse));
+                            loadMap.put("confidence", 1);
+                            loads.add(new JSONObject(loadMap));
+
+                            fuseMap.put("load", loads);
+                        }
+
                         fuses.add(new JSONObject(fuseMap));
 
                         index[0]++;
@@ -43,6 +64,11 @@ public class JsonExporter<L> implements Exporter<JSONObject, L>{
         final var cables = new JSONArray();
         index[0] = 0;
         grid.getSubstations().forEach((Substation substation) -> {
+            final var cableLoads = new HashMap<Cable, Double>();
+            if(approximator != null) {
+                cableLoads.putAll(approximator.getCableLoads(substation));
+            }
+
             CableExtracter.INSTANCE
                     .getExtracted(substation)
                     .forEach((Cable cable) -> {
@@ -62,6 +88,7 @@ public class JsonExporter<L> implements Exporter<JSONObject, L>{
                             meters.add(new JSONObject(meterMap));
                         });
                         cableMap.put("meters", meters);
+
 
                         cables.add(new JSONObject(cableMap));
 
@@ -93,11 +120,6 @@ public class JsonExporter<L> implements Exporter<JSONObject, L>{
         res.put("entities", entities);
 
         return res;
-    }
-
-    @Override
-    public JSONObject exportWithLoads(SmartGrid grid, LoadApproximator<L> approximator) {
-        return null;
     }
 
 }
