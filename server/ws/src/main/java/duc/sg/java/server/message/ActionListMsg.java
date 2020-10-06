@@ -3,7 +3,7 @@ package duc.sg.java.server.message;
 public class ActionListMsg extends Message {
     private String[] actionName;
 
-    ActionListMsg(String[] actionName) {
+    public ActionListMsg(String... actionName) {
         super(MessageType.ACTION_LIST);
         this.actionName = actionName;
     }

@@ -1,9 +1,12 @@
 package duc.sg.java.server.message;
 
-import com.alibaba.fastjson.JSONObject;
-import duc.sg.java.exporter.JsonExporter;
 import duc.sg.java.loadapproximator.certain.CertainApproximator;
+import duc.sg.java.model.Cable;
+import duc.sg.java.model.Fuse;
 import duc.sg.java.model.SmartGrid;
+import duc.sg.java.model.Substation;
+
+import java.util.ArrayList;
 
 public class LoadApproxMsg extends Message implements RequestMessage {
     private SmartGrid grid;
@@ -15,9 +18,25 @@ public class LoadApproxMsg extends Message implements RequestMessage {
 
     @Override
     public Message process() {
-        grid.getSubstations().forEach(CertainApproximator.INSTANCE::approximateAndSave);
-        JSONObject res = new JsonExporter<Object>().export(grid);
+        final var fuseLoads = new ArrayList<LoadApproximationAnswer.Load>();
+        final var cableLoads = new ArrayList<LoadApproximationAnswer.Load>();
+        grid.getSubstations().forEach((Substation substation) -> {
+            CertainApproximator.INSTANCE
+                    .getFuseLoads(substation, true)
+                    .forEach((Fuse fuse, Double load) -> {
+                        fuseLoads.add(new LoadApproximationAnswer.Load(fuse.getId(), load));
+                    });
 
-        return new LoadApproximationAnswer(res);
+            CertainApproximator.INSTANCE
+                    .getCableLoads(substation)
+                    .forEach((Cable cable, Double load) -> {
+                        cableLoads.add(new LoadApproximationAnswer.Load(cable.getId(), load));
+                    });
+        });
+
+        return new LoadApproximationAnswer(
+                fuseLoads.toArray(new LoadApproximationAnswer.Load[0]),
+                cableLoads.toArray(new LoadApproximationAnswer.Load[0])
+        );
     }
 }
