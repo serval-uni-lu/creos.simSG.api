@@ -30,6 +30,8 @@
         <module>algorithms/circlefinder</module>
         <module>algorithms/loadapproximator/interface</module>
         <module>algorithms/matrixbuilder/interface</module>
+        <module>algorithms/exporter/interface</module>
+        <module>algorithms/exporter/json</module>
     </modules>
 
     <name>DucPropagationJava</name>

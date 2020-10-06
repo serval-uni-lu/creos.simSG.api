@@ -1,4 +1,4 @@
-package duc.sg.java.server.ws.message;
+package old.duc.sg.java.server.ws.message;
 
 import com.alibaba.fastjson.JSON;
 

@@ -1,6 +1,6 @@
-package duc.sg.java.server.ws.message;
+package old.duc.sg.java.server.ws.message;
 
-import duc.sg.java.server.ws.JsonLoaderException;
+import old.duc.sg.java.server.ws.JsonLoaderException;
 
 import java.util.logging.Logger;
 

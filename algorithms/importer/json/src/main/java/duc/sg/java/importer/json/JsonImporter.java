@@ -33,5 +33,16 @@ abstract class JsonImporter<T> implements Importer<T> {
         return extract(toImport);
     }
 
+    @Override
+    public Optional<T> from(String jsonText) throws ImportationException {
+        JsonNode toImport;
+        try {
+            toImport = JsonLoader.fromString(jsonText);
+        } catch (IOException e) {
+            throw new  ImportationException(e);
+        }
+        return extract(toImport);
+    }
+
     protected abstract Optional<T> extract(JsonNode root) throws ImportationException;
 }
