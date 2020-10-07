@@ -32,18 +32,3 @@ jobs:
 
       - name: mvn
         run: mvn -B verify
-
-
-#  build-windows:
-#    runs-on: windows-latest
-#
-#    steps:
-#      - uses: actions/checkout@v2
-#      - name: Setup Java JDK
-#      uses: actions/setup-java@v1.4.3
-#      with:
-#        java-version: 1.14
-#      - uses: stCarolas/setup-maven@v1
-#
-#      - name: mvn
-#        run: mvn -B verify
