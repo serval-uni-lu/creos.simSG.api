@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
@@ -24,13 +25,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class JsonSCImporterTest {
 
 
-    public static Arguments[] getInvalidJsonFiles() {
+    public static Arguments[] getInvalidJsonFiles() throws URISyntaxException {
         var rootFolder = JsonSCImporterTest.class
                 .getClassLoader()
-                .getResource("invalidJson")
-                .getPath();
-        var path = Paths.get(rootFolder);
+                .getResource("invalidJson");
 
+//        var path = Paths.get(rootFolder);
+        var path = Paths.get(rootFolder.toURI());
         final var arsList = new ArrayList<Arguments>();
 
         try {
