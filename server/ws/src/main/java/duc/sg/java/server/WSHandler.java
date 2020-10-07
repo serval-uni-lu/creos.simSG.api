@@ -33,7 +33,7 @@ public class WSHandler implements WebSocketConnectionCallback {
             @Override
             public void onError(WebSocketChannel channel, Void context, Throwable throwable) {
                 LOGGER.severe("Error while sending the message: " + throwable.getMessage());
-                LOGGER.throwing(old.duc.sg.java.server.ws.WSHandler.class.getName(), "sendMessage", throwable);
+                LOGGER.throwing(WSHandler.class.getName(), "sendMessage", throwable);
             }
         });
     }

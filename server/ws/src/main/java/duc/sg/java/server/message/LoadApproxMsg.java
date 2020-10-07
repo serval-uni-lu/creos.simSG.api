@@ -1,5 +1,7 @@
 package duc.sg.java.server.message;
 
+import duc.sg.java.extracter.CableExtracter;
+import duc.sg.java.extracter.FuseExtracter;
 import duc.sg.java.loadapproximator.certain.CertainApproximator;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
@@ -7,6 +9,7 @@ import duc.sg.java.model.SmartGrid;
 import duc.sg.java.model.Substation;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class LoadApproxMsg extends Message implements RequestMessage {
     private SmartGrid grid;
@@ -21,16 +24,29 @@ public class LoadApproxMsg extends Message implements RequestMessage {
         final var fuseLoads = new ArrayList<LoadApproximationAnswer.Load>();
         final var cableLoads = new ArrayList<LoadApproximationAnswer.Load>();
         grid.getSubstations().forEach((Substation substation) -> {
-            CertainApproximator.INSTANCE
-                    .getFuseLoads(substation, true)
-                    .forEach((Fuse fuse, Double load) -> {
-                        fuseLoads.add(new LoadApproximationAnswer.Load(fuse.getId(), load));
+            Map<Fuse, Double> fLoads = CertainApproximator.INSTANCE
+                    .getFuseLoads(substation, true);
+
+            FuseExtracter.INSTANCE
+                    .getExtracted(substation)
+                    .forEach((Fuse fuse) -> {
+                        fuseLoads.add(new LoadApproximationAnswer.Load(
+                                fuse.getId(),
+                                fLoads.getOrDefault(fuse, 0.)
+                        ));
                     });
 
-            CertainApproximator.INSTANCE
-                    .getCableLoads(substation)
-                    .forEach((Cable cable, Double load) -> {
-                        cableLoads.add(new LoadApproximationAnswer.Load(cable.getId(), load));
+
+            Map<Cable, Double> cLoads = CertainApproximator.INSTANCE
+                    .getCableLoads(substation);
+
+            CableExtracter.INSTANCE
+                    .getExtracted(substation)
+                    .forEach((Cable cable) -> {
+                        cableLoads.add(new LoadApproximationAnswer.Load(
+                                cable.getId(),
+                                cLoads.getOrDefault(cable, 0.)
+                        ));
                     });
         });
 
