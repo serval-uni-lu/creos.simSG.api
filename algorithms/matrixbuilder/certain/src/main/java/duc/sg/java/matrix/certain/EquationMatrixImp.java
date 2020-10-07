@@ -28,6 +28,7 @@ public class EquationMatrixImp implements EquationMatrix {
         this.data = fuseStatesMatrix.data;
         this.columnIdx = fuseStatesMatrix.columnIdx;
         this.eqResults = fuseStatesMatrix.eqResults;
+        this.mapFuseColumnIdx = fuseStatesMatrix.mapFuseColumnIdx;
     }
 
     @Override

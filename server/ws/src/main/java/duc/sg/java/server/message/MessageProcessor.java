@@ -22,6 +22,13 @@ public class MessageProcessor {
             } catch (ImportationException e) {
                 return Optional.empty();
             }
+        } else if(msgType.equals(MessageType.ULOAD_APPROX.getName())) {
+            try {
+                Optional<SmartGrid> grid = JsonGridImporter.INSTANCE.from(msgObj.getString("grid"));
+                return grid.map(ULoadApproxMsg::new).map(ULoadApproxMsg::process);
+            } catch (ImportationException e) {
+                return Optional.empty();
+            }
         }
 
         return Optional.empty();
