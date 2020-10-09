@@ -22,6 +22,19 @@ public class MessageProcessor {
             } catch (ImportationException e) {
                 return Optional.empty();
             }
+        } else if(msgType.equals(MessageType.ULOAD_APPROX.getName())) {
+            try {
+
+                final var type = ULoadApproxMsg.ULoadType.valueOf(
+                        msgObj.getString("approximationType").toUpperCase()
+                );
+
+                Optional<SmartGrid> optGrid = JsonGridImporter.INSTANCE.from(msgObj.getString("grid"));
+                return optGrid.map((SmartGrid grid) -> new ULoadApproxMsg(grid, type))
+                        .map(ULoadApproxMsg::process);
+            } catch (ImportationException e) {
+                return Optional.empty();
+            }
         }
 
         return Optional.empty();

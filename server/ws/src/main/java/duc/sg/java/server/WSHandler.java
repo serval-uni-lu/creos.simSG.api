@@ -33,7 +33,7 @@ public class WSHandler implements WebSocketConnectionCallback {
             @Override
             public void onError(WebSocketChannel channel, Void context, Throwable throwable) {
                 LOGGER.severe("Error while sending the message: " + throwable.getMessage());
-                LOGGER.throwing(old.duc.sg.java.server.ws.WSHandler.class.getName(), "sendMessage", throwable);
+                LOGGER.throwing(WSHandler.class.getName(), "sendMessage", throwable);
             }
         });
     }
@@ -42,7 +42,7 @@ public class WSHandler implements WebSocketConnectionCallback {
     public void onConnect(WebSocketHttpExchange exchange, WebSocketChannel channel) {
         LOGGER.info("Client connected");
 
-        sendMessage(channel, new ActionListMsg("LoadApproxVue"));
+        sendMessage(channel, new ActionListMsg("LoadApproxVue", "ULoadApproxVue"));
 
         channel.getReceiveSetter().set(new AbstractReceiveListener() {
             @Override
@@ -50,7 +50,11 @@ public class WSHandler implements WebSocketConnectionCallback {
                 var msg = message.getData();
                 LOGGER.info("Message received: " + msg);
                 Optional<Message> answer = MessageProcessor.process(msg);
-                answer.ifPresent((Message ans) -> sendMessage(channel, ans));
+                if(answer.isPresent()) {
+                    sendMessage(channel, answer.get());
+                } else {
+                    LOGGER.info("Message process is empty. No answer to send");
+                }
             }
         });
         channel.resumeReceives();

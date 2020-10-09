@@ -4,6 +4,7 @@ import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class UFuseExtracter implements Extracter<Fuse> {
@@ -25,6 +26,13 @@ public class UFuseExtracter implements Extracter<Fuse> {
 
     @Override
     public List<Fuse> getExtracted(Substation substation) {
-        return null;
+        String key = ExtracterUtils.getKeyUncertain(Fuse.class, substation);
+        Optional<Object> optFuses = substation.getGrid().retrieve(key);
+        if(optFuses.isEmpty()) {
+            extractAndSave(substation);
+            optFuses = substation.getGrid().retrieve(key);
+        }
+
+        return (List<Fuse>) optFuses.get();
     }
 }

@@ -9,6 +9,7 @@ import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
 import duc.sg.java.scenarios.SingleCableSC;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class SingleCableTest {
     private Substation substation;
@@ -34,7 +35,7 @@ public class SingleCableTest {
         cable.addMeters(m1);
     }
 
-//    @Test
+    @Test
     public void testAllClosed() {
         m1.setConsumption(20);
 
@@ -48,7 +49,6 @@ public class SingleCableTest {
 //            System.out.println(f.getKey() + " -> " + f.getValue());
 //        }
 //
-//        System.out.println("F2");
 //        for(var f: fuse_cabinet.getUncertainLoad().entrySet()) {
 //            System.out.println(f.getKey() + " -> " + f.getValue());
 //        }
@@ -58,3 +58,5 @@ public class SingleCableTest {
 
 
 }
+
+//        System.out.println("F2");

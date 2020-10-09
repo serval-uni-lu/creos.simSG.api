@@ -21,6 +21,7 @@ public class JsonGridImporter extends JsonImporter<SmartGrid> {
 
     static final String ENT_TYPE = "type";
     static final String ENT_NAME = "name";
+    static final String ENT_ID = "id";
     static final String ENT_FUSES = "fuses";
 
     static final String FUSE_ID = "id";
@@ -44,7 +45,7 @@ public class JsonGridImporter extends JsonImporter<SmartGrid> {
     @Override
     protected Optional<SmartGrid> extract(JsonNode toImport) throws ImportationException {
         if(JsonGirdValidator.validate(toImport)) {
-            HashMap<Integer, Fuse> fuses = extractFuses(toImport);
+            HashMap<String, Fuse> fuses = extractFuses(toImport);
             extractCables(toImport, fuses);
             return Optional.of(extractEntities(toImport, fuses));
         } else {
@@ -52,7 +53,7 @@ public class JsonGridImporter extends JsonImporter<SmartGrid> {
         }
     }
 
-    private SmartGrid extractEntities(JsonNode toImport, HashMap<Integer, Fuse> fuses) {
+    private SmartGrid extractEntities(JsonNode toImport, HashMap<String, Fuse> fuses) {
         var entitiesNodes = (ArrayNode) toImport.get(ENTITIES);
         var sg = new SmartGrid();
 
@@ -70,7 +71,7 @@ public class JsonGridImporter extends JsonImporter<SmartGrid> {
             var fusesNode = (ArrayNode) entityNode.get(ENT_FUSES);
             var entFuses = new Fuse[fusesNode.size()];
             for (int i = 0; i < fusesNode.size(); i++) {
-                var fuseIdx = fusesNode.get(i).asInt();
+                var fuseIdx = fusesNode.get(i).asText();
                 entFuses[i] = fuses.get(fuseIdx);
             }
             entity.addFuses(entFuses);
@@ -80,12 +81,12 @@ public class JsonGridImporter extends JsonImporter<SmartGrid> {
         return sg;
     }
 
-    private HashMap<Integer, Fuse> extractFuses(JsonNode toImport) {
+    private HashMap<String, Fuse> extractFuses(JsonNode toImport) {
         var fuseArrayNode = (ArrayNode) toImport.get(FUSES);
-        final var fuses = new HashMap<Integer, Fuse>(fuseArrayNode.size());
+        final var fuses = new HashMap<String, Fuse>(fuseArrayNode.size());
         fuseArrayNode.forEach(fuseNode -> {
             var fuse = new Fuse(fuseNode.get(FUSE_ID).asText(), fuseNode.get(FUSE_NAME).asText());
-            fuses.put(fuseNode.get(FUSE_ID).asInt(), fuse);
+            fuses.put(fuseNode.get(FUSE_ID).asText(), fuse);
 
             var stateNode = fuseNode.get(FUSE_STATE);
             if(stateNode != null) {
@@ -115,7 +116,7 @@ public class JsonGridImporter extends JsonImporter<SmartGrid> {
         return fuses;
     }
 
-    private void extractCables(JsonNode toImport, HashMap<Integer, Fuse> fuses) {
+    private void extractCables(JsonNode toImport, HashMap<String, Fuse> fuses) {
         var cableArrayNode = (ArrayNode) toImport.get(CABLES);
         cableArrayNode.forEach(cableNode -> {
             final var cable = new Cable(cableNode.get(CABLE_ID).asText());
@@ -130,8 +131,8 @@ public class JsonGridImporter extends JsonImporter<SmartGrid> {
             }
 
             var fusesIds = (ArrayNode) cableNode.get(CABLE_FUSES);
-            var fuse1 = fuses.get(fusesIds.get(0).asInt());
-            var fuse2 = fuses.get(fusesIds.get(1).asInt());
+            var fuse1 = fuses.get(fusesIds.get(0).asText());
+            var fuse2 = fuses.get(fusesIds.get(1).asText());
             cable.setFuses(fuse1, fuse2);
         });
     }

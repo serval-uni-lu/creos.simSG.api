@@ -8,9 +8,9 @@ import java.util.HashSet;
 class JsonUtils {
     private JsonUtils(){}
 
-    static boolean extractIds(ArrayNode array, final HashSet<Integer> ids, String idKey) {
+    static boolean extractIds(ArrayNode array, final HashSet<String> ids, String idKey) {
         for (JsonNode elmt : array) {
-            var id = elmt.get(idKey).asInt();
+            var id = elmt.get(idKey).asText();
             if(!ids.add(id)) {
                 return true;
             }
