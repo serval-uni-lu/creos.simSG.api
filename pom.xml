@@ -10,7 +10,7 @@
         <module>model</module>
         <module>scenarios</module>
         <module>uncertainty</module>
-        <module>algorithms/validator/umatrix</module>
+        <module>algorithms/validator/matrix</module>
         <module>algorithms/importer/json</module>
         <module>algorithms/powerflow</module>
         <module>server/ws</module>
