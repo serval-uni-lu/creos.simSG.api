@@ -28,7 +28,7 @@ public class CertainApproximator implements LoadApproximator<Double> {
 
     @Override
     public Map<Fuse, Double> approximate(Substation substation, Configuration configuration) {
-        if(validator.isValid(substation, configuration.getConfiguration(), new LinkedSubstation())){
+        if(validator.isValid(substation, configuration.getConfiguration())){
             EquationMatrix matrix = new CertainMatrixBuilder().build(substation)[0];
             var fuseStates = new DenseMatrix64F(matrix.getNbColumns(), matrix.getNbColumns(), true, matrix.getValues());
             final var matConsumptions = new DenseMatrix64F(matrix.getNbColumns(), 1, true, matrix.getEqResults());
