@@ -29,6 +29,23 @@ The project uses Maven for the project management. Uses the classic cycle goals 
 - From your favaorite idea, run execute the main class in `duc.sg.java.server.RunServer`
 - After packaging the project (`mvn package`): ` java -jar server/ws/target/creos.simsg.server.ws.jar`
 
+## Project structure 
+
+- `algorithms`: folder that contains different module to analyse the grid and save the result into the model that can be used by other algorithms
+    - `cyle`: folder that contain different modules to find circles in a grid
+    - `importer`: contain the different algorithms to import grid from different format
+        - `json`: import data from Json files
+    - `powerflow`: ...
+    - `validator`: module that contains algorithms to validate a grid
+- `loadapproximator`: contain different algorithms to approximate the load
+    - `certain`: algorithm that do not consider fuse uncertainty
+    - `uncertainty.naive`: naive  version that process all possibilities
+    - `uncertain.onlyvalid`: version that approximate the load only on the valid configurations
+- `model`: module that contains the smart grid model, contains mainly data or "simple" algorithms (those that do not need to navigate through the grid)
+- `scenarios`: contain a module that stores different predefined module
+- `uncertainty`: module that contains different utils to manipulate uncertain data
+- `utils`
+
 
 
 
