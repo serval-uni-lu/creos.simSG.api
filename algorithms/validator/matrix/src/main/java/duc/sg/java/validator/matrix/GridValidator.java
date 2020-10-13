@@ -1,4 +1,4 @@
-package duc.sg.java.validator.umatrix;
+package duc.sg.java.validator.matrix;
 
 import duc.sg.java.circlefinder.CircleFinder;
 import duc.sg.java.model.Fuse;
@@ -11,9 +11,13 @@ import java.util.Map;
 
 public class GridValidator implements  IValidator {
     @Override
-    public boolean isValid(Substation substation, Map<Fuse, State> idxColumn) {
+    public boolean isValid(Substation substation, Map<Fuse, State> idxColumn, IRule... iRules){
         CircleFinder.getDefault().findAndSave(substation);
-        IRule[] rules = Rules.getAllRules();
+        IRule[] rules;
+        if(iRules.length < 1)
+            rules = Rules.getAllRules();
+        else
+            rules = iRules;
 
         for(IRule rule: rules) {
             if(!rule.apply(substation, idxColumn)) {

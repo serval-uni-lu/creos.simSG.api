@@ -5,8 +5,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Configuration {
-    private final Map<Fuse, State> configuration;
+    public Map<Fuse, State> getConfiguration() {
+        return configuration;
+    }
 
+    private final Map<Fuse, State> configuration;
 
     public Configuration(Map<Fuse, State> configuration) {
         this.configuration = configuration;

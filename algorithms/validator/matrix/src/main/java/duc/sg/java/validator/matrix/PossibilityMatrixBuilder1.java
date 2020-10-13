@@ -1,4 +1,4 @@
-package duc.sg.java.validator.umatrix;
+package duc.sg.java.validator.matrix;
 
 import duc.sg.java.circlefinder.Circle;
 import duc.sg.java.circlefinder.CircleUtils;

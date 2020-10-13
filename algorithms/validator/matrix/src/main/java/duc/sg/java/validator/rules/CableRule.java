@@ -14,10 +14,11 @@ public class CableRule extends AbsFuseLevelRule {
     @Override
     public boolean apply(Fuse fuse, Map<Fuse, State> fuseStateMap) {
         Cable cable = fuse.getCable();
-
-        return cable.getConsumption() == 0 ||
+        var flag = cable.getConsumption() == 0 ||
                 fuseStateMap.get(fuse) == State.CLOSED ||
                 fuseStateMap.get(fuse.getOpposite()) == State.CLOSED
-                ;
+        ;
+
+        return flag;
     }
 }

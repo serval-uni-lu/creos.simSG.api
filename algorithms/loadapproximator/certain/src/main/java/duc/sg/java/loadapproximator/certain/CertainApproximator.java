@@ -9,8 +9,12 @@ import duc.sg.java.model.Cable;
 import duc.sg.java.model.Configuration;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
+import duc.sg.java.validator.rules.IRule;
+import duc.sg.java.validator.rules.LinkedSubstation;
 import org.ejml.alg.dense.linsol.svd.SolvePseudoInverseSvd;
 import org.ejml.data.DenseMatrix64F;
+import duc.sg.java.validator.matrix.GridValidator;
+import duc.sg.java.validator.matrix.IValidator;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,35 +23,41 @@ import java.util.Optional;
 
 public class CertainApproximator implements LoadApproximator<Double> {
     public static final CertainApproximator INSTANCE = new CertainApproximator();
-
+    IValidator validator = new GridValidator();
     private CertainApproximator(){}
 
     @Override
     public Map<Fuse, Double> approximate(Substation substation, Configuration configuration) {
-        EquationMatrix matrix = new CertainMatrixBuilder().build(substation)[0];
+        if(validator.isValid(substation, configuration.getConfiguration(), new LinkedSubstation())){
+            EquationMatrix matrix = new CertainMatrixBuilder().build(substation)[0];
+            var fuseStates = new DenseMatrix64F(matrix.getNbColumns(), matrix.getNbColumns(), true, matrix.getValues());
+            final var matConsumptions = new DenseMatrix64F(matrix.getNbColumns(), 1, true, matrix.getEqResults());
 
-        var fuseStates = new DenseMatrix64F(matrix.getNbColumns(), matrix.getNbColumns(), true, matrix.getValues());
-        final var matConsumptions = new DenseMatrix64F(matrix.getNbColumns(), 1, true, matrix.getEqResults());
+            DenseMatrix64F solution = new DenseMatrix64F(matConsumptions.numRows, matConsumptions.numCols);
+            SolvePseudoInverseSvd solver = new SolvePseudoInverseSvd();
+            solver.setA(fuseStates);
 
-        DenseMatrix64F solution = new DenseMatrix64F(matConsumptions.numRows, matConsumptions.numCols);
-        SolvePseudoInverseSvd solver = new SolvePseudoInverseSvd();
-        solver.setA(fuseStates);
+            solver.solve(matConsumptions, solution);
 
-        solver.solve(matConsumptions, solution);
+            var solData = solution.data;
+            var res = new HashMap<Fuse, Double>();
+            FuseExtracter.INSTANCE
+                    .getExtracted(substation)
+                    .forEach((Fuse f) -> {
+                        Integer idx = matrix.getColumnIdx(f);
+                        if(solData.length == 0 || idx == null) {
+                            res.put(f,0.);
+                        } else {
+                            res.put(f, solData[matrix.getColumnIdx(f)]);
+                        }
+                    });
+            return res;
+        }
+        return new HashMap<Fuse, Double>();
 
-        var solData = solution.data;
-        var res = new HashMap<Fuse, Double>();
-        FuseExtracter.INSTANCE
-                .getExtracted(substation)
-                .forEach((Fuse f) -> {
-                    Integer idx = matrix.getColumnIdx(f);
-                    if(solData.length == 0 || idx == null) {
-                        res.put(f,0.);
-                    } else {
-                        res.put(f, solData[matrix.getColumnIdx(f)]);
-                    }
-                });
-        return res;
+
+
+
     }
 
     @Override

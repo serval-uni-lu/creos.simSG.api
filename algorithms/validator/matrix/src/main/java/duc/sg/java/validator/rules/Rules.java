@@ -10,7 +10,8 @@ public final class Rules {
                 new DeadEndEntities(),
                 new SubstationRule(),
                 new AllCirclesRule(),
-                new MandatoryPowerFLow()
+                new MandatoryPowerFLow(),
+                new LinkedSubstation()
         };
     }
 

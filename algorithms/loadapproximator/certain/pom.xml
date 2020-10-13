@@ -42,6 +42,12 @@
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>duc.sg.java</groupId>
+            <artifactId>validator.umatrix</artifactId>
+            <version>2020.09.DD-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 
