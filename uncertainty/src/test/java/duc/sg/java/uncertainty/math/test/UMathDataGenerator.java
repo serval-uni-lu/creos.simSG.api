@@ -1,7 +1,7 @@
 package duc.sg.java.uncertainty.math.test;
 
 import duc.sg.java.uncertainty.Confidence;
-import duc.sg.java.uncertainty.MultDblePossibilities;
+import duc.sg.java.uncertainty.MultiplePossibilities;
 import duc.sg.java.uncertainty.PossibilityDouble;
 import org.junit.jupiter.params.provider.Arguments;
 
@@ -78,20 +78,20 @@ class UMathDataGenerator {
     public static Arguments[] generateMultPossDMaxData() {
         var res = new Arguments[1];
 
-        var multA = new MultDblePossibilities();
-        multA.addOrReplace(new PossibilityDouble(0, new Confidence(0.1)));
-        multA.addOrReplace(new PossibilityDouble(20, new Confidence(0.6)));
-        multA.addOrReplace(new PossibilityDouble(50, new Confidence(0.3)));
+        var multA = new MultiplePossibilities();
+        multA.addPossibility(new PossibilityDouble(0, new Confidence(0.1)));
+        multA.addPossibility(new PossibilityDouble(20, new Confidence(0.6)));
+        multA.addPossibility(new PossibilityDouble(50, new Confidence(0.3)));
 
-        var multB = new MultDblePossibilities();
-        multB.addOrReplace(new PossibilityDouble(15, new Confidence(0.1)));
-        multB.addOrReplace(new PossibilityDouble(20, new Confidence(0.5)));
-        multB.addOrReplace(new PossibilityDouble(50, new Confidence(0.4)));
+        var multB = new MultiplePossibilities();
+        multB.addPossibility(new PossibilityDouble(15, new Confidence(0.1)));
+        multB.addPossibility(new PossibilityDouble(20, new Confidence(0.5)));
+        multB.addPossibility(new PossibilityDouble(50, new Confidence(0.4)));
 
-        var expt = new MultDblePossibilities();
-        expt.addOrReplace(new PossibilityDouble(15, new Confidence(0.01)));
-        expt.addOrReplace(new PossibilityDouble(20, new Confidence(0.41)));
-        expt.addOrReplace(new PossibilityDouble(50, new Confidence(0.58)));
+        var expt = new MultiplePossibilities();
+        expt.addPossibility(new PossibilityDouble(15, new Confidence(0.01)));
+        expt.addPossibility(new PossibilityDouble(20, new Confidence(0.41)));
+        expt.addPossibility(new PossibilityDouble(50, new Confidence(0.58)));
 
         res[0] = Arguments.of(multA, multB, expt);
 

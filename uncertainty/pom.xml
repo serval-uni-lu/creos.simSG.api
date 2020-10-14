@@ -9,5 +9,13 @@
 
     <artifactId>uncertainty</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>duc.sg.java</groupId>
+            <artifactId>utils</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
 
 </project>

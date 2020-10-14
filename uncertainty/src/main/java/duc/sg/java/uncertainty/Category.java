@@ -1,22 +1,23 @@
 package duc.sg.java.uncertainty;
 
 public enum Category {
-    UNKNOWN(0),
-    MOST_UNLIKELY(1),
-    UNLIKELY(2),
-    HALF_LIKELY(3),
-    LIKELY(4),
-    MOST_LIKELY(5),
-    CERTAIN(6);
+    UNKNOWN("unknown"),
+    MOST_UNLIKELY("Most likely"),
+    UNLIKELY("Unlikely"),
+    HALF_LIKELY("Half likely"),
+    LIKELY("Likely"),
+    MOST_LIKELY("Most likely"),
+    CERTAIN("Certain");
 
-    private int id;
+    private String name;
 
-    Category(int id) {
-        this.id = id;
+    Category(String name) {
+        this.name = name;
     }
 
-    public int getId() {
-        return id;
+    @Override
+    public String toString() {
+        return super.toString();
     }
 
     public static Category probToCategory(double probability) {

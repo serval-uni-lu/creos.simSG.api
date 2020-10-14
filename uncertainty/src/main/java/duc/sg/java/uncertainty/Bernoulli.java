@@ -1,5 +1,8 @@
 package duc.sg.java.uncertainty;
 
+/**
+ * Representation of the <a href="https://en.wikipedia.org/wiki/Bernoulli_distribution">Bernoulli distribution</a>.
+ */
 public class Bernoulli extends Confidence {
 
     public Bernoulli(double probability) {

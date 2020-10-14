@@ -1,5 +1,11 @@
 package duc.sg.java.uncertainty;
 
+/**
+ * Class to represent an uncertain double with only one known value with its confidence.
+ * It is used to represent when the confidence is only attached to one value. For example, an uncertain value
+ * of 10.6 [84%] means that one knows that the value equals to 10.6 with 84% confidence. But, she does not know the
+ * value with 26% confidence.
+ */
 public class  PossibilityDouble {
     private double value;
     private Confidence confidence;

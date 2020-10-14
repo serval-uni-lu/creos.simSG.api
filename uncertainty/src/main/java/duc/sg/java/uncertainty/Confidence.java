@@ -1,5 +1,8 @@
 package duc.sg.java.uncertainty;
 
+/**
+ * Class to manipulate a confidence level: a value between 0 and 1.
+ */
 public class Confidence {
     protected double probability;
     public static final int MAX_PROBABILITY = 1;
@@ -18,9 +21,6 @@ public class Confidence {
 
     public void setProbability(double probability) {
         checkProb(probability);
-        //TODO check for that...
-//        if(Math.abs(probability - MIN_PROBABILITY) <= PRECISION) probability = MIN_PROBABILITY;
-//        else if(Math.abs(probability - MAX_PROBABILITY) <= PRECISION) probability = MAX_PROBABILITY;
         this.probability = probability;
     }
 

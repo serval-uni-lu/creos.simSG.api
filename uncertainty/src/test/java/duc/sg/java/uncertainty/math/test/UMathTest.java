@@ -1,7 +1,7 @@
 package duc.sg.java.uncertainty.math.test;
 
 import duc.sg.java.uncertainty.Confidence;
-import duc.sg.java.uncertainty.MultDblePossibilities;
+import duc.sg.java.uncertainty.MultiplePossibilities;
 import duc.sg.java.uncertainty.PossibilityDouble;
 import duc.sg.java.uncertainty.math.UMath;
 import org.junit.jupiter.api.Disabled;
@@ -64,7 +64,7 @@ public class UMathTest {
 
     @ParameterizedTest
     @MethodSource("duc.sg.java.uncertainty.math.test.UMathDataGenerator#generateMultPossDMaxData")
-    public void testMultPossDMax(MultDblePossibilities a, MultDblePossibilities b, MultDblePossibilities expt) {
+    public void testMultPossDMax(MultiplePossibilities a, MultiplePossibilities b, MultiplePossibilities expt) {
         var actual = UMath.max(a, b);
 
         Iterator<PossibilityDouble> itActual = actual.iterator();
