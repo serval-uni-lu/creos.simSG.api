@@ -6,7 +6,9 @@ import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.SmartGrid;
 import duc.sg.java.model.Substation;
+import duc.sg.java.uncertainty.Category;
 import duc.sg.java.uncertainty.PossibilityDouble;
+import duc.sg.java.utils.Pair;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
@@ -62,7 +64,7 @@ public class ULoadApproxMsg extends Message implements RequestMessage {
                     .forEach((Fuse fuse) -> {
                         var jsonULoads = new ArrayList<ULoadApproximationAnswer.ULoad>();
                         fuse.getUncertainLoad().forEach((PossibilityDouble poss) -> {
-                            jsonULoads.add(new ULoadApproximationAnswer.ULoad(poss.getValue(), poss.getConfidence().getProbability()));
+                            jsonULoads.add(new ULoadApproximationAnswer.ULoad(poss.getValue(), Category.probToCategory(poss.getConfidence().getProbability())));
                         });
 
                         fuseLoads.add(new ULoadApproximationAnswer.ElmtULoad(
@@ -75,9 +77,11 @@ public class ULoadApproxMsg extends Message implements RequestMessage {
                     .getExtracted(substation)
                     .forEach((Cable cable) -> {
                         var jsonULoads = new ArrayList<ULoadApproximationAnswer.ULoad>();
-                        cable.getUncertainLoad().forEach((PossibilityDouble poss) -> {
-                            jsonULoads.add(new ULoadApproximationAnswer.ULoad(poss.getValue(), poss.getConfidence().getProbability()));
-                        });
+                        cable.getUncertainLoad()
+                                .formatWithCategory()
+                                .forEach((Pair<Double, Category> uLoad) -> {
+                                    jsonULoads.add(new ULoadApproximationAnswer.ULoad(uLoad.getFirst(), uLoad.getSecond()));
+                                });
 
                         cableLoads.add(new ULoadApproximationAnswer.ElmtULoad(
                                 cable.getId(),

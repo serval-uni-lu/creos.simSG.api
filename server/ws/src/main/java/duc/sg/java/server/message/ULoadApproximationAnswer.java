@@ -1,5 +1,7 @@
 package duc.sg.java.server.message;
 
+import duc.sg.java.uncertainty.Category;
+
 public class ULoadApproximationAnswer extends Message {
     private final ElmtULoad[] fuseLoads;
     private final ElmtULoad[] cableLoads;
@@ -20,14 +22,14 @@ public class ULoadApproximationAnswer extends Message {
 
     public static class ULoad {
         final double value;
-        final double confidence;
+        final Category confidence;
 
-        public ULoad(double value, double confidence) {
+        public ULoad(double value, Category confidence) {
             this.confidence = confidence;
             this.value = value;
         }
 
-        public double getConfidence() {
+        public Category getConfidence() {
             return confidence;
         }
 
