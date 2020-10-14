@@ -5,7 +5,6 @@ import java.util.List;
 public class ListConverter {
     private ListConverter(){}
 
-
     public static double[] convert(List<Double> toConvert) {
         if(toConvert == null || toConvert.isEmpty()) {
             return new double[0];
