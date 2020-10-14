@@ -1,6 +1,7 @@
 package duc.sg.java.model;
 
-import duc.sg.java.uncertainty.MultDblPoss2;
+import duc.sg.java.uncertainty.MultiplePossibilities;
+import duc.sg.java.uncertainty.PossibilityDouble;
 import duc.sg.java.uncertainty.math.UMath;
 
 import java.util.*;
@@ -87,7 +88,7 @@ public class Cable {
      *
      * @return uncertain loads
      */
-    public MultDblPoss2 getUncertainLoad() {
+    public MultiplePossibilities getUncertainLoad() {
         if(fuses[0] == null) {
             return fuses[1].getUncertainLoad();
         }
@@ -96,27 +97,19 @@ public class Cable {
             return fuses[0].getUncertainLoad();
         }
 
-        MultDblPoss2 res = new MultDblPoss2();
-//        Iterator<PossibilityDouble> itF1Poss = fuses[0].getUncertainLoad().iterator();
-//        Iterator<PossibilityDouble> itF2Poss = fuses[1].getUncertainLoad().iterator();
-//
-//        while (itF1Poss.hasNext()) {
-//            PossibilityDouble f1Poss = itF1Poss.next();
-//            PossibilityDouble f2Poss = itF2Poss.next();
-//
-//            res.addPossibility(new PossibilityDouble(
-//                        Math.max(f1Poss.getValue(), f2Poss.getValue()),
-//                        f1Poss.getConfidence().getProbability()
-//            ));
-//
-//        }
-        for(var possF1: fuses[0].getUncertainLoad()) {
-            for(var possF2: fuses[1].getUncertainLoad()) {
-                res.addPossibility(UMath.max(possF1, possF2));
-            }
+
+        MultiplePossibilities res = new MultiplePossibilities();
+        Iterator<PossibilityDouble> itPossF1 = fuses[0].getUncertainLoad().iterator();
+        Iterator<PossibilityDouble> itPossF2 = fuses[1].getUncertainLoad().iterator();
+
+        while (itPossF1.hasNext()) {
+            var possF1 = itPossF1.next();
+            var possF2 = itPossF2.next();
+
+            res.addPossibility(UMath.max(possF1, possF2));
         }
 
-        return res.format();
+        return res;
     }
 
     @Override

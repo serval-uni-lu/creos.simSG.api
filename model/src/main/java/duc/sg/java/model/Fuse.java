@@ -1,6 +1,6 @@
 package duc.sg.java.model;
 
-import duc.sg.java.uncertainty.MultDblPoss2;
+import duc.sg.java.uncertainty.MultiplePossibilities;
 
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +15,7 @@ public class Fuse {
     private final Status status;
 
     // TODO remove the following fields (see https://github.com/UL-SnT-Serval/creos.simSG.api/issues/3)
-    private MultDblPoss2 uload;
+    private MultiplePossibilities uload;
     private Fuse[] getPowerFrom;
     private Fuse[] givePowerTo;
 
@@ -95,14 +95,14 @@ public class Fuse {
 
     }
 
-    public MultDblPoss2 getUncertainLoad() {
+    public MultiplePossibilities getUncertainLoad() {
         if(uload == null) {
-            uload = new MultDblPoss2();
+            uload = new MultiplePossibilities();
         }
         return uload;
     }
 
-    public void setLoad(MultDblPoss2 uload) {
+    public void setLoad(MultiplePossibilities uload) {
         this.uload = uload;
     }
 

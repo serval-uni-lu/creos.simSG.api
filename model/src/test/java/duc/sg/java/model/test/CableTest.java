@@ -3,15 +3,15 @@ package duc.sg.java.model.test;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Meter;
-import duc.sg.java.uncertainty.MultDblPoss2;
-import duc.sg.java.uncertainty.MultDblePossibilities;
+import duc.sg.java.uncertainty.MultiplePossibilities;
 import duc.sg.java.uncertainty.PossibilityDouble;
 import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CableTest {
 
@@ -19,14 +19,15 @@ public class CableTest {
     @Test
     public void uncertainLoadTest() {
         var f1 = new Fuse("f1");
-        var uloadF1 = new MultDblPoss2();
+        var uloadF1 = new MultiplePossibilities();
         uloadF1.addPossibility(new PossibilityDouble(0, 0.1));
-        uloadF1.addPossibility(new PossibilityDouble(20, 0.6));
+        uloadF1.addPossibility(new PossibilityDouble(20, 0.5));
         uloadF1.addPossibility(new PossibilityDouble(50, 0.3));
+        uloadF1.addPossibility(new PossibilityDouble(20, 0.1));
         f1.setLoad(uloadF1);
 
         var f2 = new Fuse("f2");
-        var uloadF2 = new MultDblPoss2();
+        var uloadF2 = new MultiplePossibilities();
         uloadF2.addPossibility(new PossibilityDouble(15, 0.1));
         uloadF2.addPossibility(new PossibilityDouble(20, 0.5));
         uloadF2.addPossibility(new PossibilityDouble(50, 0.2));
@@ -37,11 +38,11 @@ public class CableTest {
         cable.setFuses(f1, f2);
         var actuals = cable.getUncertainLoad();
 
-        var expected = new MultDblePossibilities();
-        expected.addOrReplace(new PossibilityDouble(15, 0.01));
-        expected.addOrReplace(new PossibilityDouble(20, 0.41));
-        expected.addOrReplace(new PossibilityDouble(50, 0.38));
-        expected.addOrReplace(new PossibilityDouble(60, 0.2));
+        var expected = new MultiplePossibilities();
+        expected.addPossibility(new PossibilityDouble(15, 0.01));
+        expected.addPossibility(new PossibilityDouble(20, 0.25));
+        expected.addPossibility(new PossibilityDouble(50, 0.06));
+        expected.addPossibility(new PossibilityDouble(60, 0.02));
 
         int nb=0;
         for (PossibilityDouble actual: actuals) {
