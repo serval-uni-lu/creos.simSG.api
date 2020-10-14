@@ -61,7 +61,11 @@ class JsonGirdValidator {
             if(loads != null && loads.size() > 0) {
                 double sum = 0;
                 for (JsonNode load : loads) {
-                    sum += load.get(JsonGridImporter.FUSE_LOAD_CONF).asDouble();
+                    if(load.get(JsonGridImporter.FUSE_LOAD_CONF).isNumber()) {
+                        sum += load.get(JsonGridImporter.FUSE_LOAD_CONF).asDouble();
+                    } else {
+                        return true;
+                    }
                 }
                 if (sum != 1) return false;
             }

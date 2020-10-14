@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import duc.sg.java.importer.ImportationException;
 import duc.sg.java.model.*;
-import duc.sg.java.uncertainty.MultDblPoss2;
+import duc.sg.java.uncertainty.MultiplePossibilities;
 import duc.sg.java.uncertainty.PossibilityDouble;
 
 import java.util.HashMap;
@@ -101,13 +101,15 @@ public class JsonGridImporter extends JsonImporter<SmartGrid> {
 
             var loads = (ArrayNode) fuseNode.get(FUSE_LOAD);
             if(loads != null) {
-                final var uLoad = new MultDblPoss2();
+                final var uLoad = new MultiplePossibilities();
                 loads.forEach(loadNode -> {
-                    var possibility = new PossibilityDouble(
-                            loadNode.get(FUSE_LOAD_VAL).asDouble(),
-                            loadNode.get(FUSE_LOAD_CONF).asDouble()
-                    );
-                    uLoad.addPossibility(possibility);
+                    if(loadNode.get(FUSE_LOAD_CONF).isNumber()) {
+                        var possibility = new PossibilityDouble(
+                                loadNode.get(FUSE_LOAD_VAL).asDouble(),
+                                loadNode.get(FUSE_LOAD_CONF).asDouble()
+                        );
+                        uLoad.addPossibility(possibility);
+                    }
                 });
                 fuse.setLoad(uLoad);
             }
