@@ -1,14 +1,23 @@
 package duc.sg.java.model;
 
 import duc.sg.java.uncertainty.MultDblPoss2;
-import duc.sg.java.uncertainty.PossibilityDouble;
+import duc.sg.java.uncertainty.math.UMath;
 
 import java.util.*;
 
 public class Cable {
-    private String id;
-    private Fuse[] fuses;
-    private List<Meter> meters;
+    /**
+     * Unique identifier of the cable.
+     * WARNING: If you change the type of the identified, please modify also the WebUI :)
+     */
+    private final String id;
+
+    /**
+     * Cables end by exactly 2 fuses, so the length of this array should always equal 2.
+     * It can be replaced by two fields
+     */
+    private final Fuse[] fuses;
+    private final List<Meter> meters;
 
     public Cable(String id) {
         this.id = id;
@@ -17,7 +26,7 @@ public class Cable {
     }
 
     public Cable() {
-        this("NaN");
+        this(UUID.randomUUID().toString());
     }
 
     public String getId() {
@@ -60,26 +69,25 @@ public class Cable {
     }
 
     public List<Meter> getMeters() {
-        return new ArrayList<>(meters);
+        return Collections.unmodifiableList(meters);
     }
 
     public double getConsumption() {
-        double consumption = 0;
-        for(var m: meters) {
-            consumption+= m.getConsumption();
-        }
-        return consumption;
+        return meters.stream()
+                .mapToDouble(Meter::getConsumption)
+                .sum();
     }
 
+    /**
+     * Return the uncertain load, computed by the `algorithms/loadapproximator/uncertain` modules.
+     * The cable uLoad equal the maximum of its fuses loads, for each configuration
+     *
+     * TODO: remove this function and store the result in the {@link SharedMemory}, or in the algorithm
+     *  itself @see <a href="https://github.com/UL-SnT-Serval/creos.simSG.api/issues/3">Issue 3</a>
+     *
+     * @return uncertain loads
+     */
     public MultDblPoss2 getUncertainLoad() {
-//        if(fuses[0] != null && fuses[1] != null) {
-//            return UMath.max(fuses[0].getUncertainLoad(), fuses[1].getUncertainLoad());
-//        } else if(fuses[0] != null) {
-//            return fuses[0].getUncertainLoad();
-//        }
-//
-//        return fuses[1].getUncertainLoad();
-
         if(fuses[0] == null) {
             return fuses[1].getUncertainLoad();
         }
@@ -89,35 +97,31 @@ public class Cable {
         }
 
         MultDblPoss2 res = new MultDblPoss2();
-//        for (PossibilityDouble f1Poss: fuses[0].getUncertainLoad()) {
-//            for (PossibilityDouble f2Poss: fuses[1].getUncertainLoad()) {
-//                res.addPossibility(new PossibilityDouble(
+//        Iterator<PossibilityDouble> itF1Poss = fuses[0].getUncertainLoad().iterator();
+//        Iterator<PossibilityDouble> itF2Poss = fuses[1].getUncertainLoad().iterator();
+//
+//        while (itF1Poss.hasNext()) {
+//            PossibilityDouble f1Poss = itF1Poss.next();
+//            PossibilityDouble f2Poss = itF2Poss.next();
+//
+//            res.addPossibility(new PossibilityDouble(
 //                        Math.max(f1Poss.getValue(), f2Poss.getValue()),
 //                        f1Poss.getConfidence().getProbability()
-//                ));
-//            }
+//            ));
+//
 //        }
-        Iterator<PossibilityDouble> itF1Poss = fuses[0].getUncertainLoad().iterator();
-        Iterator<PossibilityDouble> itF2Poss = fuses[1].getUncertainLoad().iterator();
-
-        while (itF1Poss.hasNext()) {
-            PossibilityDouble f1Poss = itF1Poss.next();
-            PossibilityDouble f2Poss = itF2Poss.next();
-
-            res.addPossibility(new PossibilityDouble(
-                        Math.max(f1Poss.getValue(), f2Poss.getValue()),
-                        f1Poss.getConfidence().getProbability()
-            ));
-
+        for(var possF1: fuses[0].getUncertainLoad()) {
+            for(var possF2: fuses[1].getUncertainLoad()) {
+                res.addPossibility(UMath.max(possF1, possF2));
+            }
         }
 
-        return res;
+        return res.format();
     }
 
     @Override
     public int hashCode() {
-        var s = fuses[0].getName() + "->" + fuses[1].getName();
-        return s.hashCode();
+        return id.hashCode();
     }
 
     @Override
@@ -126,13 +130,13 @@ public class Cable {
             return false;
         }
         var casted = (Cable) obj;
-        return fuses[0].equals(casted.fuses[0]) && fuses[1].equals(casted.fuses[1]);
+        return id.equals(casted.id);
     }
 
     @Override
     public String toString() {
         return "Cable(" +
-                "fuses=" + Arrays.toString(Arrays.stream(fuses).map(new MapperFuseName()).toArray()) +
+                "fuses=" + Arrays.toString(Arrays.stream(fuses).map(Fuse::getName).toArray()) +
                 ", meters=" + Arrays.toString(meters.stream().map(Meter::getName).toArray()) +
                  ", consumption=" + getConsumption() +
                  ", load=" + getUncertainLoad() +

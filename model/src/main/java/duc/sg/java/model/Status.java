@@ -1,19 +1,31 @@
 package duc.sg.java.model;
 
 import duc.sg.java.uncertainty.Bernoulli;
+import duc.sg.java.uncertainty.Confidence;
 
+/**
+ * Abstracts the uncertain status of fuses. The uncertainty is represented by a
+ * <a href="https://en.wikipedia.org/wiki/Bernoulli_distribution">Bernoulli distribution</a>. Indeed, this
+ * distribution allows us to represent the confidence that is shared between exactly two opposite values: closed
+ * and open.
+ *
+ * The confidence level is between 0 and 1.
+ *
+ * We assume that the fuse state it's either closed or open. Therefore, knowing that a fuse is closed with
+ * 65% confidence is equivalent than knowing that a fuse is open with 35% (100% - 65%) confidence.
+ *
+ */
 public class Status {
     private State state;
-    private Bernoulli confidence;
+    private final Bernoulli confidence;
 
     public Status(State state) {
-       this(state, 1);
+       this(state, Confidence.MAX_PROBABILITY);
     }
 
     public Status(State state, double confidence) {
         this.state = state;
-        this.confidence = new Bernoulli(1);
-        this.confidence.setProbability(confidence);
+        this.confidence = new Bernoulli(confidence);
     }
 
     public State getState() {

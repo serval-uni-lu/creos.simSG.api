@@ -3,6 +3,7 @@ package duc.sg.java.model.test;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Meter;
+import duc.sg.java.uncertainty.MultDblPoss2;
 import duc.sg.java.uncertainty.MultDblePossibilities;
 import duc.sg.java.uncertainty.PossibilityDouble;
 import org.junit.jupiter.api.Test;
@@ -15,26 +16,27 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CableTest {
 
 
-//    @Test
+    @Test
     public void uncertainLoadTest() {
         var f1 = new Fuse("f1");
-        var uloadF1 = new MultDblePossibilities();
-        uloadF1.addOrReplace(new PossibilityDouble(0, 0.1));
-        uloadF1.addOrReplace(new PossibilityDouble(20, 0.6));
-        uloadF1.addOrReplace(new PossibilityDouble(50, 0.3));
-//        f1.setLoad(uloadF1);
+        var uloadF1 = new MultDblPoss2();
+        uloadF1.addPossibility(new PossibilityDouble(0, 0.1));
+        uloadF1.addPossibility(new PossibilityDouble(20, 0.6));
+        uloadF1.addPossibility(new PossibilityDouble(50, 0.3));
+        f1.setLoad(uloadF1);
 
         var f2 = new Fuse("f2");
-        var uloadF2 = new MultDblePossibilities();
-        uloadF2.addOrReplace(new PossibilityDouble(15, 0.1));
-        uloadF2.addOrReplace(new PossibilityDouble(20, 0.5));
-        uloadF2.addOrReplace(new PossibilityDouble(50, 0.2));
-        uloadF2.addOrReplace(new PossibilityDouble(60, 0.2));
-//        f2.setLoad(uloadF2);
+        var uloadF2 = new MultDblPoss2();
+        uloadF2.addPossibility(new PossibilityDouble(15, 0.1));
+        uloadF2.addPossibility(new PossibilityDouble(20, 0.5));
+        uloadF2.addPossibility(new PossibilityDouble(50, 0.2));
+        uloadF2.addPossibility(new PossibilityDouble(60, 0.2));
+        f2.setLoad(uloadF2);
 
         var cable = new Cable();
         cable.setFuses(f1, f2);
         var actuals = cable.getUncertainLoad();
+
         var expected = new MultDblePossibilities();
         expected.addOrReplace(new PossibilityDouble(15, 0.01));
         expected.addOrReplace(new PossibilityDouble(20, 0.41));
@@ -63,8 +65,9 @@ public class CableTest {
         assertEquals(uloadF1, actCbl2);
 
         var cable3 = new Cable();
-        cable3.setSecondFuse(f1);
+        cable3.setSecondFuse(f2);
         var actCbl3 = cable3.getUncertainLoad();
+        assertEquals(uloadF2, actCbl3);
 
     }
 

@@ -3,8 +3,8 @@ package duc.sg.java.model;
 import java.util.*;
 
 public class SmartGrid {
-    private Map<String, Substation> substations;
-    private SharedMemory memory;
+    private final Map<String, Substation> substations;
+    private final SharedMemory memory;
 
     public SmartGrid() {
         this.substations = new HashMap<>();

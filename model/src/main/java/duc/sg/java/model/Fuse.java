@@ -1,25 +1,27 @@
 package duc.sg.java.model;
 
-import duc.sg.java.uncertainty.Category;
 import duc.sg.java.uncertainty.MultDblPoss2;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class Fuse {
-    private String id;
-    private String name;
+    private final String id;
+    private final String name;
     private Cable cable;
     private Entity owner;
-    private Status status;
+    private final Status status;
+
+    // TODO remove the following fields (see https://github.com/UL-SnT-Serval/creos.simSG.api/issues/3)
     private MultDblPoss2 uload;
     private Fuse[] getPowerFrom;
     private Fuse[] givePowerTo;
 
 
     public Fuse(String name) {
-        this(name, name, State.CLOSED);
+        this(UUID.randomUUID().toString(), name, State.CLOSED);
     }
 
     public Fuse(String id, String name) {
@@ -79,48 +81,27 @@ public class Fuse {
 
     public Fuse getOpposite() {
         var f = cable.getFirstFuse();
-        if(this == f) return cable.getSecondFuse();
+        if(this.equals(f)) return cable.getSecondFuse();
         return f;
     }
 
     public List<Fuse> getNeighbors() {
-        var res = new ArrayList<Fuse>();
-
+        var res = getOwner().getFuses()
+                .stream()
+                .filter((Fuse fuse) -> !fuse.equals(this))
+                .collect(Collectors.toList());
         res.add(getOpposite());
-        for(var f: getOwner().getFuses()) {
-            if(!f.equals(this)) {
-                res.add(f);
-            }
-        }
+        return Collections.unmodifiableList(res);
 
-        return res;
     }
 
-//    public MultDblePossibilities getUncertainLoad() {
     public MultDblPoss2 getUncertainLoad() {
         if(uload == null) {
-//            var dft = new MultDblePossibilities();
-//            dft.addOrReplace(new PossibilityDouble(0, Confidence.MAX_PROBABILITY));
-//            uload = dft;
-//            uload = new MultDblePossibilities();
             uload = new MultDblPoss2();
-//            uload.add(new PossibilityDouble(0, Confidence.MAX_PROBABILITY));
         }
         return uload;
     }
 
-    public Map<Category, Double> formattedULoad() {
-//        if(uload == null) {
-////            var dft = new MultDblePossibilities();
-////            dft.addOrReplace(new PossibilityDouble(0, Confidence.MAX_PROBABILITY));
-////            return dft.format();
-//        }
-//        return uload.format();
-//        return getUncertainLoad().format();
-        return null;
-    }
-
-//    public void setLoad(MultDblePossibilities uload) {
     public void setLoad(MultDblPoss2 uload) {
         this.uload = uload;
     }
@@ -129,16 +110,14 @@ public class Fuse {
         uload = null;
     }
 
-
     public Status getStatus() {
         return status;
     }
 
 
-
     @Override
     public int hashCode() {
-        return name.hashCode();
+        return id.hashCode();
     }
 
     @Override
@@ -148,7 +127,7 @@ public class Fuse {
         }
 
         var casted = (Fuse) obj;
-        return this.name.equals(casted.name);
+        return this.id.equals(casted.id);
     }
 
     @Override

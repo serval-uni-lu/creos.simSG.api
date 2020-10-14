@@ -1,14 +1,11 @@
 package duc.sg.java.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class Entity {
-    private List<Fuse> fuses;
-    private String name;
+    private final List<Fuse> fuses;
+    private final String name;
 
     public Entity(String name) {
         this.name = name;
@@ -27,7 +24,7 @@ public abstract class Entity {
     }
 
     public List<Fuse> getFuses() {
-        return new ArrayList<>(fuses);
+        return Collections.unmodifiableList(fuses);
     }
 
     public List<Fuse> getClosedFuses() {
@@ -36,22 +33,40 @@ public abstract class Entity {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * A dead-end entity is an entity with at most one active connection to another entity
+     *
+     * @return true if it is a dead-end, false otherwise
+     */
     public boolean isDeadEnd() {
         return getClosedFuses().size() <= 1;
     }
 
+    /**
+     * An entity can be a dead-end if in one valid configuration it is a dead-end. For that, the entity should be
+     * connected to exactly another one entity, possibly through more than one cable
+     *
+     * @return true if the entity can be a dead-end, false otherwise
+     */
     public boolean mightBeDeadEnd() {
+        // TODO check if it's a real-optimisation - fuses.size() remains low (I would say less than 10), so the stream
+        //  API might be sufficiently efficient
         if(fuses.size() == 1) {
             return true;
         }
 
-        var neighbors = new HashSet<Entity>(fuses.size());
-        for(Fuse f: fuses) {
-            neighbors.add(f.getOpposite().getOwner());
-        }
-        return neighbors.size() == 1;
+        return fuses.stream()
+                .map(Fuse::getOpposite)
+                .map(Fuse::getOwner)
+                .distinct()
+                .count() == 1;
     }
 
+    /**
+     * An entity is always a dead-end is it is connected to exactly another one entity
+     * (through active connection or not).
+     *
+     */
     public boolean isAlwaysDeadEnd() {
         return fuses.size() == 1;
     }
@@ -60,7 +75,7 @@ public abstract class Entity {
     public String toString() {
         return this.getClass().getSimpleName() + "(" +
                 "name=" + name +
-                ", fuses=" + Arrays.toString(fuses.stream().map(new MapperFuseName()).toArray()) +
+                ", fuses=" + Arrays.toString(fuses.stream().map(Fuse::getName).toArray()) +
                 ")";
     }
 

@@ -6,10 +6,14 @@ import java.util.*;
 import java.util.function.Consumer;
 
 public class MultDblPoss2 implements Iterable<PossibilityDouble> {
-    private List<PossibilityDouble> possibilities;
+    private final List<PossibilityDouble> possibilities;
 
     public MultDblPoss2() {
         possibilities = new ArrayList<>();
+    }
+
+    public MultDblPoss2(List<PossibilityDouble> possibilities) {
+        this.possibilities = possibilities;
     }
 
     public void addPossibility(PossibilityDouble toAdd) {
@@ -21,7 +25,7 @@ public class MultDblPoss2 implements Iterable<PossibilityDouble> {
     }
 
 
-    public List<PossibilityDouble> format() {
+    public MultDblPoss2 format() {
         var res = new ArrayList<PossibilityDouble>(possibilities.size());
         var possSet = new HashMap<Double, Integer>(possibilities.size());
 
@@ -40,13 +44,13 @@ public class MultDblPoss2 implements Iterable<PossibilityDouble> {
         }
 
 
-        return res;
+        return new MultDblPoss2(res);
     }
 
     @Override
     public String toString() {
         return "MultDblPoss2(" +
-                "possibilities=" + Arrays.toString(format().toArray()) +
+                "possibilities=" + Arrays.toString(format().possibilities.toArray()) +
                 ')';
     }
 
