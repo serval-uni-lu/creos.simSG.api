@@ -46,9 +46,7 @@
                 "enum": ["CLOSED", "Closed","closed", "OPEN", "open", "Open"]
               },
               "confidence": {
-                "type":  "number",
-                "minimum": 0,
-                "maximum": 1
+                "type":  ["number", "string"]
               }
             },
             "additionalProperties": false,
@@ -63,9 +61,7 @@
                   "type": "number"
                 },
                 "confidence": {
-                  "type": "number",
-                  "minimum": 0,
-                  "maximum": 1
+                  "type":  ["number", "string"]
                 }
               },
               "additionalProperties": false,
