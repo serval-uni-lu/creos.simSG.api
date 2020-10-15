@@ -3,6 +3,11 @@ package duc.sg.java.server.message;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 
+/**
+ * Message exchanged between the client(s) and the server.
+ *
+ * Messages (this class and those that extend it)  should be Java beans to allow the generation of JSON string
+ */
 public abstract class Message {
     private MessageType type;
 

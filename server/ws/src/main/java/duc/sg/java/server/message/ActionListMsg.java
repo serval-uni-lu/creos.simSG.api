@@ -1,5 +1,8 @@
 package duc.sg.java.server.message;
 
+/**
+ * Message sent to the client on the connection, to inform it the actuators the server handles.
+ */
 public class ActionListMsg extends Message {
     private String[] actionName;
 

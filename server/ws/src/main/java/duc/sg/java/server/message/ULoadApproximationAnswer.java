@@ -2,6 +2,9 @@ package duc.sg.java.server.message;
 
 import duc.sg.java.uncertainty.Category;
 
+/**
+ * This message contains information to answer an uncertain load approximation request: fuses and cables loads
+ */
 public class ULoadApproximationAnswer extends Message {
     private final ElmtULoad[] fuseLoads;
     private final ElmtULoad[] cableLoads;

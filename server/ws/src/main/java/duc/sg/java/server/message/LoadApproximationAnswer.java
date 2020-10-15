@@ -1,5 +1,8 @@
 package duc.sg.java.server.message;
 
+/**
+ * This message contains information to answer a load approximation request: fuses and cables loads
+ */
 public class LoadApproximationAnswer extends Message {
     private final Load[] fuseLoads;
     private final Load[] cableLoads;

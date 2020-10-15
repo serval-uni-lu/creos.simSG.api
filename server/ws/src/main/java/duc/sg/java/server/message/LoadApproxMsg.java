@@ -11,8 +11,11 @@ import duc.sg.java.model.Substation;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * This message is sent by client to request a load approximation
+ */
 public class LoadApproxMsg extends Message implements RequestMessage {
-    private SmartGrid grid;
+    private final SmartGrid grid;
 
     LoadApproxMsg(SmartGrid grid) {
         super(MessageType.LOAD_APPROX);

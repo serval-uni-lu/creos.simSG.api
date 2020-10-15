@@ -7,12 +7,14 @@ import duc.sg.java.model.Fuse;
 import duc.sg.java.model.SmartGrid;
 import duc.sg.java.model.Substation;
 import duc.sg.java.uncertainty.Category;
-import duc.sg.java.uncertainty.PossibilityDouble;
 import duc.sg.java.utils.Pair;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
+/**
+ * This message is sent by client to request an uncertain load approximation
+ */
 public class ULoadApproxMsg extends Message implements RequestMessage {
     final SmartGrid grid;
     final ULoadType type;
@@ -63,9 +65,14 @@ public class ULoadApproxMsg extends Message implements RequestMessage {
                     .getExtracted(substation)
                     .forEach((Fuse fuse) -> {
                         var jsonULoads = new ArrayList<ULoadApproximationAnswer.ULoad>();
-                        fuse.getUncertainLoad().forEach((PossibilityDouble poss) -> {
-                            jsonULoads.add(new ULoadApproximationAnswer.ULoad(poss.getValue(), Category.probToCategory(poss.getConfidence().getProbability())));
-                        });
+                        fuse.getUncertainLoad()
+                                .formatWithCategory()
+                                .forEach((Pair<Double, Category> uLoad) ->
+                                    jsonULoads.add(new ULoadApproximationAnswer.ULoad(uLoad.getFirst(), uLoad.getSecond()))
+                                );
+//                                .forEach((PossibilityDouble poss) -> {
+//                                    jsonULoads.add(new ULoadApproximationAnswer.ULoad(poss.getValue(), Category.probToCategory(poss.getConfidence().getProbability())));
+//                                });
 
                         fuseLoads.add(new ULoadApproximationAnswer.ElmtULoad(
                                 fuse.getId(),
@@ -76,16 +83,16 @@ public class ULoadApproxMsg extends Message implements RequestMessage {
             CableExtracter.INSTANCE
                     .getExtracted(substation)
                     .forEach((Cable cable) -> {
-                        var jsonULoads = new ArrayList<ULoadApproximationAnswer.ULoad>();
+                        var cableULoads = new ArrayList<ULoadApproximationAnswer.ULoad>();
                         cable.getUncertainLoad()
                                 .formatWithCategory()
-                                .forEach((Pair<Double, Category> uLoad) -> {
-                                    jsonULoads.add(new ULoadApproximationAnswer.ULoad(uLoad.getFirst(), uLoad.getSecond()));
-                                });
+                                .forEach((Pair<Double, Category> uLoad) ->
+                                    cableULoads.add(new ULoadApproximationAnswer.ULoad(uLoad.getFirst(), uLoad.getSecond()))
+                                );
 
                         cableLoads.add(new ULoadApproximationAnswer.ElmtULoad(
                                 cable.getId(),
-                                jsonULoads.toArray(new ULoadApproximationAnswer.ULoad[0])
+                                cableULoads.toArray(new ULoadApproximationAnswer.ULoad[0])
                         ));
                     });
         }
