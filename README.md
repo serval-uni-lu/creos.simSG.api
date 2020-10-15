@@ -31,6 +31,13 @@ The project uses Maven for the project management. Uses the classic cycle goals 
 
 ## Project structure 
 
+- `model`: module that contains the smart grid model, should only contain an abstraction of the grid state
+- `simsg.uncertainty`: contains all uncertainty elements specific for the smart grid
+- `uncertainty`: module that contains different utils to manipulate uncertain data, should be general and not smart grid specific
+- `utils`
+
+to delete
+
 - `algorithms`: folder that contains different module to analyse the grid and save the result into the model that can be used by other algorithms
     - `cyle`: folder that contain different modules to find circles in a grid
     - `importer`: contain the different algorithms to import grid from different format
@@ -41,10 +48,14 @@ The project uses Maven for the project management. Uses the classic cycle goals 
     - `certain`: algorithm that do not consider fuse uncertainty
     - `uncertainty.naive`: naive  version that process all possibilities
     - `uncertain.onlyvalid`: version that approximate the load only on the valid configurations
-- `model`: module that contains the smart grid model, contains mainly data or "simple" algorithms (those that do not need to navigate through the grid)
 - `scenarios`: contain a module that stores different predefined module
-- `uncertainty`: module that contains different utils to manipulate uncertain data
-- `utils`
+
+
+
+
+
+
+
 
 
 

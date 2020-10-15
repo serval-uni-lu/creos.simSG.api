@@ -3,12 +3,13 @@ package duc.sg.java.loadapproximator.uncertain.bsrules;
 import duc.sg.java.circlefinder.Circle;
 import duc.sg.java.circlefinder.CircleFinder;
 import duc.sg.java.extracter.FuseExtracter;
-import duc.sg.java.grid.uncertainty.configuration.Configuration;
-import duc.sg.java.grid.uncertainty.configuration.ConfigurationMatrix;
-import duc.sg.java.grid.uncertainty.configuration.EmptyConfigurationMatrix;
+import duc.sg.java.grid.uncertainty.configuration.UConfiguration;
+import duc.sg.java.grid.uncertainty.configuration.UConfigurationList;
+import duc.sg.java.grid.uncertainty.configuration.EmptyUConfigurationList;
 import duc.sg.java.matrix.certain.EquationMatrixImp;
 import duc.sg.java.matrix.certain.CertainMatrixBuilder;
 import duc.sg.java.matrix.uncertain.UEquationMatrix;
+import duc.sg.java.model.Configuration;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;
 import duc.sg.java.model.Substation;
@@ -53,15 +54,15 @@ public class UncertainLoadApproximator {
         return res;
     }
 
-    public static ConfigurationMatrix getAllConfigurations(Substation substation) {
+    public static UConfigurationList getAllConfigurations(Substation substation) {
         UFuseDetector.detectAndModifyUFuses(substation);
         List<Circle> allCycles = CircleFinder.getDefault().getCircles(substation);
 
         if(allCycles.isEmpty()) {
-            return new EmptyConfigurationMatrix();
+            return new EmptyUConfigurationList();
         }
 
-        var gridConf = new ConfigurationMatrix();
+        var gridConf = new UConfigurationList();
 
         CircleRule circleRule = new CircleRule();
 
@@ -73,7 +74,7 @@ public class UncertainLoadApproximator {
                 continue; //ignore this circle
             }
 
-            var circleConf = new ConfigurationMatrix(uFuses.toArray(new Fuse[0]));
+            var circleConf = new UConfigurationList(uFuses.toArray(new Fuse[0]));
             double confToAdd = 0;
 
 
@@ -94,7 +95,7 @@ public class UncertainLoadApproximator {
                 }
 
                 if(circleRule.apply(circle.getFuses(), fuseStateMap)) {
-                    circleConf.add(fuseStateMap, confidence);
+                    circleConf.add(new Configuration(fuseStateMap), confidence);
                 } else {
                     confToAdd += confidence;
                 }
@@ -102,7 +103,7 @@ public class UncertainLoadApproximator {
             }
 
             if(confToAdd > 0) {
-                circleConf.addConfToMaxOpen(confToAdd);
+                circleConf.addConfToMaxClosed(confToAdd);
             }
 
             gridConf.add(circleConf);
@@ -111,7 +112,7 @@ public class UncertainLoadApproximator {
         }
 
         if(gridConf.getConfidences().isEmpty()) {
-            return new EmptyConfigurationMatrix();
+            return new EmptyUConfigurationList();
         }
 
         return gridConf;
@@ -119,13 +120,13 @@ public class UncertainLoadApproximator {
     }
 
     public static UEquationMatrix[] build(Substation substation) {
-        ConfigurationMatrix gridConfigurations = getAllConfigurations(substation);
+        UConfigurationList gridConfigurations = getAllConfigurations(substation);
 
         var fuseMatrices = new UEquationMatrix[gridConfigurations.nbConfigurations()];
 
         int idx = 0;
-        for(Configuration configuration: gridConfigurations) {
-            for (Iterator<Pair<Fuse, State>> it = configuration.getFuseStates(); it.hasNext(); ) {
+        for(UConfiguration UConfiguration : gridConfigurations) {
+            for (Iterator<Pair<Fuse, State>> it = UConfiguration.getFuseStates(); it.hasNext(); ) {
                 Pair<Fuse, State> fuseState = it.next();
                 if(fuseState.getSecond() == State.CLOSED) {
                     fuseState.getFirst().closeFuse();
@@ -136,7 +137,7 @@ public class UncertainLoadApproximator {
 
             fuseMatrices[idx] = new UEquationMatrix(
                     (EquationMatrixImp) new CertainMatrixBuilder().build(substation)[0],
-                    configuration.getConfidence()
+                    UConfiguration.getConfidence()
             );
 
             idx++;

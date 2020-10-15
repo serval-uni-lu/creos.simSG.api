@@ -5,8 +5,8 @@ import duc.sg.java.model.State;
 
 import java.util.ArrayList;
 
-public class EmptyConfigurationMatrix extends ConfigurationMatrix {
-    public EmptyConfigurationMatrix() {
+public class EmptyUConfigurationList extends UConfigurationList {
+    public EmptyUConfigurationList() {
         this.confidences = new ArrayList<>(1);
         this.confidences.add(1.);
 

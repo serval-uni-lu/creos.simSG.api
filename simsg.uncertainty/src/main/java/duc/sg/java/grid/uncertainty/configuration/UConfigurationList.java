@@ -1,25 +1,46 @@
 package duc.sg.java.grid.uncertainty.configuration;
 
+import duc.sg.java.model.Configuration;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;
 
 import java.text.DecimalFormat;
 import java.util.*;
 
-public class ConfigurationMatrix implements Iterable<Configuration>{
+/**
+ * List of UConfigurationMatrix
+ * The sum of the confidence levels should not exceed 1.
+ */
+public class UConfigurationList implements Iterable<UConfiguration>{
     protected State[] states;
     protected Fuse[] columns;
     protected List<Double> confidences;
-    protected int idxLineMaxClosed = -1;
-    protected int maxClosedFuses = -1;
 
-    public ConfigurationMatrix() {
+    private int idxLineMaxClosed = -1;
+    private int maxClosedFuses = -1;
+
+    /**
+     * Init an empty configuration.
+     *
+     * **WARNING**: after having initialised the uconfiguration list with the default constructor, one cannot
+     * add a configuration with fuses.
+     * But it can be combined with another configuration using {@link UConfigurationList#add(UConfigurationList)}
+     *
+     */
+    public UConfigurationList() {
         this.confidences = new ArrayList<>();
         this.states = new State[0];
         this.columns = new Fuse[0];
     }
 
-    public ConfigurationMatrix(Fuse[] fuses) {
+
+
+    /**
+     * Init the uconfiguration list for the given fuses
+     *
+     * @param fuses Fuses implied in the configuration
+     */
+    public UConfigurationList(Fuse[] fuses) {
         this.states = new State[0];
         this.columns = fuses;
         this.confidences = new ArrayList<>();
@@ -30,7 +51,7 @@ public class ConfigurationMatrix implements Iterable<Configuration>{
     }
 
     @Override
-    public Iterator<Configuration> iterator() {
+    public Iterator<UConfiguration> iterator() {
         return new Iterator<>() {
             int idxLine;
 
@@ -40,23 +61,29 @@ public class ConfigurationMatrix implements Iterable<Configuration>{
             }
 
             @Override
-            public Configuration next() {
+            public UConfiguration next() {
                 int currIdx = idxLine;
                 idxLine++;
 
                 State[] line = new State[columns.length];
                 System.arraycopy(states, currIdx*columns.length, line, 0, columns.length);
-                return new Configuration(columns, line, confidences.get(currIdx));
+                return new UConfiguration(columns, line, confidences.get(currIdx));
             }
         };
     }
-
 
     public int nbConfigurations() {
         return confidences.size();
     }
 
-    public void add(Map<Fuse, State> fuseStateMap, double confidence) {
+    /**
+     * Add a configuration to the list. The configuration should contain all fuses with which the list has been
+     * initialised.
+     *
+     * @param configuration configuration
+     * @param confidence confidence of the configuration
+     */
+    public void add(Configuration configuration, double confidence) {
         //create a new line
         State[] newStates = new State[states.length + columns.length];
         System.arraycopy(states, 0, newStates, 0, states.length);
@@ -68,7 +95,7 @@ public class ConfigurationMatrix implements Iterable<Configuration>{
 
         // copy the values
         for (int idxColumn = 0; idxColumn < columns.length; idxColumn++) {
-            State state = fuseStateMap.get(columns[idxColumn]);
+            State state = configuration.getState(columns[idxColumn]);
             states[idxLine*columns.length + idxColumn] = state;
 
             if(state == State.CLOSED) {
@@ -87,14 +114,21 @@ public class ConfigurationMatrix implements Iterable<Configuration>{
 
     }
 
-    public void addConfToMaxOpen(double toAdd) {
+    public void addConfToMaxClosed(double toAdd) {
         if(idxLineMaxClosed != -1) {
             double current = confidences.get(idxLineMaxClosed);
             confidences.set(idxLineMaxClosed, current + toAdd);
         }
     }
 
-    public void add(ConfigurationMatrix other) {
+    /**
+     * Combine the given configuration to the current one. This combination is done by computing the cartesian
+     * product of the two configurations. The new confidence is computed by multiplying the confidence of each
+     * configuration.
+     *
+     * @param other the other configuration
+     */
+    public void add(UConfigurationList other) {
         if(this.confidences.isEmpty()) {
             this.columns = other.columns;
             this.confidences = other.confidences;
@@ -176,7 +210,7 @@ public class ConfigurationMatrix implements Iterable<Configuration>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ConfigurationMatrix that = (ConfigurationMatrix) o;
+        UConfigurationList that = (UConfigurationList) o;
 
         // Check equality of columns
         var currentHashed = new HashSet<Fuse>();
@@ -192,9 +226,9 @@ public class ConfigurationMatrix implements Iterable<Configuration>{
             return false;
         }
 
-        for(Configuration conf: this) {
+        for(UConfiguration conf: this) {
             boolean exists = false;
-            for(Configuration confThat: that) {
+            for(UConfiguration confThat: that) {
                 if(confThat.equals(conf)) {
                     exists = true;
                     break;
