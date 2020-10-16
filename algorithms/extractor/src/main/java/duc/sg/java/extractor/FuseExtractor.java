@@ -1,4 +1,4 @@
-package duc.sg.java.extracter;
+package duc.sg.java.extractor;
 
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;

@@ -1,4 +1,4 @@
-import duc.sg.java.extracter.FuseExtracter;
+import duc.sg.java.extractor.FuseExtracter;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.SmartGrid;
 import duc.sg.java.model.State;

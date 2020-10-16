@@ -1,6 +1,6 @@
 package duc.sg.java.loadapproximator;
 
-import duc.sg.java.extracter.FuseExtractor;
+import duc.sg.java.extractor.FuseExtractor;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;
 import duc.sg.java.model.Substation;

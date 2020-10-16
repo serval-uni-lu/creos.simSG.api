@@ -1,4 +1,4 @@
-package duc.sg.java.extracter;
+package duc.sg.java.extractor;
 
 import duc.sg.java.model.Entity;
 import duc.sg.java.model.Substation;
@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LargestClosedGridExtractor implements Extracter {
+public class LargestClosedGridExtractor implements Extractor {
     private Map<Entity,List<Entity>> grid_graph;
 
     public LargestClosedGridExtractor() {

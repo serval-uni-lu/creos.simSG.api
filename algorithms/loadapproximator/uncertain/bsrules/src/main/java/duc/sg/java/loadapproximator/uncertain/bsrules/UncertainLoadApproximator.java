@@ -2,7 +2,7 @@ package duc.sg.java.loadapproximator.uncertain.bsrules;
 
 import duc.sg.java.circlefinder.Circle;
 import duc.sg.java.circlefinder.CircleFinder;
-import duc.sg.java.extracter.FuseExtractor;
+import duc.sg.java.extractor.FuseExtractor;
 import duc.sg.java.grid.uncertainty.configuration.UConfiguration;
 import duc.sg.java.grid.uncertainty.configuration.UConfigurationList;
 import duc.sg.java.grid.uncertainty.configuration.EmptyUConfigurationList;

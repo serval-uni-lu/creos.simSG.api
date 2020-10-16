@@ -3,7 +3,7 @@ package duc.sg.java.circlefinder.test;
 import duc.sg.java.circlefinder.Circle;
 import duc.sg.java.circlefinder.CircleFinder;
 import duc.sg.java.circlefinder.CircleUtils;
-import duc.sg.java.extracter.FuseExtractor;
+import duc.sg.java.extractor.FuseExtractor;
 import duc.sg.java.model.*;
 import duc.sg.java.utils.BaseTransform;
 import org.junit.jupiter.api.Assertions;

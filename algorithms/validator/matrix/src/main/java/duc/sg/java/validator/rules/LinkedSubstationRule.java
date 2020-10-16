@@ -1,9 +1,9 @@
 package duc.sg.java.validator.rules;
 
-import duc.sg.java.extracter.CableExtracter;
-import duc.sg.java.extracter.EffectiveConfigurationExtracter;
-import duc.sg.java.extracter.EntityExtracter;
-import duc.sg.java.extracter.Extracter;
+import duc.sg.java.extractor.CableExtracter;
+import duc.sg.java.extractor.EffectiveConfigurationExtracter;
+import duc.sg.java.extractor.EntityExtracter;
+import duc.sg.java.extractor.Extracter;
 import duc.sg.java.model.*;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package duc.sg.java.loadapproximator.certain;
 
-import duc.sg.java.extracter.CableExtractor;
-import duc.sg.java.extracter.FuseExtractor;
+import duc.sg.java.extractor.CableExtractor;
+import duc.sg.java.extractor.FuseExtractor;
 import duc.sg.java.loadapproximator.LoadApproximator;
 import duc.sg.java.matrix.EquationMatrix;
 import duc.sg.java.matrix.certain.CertainMatrixBuilder;

@@ -1,6 +1,6 @@
 package duc.sg.java.loadapproximator.uncertain.bsrules.old;
 
-import duc.sg.java.extracter.FuseExtractor;
+import duc.sg.java.extractor.FuseExtractor;
 import duc.sg.java.matrix.certain.EquationMatrixImp;
 import duc.sg.java.matrix.certain.CertainMatrixBuilder;
 import duc.sg.java.matrix.uncertain.UEquationMatrix;
