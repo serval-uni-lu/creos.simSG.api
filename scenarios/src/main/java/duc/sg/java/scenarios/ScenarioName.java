@@ -7,7 +7,9 @@ public enum ScenarioName {
     PARA_W_DEADEND(4),
     PARA_CABINET(8),
     INDIRECT_PARALLEL(10),
+    LINKED_SUBSTATIONS(6),
     UNDEFINED(-1);
+
 
     private int nbFuses;
 
@@ -20,14 +22,15 @@ public enum ScenarioName {
     }
 
     public static ScenarioName idToName(int id) {
-        switch (id) {
-            case 1: return SINGLE_CABLE;
-            case 2: return CABINET;
-            case 3: return PARA_TRANSFORMER;
-            case 4: return PARA_CABINET;
-            case 5: return INDIRECT_PARALLEL;
-            case 6: return PARA_W_DEADEND;
-            default: return UNDEFINED;
-        }
+        return switch (id) {
+            case 1 -> SINGLE_CABLE;
+            case 2 -> CABINET;
+            case 3 -> PARA_TRANSFORMER;
+            case 4 -> PARA_CABINET;
+            case 5 -> INDIRECT_PARALLEL;
+            case 6 -> PARA_W_DEADEND;
+            case 7 -> LINKED_SUBSTATIONS;
+            default -> UNDEFINED;
+        };
     }
 }
