@@ -1,6 +1,6 @@
 package duc.sg.java.loadapproximator.uncertain.bsrules.old;
 
-import duc.sg.java.extracter.FuseExtracter;
+import duc.sg.java.extracter.FuseExtractor;
 import duc.sg.java.matrix.certain.EquationMatrixImp;
 import duc.sg.java.matrix.certain.CertainMatrixBuilder;
 import duc.sg.java.matrix.uncertain.UEquationMatrix;
@@ -50,7 +50,7 @@ public class UncertainLoadApproximator {
 
 
     private static Map<Fuse, State> boolarr2MapFuse(boolean[] fuseStates, List<Fuse> uFuses, Substation substation) {
-        Collection<Fuse> allFuses = FuseExtracter.INSTANCE.getExtracted(substation);
+        Collection<Fuse> allFuses = FuseExtractor.INSTANCE.getExtracted(substation);
         var res = new HashMap<Fuse, State>(allFuses.size());
 
         for(Fuse f: allFuses) {
@@ -140,7 +140,7 @@ public class UncertainLoadApproximator {
             solver.solve(matConsumptions, solution);
 
             var solData = solution.data;
-            var fuses = new HashSet<Fuse>(FuseExtracter.INSTANCE.getExtracted(substation));
+            var fuses = new HashSet<Fuse>(FuseExtractor.INSTANCE.getExtracted(substation));
             for (int i = 0; i < solData.length; i++) {
                 Fuse current = usfm.getColumn(i);
                 if (!visited.contains(current)) {

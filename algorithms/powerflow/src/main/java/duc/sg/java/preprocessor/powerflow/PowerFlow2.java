@@ -2,7 +2,7 @@ package duc.sg.java.preprocessor.powerflow;
 
 import duc.sg.java.circlefinder.Circle;
 import duc.sg.java.circlefinder.CircleFinder;
-import duc.sg.java.extracter.FuseExtracter;
+import duc.sg.java.extracter.FuseExtractor;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
 
@@ -14,7 +14,7 @@ public class PowerFlow2 implements IPowerFlow {
     @Override
     public Fuse[] getFuseOnMandatoryPF(Substation substation) {
         List<Circle> circles = CircleFinder.getDefault().getCircles(substation);
-        List<Fuse> allFuses = FuseExtracter.INSTANCE.getExtracted(substation);
+        List<Fuse> allFuses = FuseExtractor.INSTANCE.getExtracted(substation);
 
         var fuseOnCircles = new HashSet<Fuse>();
         circles.forEach((Circle c) -> Collections.addAll(fuseOnCircles, c.getFuses()));

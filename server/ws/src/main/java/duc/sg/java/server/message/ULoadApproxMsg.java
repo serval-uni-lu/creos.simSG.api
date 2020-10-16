@@ -1,7 +1,7 @@
 package duc.sg.java.server.message;
 
-import duc.sg.java.extracter.CableExtracter;
-import duc.sg.java.extracter.FuseExtracter;
+import duc.sg.java.extracter.CableExtractor;
+import duc.sg.java.extracter.FuseExtractor;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.SmartGrid;
@@ -61,7 +61,7 @@ public class ULoadApproxMsg extends Message implements RequestMessage {
 
         @Override
         public void accept(Substation substation) {
-            FuseExtracter.INSTANCE
+            FuseExtractor.INSTANCE
                     .getExtracted(substation)
                     .forEach((Fuse fuse) -> {
                         var jsonULoads = new ArrayList<ULoadApproximationAnswer.ULoad>();
@@ -80,7 +80,7 @@ public class ULoadApproxMsg extends Message implements RequestMessage {
                         ));
                     });
 
-            CableExtracter.INSTANCE
+            CableExtractor.INSTANCE
                     .getExtracted(substation)
                     .forEach((Cable cable) -> {
                         var cableULoads = new ArrayList<ULoadApproximationAnswer.ULoad>();

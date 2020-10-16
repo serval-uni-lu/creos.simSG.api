@@ -1,6 +1,6 @@
 package duc.sg.java.circlefinder;
 
-import duc.sg.java.extracter.FuseExtracter;
+import duc.sg.java.extracter.FuseExtractor;
 import duc.sg.java.model.Entity;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
@@ -33,7 +33,7 @@ class CircleFinderImpl implements CircleFinder {
 
         // Extract fuses in BFS order
         // Means that all fuses that belong to a same entities are grouped next to each other.
-        List<Fuse> fuses = FuseExtracter.INSTANCE.getExtracted(substation);
+        List<Fuse> fuses = FuseExtractor.INSTANCE.getExtracted(substation);
 
         int i=0;
         while(i< fuses.size()) {

@@ -1,6 +1,6 @@
 package duc.sg.java.loadapproximator.uncertain.naive;
 
-import duc.sg.java.extracter.FuseExtracter;
+import duc.sg.java.extracter.FuseExtractor;
 import duc.sg.java.matrix.uncertain.UMatrixBuilder;
 import duc.sg.java.matrix.uncertain.UEquationMatrix;
 import duc.sg.java.model.Fuse;
@@ -31,7 +31,7 @@ public class UncertainLoadApproximator {
             solver.solve(matConsumptions, solution);
 
             var solData = solution.data;
-            var fuses = new HashSet<Fuse>(FuseExtracter.INSTANCE.getExtracted(substation));
+            var fuses = new HashSet<Fuse>(FuseExtractor.INSTANCE.getExtracted(substation));
             for (int i = 0; i < solData.length; i++) {
                 Fuse current = usfm.getColumn(i);
                 if (!visited.contains(current)) {

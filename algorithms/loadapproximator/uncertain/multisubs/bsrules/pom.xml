@@ -20,7 +20,7 @@
         </dependency>
         <dependency>
             <groupId>duc.sg.java</groupId>
-            <artifactId>importer.json</artifactId>
+            <artifactId>transformer.json</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

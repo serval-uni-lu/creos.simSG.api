@@ -1,7 +1,7 @@
 package duc.sg.java.loadapproximator.certain;
 
-import duc.sg.java.extracter.CableExtracter;
-import duc.sg.java.extracter.FuseExtracter;
+import duc.sg.java.extracter.CableExtractor;
+import duc.sg.java.extracter.FuseExtractor;
 import duc.sg.java.loadapproximator.LoadApproximator;
 import duc.sg.java.matrix.EquationMatrix;
 import duc.sg.java.matrix.certain.CertainMatrixBuilder;
@@ -40,7 +40,7 @@ public class CertainApproximator implements LoadApproximator<Double> {
 
             var solData = solution.data;
             var res = new HashMap<Fuse, Double>();
-            FuseExtracter.INSTANCE
+            FuseExtractor.INSTANCE
                     .getExtracted(substation)
                     .forEach((Fuse f) -> {
                         Integer idx = matrix.getColumnIdx(f);
@@ -77,7 +77,7 @@ public class CertainApproximator implements LoadApproximator<Double> {
     @Override
     public Map<Cable, Double> getCableLoads(Substation substation, Configuration configuration, boolean forceRecompute) {
         Map<Fuse, Double> fuseLoads = getFuseLoads(substation, configuration, forceRecompute);
-        List<Cable> allCables = CableExtracter.INSTANCE.getExtracted(substation);
+        List<Cable> allCables = CableExtractor.INSTANCE.getExtracted(substation);
 
         var cableLoad = new HashMap<Cable, Double>(allCables.size());
         for(Cable cable: allCables) {

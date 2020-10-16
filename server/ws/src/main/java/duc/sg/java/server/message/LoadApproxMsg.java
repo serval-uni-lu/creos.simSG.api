@@ -1,7 +1,7 @@
 package duc.sg.java.server.message;
 
-import duc.sg.java.extracter.CableExtracter;
-import duc.sg.java.extracter.FuseExtracter;
+import duc.sg.java.extracter.CableExtractor;
+import duc.sg.java.extracter.FuseExtractor;
 import duc.sg.java.loadapproximator.certain.CertainApproximator;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
@@ -30,7 +30,7 @@ public class LoadApproxMsg extends Message implements RequestMessage {
             Map<Fuse, Double> fLoads = CertainApproximator.INSTANCE
                     .getFuseLoads(substation, true);
 
-            FuseExtracter.INSTANCE
+            FuseExtractor.INSTANCE
                     .getExtracted(substation)
                     .forEach((Fuse fuse) -> {
                         fuseLoads.add(new LoadApproximationAnswer.Load(
@@ -43,7 +43,7 @@ public class LoadApproxMsg extends Message implements RequestMessage {
             Map<Cable, Double> cLoads = CertainApproximator.INSTANCE
                     .getCableLoads(substation);
 
-            CableExtracter.INSTANCE
+            CableExtractor.INSTANCE
                     .getExtracted(substation)
                     .forEach((Cable cable) -> {
                         cableLoads.add(new LoadApproximationAnswer.Load(

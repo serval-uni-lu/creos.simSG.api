@@ -1,6 +1,6 @@
 package duc.sg.java.loadapproximator.certain.tests;
 
-import duc.sg.java.extracter.FuseExtracter;
+import duc.sg.java.extracter.FuseExtractor;
 import duc.sg.java.loadapproximator.certain.CertainApproximator;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
@@ -31,7 +31,7 @@ public abstract class LoadApproximatorTest {
     protected void initFuseMap() {
         fusesMap = new HashMap<>();
 
-        FuseExtracter.INSTANCE
+        FuseExtractor.INSTANCE
                 .getExtracted(substation)
                 .forEach((Fuse f) -> fusesMap.put(f.getName(), f));
     }

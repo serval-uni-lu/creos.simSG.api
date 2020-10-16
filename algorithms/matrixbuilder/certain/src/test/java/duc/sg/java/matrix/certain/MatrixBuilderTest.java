@@ -1,6 +1,6 @@
 package duc.sg.java.matrix.certain;
 
-import duc.sg.java.extracter.FuseExtracter;
+import duc.sg.java.extracter.FuseExtractor;
 import duc.sg.java.matrix.EquationMatrix;
 import duc.sg.java.model.Configuration;
 import duc.sg.java.model.Fuse;
@@ -28,7 +28,7 @@ public abstract class MatrixBuilderTest {
     protected void initFuseMap() {
         fusesMap = new HashMap<>();
 
-        FuseExtracter.INSTANCE
+        FuseExtractor.INSTANCE
                 .getExtracted(substation)
                 .forEach((Fuse f) -> fusesMap.put(f.getName(), f));
     }
@@ -42,7 +42,7 @@ public abstract class MatrixBuilderTest {
     private Configuration generateConfiguration(String[] toOpen) {
         var conf = new HashMap<Fuse, State>();
 
-        FuseExtracter.INSTANCE
+        FuseExtractor.INSTANCE
                 .getExtracted(substation)
                 .forEach((Fuse f) -> conf.put(f, State.CLOSED));
 
