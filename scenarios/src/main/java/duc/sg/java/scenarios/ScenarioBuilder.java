@@ -62,6 +62,7 @@ public final class ScenarioBuilder {
             case PARA_CABINET -> buildParaCabinet();
             case PARA_TRANSFORMER -> buildParaTransformer();
             case PARA_W_DEADEND -> buildParaWDe();
+            case LINKED_SUBSTATIONS -> buildLinkedSubstationsSC();
             default -> throw new BuilderException("Builder for " + name + "has not been implemented yet.");
         };
     }
@@ -199,6 +200,10 @@ public final class ScenarioBuilder {
         return new ParaWithDeadendSC(grid);
     }
 
+    private LinkedSubstationSC buildLinkedSubstationsSC(){
+        var grid = new SmartGrid();
+        return new LinkedSubstationSC(grid);
+    }
 
     private double[] getOrDefaultConsumptions(int nbCable) {
         if(consumptions == null) {
