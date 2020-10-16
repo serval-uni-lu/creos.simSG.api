@@ -23,32 +23,21 @@ class CircleImp implements Circle {
 
     @Override
     public boolean isEffective() {
-        for(Fuse fuse: fuses) {
-            if(!fuse.isClosed()) {
-                return false;
-            }
-        }
-        return true;
+        return Arrays.stream(fuses).allMatch(Fuse::isClosed);
+
     }
 
     @Override
     public boolean isEffective(Configuration configuration) {
-        for (Fuse fuse: getFuses()) {
-            if(!configuration.isClosed(fuse)) {
-                return false;
-            }
-        }
-        return true;
+        return Arrays.stream(fuses).allMatch(configuration::isClosed);
     }
 
     @Override
     public Fuse getOtherEndPoint(Fuse start) {
-        for (Fuse fc : fuses) {
-            if (!fc.equals(start) && fc.getOwner().equals(start.getOwner())) {
-                return fc;
-            }
-        }
-        return null; //should never be executed
+        return Arrays.stream(fuses)
+                .filter((Fuse fuse) -> !fuse.equals(start) && fuse.getOwner().equals(start.getOwner()))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
@@ -56,8 +45,6 @@ class CircleImp implements Circle {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CircleImp circleImp = (CircleImp) o;
-
-
         return Arrays.equals(fuses, circleImp.fuses);
     }
 

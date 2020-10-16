@@ -317,11 +317,11 @@ public class CircleFinderTests {
         assertEquals(2, allCircles.size());
 
         var expectedFirst = new HashSet<Fuse>(4);
-        Collections.addAll(expectedFirst, f3, f4, f5, f6);
+        Collections.addAll(expectedFirst, f7, f8, f9, f10);
         assertSuccPara(allCircles.get(0), expectedFirst);
 
         var expectedSecond = new HashSet<Fuse>(4);
-        Collections.addAll(expectedSecond, f7, f8, f9, f10);
+        Collections.addAll(expectedSecond, f3, f4, f5, f6);
         assertSuccPara(allCircles.get(1), expectedSecond);
 
     }

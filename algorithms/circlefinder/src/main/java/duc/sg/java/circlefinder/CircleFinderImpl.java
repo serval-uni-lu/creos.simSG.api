@@ -13,11 +13,26 @@ class CircleFinderImpl implements CircleFinder {
 
     private CircleFinderImpl() {}
 
+    /**
+     * This function retrieve all circles that exist from one substation.
+     * To perform that, we simulate the power flow by navigating through the fuses using a
+     * <a href="https://en.wikipedia.org/wiki/Breadth-first_search">BFS</a> strategy.
+     *
+     * We tried to implement this algorithm by navigating through entities. The algorithm's result contained
+     * several time a same circle. So we needed to add an extra step to filter out redundant circles. The performance
+     * different might be insignificant. But one can implement this algorithm and compare the performance. However,
+     * a possible advantage of this approach would be the readability of the code and its maintainability.
+     *
+     *
+     * @param substation root element of the topology
+     */
     @Override
     public void findAndSave(Substation substation) {
         List<Circle> circles = new ArrayList<>();
         var fuseInCircle = new HashSet<Fuse>();
 
+        // Extract fuses in BFS order
+        // Means that all fuses that belong to a same entities are grouped next to each other.
         List<Fuse> fuses = FuseExtracter.INSTANCE.getExtracted(substation);
 
         int i=0;
@@ -25,13 +40,14 @@ class CircleFinderImpl implements CircleFinder {
             Fuse currentFuse = fuses.get(i);
             Entity currentEnt = currentFuse.getOwner();
 
-
             long nbUnprocFuses = currentEnt.getFuses()
                     .stream()
                     .filter((Fuse f) -> !fuseInCircle.contains(f))
                     .count();
 
-
+            // For each entity, for all combination of 2 fuses, check if it exists a "path"
+            // that do not go through a substation and not by the entity itself
+            // we remove the current fuse as no circle can start
             if(currentEnt.getFuses().size() >= 2 && nbUnprocFuses != 0) {
                 List<Fuse> entFuses = currentEnt.getFuses();
                 for (int idx1st = 0; idx1st < entFuses.size(); idx1st++) {
@@ -57,6 +73,7 @@ class CircleFinderImpl implements CircleFinder {
             i += currentEnt.getFuses().size();
         }
 
+
         handleInnerCircles(circles);
         substation.getGrid().save(CircleUtils.getKey(substation), circles);
     }
@@ -77,6 +94,11 @@ class CircleFinderImpl implements CircleFinder {
     }
 
 
+    /**
+     * Detect possible inner circles, and add all fuses of the inner circle to the one that contains it.
+     *
+     * @param circles all circles of a topology
+     */
     private void handleInnerCircles(List<Circle> circles) {
         for (int i = 0; i < circles.size(); i++) {
             for (int j = i + 1; j < circles.size(); j++) {

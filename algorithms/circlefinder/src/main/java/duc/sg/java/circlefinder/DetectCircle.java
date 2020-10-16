@@ -8,6 +8,15 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.PriorityQueue;
 
+/**
+ * Retrieve the circle, if it exists, between two fuses.
+ * The circle, if it exists, is composed of all fuses that belong to the shortest path from the first fuse to the
+ * second. We use the Dijkstra's algorithm.
+ *
+ * For the algorithm, we set to 10 the "travel cost" between two fuses that belong to the same entity.
+ * It allows us to increase drastically the cost of travelling through cabinet. Therefore, we discard paths that
+ * go through a same entity several times. The "travel cost", otherwise, equals 1.
+ */
 class DetectCircle {
     private static final int STD_DIST = 1;
     private static final int SAME_OWNER_DIST = 10; //to avoid path to cross too often an entity
@@ -23,16 +32,7 @@ class DetectCircle {
         return STD_DIST;
     }
 
-    /**
-     * Retrieve the circle, if it exists, between two fuses.
-     * The circle, if it exists, is composed of all fuses that belong to the shortest path from the first fuse to the
-     * second. We use the Dijkstra's algorithm.
-     *
-     * @param start
-     * @param end
-     *
-     * @return
-     */
+
     static Optional<Circle> findCircle(Fuse start, Fuse end) {
         if(start == null || end == null || start.equals(end) || !start.getOwner().equals(end.getOwner())) {
             return Optional.empty();
