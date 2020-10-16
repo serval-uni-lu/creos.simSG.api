@@ -1,9 +1,7 @@
 package duc.sg.java.validator.rules;
 
-import duc.sg.java.extractor.CableExtracter;
-import duc.sg.java.extractor.EffectiveConfigurationExtracter;
-import duc.sg.java.extractor.EntityExtracter;
-import duc.sg.java.extractor.Extracter;
+import duc.sg.java.extractor.EffectiveConfigurationExtractor;
+import duc.sg.java.extractor.EntityExtractor;
 import duc.sg.java.model.*;
 
 import java.util.List;
@@ -20,7 +18,7 @@ public class LinkedSubstationRule implements IRule {
         Substation initial_substation = substation;
         //Compute the grid subgraph i.e. the subgrid that represent all connected (fuses closed) entities
 //        List<Cable> cables = CableExtracter.INSTANCE.getExtracted(initial_substation);
-        List<Entity> entities = EntityExtracter.INSTANCE.getExtracted(initial_substation);
+        List<Entity> entities = EntityExtractor.INSTANCE.getExtracted(initial_substation);
         int n_substations = 0;
         for(Entity e:entities){
             if(e instanceof Substation)
@@ -31,7 +29,7 @@ public class LinkedSubstationRule implements IRule {
             return true;
 
 
-        List<Configuration> c = EffectiveConfigurationExtracter.INSTANCE.getExtracted(initial_substation);
+        List<Configuration> c = EffectiveConfigurationExtractor.INSTANCE.getExtracted(initial_substation);
         return true;
     }
 
