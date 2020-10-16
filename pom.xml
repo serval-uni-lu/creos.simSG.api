@@ -24,7 +24,7 @@
         <module>algorithms/loadapproximator/uncertain/multisubs/naive</module>
         <module>algorithms/navigation/interface</module>
         <module>algorithms/navigation/bfs</module>
-        <module>algorithms/extracter</module>
+        <module>algorithms/extractor</module>
         <module>algorithms/circlefinder</module>
         <module>algorithms/loadapproximator/interface</module>
         <module>algorithms/matrixbuilder/interface</module>
