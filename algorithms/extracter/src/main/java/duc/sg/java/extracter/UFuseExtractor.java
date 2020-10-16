@@ -7,15 +7,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class UFuseExtracter implements Extracter<Fuse> {
-    private UFuseExtracter(){}
+/**
+ * Extracts fuses with uncertain status in a <a href="https://en.wikipedia.org/wiki/Breadth-first_search">BFS</a> order.
+ */
+public class UFuseExtractor implements Extractor<Fuse> {
+    private UFuseExtractor(){}
 
-    public static final UFuseExtracter INSTANCE = new UFuseExtracter();
+    public static final UFuseExtractor INSTANCE = new UFuseExtractor();
 
 
     @Override
     public void extractAndSave(Substation substation) {
-        List<Fuse> uFuses = FuseExtracter.INSTANCE
+        List<Fuse> uFuses = FuseExtractor.INSTANCE
                 .getExtracted(substation)
                 .stream()
                 .filter((Fuse f) -> f.getStatus().isUncertain())

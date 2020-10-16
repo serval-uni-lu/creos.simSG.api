@@ -7,10 +7,13 @@ import duc.sg.java.navigation.bfs.BFSFuse;
 
 import java.util.*;
 
-public class CableExtracter implements Extracter<Cable> {
-    public static final CableExtracter INSTANCE = new CableExtracter();
+/**
+ * Extract all cables in a <a href="https://en.wikipedia.org/wiki/Breadth-first_search">BFS</a> order
+ */
+public class CableExtractor implements Extractor<Cable> {
+    public static final CableExtractor INSTANCE = new CableExtractor();
 
-    private CableExtracter(){}
+    private CableExtractor(){}
 
     @Override
     public void extractAndSave(Substation substation) {
@@ -20,8 +23,6 @@ public class CableExtracter implements Extracter<Cable> {
                 .save(ExtracterUtils.getKeyCertain(Cable.class, substation),
                         new ArrayList<>(allCables)
                 );
-
-
     }
 
     @Override

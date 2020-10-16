@@ -7,14 +7,17 @@ import duc.sg.java.model.Substation;
 
 import java.util.*;
 
-public class EffectiveConfigurationExtracter implements Extracter<Configuration> {
-    public static final EffectiveConfigurationExtracter INSTANCE = new EffectiveConfigurationExtracter();
+/**
+ * Extract the effective configuration (fuse states) of the grid
+ */
+public class EffectiveConfigurationExtractor implements Extractor<Configuration> {
+    public static final EffectiveConfigurationExtractor INSTANCE = new EffectiveConfigurationExtractor();
 
-    private EffectiveConfigurationExtracter(){}
+    private EffectiveConfigurationExtractor(){}
 
     @Override
     public void extractAndSave(Substation substation) {
-        List<Fuse> allFuses = FuseExtracter.INSTANCE.getExtracted(substation);
+        List<Fuse> allFuses = FuseExtractor.INSTANCE.getExtracted(substation);
         Map<Fuse, State> configuration = new HashMap<>();
         for(Fuse f: allFuses) {
             configuration.put(f, f.getStatus().getState());

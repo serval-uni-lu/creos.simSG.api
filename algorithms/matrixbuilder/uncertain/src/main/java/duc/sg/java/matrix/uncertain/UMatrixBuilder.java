@@ -1,7 +1,7 @@
 package duc.sg.java.matrix.uncertain;
 
-import duc.sg.java.extracter.EffectiveConfigurationExtracter;
-import duc.sg.java.extracter.UFuseExtracter;
+import duc.sg.java.extracter.EffectiveConfigurationExtractor;
+import duc.sg.java.extracter.UFuseExtractor;
 import duc.sg.java.matrix.certain.EquationMatrixImp;
 import duc.sg.java.matrix.certain.CertainMatrixBuilder;
 import duc.sg.java.model.Configuration;
@@ -17,7 +17,7 @@ public class UMatrixBuilder {
     private UMatrixBuilder(){}
 
     public static List<UEquationMatrix> build(Substation substation) {
-        List<Fuse> uFuses = UFuseExtracter.INSTANCE.getExtracted(substation);
+        List<Fuse> uFuses = UFuseExtractor.INSTANCE.getExtracted(substation);
         var nbPossibilities = Math.pow(2, uFuses.size());
 
         var res = new ArrayList<UEquationMatrix>((int) nbPossibilities);
@@ -25,7 +25,7 @@ public class UMatrixBuilder {
             boolean[] fuseStates = BaseTransform.toBinary(idxCase, uFuses.size());
             double confidence = 1;
 
-            Configuration configuration = EffectiveConfigurationExtracter.INSTANCE
+            Configuration configuration = EffectiveConfigurationExtractor.INSTANCE
                     .getExtracted(substation)
                     .get(0);
 

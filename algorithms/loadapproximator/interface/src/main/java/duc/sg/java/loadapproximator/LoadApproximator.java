@@ -1,6 +1,6 @@
 package duc.sg.java.loadapproximator;
 
-import duc.sg.java.extracter.EffectiveConfigurationExtracter;
+import duc.sg.java.extracter.EffectiveConfigurationExtractor;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Configuration;
 import duc.sg.java.model.Fuse;
@@ -13,7 +13,7 @@ public interface LoadApproximator<T> {
     Map<Fuse, T> approximate(Substation substation, Configuration configuration) throws InvalidGridException, duc.sg.java.validator.Exceptions.InvalidGridException;
     void approximateAndSave(Substation substation, Configuration configuration);
     default void approximateAndSave(Substation substation) {
-        Configuration configuration = EffectiveConfigurationExtracter.INSTANCE
+        Configuration configuration = EffectiveConfigurationExtractor.INSTANCE
                 .getExtracted(substation)
                 .get(0);
         approximateAndSave(substation, configuration);
@@ -24,7 +24,7 @@ public interface LoadApproximator<T> {
         return getFuseLoads(substation, false);
     }
     default Map<Fuse, T> getFuseLoads(Substation substation, boolean forRecompute) {
-        Configuration configuration = EffectiveConfigurationExtracter.INSTANCE
+        Configuration configuration = EffectiveConfigurationExtractor.INSTANCE
                 .getExtracted(substation)
                 .get(0);
         return getFuseLoads(substation, configuration, forRecompute);
@@ -41,7 +41,7 @@ public interface LoadApproximator<T> {
         return getCableLoads(substation, false);
     }
     default Map<Cable, T> getCableLoads(Substation substation, boolean forceRecompute) {
-        Configuration configuration = EffectiveConfigurationExtracter.INSTANCE
+        Configuration configuration = EffectiveConfigurationExtractor.INSTANCE
                 .getExtracted(substation)
                 .get(0);
         return getCableLoads(substation, configuration, forceRecompute);

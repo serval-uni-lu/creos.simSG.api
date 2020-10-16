@@ -1,6 +1,6 @@
 package duc.sg.java.validator.rules;
 
-import duc.sg.java.extracter.FuseExtracter;
+import duc.sg.java.extracter.FuseExtractor;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.State;
 import duc.sg.java.model.Substation;
@@ -11,7 +11,7 @@ import java.util.Map;
 abstract class AbsFuseLevelRule implements IRule {
     @Override
     public final boolean apply(Substation substation, Map<Fuse, State> fuseStateMap) {
-        Collection<Fuse> fuses = FuseExtracter.INSTANCE.getExtracted(substation);
+        Collection<Fuse> fuses = FuseExtractor.INSTANCE.getExtracted(substation);
 
         for(Fuse fuse: fuses) {
             if(!apply(fuse, fuseStateMap)) {

@@ -1,6 +1,6 @@
 package duc.sg.java.loadapproximator.uncertain.multisubs.naive;
 
-import duc.sg.java.extracter.FuseExtracter;
+import duc.sg.java.extracter.FuseExtractor;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.SmartGrid;
 import duc.sg.java.model.State;
@@ -91,7 +91,7 @@ public class ValidConfiguration {
                    .reduce("", (s, s2) -> s + ", " + s2);
            System.out.println("[" + names + "]");
            if(!component.isEmpty()) {
-               List<Fuse> fuses = FuseExtracter.INSTANCE.getExtracted(component.get(0));
+               List<Fuse> fuses = FuseExtractor.INSTANCE.getExtracted(component.get(0));
                var configuration = new HashMap<Fuse, State>();
                for(Fuse f: fuses) {
                    if(f.getName().equals("Fuse 38") || f.getName().equals("Fuse 47")) {

@@ -7,10 +7,13 @@ import duc.sg.java.navigation.bfs.BFSFuse;
 
 import java.util.*;
 
-public class EntityExtracter implements Extracter<Entity> {
-    public static final EntityExtracter INSTANCE = new EntityExtracter();
+/**
+ * Extracts entities in a <a href="https://en.wikipedia.org/wiki/Breadth-first_search">BFS</a> order.
+ */
+public class EntityExtractor implements Extractor<Entity> {
+    public static final EntityExtractor INSTANCE = new EntityExtractor();
 
-    private EntityExtracter(){}
+    private EntityExtractor(){}
 
     @Override
     public void extractAndSave(Substation substation) {

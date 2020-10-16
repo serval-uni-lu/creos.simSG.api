@@ -2,9 +2,9 @@ package duc.sg.java.transformer.json.exporter;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import duc.sg.java.extracter.CableExtracter;
-import duc.sg.java.extracter.EntityExtracter;
-import duc.sg.java.extracter.FuseExtracter;
+import duc.sg.java.extracter.CableExtractor;
+import duc.sg.java.extracter.EntityExtractor;
+import duc.sg.java.extracter.FuseExtractor;
 import duc.sg.java.loadapproximator.LoadApproximator;
 import duc.sg.java.model.*;
 import duc.sg.java.transformer.Exporter;
@@ -38,7 +38,7 @@ public class JsonExporter implements Exporter<JSONObject> {
                 fuseLoads.putAll(approximator.getFuseLoads(substation, true));
             }
 
-            FuseExtracter.INSTANCE
+            FuseExtractor.INSTANCE
                     .getExtracted(substation)
                     .forEach((Fuse fuse) -> {
                         mapFuses.put(fuse, index[0]);
@@ -78,7 +78,7 @@ public class JsonExporter implements Exporter<JSONObject> {
                 cableLoads.putAll(approximator.getCableLoads(substation));
             }
 
-            CableExtracter.INSTANCE
+            CableExtractor.INSTANCE
                     .getExtracted(substation)
                     .forEach((Cable cable) -> {
                         final var cableMap = new HashMap<String, Object>();
@@ -110,7 +110,7 @@ public class JsonExporter implements Exporter<JSONObject> {
 
         final var entities = new JSONArray();
         grid.getSubstations().forEach((Substation substation) -> {
-            EntityExtracter.INSTANCE
+            EntityExtractor.INSTANCE
                     .getExtracted(substation)
                     .forEach((Entity entity) -> {
                         final var entityJson = new HashMap<String, Object>();

@@ -8,10 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class FuseExtracter implements Extracter<Fuse> {
-    private FuseExtracter(){}
+/**
+ * Extracts fuses in a <a href="https://en.wikipedia.org/wiki/Breadth-first_search">BFS</a> order.
+ */
+public class FuseExtractor implements Extractor<Fuse> {
+    private FuseExtractor(){}
 
-    public static final FuseExtracter INSTANCE = new FuseExtracter();
+    public static final FuseExtractor INSTANCE = new FuseExtractor();
 
     @Override
     public void extractAndSave(Substation substation) {
