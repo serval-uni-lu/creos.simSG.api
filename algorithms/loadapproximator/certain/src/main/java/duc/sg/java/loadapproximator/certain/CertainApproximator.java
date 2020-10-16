@@ -10,7 +10,6 @@ import duc.sg.java.model.Configuration;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
 import duc.sg.java.validator.matrix.GridValidator;
-import duc.sg.java.validator.matrix.IValidator;
 import org.ejml.alg.dense.linsol.svd.SolvePseudoInverseSvd;
 import org.ejml.data.DenseMatrix64F;
 
@@ -21,13 +20,14 @@ import java.util.Optional;
 
 public class CertainApproximator implements LoadApproximator<Double> {
     public static final CertainApproximator INSTANCE = new CertainApproximator();
-    IValidator validator = new GridValidator();
+
     private CertainApproximator(){}
 
     @Override
     public Map<Fuse, Double> approximate(Substation substation, Configuration configuration) {
-        //todo @ludo: fix it
-//        if(validator.isValid(substation, configuration.getConfiguration())){
+        var validator = new GridValidator();
+
+        if(validator.isValid(substation, configuration.getConfiguration())){
             EquationMatrix matrix = new CertainMatrixBuilder().build(substation)[0];
             var fuseStates = new DenseMatrix64F(matrix.getNbColumns(), matrix.getNbColumns(), true, matrix.getValues());
             final var matConsumptions = new DenseMatrix64F(matrix.getNbColumns(), 1, true, matrix.getEqResults());
@@ -51,8 +51,8 @@ public class CertainApproximator implements LoadApproximator<Double> {
                         }
                     });
             return res;
-//        }
-//        return new HashMap<Fuse, Double>();
+        }
+        return new HashMap<>();
 
     }
 

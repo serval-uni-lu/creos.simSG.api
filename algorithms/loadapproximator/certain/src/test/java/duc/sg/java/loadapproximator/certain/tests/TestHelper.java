@@ -24,9 +24,16 @@ public class TestHelper {
             }
 
             for (int j = 0; j < NB_TESTS; j++) {
-                args[i* NB_TESTS + j] = Arguments.of(
-                        fuseNames.toArray(new String[0]),
-                        randomDouble(nbCable));
+                if(nbCable == 1) {
+                    args[i* NB_TESTS + j] = Arguments.of(
+                            fuseNames.toArray(new String[0]),
+                            randomDouble(nbCable)[0]);
+                } else {
+                    args[i* NB_TESTS + j] = Arguments.of(
+                            fuseNames.toArray(new String[0]),
+                            randomDouble(nbCable));
+                }
+
             }
 
 
@@ -64,15 +71,12 @@ public class TestHelper {
         return res;
     }
 
-    static Double[] randomDouble(int nb, double max) {
-        var res = new Double[nb];
-        for (int j = 0; j < nb; j++) {
-            res[j] = randomValue(max);
-        }
-        return res;
-    }
 
     static Double[] randomDouble(int nb) {
-        return randomDouble(nb, MAX_LOAD);
+        var res = new Double[nb];
+        for (int j = 0; j < nb; j++) {
+            res[j] = randomValue(MAX_LOAD);
+        }
+        return res;
     }
 }

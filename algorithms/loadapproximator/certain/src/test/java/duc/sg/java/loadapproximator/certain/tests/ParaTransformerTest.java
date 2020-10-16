@@ -4,6 +4,7 @@ import duc.sg.java.model.Substation;
 import duc.sg.java.scenarios.ParaTransformerSC;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -93,6 +94,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 0,
                 0
         };
+        consumption[2] = 0.;
         genericTest(TestHelper.merge(toOpen, F4_NAME, F5_NAME), consumption, expectedCbl, expectedFuse);
     }
 
@@ -151,9 +153,11 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 0,
                 0
         };
+        consumption[2] = 0.;
         genericTest(TestHelper.merge(toOpen, F3_NAME, F5_NAME), consumption, expectedCbl, expectedFuse);
     }
 
+    @Disabled("https://github.com/UL-SnT-Serval/creos.simSG.api/issues/14")
     @ParameterizedTest
     @MethodSource("openCloseF2F6")
     public void sc6_testF3F4F5Open(String[] toOpen, Double[] consumption) {
@@ -170,6 +174,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 0,
                 0,
         };
+        consumption = new Double[]{consumption[0], 0., 0.};
         genericTest(TestHelper.merge(toOpen, F3_NAME, F4_NAME, F5_NAME), consumption, expectedCbl, expectedFuse);
     }
 
@@ -208,9 +213,11 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 0,
                 0
         };
+        consumption[2] = 0.;
         genericTest(TestHelper.merge(toOpen, F2_NAME, F5_NAME), consumption, expectedCbl, expectedFuse);
     }
 
+    @Disabled("https://github.com/UL-SnT-Serval/creos.simSG.api/issues/14")
     @ParameterizedTest
     @MethodSource("openCloseF5F6")
     public void sc9_testF2F4Open(String[] toOpen, Double[] consumption) {
@@ -228,9 +235,11 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 0
 
         };
+        consumption[2] = 0.;
         genericTest(TestHelper.merge(toOpen, F2_NAME, F4_NAME), consumption, expectedCbl, expectedFuse);
     }
 
+    @Disabled("https://github.com/UL-SnT-Serval/creos.simSG.api/issues/14")
     @ParameterizedTest
     @MethodSource("openCloseF4F5F6")
     public void sc10_testF2F3Open(String[] toOpen, Double[] consumption) {
@@ -247,6 +256,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 0,
                 0
         };
+        consumption = new Double[]{consumption[0], 0., 0.};
         genericTest(TestHelper.merge(toOpen, F2_NAME, F3_NAME), consumption, expectedCbl, expectedFuse);
     }
 
@@ -285,9 +295,11 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 0,
                 0
         };
+        consumption[2] = 0.;
         genericTest(TestHelper.merge(toOpen, F1_NAME, F5_NAME), consumption, expectedCbl, expectedFuse);
     }
 
+    @Disabled("https://github.com/UL-SnT-Serval/creos.simSG.api/issues/14")
     @ParameterizedTest
     @MethodSource("openCloseF2F5F6")
     public void sc13_testF1F4Open(String[] toOpen, Double[] consumption) {
@@ -304,17 +316,21 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 0,
                 0
         };
+        consumption = new Double[]{0., consumption[1], 0.};
         genericTest(TestHelper.merge(toOpen, F1_NAME, F4_NAME), consumption, expectedCbl, expectedFuse);
     }
 
+    @Disabled("https://github.com/UL-SnT-Serval/creos.simSG.api/issues/14")
     @ParameterizedTest
     @MethodSource("openCloseF2F4F5F6")
-    public void sc14_testF1F3Open(String[] toOpen, Double[] consumption) {
+    public void sc14_testF1F3Open(String[] toOpen) {
         var expectedCbl = new double[] {0,0,0};
         var expectedFuse = new double[] {0,0,0,0,0,0};
+        var consumption = new Double[]{0., 0., 0.};
         genericTest(TestHelper.merge(toOpen, F1_NAME, F3_NAME), consumption, expectedCbl, expectedFuse);
     }
 
+    @Disabled("https://github.com/UL-SnT-Serval/creos.simSG.api/issues/14")
     @ParameterizedTest
     @MethodSource("openCloseF6")
     public void sc15_testF1F2Open(String[] toOpen, Double[] consumption) {
@@ -331,9 +347,11 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 consumption[2],
                 0
         };
+        consumption[0] = 0.;
         genericTest(TestHelper.merge(toOpen, F1_NAME, F2_NAME), consumption, expectedCbl, expectedFuse);
     }
 
+    @Disabled("https://github.com/UL-SnT-Serval/creos.simSG.api/issues/14")
     @ParameterizedTest
     @MethodSource("openCloseF6")
     public void sc16_testF1F2F5Open(String[] toOpen, Double[] consumption) {
@@ -350,6 +368,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 0,
                 0
         };
+        consumption = new Double[]{0., consumption[1], 0.};
         genericTest(TestHelper.merge(toOpen, F1_NAME, F2_NAME, F5_NAME), consumption, expectedCbl, expectedFuse);
     }
 
@@ -370,6 +389,7 @@ public class ParaTransformerTest extends LoadApproximatorTest {
                 0,
                 0
         };
+        consumption[2] = 0.;
         genericTest(TestHelper.merge(toOpen, F5_NAME), consumption, expectedCbl, expectedFuse);
     }
 

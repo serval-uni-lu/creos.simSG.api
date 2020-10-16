@@ -5,12 +5,11 @@ import duc.sg.java.model.Cable;
 import duc.sg.java.model.Configuration;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
-import duc.sg.java.validator.Exceptions.InvalidGridException;
 
 import java.util.Map;
 
 public interface LoadApproximator<T> {
-    Map<Fuse, T> approximate(Substation substation, Configuration configuration) throws InvalidGridException, duc.sg.java.validator.Exceptions.InvalidGridException;
+    Map<Fuse, T> approximate(Substation substation, Configuration configuration);
     void approximateAndSave(Substation substation, Configuration configuration);
     default void approximateAndSave(Substation substation) {
         Configuration configuration = EffectiveConfigurationExtractor.INSTANCE

@@ -15,12 +15,14 @@ public class SubstationRule implements IRule {
     public boolean apply(Substation substation, Map<Fuse, State> fuseStateMap) {
         List<Fuse> subsFuses = substation.getFuses();
 
+        boolean allCablesWoCons = true;
         for(Fuse fuse: subsFuses) {
             if(fuseStateMap.get(fuse) == State.CLOSED) {
                 return true;
             }
+            allCablesWoCons = allCablesWoCons & fuse.getCable().getConsumption() == 0;
         }
 
-        return false;
+        return allCablesWoCons;
     }
 }

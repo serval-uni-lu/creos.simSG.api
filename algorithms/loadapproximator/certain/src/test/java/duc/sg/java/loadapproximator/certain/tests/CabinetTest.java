@@ -4,6 +4,7 @@ import duc.sg.java.model.Substation;
 import duc.sg.java.scenarios.CabinetSC;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -82,6 +83,7 @@ public class CabinetTest extends LoadApproximatorTest {
                 0,
                 0
         };
+        consumptions[2] = 0.;
         genericTest(TestHelper.merge(toOpen, F4_NAME), consumptions, expectedCables, expectedFuses);
     }
 
@@ -101,6 +103,7 @@ public class CabinetTest extends LoadApproximatorTest {
                 0,
                 0
         };
+        consumptions[1] = 0.;
         genericTest(TestHelper.merge(toOpen, F3_NAME), consumptions, expectedCables, expectedFuses);
     }
 
@@ -109,22 +112,28 @@ public class CabinetTest extends LoadApproximatorTest {
     public void sc4_testF3F4Open(String[] toOpen, Double[] consumptions) {
         var expectedCables = new double[] {consumptions[0], 0, 0};
         var expectedFuses = new double[] {consumptions[0], 0, 0, 0, 0, 0};
+        consumptions[1] = 0.;
+        consumptions[2] = 0.;
         genericTest(TestHelper.merge(toOpen, F3_NAME, F4_NAME), consumptions, expectedCables, expectedFuses);
     }
 
+    @Disabled("See https://github.com/UL-SnT-Serval/creos.simSG.api/issues/14")
     @ParameterizedTest
     @MethodSource("openCloseF3F4F5F6")
     public void sc5_testF2Open(String[] toOpen, Double[] consumptions) {
         var expectedCables = new double[] {consumptions[0],0,0};
         var expectedFuses = new double[] {consumptions[0],0,0,0,0,0,0};
+        consumptions[1] = 0.;
+        consumptions[2] = 0.;
         genericTest(TestHelper.merge(toOpen, F2_NAME), consumptions, expectedCables, expectedFuses);
     }
 
     @ParameterizedTest
     @MethodSource("openCloseF2F3F4F5F6")
-    public void sc6_testF1Open(String[] toOpen, Double[] consumptions) {
+    public void sc6_testF1Open(String[] toOpen) {
         var expectedCables = new double[] {0,0,0};
         var expectedFuses = new double[] {0,0,0,0,0,0};
+        var consumptions = new Double[]{0., 0., 0.};
         genericTest(TestHelper.merge(toOpen, F1_NAME), consumptions, expectedCables, expectedFuses);
     }
 

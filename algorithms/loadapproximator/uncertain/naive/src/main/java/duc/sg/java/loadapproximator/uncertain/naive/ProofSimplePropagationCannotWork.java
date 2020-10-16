@@ -2,6 +2,10 @@ package duc.sg.java.loadapproximator.uncertain.naive;
 
 import java.util.Arrays;
 
+/**
+ * A class that shows that uncertainty propagation through operators, as intended while working on the
+ * <a href="https://github.com/lmouline/aintea">Ain'tea</a> language, cannot work for load approximation.
+ */
 public class ProofSimplePropagationCannotWork {
 
     // Working scenario:
@@ -9,7 +13,6 @@ public class ProofSimplePropagationCannotWork {
     // s-<                   >-c
     //   |-[f3]--------[f4]-|
     // f2 status is uncertain
-
 
 
     static class M {

@@ -3,6 +3,7 @@ package duc.sg.java.loadapproximator.certain.tests;
 import duc.sg.java.model.Substation;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -49,10 +50,9 @@ public class SingleCableTest extends LoadApproximatorTest{
         genericTest(new String[]{}, consumptions, expectedCableLoad, expectedFuseLoad);
     }
 
-    @ParameterizedTest
-    @MethodSource("threeValues")
-    public void testFSubsOpen(double m1Cons, double m2Cons, double m3Cons) {
-        var consumptions = new Double[]{m1Cons + m2Cons + m3Cons};
+    @Test
+    public void testFSubsOpen() {
+        var consumptions = new Double[]{0.};
         var openFuses = new String[]{F1_NAME};
 
         var expectedCableLoad = new double[] {0};
@@ -60,7 +60,6 @@ public class SingleCableTest extends LoadApproximatorTest{
                 0,
                 0.
         };
-
         genericTest(openFuses, consumptions, expectedCableLoad, expectedFuseLoad);
     }
 
@@ -80,10 +79,9 @@ public class SingleCableTest extends LoadApproximatorTest{
     }
 
 
-    @ParameterizedTest
-    @MethodSource("threeValues")
-    public void testAllOpen(double m1Cons, double m2Cons, double m3Cons) {
-        var consumptions = new Double[]{m1Cons + m2Cons + m3Cons};
+    @Test
+    public void testAllOpen() {
+        var consumptions = new Double[]{0.};
         var openFuses = new String[]{F1_NAME, F2_NAME};
 
         var expectedCableLoad = new double[] {0};

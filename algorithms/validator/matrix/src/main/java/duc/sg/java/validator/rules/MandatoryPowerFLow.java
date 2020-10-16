@@ -13,7 +13,7 @@ public class MandatoryPowerFLow implements IRule {
         Fuse[] alwaysOpen = new PowerFlow2().getFuseOnMandatoryPF(substation);
 
         for(Fuse fuse: alwaysOpen) {
-            if(fuseStateMap.get(fuse) == State.OPEN) {
+            if(fuse.getCable().getConsumption() > 0 && fuseStateMap.get(fuse) == State.OPEN) {
                 return false;
             }
         }

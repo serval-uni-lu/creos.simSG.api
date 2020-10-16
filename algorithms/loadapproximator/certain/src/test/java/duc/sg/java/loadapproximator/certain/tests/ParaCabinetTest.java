@@ -4,6 +4,7 @@ import duc.sg.java.model.Substation;
 import duc.sg.java.scenarios.ParaCabinetSC;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -88,30 +89,37 @@ public class ParaCabinetTest extends LoadApproximatorTest {
         genericTest(toOpen, consumptions, expectedCables, expectedFuses);
     }
 
+    @Disabled("https://github.com/UL-SnT-Serval/creos.simSG.api/issues/14")
     @ParameterizedTest
     @MethodSource("openCloseF2F3F4F5F6F7F8")
-    public void sc2_f1Open(String[] toOpen, Double[] consumptions) {
+    public void sc2_f1Open(String[] toOpen) {
         var expectedCables = new double[] {0,0,0,0};
         var expectedFuses = new double[] {0,0,0,0,0,0,0,0};
+        var consumptions = new Double[]{0., 0., 0., 0.};
         genericTest(TestHelper.merge(toOpen, F1_NAME), consumptions, expectedCables, expectedFuses);
     }
 
+    @Disabled("https://github.com/UL-SnT-Serval/creos.simSG.api/issues/14")
     @ParameterizedTest
     @MethodSource("openCloseF3F4F5F6F7F8")
     public void sc3_f2Open(String[] toOpen, Double[] consumptions) {
         var expectedCables = new double[] {consumptions[0],0,0,0};
         var expectedFuses = new double[] {consumptions[0],0,0,0,0,0,0,0};
+        consumptions = new Double[]{consumptions[0], 0., 0., 0.};
         genericTest(TestHelper.merge(toOpen, F2_NAME), consumptions, expectedCables, expectedFuses);
     }
 
+    @Disabled("https://github.com/UL-SnT-Serval/creos.simSG.api/issues/14")
     @ParameterizedTest
     @MethodSource("openCloseF4F6F7F8")
     public void sc4_f3f5Open(String[] toOpen, Double[] consumptions) {
         var expectedCables = new double[] {consumptions[0],0,0,0};
         var expectedFuses = new double[] {consumptions[0],0,0,0,0,0,0,0};
+        consumptions = new Double[]{consumptions[0], 0., 0., 0.};
         genericTest(TestHelper.merge(toOpen, F3_NAME, F5_NAME), consumptions, expectedCables, expectedFuses);
     }
 
+    @Disabled("https://github.com/UL-SnT-Serval/creos.simSG.api/issues/14")
     @ParameterizedTest
     @MethodSource("openCloseF7F8")
     public void sc5_f4f6Open(String[] toOpen, Double[] consumptions) {
@@ -130,6 +138,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 0,
                 0,
                 0};
+        consumptions[3] = 0.;
         genericTest(TestHelper.merge(toOpen, F4_NAME, F6_NAME), consumptions, expectedCables, expectedFuses);
     }
 
@@ -155,6 +164,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 Math.max(expectedFuses[4], expectedFuses[5]),
                 0
         };
+        consumptions[3] = 0.;
         genericTest(TestHelper.merge(toOpen, F7_NAME), consumptions, expectedCables, expectedFuses);
     }
 
@@ -203,6 +213,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 0,
                 0
         };
+        consumptions[3] = 0.;
         genericTest(TestHelper.merge(toOpen, F6_NAME, F7_NAME), consumptions, expectedCables, expectedFuses);
     }
 
@@ -251,9 +262,11 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 0,
                 0
         };
+        consumptions[3] = 0.;
         genericTest(TestHelper.merge(toOpen, F5_NAME, F7_NAME), consumptions, expectedCables, expectedFuses);
     }
 
+    @Disabled("https://github.com/UL-SnT-Serval/creos.simSG.api/issues/14")
     @ParameterizedTest
     @MethodSource("openCloseF8")
     public void sc11_f5f6Open(String[] toOpen, Double[] consumptions) {
@@ -274,9 +287,11 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 consumptions[3],
                 0
         };
+        consumptions[2] = 0.;
         genericTest(TestHelper.merge(toOpen, F5_NAME, F6_NAME), consumptions, expectedCables, expectedFuses);
     }
 
+    @Disabled("https://github.com/UL-SnT-Serval/creos.simSG.api/issues/14")
     @ParameterizedTest
     @MethodSource("openCloseF4F8")
     public void sc12_f5f6f7Open(String[] toOpen, Double[] consumptions) {
@@ -297,6 +312,8 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 0,
                 0
         };
+        consumptions[2] = 0.;
+        consumptions[3] = 0.;
         genericTest(TestHelper.merge(toOpen, F5_NAME, F6_NAME, F7_NAME), consumptions, expectedCables, expectedFuses);
     }
 
@@ -323,6 +340,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
         genericTest(TestHelper.merge(toOpen, F4_NAME), consumptions, expectedCables, expectedFuses);
     }
 
+    @Disabled("https://github.com/UL-SnT-Serval/creos.simSG.api/issues/14")
     @ParameterizedTest
     @MethodSource("openCloseF6F7F8")
     public void sc14_f4f5Open(String[] toOpen, Double[] consumptions) {
@@ -343,9 +361,12 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 0,
                 0
         };
+        consumptions[2] = 0.;
+        consumptions[3] = 0.;
         genericTest(TestHelper.merge(toOpen, F5_NAME, F4_NAME), consumptions, expectedCables, expectedFuses);
     }
 
+    @Disabled("https://github.com/UL-SnT-Serval/creos.simSG.api/issues/14")
     @ParameterizedTest
     @MethodSource("openCloseF4F7F8")
     public void sc15_f3f6Open(String[] toOpen, Double[] consumptions) {
@@ -366,6 +387,8 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 0,
                 0
         };
+        consumptions[1] = 0.;
+        consumptions[3] = 0.;
         genericTest(TestHelper.merge(toOpen, F3_NAME, F6_NAME), consumptions, expectedCables, expectedFuses);
     }
 
@@ -390,6 +413,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 0
 
         };
+        consumptions[3] = 0.;
         genericTest(TestHelper.merge(toOpen, F3_NAME, F7_NAME), consumptions, expectedCables, expectedFuses);
     }
 
@@ -417,6 +441,7 @@ public class ParaCabinetTest extends LoadApproximatorTest {
         genericTest(TestHelper.merge(toOpen, F3_NAME), consumptions, expectedCables, expectedFuses);
     }
 
+    @Disabled("https://github.com/UL-SnT-Serval/creos.simSG.api/issues/14")
     @ParameterizedTest
     @MethodSource("openCloseF8")
     public void sc18_f3f4Open(String[] toOpen, Double[] consumptions) {
@@ -437,12 +462,14 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 consumptions[3],
                 0
         };
+        consumptions[1] = 0.;
         genericTest(TestHelper.merge(toOpen, F3_NAME, F4_NAME), consumptions, expectedCables, expectedFuses);
     }
 
+    @Disabled("https://github.com/UL-SnT-Serval/creos.simSG.api/issues/14")
     @ParameterizedTest
     @MethodSource("openCloseF8")
-    public void sc19_f3f4f4f7Open(String[] toOpen, Double[] consumptions) {
+    public void sc19_f3f4f7Open(String[] toOpen, Double[] consumptions) {
         var expectedCables = new double[] {
                 consumptions[0] + consumptions[2],
                 0,
@@ -460,6 +487,8 @@ public class ParaCabinetTest extends LoadApproximatorTest {
                 0,
                 0
         };
+        consumptions[1] = 0.;
+        consumptions[3] = 0.;
         genericTest(TestHelper.merge(toOpen, F3_NAME, F4_NAME, F7_NAME), consumptions, expectedCables, expectedFuses);
     }
 
