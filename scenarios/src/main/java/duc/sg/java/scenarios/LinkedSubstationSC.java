@@ -26,16 +26,16 @@ public class LinkedSubstationSC extends Scenario {
         grid.addSubstations(ss2);
         //Fuse creation
         Fuse f1,f2,f3,f4,f5,f6;
-        f1 = new Fuse(F1_NAME);
+//        f1 = new Fuse(F1_NAME);
         f2 = new Fuse(F2_NAME);
         f3 = new Fuse(F3_NAME);
         f4 = new Fuse(F4_NAME);
         f5 = new Fuse(F5_NAME);
-        f6 = new Fuse(F6_NAME);
+//        f6 = new Fuse(F6_NAME);
 
         //Fuses assignment
-        f1.setOwner(ss1);
-        f1.openFuse();
+//        f1.setOwner(ss1);
+//        f1.openFuse();
         f2.setOwner(ss1);
         f2.closeFuse();
         f3.setOwner(cabinet);
@@ -44,10 +44,11 @@ public class LinkedSubstationSC extends Scenario {
         f4.closeFuse();
         f5.setOwner(ss2);
         f5.closeFuse();
-        f6.setOwner(ss2);
-        f6.openFuse();
+//        f6.setOwner(ss2);
+//        f6.openFuse();
 
-        fuses = new Fuse[]{f1, f2, f3, f4, f5, f6};
+//        fuses = new Fuse[]{f1, f2, f3, f4, f5, f6};
+        fuses = new Fuse[]{f2, f3, f4, f5};
         //Cable creation
         Cable c1 = new Cable("c1");
         Cable c2 = new Cable("c2");
@@ -60,8 +61,9 @@ public class LinkedSubstationSC extends Scenario {
         c2.setFirstFuse(f4);
         c2.setSecondFuse(f5);
 
-        ss1.addFuses(f1, f2);
-        ss2.addFuses(f5,f6);
+        ss1.addFuses(f2);
+        cabinet.addFuses(f3,f4);
+        ss2.addFuses(f5);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package duc.sg.java.matrix.uncertain;
 
-import duc.sg.java.extracter.EffectiveConfigurationExtractor;
-import duc.sg.java.extracter.UFuseExtractor;
+import duc.sg.java.extractor.EffectiveConfigurationExtractor;
+import duc.sg.java.extractor.UFuseExtractor;
 import duc.sg.java.matrix.certain.EquationMatrixImp;
 import duc.sg.java.matrix.certain.CertainMatrixBuilder;
 import duc.sg.java.model.Configuration;

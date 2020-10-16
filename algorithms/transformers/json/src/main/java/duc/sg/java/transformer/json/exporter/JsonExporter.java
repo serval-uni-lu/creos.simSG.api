@@ -2,9 +2,9 @@ package duc.sg.java.transformer.json.exporter;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import duc.sg.java.extracter.CableExtractor;
-import duc.sg.java.extracter.EntityExtractor;
-import duc.sg.java.extracter.FuseExtractor;
+import duc.sg.java.extractor.CableExtractor;
+import duc.sg.java.extractor.EntityExtractor;
+import duc.sg.java.extractor.FuseExtractor;
 import duc.sg.java.loadapproximator.LoadApproximator;
 import duc.sg.java.model.*;
 import duc.sg.java.transformer.Exporter;

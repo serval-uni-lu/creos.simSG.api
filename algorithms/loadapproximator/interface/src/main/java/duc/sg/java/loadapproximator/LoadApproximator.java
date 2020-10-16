@@ -1,6 +1,6 @@
 package duc.sg.java.loadapproximator;
 
-import duc.sg.java.extracter.EffectiveConfigurationExtractor;
+import duc.sg.java.extractor.EffectiveConfigurationExtractor;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Configuration;
 import duc.sg.java.model.Fuse;

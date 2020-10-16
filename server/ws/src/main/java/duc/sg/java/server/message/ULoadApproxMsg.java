@@ -1,7 +1,7 @@
 package duc.sg.java.server.message;
 
-import duc.sg.java.extracter.CableExtractor;
-import duc.sg.java.extracter.FuseExtractor;
+import duc.sg.java.extractor.CableExtractor;
+import duc.sg.java.extractor.FuseExtractor;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.SmartGrid;

@@ -7,7 +7,7 @@ public enum ScenarioName {
     PARA_W_DEADEND(4),
     PARA_CABINET(8),
     INDIRECT_PARALLEL(10),
-    LINKED_SUBSTATIONS(6),
+    LINKED_SUBSTATIONS(4),
     UNDEFINED(-1);
 
 

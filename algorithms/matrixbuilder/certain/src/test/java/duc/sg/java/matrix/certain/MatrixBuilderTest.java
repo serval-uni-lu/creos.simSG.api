@@ -1,6 +1,6 @@
 package duc.sg.java.matrix.certain;
 
-import duc.sg.java.extracter.FuseExtractor;
+import duc.sg.java.extractor.FuseExtractor;
 import duc.sg.java.matrix.EquationMatrix;
 import duc.sg.java.model.Configuration;
 import duc.sg.java.model.Fuse;

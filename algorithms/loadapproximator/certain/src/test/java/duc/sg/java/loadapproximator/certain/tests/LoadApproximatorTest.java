@@ -1,6 +1,6 @@
 package duc.sg.java.loadapproximator.certain.tests;
 
-import duc.sg.java.extracter.FuseExtractor;
+import duc.sg.java.extractor.FuseExtractor;
 import duc.sg.java.loadapproximator.certain.CertainApproximator;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;

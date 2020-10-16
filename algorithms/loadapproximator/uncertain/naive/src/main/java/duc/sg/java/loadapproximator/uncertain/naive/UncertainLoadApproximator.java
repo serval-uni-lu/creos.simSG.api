@@ -1,6 +1,6 @@
 package duc.sg.java.loadapproximator.uncertain.naive;
 
-import duc.sg.java.extracter.FuseExtractor;
+import duc.sg.java.extractor.FuseExtractor;
 import duc.sg.java.matrix.uncertain.UMatrixBuilder;
 import duc.sg.java.matrix.uncertain.UEquationMatrix;
 import duc.sg.java.model.Fuse;

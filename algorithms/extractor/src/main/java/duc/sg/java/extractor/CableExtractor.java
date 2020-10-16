@@ -1,4 +1,4 @@
-package duc.sg.java.extracter;
+package duc.sg.java.extractor;
 
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
