@@ -37,21 +37,10 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>duc.sg.java</groupId>
-            <artifactId>exporter.json</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.61</version>
         </dependency>
-
-
-
-
-
         <dependency>
             <groupId>io.undertow</groupId>
             <artifactId>undertow-core</artifactId>
@@ -69,7 +58,7 @@
         </dependency>
         <dependency>
             <groupId>duc.sg.java</groupId>
-            <artifactId>importer.json</artifactId>
+            <artifactId>transformer.json</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

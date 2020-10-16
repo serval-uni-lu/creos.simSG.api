@@ -1,12 +1,12 @@
 package duc.sg.java.loadapproximator.uncertain.multisubs.naive;
 
 import duc.sg.java.extracter.FuseExtracter;
-import duc.sg.java.importer.ImportationException;
-import duc.sg.java.importer.json.JsonGridImporter;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.SmartGrid;
 import duc.sg.java.model.State;
 import duc.sg.java.model.Substation;
+import duc.sg.java.transformer.ImportationException;
+import duc.sg.java.transformer.json.importer.JsonGridImporter;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;

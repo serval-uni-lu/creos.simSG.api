@@ -31,7 +31,12 @@ The project uses Maven for the project management. Uses the classic cycle goals 
 
 ## Project structure 
 
+- `algorithms`: this directory contains all modules that implement an algorithm. **Note:** algorithms **SHOULD NOT** modify the model itself.
+    - `circlefinder`: this module retrieves all possible circle in a topology
 - `model`: module that contains the smart grid model, should only contain an abstraction of the grid state
+- `scenarios`: this modules contains the implementation of the different pre-built topologies
+- `server`: directories with a list of modules for the server
+    - `ws`: module that contains a WebSocket server
 - `simsg.uncertainty`: contains all uncertainty elements specific for the smart grid
 - `uncertainty`: module that contains different utils to manipulate uncertain data, should be general and not smart grid specific
 - `utils`
@@ -39,7 +44,6 @@ The project uses Maven for the project management. Uses the classic cycle goals 
 to delete
 
 - `algorithms`: folder that contains different module to analyse the grid and save the result into the model that can be used by other algorithms
-    - `cyle`: folder that contain different modules to find circles in a grid
     - `importer`: contain the different algorithms to import grid from different format
         - `json`: import data from Json files
     - `powerflow`: ...

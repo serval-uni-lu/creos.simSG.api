@@ -1,12 +1,12 @@
 package duc.sg.java.loadapproximator.uncertain.multisubs.bsrules;
 
 import duc.sg.java.circlefinder.Circle;
-import duc.sg.java.importer.ImportationException;
-import duc.sg.java.importer.json.JsonGridImporter;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.SmartGrid;
 import duc.sg.java.model.State;
 import duc.sg.java.navigation.bfs.BFSFuse;
+import duc.sg.java.transformer.ImportationException;
+import duc.sg.java.transformer.json.importer.JsonGridImporter;
 import duc.sg.java.utils.OArrays;
 
 import java.io.InputStream;

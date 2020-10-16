@@ -1,8 +1,8 @@
 package duc.sg.java.loadapproximator.uncertain.multisubs.bsrules;
 
-import duc.sg.java.importer.ImportationException;
-import duc.sg.java.importer.json.JsonGridImporter;
 import duc.sg.java.model.SmartGrid;
+import duc.sg.java.transformer.ImportationException;
+import duc.sg.java.transformer.json.importer.JsonGridImporter;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;

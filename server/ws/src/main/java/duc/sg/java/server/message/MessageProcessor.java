@@ -2,9 +2,9 @@ package duc.sg.java.server.message;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import duc.sg.java.importer.ImportationException;
-import duc.sg.java.importer.json.JsonGridImporter;
 import duc.sg.java.model.SmartGrid;
+import duc.sg.java.transformer.ImportationException;
+import duc.sg.java.transformer.json.importer.JsonGridImporter;
 
 import java.util.Optional;
 
