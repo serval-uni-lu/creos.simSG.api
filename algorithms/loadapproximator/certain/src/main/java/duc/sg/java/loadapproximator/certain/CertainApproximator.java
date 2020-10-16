@@ -18,6 +18,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Approximate the load by solving the matrix equation: B = C / A,
+ * where A is a matrix of 0/1 that represents equations of the grid,
+ * C a vector with all consumptions and B a vector with fuse loads.
+ *
+ * In the code: B is named "solution",  A is named "fuseStates", and B "matConsumptions"
+ *
+ * Cable loads equal the maximal load in its fuses.
+ *
+ */
 public class CertainApproximator implements LoadApproximator<Double> {
     public static final CertainApproximator INSTANCE = new CertainApproximator();
 
@@ -28,9 +38,10 @@ public class CertainApproximator implements LoadApproximator<Double> {
         var validator = new GridValidator();
 
         if(validator.isValid(substation, configuration.getConfiguration())){
-            EquationMatrix matrix = new CertainMatrixBuilder().build(substation)[0];
-            var fuseStates = new DenseMatrix64F(matrix.getNbColumns(), matrix.getNbColumns(), true, matrix.getValues());
-            final var matConsumptions = new DenseMatrix64F(matrix.getNbColumns(), 1, true, matrix.getEqResults());
+            EquationMatrix equationMatrix = new CertainMatrixBuilder().build(substation)[0];
+
+            var fuseStates = new DenseMatrix64F(equationMatrix.getNbColumns(), equationMatrix.getNbColumns(), true, equationMatrix.getValues());
+            final var matConsumptions = new DenseMatrix64F(equationMatrix.getNbColumns(), 1, true, equationMatrix.getEqResults());
 
             DenseMatrix64F solution = new DenseMatrix64F(matConsumptions.numRows, matConsumptions.numCols);
             SolvePseudoInverseSvd solver = new SolvePseudoInverseSvd();
@@ -43,11 +54,11 @@ public class CertainApproximator implements LoadApproximator<Double> {
             FuseExtractor.INSTANCE
                     .getExtracted(substation)
                     .forEach((Fuse f) -> {
-                        Integer idx = matrix.getColumnIdx(f);
+                        Integer idx = equationMatrix.getColumnIdx(f);
                         if(solData.length == 0 || idx == null) {
                             res.put(f,0.);
                         } else {
-                            res.put(f, solData[matrix.getColumnIdx(f)]);
+                            res.put(f, solData[equationMatrix.getColumnIdx(f)]);
                         }
                     });
             return res;

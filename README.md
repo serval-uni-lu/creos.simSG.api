@@ -34,6 +34,12 @@ The project uses Maven for the project management. Uses the classic cycle goals 
 - `algorithms`: this directory contains all modules that implement an algorithm. **Note:** algorithms **SHOULD NOT** modify the model itself.
     - `circlefinder`: this module retrieves all possible circle in a topology
     - `extractor`: modules that contains algorithm to extract different elements (cables, entities, fuses, ...) of a grid
+    - `loadapproximator`: contains different algorithms to approximate the load
+        - `certain`: alogorithm that do not consider fuse status confidence. 
+        - `uncertain`: contains the different algorithms to handle uncertainty for the load approximation
+            - `naive`: naive version that process all possible configurations for mono-substation topologies
+            - `multisubs`: contains the algorithms to approximate load in multi-substations topologies
+            - `bsrules`: version that filter out invalid configurations for mono-substation topologies
     - `transformers`: contain different modules to transform the grid into another format or from another format to the grid
             - `json`: transform the grid from/into JSON object
 - `model`: module that contains the smart grid model, should only contain an abstraction of the grid state
@@ -44,16 +50,12 @@ The project uses Maven for the project management. Uses the classic cycle goals 
 - `uncertainty`: module that contains different utils to manipulate uncertain data, should be general and not smart grid specific
 - `utils`
 
+
+
 to delete
 
-- `algorithms`: folder that contains different module to analyse the grid and save the result into the model that can be used by other algorithms
-   
-    - `powerflow`: ...
-    - `validator`: module that contains algorithms to validate a grid
-- `loadapproximator`: contain different algorithms to approximate the load
-    - `certain`: algorithm that do not consider fuse uncertainty
-    - `uncertainty.naive`: naive  version that process all possibilities
-    - `uncertain.onlyvalid`: version that approximate the load only on the valid configurations
+- `powerflow`: ...
+- `validator`: module that contains algorithms to validate a grid
 
 
 
