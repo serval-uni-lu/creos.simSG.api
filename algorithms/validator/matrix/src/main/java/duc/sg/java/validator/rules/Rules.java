@@ -11,7 +11,7 @@ public final class Rules {
                 new SubstationRule(),
                 new AllCirclesRule(),
                 new MandatoryPowerFLow(),
-                new LinkedSubstation()
+                new LinkedSubstationRule()
         };
     }
 

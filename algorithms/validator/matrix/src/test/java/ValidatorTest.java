@@ -1,10 +1,19 @@
+import duc.sg.java.extracter.FuseExtracter;
+import duc.sg.java.model.Fuse;
 import duc.sg.java.model.SmartGrid;
+import duc.sg.java.model.State;
 import duc.sg.java.model.Substation;
-import duc.sg.java.scenarios.CabinetSC;
 import duc.sg.java.scenarios.ScenarioBuilder;
 import duc.sg.java.scenarios.ScenarioName;
+import duc.sg.java.validator.rules.IRule;
+import duc.sg.java.validator.rules.LinkedSubstationRule;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 public class ValidatorTest {
 
     @Test
@@ -17,7 +26,12 @@ public class ValidatorTest {
                     .getGrid();
 
 
-        Assertions.assertTrue(true);
+        Substation substation = new ArrayList<>(grid.getSubstations()).get(0);
+        Map<Fuse, State> fuseStateMap = new HashMap<>();
+        FuseExtracter.INSTANCE.getExtracted(substation).forEach(f -> fuseStateMap.put(f,f.getStatus().getState()));
+
+        IRule linkedsubstationRule = new LinkedSubstationRule();
+        Assertions.assertTrue(linkedsubstationRule.apply(substation,fuseStateMap));
     }
 
 }
