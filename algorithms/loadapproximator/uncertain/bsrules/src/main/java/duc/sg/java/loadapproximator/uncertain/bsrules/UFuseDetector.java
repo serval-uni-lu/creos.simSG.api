@@ -4,6 +4,9 @@ import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
 import duc.sg.java.preprocessor.powerflow.PowerFlow2;
 
+/**
+ * List all uncertain fuses, and mark certain those that belong to the mandatory power flow.
+ */
 public class UFuseDetector {
 
     private UFuseDetector() {}

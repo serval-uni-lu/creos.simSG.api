@@ -8,6 +8,11 @@ import duc.sg.java.model.Substation;
 
 import java.util.Map;
 
+/**
+ * Interface to define algorithms for the load approximation.
+ *
+ * @param <T> Type of the result of the load approximation.
+ */
 public interface LoadApproximator<T> {
     Map<Fuse, T> approximate(Substation substation, Configuration configuration);
     void approximateAndSave(Substation substation, Configuration configuration);

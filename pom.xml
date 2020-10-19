@@ -20,8 +20,7 @@
         <module>algorithms/matrixbuilder/uncertain</module>
         <module>algorithms/loadapproximator/uncertain/naive</module>
         <module>algorithms/loadapproximator/uncertain/bsrules</module>
-        <module>algorithms/loadapproximator/uncertain/multisubs/bsrules</module>
-        <module>algorithms/loadapproximator/uncertain/multisubs/naive</module>
+        <module>algorithms/loadapproximator/uncertain/multisubs/brainstorm</module>
         <module>algorithms/navigation/interface</module>
         <module>algorithms/navigation/bfs</module>
         <module>algorithms/extractor</module>

@@ -12,6 +12,11 @@ import org.ejml.data.DenseMatrix64F;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ * Naive approximation of the uncertain load for mono-substation topologies.
+ * From the list of uncertain fuses, the algorithm determines all possible configurations, with their confidence level.
+ * Then it approximates the load for all of them, even though the configuration is non-realistic.
+ */
 public class UncertainLoadApproximator {
     private UncertainLoadApproximator() {}
 

@@ -7,6 +7,10 @@ import duc.sg.java.scenarios.*;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+/**
+ * Manual comparison of the first ({@link ULoadApproximator_V1}) and second ({@link ULoadApproximator_V2}) version of
+ * the algorithm.
+ */
 public class ManualTest {
 
     public static Fuse get(Fuse[] array, String toSearch) {
@@ -79,7 +83,7 @@ public class ManualTest {
 //        }
 
 
-        duc.sg.java.loadapproximator.uncertain.bsrules.old.UncertainLoadApproximator.approximate(sc.getSubstation());
+        ULoadApproximator_V1.approximate(sc.getSubstation());
         Stream.of(fuses)
                 .map(new Function<Fuse, String>() {
                     @Override
@@ -91,7 +95,7 @@ public class ManualTest {
 
         System.out.println();
 
-        duc.sg.java.loadapproximator.uncertain.bsrules.UncertainLoadApproximator.approximate(sc.getSubstation());
+        ULoadApproximator_V2.approximate(sc.getSubstation());
         Stream.of(fuses)
                 .map(new Function<Fuse, String>() {
                     @Override

@@ -38,7 +38,7 @@ The project uses Maven for the project management. Uses the classic cycle goals 
         - `certain`: alogorithm that do not consider fuse status confidence. 
         - `uncertain`: contains the different algorithms to handle uncertainty for the load approximation
             - `naive`: naive version that process all possible configurations for mono-substation topologies
-            - `multisubs`: contains the algorithms to approximate load in multi-substations topologies
+            - `multisubs`: contains first steps/thoughts towards an algorithm for uncertain load approximation **WARNING**: none of the algorithms are tested. So they might contain bugs or be even completely wrong
             - `bsrules`: version that filter out invalid configurations for mono-substation topologies
     - `transformers`: contain different modules to transform the grid into another format or from another format to the grid
             - `json`: transform the grid from/into JSON object

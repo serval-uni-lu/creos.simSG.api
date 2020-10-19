@@ -2,6 +2,7 @@ package duc.sg.java.server.message;
 
 import duc.sg.java.extractor.CableExtractor;
 import duc.sg.java.extractor.FuseExtractor;
+import duc.sg.java.loadapproximator.uncertain.bsrules.ULoadApproximator_V2;
 import duc.sg.java.model.Cable;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.SmartGrid;
@@ -37,7 +38,7 @@ public class ULoadApproxMsg extends Message implements RequestMessage {
                 );
             case BS_RULE ->
                 grid.getSubstations().forEach(
-                        duc.sg.java.loadapproximator.uncertain.bsrules.UncertainLoadApproximator::approximate
+                        ULoadApproximator_V2::approximate
                 );
         }
 
