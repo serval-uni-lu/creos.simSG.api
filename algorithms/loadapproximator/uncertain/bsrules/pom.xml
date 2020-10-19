@@ -3,7 +3,7 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>creos.simsg.api</groupId>
-        <version>2020.09.DD-SNAPSHOT</version>
+        <version>2020.10.19</version>
         <relativePath>../../../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
