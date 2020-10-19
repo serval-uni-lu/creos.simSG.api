@@ -13,6 +13,9 @@ import duc.sg.java.utils.BaseTransform;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Build the uncertain equation matrices. This is done by computing the equation matrix for each possible equations.
+ */
 public class UMatrixBuilder {
     private UMatrixBuilder(){}
 

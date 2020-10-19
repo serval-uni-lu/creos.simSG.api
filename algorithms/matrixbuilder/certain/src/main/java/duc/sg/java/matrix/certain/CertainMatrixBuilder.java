@@ -14,6 +14,10 @@ import duc.sg.java.utils.MatrixDouble;
 
 import java.util.*;
 
+/**
+ * Computes the matrix builder based on a mono-substation topology.
+ * This algorithm does not consider uncertainty of fuses.
+ */
 public class CertainMatrixBuilder implements MatrixBuilder {
     private Map<Fuse, Integer> idxFuses;
     private int[] idxLast;

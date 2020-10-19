@@ -8,6 +8,9 @@ import duc.sg.java.model.Substation;
 import java.util.Collection;
 import java.util.Map;
 
+/**
+ * Rules that are applied only at the fuse level
+ */
 abstract class AbsFuseLevelRule implements IRule {
     @Override
     public final boolean apply(Substation substation, Map<Fuse, State> fuseStateMap) {

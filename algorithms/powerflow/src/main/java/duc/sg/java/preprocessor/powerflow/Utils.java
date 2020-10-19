@@ -7,34 +7,6 @@ import duc.sg.java.model.Substation;
 import java.util.*;
 
 class Utils {
-
-    static List<Fuse> getNeighbors(Fuse start) {
-        var res = new ArrayList<Fuse>();
-
-        res.add(start.getOpposite());
-        for(var f: start.getOwner().getFuses()) {
-            if(!f.equals(start)) {
-                res.add(f);
-            }
-        }
-
-        return res;
-    }
-
-    static boolean contain(Fuse[] src, Fuse toSearch) {
-        if(src == null || src.length == 0) {
-            return false;
-        }
-
-        for(var s: src) {
-            if(s.equals(toSearch)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     static boolean pathToSubs(Fuse start, Fuse origin) {
         var visited = new HashSet<Fuse>();
         var nbHopsEntities = new HashMap<Entity, Integer>();

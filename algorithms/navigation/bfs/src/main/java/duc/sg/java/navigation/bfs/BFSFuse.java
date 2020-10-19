@@ -10,6 +10,9 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+/**
+ * Navigate through the grid and call the actioner for every fuses
+ */
 public class BFSFuse implements Navigate<Fuse> {
     public static final BFSFuse INSTANCE = new BFSFuse();
 
@@ -33,7 +36,7 @@ public class BFSFuse implements Navigate<Fuse> {
             var ownerOpp = current.getOpposite().getOwner();
             var toAdd = new ArrayList<Fuse>(ownerOpp.getFuses().size());
             for(var f: ownerOpp.getFuses()) {
-                if(!visited.contains(f) && !inWaitingList.contains(f)) {
+                if(!visited.contains(f) && !inWaitingList.contains(f) && condition.evaluate(f)) {
                     if(f.equals(current.getOpposite())) {
                         toAdd.add(0, f);
                     } else {

@@ -8,6 +8,10 @@ import duc.sg.java.model.Substation;
 import java.util.ArrayList;
 import java.util.Map;
 
+/*
+ * If one cable has a measured prosumption different from zero, then exactly two fuses are open if and only if they
+ * both belong to the same entity that can be a dead end. Otherwise, at most one fuse of the circle is open.
+ */
 public class CircleRule implements IRule{
     @Override
     public boolean apply(Substation substation, Map<Fuse, State> fuseStateMap) {

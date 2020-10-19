@@ -9,7 +9,7 @@ import duc.sg.java.model.Cable;
 import duc.sg.java.model.Configuration;
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
-import duc.sg.java.validator.matrix.GridValidator;
+import duc.sg.java.validator.GridValidator;
 import org.ejml.alg.dense.linsol.svd.SolvePseudoInverseSvd;
 import org.ejml.data.DenseMatrix64F;
 

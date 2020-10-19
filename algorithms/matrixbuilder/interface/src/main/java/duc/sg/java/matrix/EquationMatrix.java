@@ -2,6 +2,11 @@ package duc.sg.java.matrix;
 
 import duc.sg.java.model.Fuse;
 
+/**
+ * Representation of the equation matrix.
+ * Load approximation is done by solving an equation system where the variable are the fuse loads and the consumption.
+ * This matrix represents this system of equation
+ */
 public interface EquationMatrix {
     double[] getValues();
     int getNbColumns();

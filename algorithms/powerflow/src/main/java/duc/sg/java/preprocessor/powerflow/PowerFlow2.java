@@ -10,6 +10,9 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ * Algorithm to retrieve the mandatory power flow: all fuses that do not belong to a circle.
+ */
 public class PowerFlow2 implements IPowerFlow {
     @Override
     public Fuse[] getFuseOnMandatoryPF(Substation substation) {

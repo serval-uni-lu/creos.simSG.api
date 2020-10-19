@@ -2,9 +2,14 @@ package duc.sg.java.preprocessor.powerflow;
 
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Substation;
+import duc.sg.java.utils.OArrays;
 
 import java.util.*;
 
+/**
+ * Algorithm that retrieves the entire power flow: for each fuses, it computes from which fuses it can get the power
+ * and to which fuse(s) it "gives" the power.
+ */
 public class PowerFlow implements IPowerFlow {
     private Map<Fuse, Fuse[]> powerSrc;
     private Map<Fuse, Fuse[]> powerDest;
@@ -46,7 +51,7 @@ public class PowerFlow implements IPowerFlow {
 
             var powerOrigins = new ArrayList<Fuse>();
             if(!(current.getOwner() instanceof Substation)) {
-                List<Fuse> neighbors = Utils.getNeighbors(current);
+                List<Fuse> neighbors = current.getNeighbors();
                 for (var neighbor : neighbors) {
                     if (Utils.pathToSubs(neighbor, current)) {
                         powerOrigins.add(neighbor);
@@ -84,7 +89,7 @@ public class PowerFlow implements IPowerFlow {
 
                 var filtered = new ArrayList<Fuse>(currPwSrc.length);
                 for(Fuse s: currPwSrc) {
-                    if(!(s.getOwner() instanceof Substation) && !Utils.contain(currPwDest, s)) {
+                    if(!(s.getOwner() instanceof Substation) && !OArrays.contains(currPwDest, s)) {
                         filtered.add(s);
                     }
                 }

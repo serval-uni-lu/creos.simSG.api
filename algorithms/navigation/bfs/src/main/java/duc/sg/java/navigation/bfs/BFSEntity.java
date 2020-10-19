@@ -10,15 +10,18 @@ import duc.sg.java.navigation.Navigate;
 import java.util.ArrayDeque;
 import java.util.HashSet;
 
+/**
+ * Navigate through the grid and call the actioner for every entities
+ */
 public class BFSEntity implements Navigate<Entity> {
     public static final BFSEntity INSTANCE = new BFSEntity();
 
     private BFSEntity(){}
 
     @Override
-    public void navigate(Substation substation, Actionner<Entity> actionner, Condition condition) {
+    public void navigate(Substation substation, Actionner<Entity> actioner, Condition condition) {
         if(substation.getFuses().isEmpty()) {
-            actionner.act(substation);
+            actioner.act(substation);
             return;
         }
 
@@ -31,7 +34,7 @@ public class BFSEntity implements Navigate<Entity> {
         while (!waiting.isEmpty()) {
             Entity current = waiting.poll();
             visited.add(current);
-            actionner.act(current);
+            actioner.act(current);
 
             for(Fuse fuse: current.getFuses()) {
                 Entity neighbor = fuse.getOpposite().getOwner();

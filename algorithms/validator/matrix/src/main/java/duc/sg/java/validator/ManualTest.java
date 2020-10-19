@@ -1,4 +1,4 @@
-package duc.sg.java.validator.matrix;
+package duc.sg.java.validator;
 
 import duc.sg.java.model.Fuse;
 import duc.sg.java.model.Meter;

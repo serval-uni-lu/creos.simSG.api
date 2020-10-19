@@ -35,13 +35,20 @@ The project uses Maven for the project management. Uses the classic cycle goals 
     - `circlefinder`: this module retrieves all possible circle in a topology
     - `extractor`: modules that contains algorithm to extract different elements (cables, entities, fuses, ...) of a grid
     - `loadapproximator`: contains different algorithms to approximate the load
-        - `certain`: alogorithm that do not consider fuse status confidence. 
+        - `certain`: algorithm that do not consider fuse status confidence
         - `uncertain`: contains the different algorithms to handle uncertainty for the load approximation
             - `naive`: naive version that process all possible configurations for mono-substation topologies
             - `multisubs`: contains first steps/thoughts towards an algorithm for uncertain load approximation **WARNING**: none of the algorithms are tested. So they might contain bugs or be even completely wrong
             - `bsrules`: version that filter out invalid configurations for mono-substation topologies
+    - `matrixbuilder`: contains different algorithms to generate the equation matrix
+        - `certain`: algorithm that do not consider fuse status confidence
+        - `uncertain`: algorithm that lists all possible configurations for mono-substation topologies
+    - `navigation`: algorithms to navigate through the grid and collect different elements (fuses, entities, ...)
+        - `bfs`: navigate the grid using a [BFS](https://en.wikipedia.org/wiki/Breadth-first_search) strategy
+    - `powerflow`: algorithm that defines the power flow in a grid
     - `transformers`: contain different modules to transform the grid into another format or from another format to the grid
             - `json`: transform the grid from/into JSON object
+    - `validator`: contains a set of validation algorithms for the model or the result of another algorithm.
 - `model`: module that contains the smart grid model, should only contain an abstraction of the grid state
 - `scenarios`: this module contains the implementation of the different pre-built topologies
 - `server`: directories with a list of modules for the server

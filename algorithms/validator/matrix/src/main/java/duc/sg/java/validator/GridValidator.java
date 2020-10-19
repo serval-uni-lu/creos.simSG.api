@@ -1,4 +1,4 @@
-package duc.sg.java.validator.matrix;
+package duc.sg.java.validator;
 
 import duc.sg.java.circlefinder.CircleFinder;
 import duc.sg.java.model.Fuse;
@@ -9,15 +9,19 @@ import duc.sg.java.validator.rules.Rules;
 
 import java.util.Map;
 
+/**
+ * Apply all rules to validate the configuration of a topology
+ */
 public class GridValidator implements  IValidator {
     @Override
     public boolean isValid(Substation substation, Map<Fuse, State> idxColumn, IRule... iRules){
         CircleFinder.getDefault().findAndSave(substation);
         IRule[] rules;
-        if(iRules.length < 1)
+        if(iRules.length < 1) {
             rules = Rules.getAllRules();
-        else
+        } else {
             rules = iRules;
+        }
 
         for(IRule rule: rules) {
             if(!rule.apply(substation, idxColumn)) {

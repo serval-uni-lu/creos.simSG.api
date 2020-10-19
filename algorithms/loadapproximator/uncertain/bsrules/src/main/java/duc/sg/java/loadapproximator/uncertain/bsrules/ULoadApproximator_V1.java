@@ -9,8 +9,8 @@ import duc.sg.java.model.State;
 import duc.sg.java.model.Substation;
 import duc.sg.java.uncertainty.PossibilityDouble;
 import duc.sg.java.utils.BaseTransform;
-import duc.sg.java.validator.matrix.GridValidator;
-import duc.sg.java.validator.matrix.IValidator;
+import duc.sg.java.validator.GridValidator;
+import duc.sg.java.validator.IValidator;
 import org.ejml.alg.dense.linsol.svd.SolvePseudoInverseSvd;
 import org.ejml.data.DenseMatrix64F;
 

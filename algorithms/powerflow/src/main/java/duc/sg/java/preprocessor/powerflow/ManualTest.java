@@ -20,15 +20,7 @@ public class ManualTest {
 //                .chooseScenario(ScenarioName.PARA_W_DEADEND)
                 .build();
 
-        Fuse[] toOPen = new PowerFlow().getFuseOnMandatoryPF(sc.getSubstation());
-
         Fuse[] toOPen2 = new PowerFlow2().getFuseOnMandatoryPF(sc.getSubstation());
-
-        Stream.of(toOPen)
-                .map(Fuse::getName)
-                .forEach(System.out::println);
-
-        System.out.println();
 
         Stream.of(toOPen2)
                 .map(Fuse::getName)
