@@ -107,7 +107,7 @@
     </build>
 
     <scm>
-        <developerConnection>scm:git:git@bitbucket.org:sntcreos/ducpropagationjava.git</developerConnection>
+        <developerConnection>scm:git:git@github.com:UL-SnT-Serval/creos.simSG.api.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
