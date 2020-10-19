@@ -5,7 +5,7 @@
     <groupId>creos.simsg.api</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <version>2020.10.19</version>
+    <version>2020.MM.DD-SNAPSHOT</version>
     <modules>
         <module>model</module>
         <module>scenarios</module>
@@ -107,7 +107,7 @@
 
     <scm>
         <developerConnection>scm:git:git@github.com:UL-SnT-Serval/creos.simSG.api.git</developerConnection>
-        <tag>2020.10.19</tag>
+        <tag>HEAD</tag>
     </scm>
 
 
