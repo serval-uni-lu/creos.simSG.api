@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>parent</artifactId>
-        <groupId>duc.sg.java</groupId>
+        <groupId>creos.simsg.api</groupId>
         <version>2020.09.DD-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
@@ -12,27 +12,27 @@
 
     <dependencies>
         <dependency>
-            <groupId>duc.sg.java</groupId>
+            <groupId>creos.simsg.api</groupId>
             <artifactId>model</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>duc.sg.java</groupId>
+            <groupId>creos.simsg.api</groupId>
             <artifactId>scenarios</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>duc.sg.java</groupId>
+            <groupId>creos.simsg.api</groupId>
             <artifactId>circlefinder</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>duc.sg.java</groupId>
+            <groupId>creos.simsg.api</groupId>
             <artifactId>extracter</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>duc.sg.java</groupId>
+            <groupId>creos.simsg.api</groupId>
             <artifactId>utils</artifactId>
             <version>${project.version}</version>
         </dependency>
