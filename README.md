@@ -26,7 +26,7 @@ The project uses Maven for the project management. Uses the classic cycle goals 
 
 ### Run the web server
 
-- From your favaorite idea, run execute the main class in `duc.sg.java.server.RunServer`
+- From your favaorite idea, run execute the main class in `RunServer`
 - After packaging the project (`mvn package`): ` java -jar server/ws/target/creos.simsg.server.ws.jar`
 
 ## Project structure 
