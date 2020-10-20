@@ -57,12 +57,20 @@ The project uses Maven for the project management. Uses the classic cycle goals 
 - `uncertainty`: module that contains different utils to manipulate uncertain data, should be general and not smart grid specific
 - `utils`
 
+## Version schema
 
+For this project, we use the [calendar versioning schema](https://calver.org/).
 
-to delete
+Schema used: ![](https://img.shields.io/badge/calver-YYYY.0M.0D-22bfda.svg)
 
-- `powerflow`: ...
-- `validator`: module that contains algorithms to validate a grid
+- YYYY: full year  (*e.g.,* 2006, 2016, 2106)
+- 0M: zero-padded month  (*e.g.,* 01, 02, 11, 12)
+- 0D: zero-padded day (*e.g.,* 04, 08, 25, 31)
+
+SimSG is a research prototype, mainly used by those who developed it. 
+Its main goal is to be used as demonstration tool for academic conference or in front of (potential) partners.
+The version number will not be used to inform users about new features or patches fix.
+Instead, the goal was to use it as timestamp and refer them in report, academic papers, or any other written document.
 
 
 
